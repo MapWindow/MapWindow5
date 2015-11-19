@@ -24,6 +24,7 @@ namespace MW5.Services.Serialization
             TmsGroups = repository.TmsGroups.ToList();
         }
 
+        [DataMember]
         public List<RepositoryGroup> TmsGroups { get; set; }
 
         [DataMember]

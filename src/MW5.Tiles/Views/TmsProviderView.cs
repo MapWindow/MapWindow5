@@ -34,6 +34,7 @@ namespace MW5.Tiles.Views
             FormClosing += (s, e) => _lastTabIndex = tabControlAdv1.SelectedIndex;
         }
 
+
         private void InitControls()
         {
             cboProjection.AddItemsFromEnum<TileProjection>();
@@ -85,6 +86,26 @@ namespace MW5.Tiles.Views
             cboMaxZoom.SetValue(Model.MaxZoom.ToString(CultureInfo.InvariantCulture));
 
             cboProjection.SetValue(Model.Projection);
+
+            DisableEditing();
+        }
+
+        private void DisableEditing()
+        {
+            if (Model.IsCustom) return;
+
+            tabControlAdv1.TabPages.Remove(tabDescription);
+            tabControlAdv1.TabPages.Remove(tabHelp);
+
+            foreach (Control ctrl in tabDefinition.Controls)
+            {
+                ctrl.Enabled = false;
+            }
+
+            foreach (Control ctrl in tabBounds.Controls)
+            {
+                ctrl.Enabled = false;
+            }
         }
 
         public ButtonBase OkButton

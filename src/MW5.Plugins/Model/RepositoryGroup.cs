@@ -21,5 +21,8 @@ namespace MW5.Plugins.Model
 
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public bool Expanded { get; set; }
     }
 }

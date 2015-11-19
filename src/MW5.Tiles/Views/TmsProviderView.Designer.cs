@@ -61,7 +61,7 @@
             this.txtMinLng = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtMaxLng = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
-            this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabDescription = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label14 = new System.Windows.Forms.Label();
             this.txtDescription = new MW5.UI.Controls.WatermarkTextbox();
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
@@ -81,7 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMinLat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMinLng)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxLng)).BeginInit();
-            this.tabPageAdv1.SuspendLayout();
+            this.tabDescription.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).BeginInit();
             this.tabHelp.SuspendLayout();
             this.SuspendLayout();
@@ -208,7 +208,7 @@
             this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(504, 278);
             this.tabControlAdv1.Controls.Add(this.tabDefinition);
             this.tabControlAdv1.Controls.Add(this.tabBounds);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
+            this.tabControlAdv1.Controls.Add(this.tabDescription);
             this.tabControlAdv1.Controls.Add(this.tabHelp);
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 25);
             this.tabControlAdv1.Location = new System.Drawing.Point(12, 7);
@@ -371,7 +371,7 @@
             this.txtMaxLat.Size = new System.Drawing.Size(98, 20);
             this.txtMaxLat.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtMaxLat.TabIndex = 2;
-            this.txtMaxLat.Text = "85.05112878";
+            this.txtMaxLat.Text = "90.0000000";
             // 
             // chkBoundingBox
             // 
@@ -410,7 +410,7 @@
             this.txtMinLat.Size = new System.Drawing.Size(98, 20);
             this.txtMinLat.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtMinLat.TabIndex = 1;
-            this.txtMinLat.Text = "-85.05112878";
+            this.txtMinLat.Text = "-90.0000000";
             // 
             // label11
             // 
@@ -478,19 +478,19 @@
             this.txtMaxLng.TabIndex = 4;
             this.txtMaxLng.Text = "180.0000000";
             // 
-            // tabPageAdv1
+            // tabDescription
             // 
-            this.tabPageAdv1.Controls.Add(this.label14);
-            this.tabPageAdv1.Controls.Add(this.txtDescription);
-            this.tabPageAdv1.Image = null;
-            this.tabPageAdv1.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv1.Location = new System.Drawing.Point(1, 28);
-            this.tabPageAdv1.Name = "tabPageAdv1";
-            this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(501, 248);
-            this.tabPageAdv1.TabIndex = 4;
-            this.tabPageAdv1.Text = "Description";
-            this.tabPageAdv1.ThemesEnabled = false;
+            this.tabDescription.Controls.Add(this.label14);
+            this.tabDescription.Controls.Add(this.txtDescription);
+            this.tabDescription.Image = null;
+            this.tabDescription.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabDescription.Location = new System.Drawing.Point(1, 28);
+            this.tabDescription.Name = "tabDescription";
+            this.tabDescription.ShowCloseButton = true;
+            this.tabDescription.Size = new System.Drawing.Size(501, 248);
+            this.tabDescription.TabIndex = 4;
+            this.tabDescription.Text = "Description";
+            this.tabDescription.ThemesEnabled = false;
             // 
             // label14
             // 
@@ -584,8 +584,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMinLat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMinLng)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxLng)).EndInit();
-            this.tabPageAdv1.ResumeLayout(false);
-            this.tabPageAdv1.PerformLayout();
+            this.tabDescription.ResumeLayout(false);
+            this.tabDescription.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).EndInit();
             this.tabHelp.ResumeLayout(false);
             this.tabHelp.PerformLayout();
@@ -626,7 +626,7 @@
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMinLng;
         private System.Windows.Forms.Label label10;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMaxLng;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabDescription;
         private System.Windows.Forms.Label label13;
         private UI.Controls.WatermarkTextbox txtDescription;
         private System.Windows.Forms.Label label14;

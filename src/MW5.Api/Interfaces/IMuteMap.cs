@@ -142,6 +142,8 @@ namespace MW5.Api.Interfaces
 
         bool GetIsCustomSelectionMode(Guid clientId);
 
+        void SetTileProvider(int providerId);
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;

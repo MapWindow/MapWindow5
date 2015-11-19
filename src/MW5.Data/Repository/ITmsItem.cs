@@ -10,5 +10,9 @@ namespace MW5.Data.Repository
     public interface ITmsItem: IRepositoryItem
     {
         TmsProvider Provider { get; }
+
+        bool Active { get; set; }
+
+        string Serialize();
     }
 }

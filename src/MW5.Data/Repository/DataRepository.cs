@@ -70,6 +70,11 @@ namespace MW5.Data.Repository
         {
             foreach (var p in context.Map.Tiles.Providers.Where(p => !p.Custom))
             {
+                if (p.Name.StartsWithIgnoreCase("google"))
+                {
+                    continue;
+                }
+
                 var provider = new TmsProvider
                 {
                     Id = p.Id,
@@ -77,7 +82,7 @@ namespace MW5.Data.Repository
                     MinZoom = p.MinZoom,
                     MaxZoom = p.MaxZoom,
                     Bounds = p.GeographicBounds,
-                    Editable = false,
+                    IsCustom = false,
                     Url = p.Url
                 };
 

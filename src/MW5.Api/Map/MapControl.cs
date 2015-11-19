@@ -65,6 +65,7 @@ namespace MW5.Api.Map
         public event EventHandler<EventArgs> HistoryChanged;
         public event EventHandler<ValidateShapeEventArgs> ValidateShape;
         public event EventHandler<LockedEventArgs> MapLocked;
+        public event EventHandler<EventArgs> TmsProviderChanged;
 
         // overriding default handlers for user control
         public new event EventHandler<MouseEventArgs> MouseDown;
@@ -497,7 +498,21 @@ namespace MW5.Api.Map
         public TileProvider TileProvider
         {
             get { return (TileProvider) _map.TileProvider; }
-            set { _map.TileProvider = (tkTileProvider) value; }
+            set
+            {
+                SetTileProvider((int)value);
+            }
+        }
+
+        public void SetTileProvider(int providerId)
+        {
+            var tiles = _map.Tiles;
+            bool changed = providerId != tiles.ProviderId;
+            tiles.ProviderId = providerId;
+            if (changed)
+            {
+                DelegateHelper.FireEvent(this, TmsProviderChanged, new EventArgs());
+            }
         }
 
         public AngleFormat ShowCoordinatesFormat
@@ -674,6 +689,7 @@ namespace MW5.Api.Map
         private void MapControl_DragDrop(object sender, DragEventArgs e)
         {
             string filename = GetFilename(e);
+
             var handler = FileDropped;
             if (handler != null)
             {

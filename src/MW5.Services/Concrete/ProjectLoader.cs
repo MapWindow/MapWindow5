@@ -48,7 +48,7 @@ namespace MW5.Services.Concrete
             _context.Map.Lock();
             _context.Legend.Lock();
 
-            _context.Map.Tiles.ProviderId = project.Map.TileProviderId;
+            _context.Map.SetTileProvider(project.Map.TileProviderId);
 
             try
             {

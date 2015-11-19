@@ -96,7 +96,7 @@ namespace MW5.Plugins.Printing.Services
                     var oldProvider = tiles.ProviderId;
                     var oldVisible = tiles.Visible;
 
-                    tiles.ProviderId = task.TileProvider;
+                    _map.SetTileProvider(task.TileProvider);
                     tiles.Visible = task.TileProvider != (int)TileProvider.None;
 
                     // if true is returned, then the tiles are already in cache
@@ -112,7 +112,7 @@ namespace MW5.Plugins.Printing.Services
                     }
 
                     tiles.Visible = oldVisible;
-                    tiles.ProviderId = oldProvider;
+                    _map.SetTileProvider(oldProvider);
                 }
             }
         }

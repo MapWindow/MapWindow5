@@ -60,8 +60,18 @@ namespace MW5.Data.Repository
             AttachEvents();
 
             AfterExpand += RepositoryTreeView_AfterExpand;
+            AfterCollapse += (s, e) => SaveExpandedState(e.Node);
 
             _initialized = true;
+        }
+
+        private void SaveExpandedState(TreeNodeAdv node)
+        {
+            var item = RepositoryItem.Get(node) as IGroupItem;
+            if (item != null)
+            {
+                item.Group.Expanded = node.Expanded;
+            }
         }
 
         private void AttachEvents()
@@ -90,7 +100,14 @@ namespace MW5.Data.Repository
 
             foreach (var g in _repository.TmsGroups)
             {
-                root.SubItems.AddGroup(g);
+                bool expanded = g.Expanded;
+
+                var groupItem = root.SubItems.AddGroup(g);
+
+                if (expanded)
+                {
+                    groupItem.Expand();
+                }
             }
 
             var group = GetGroup(RepositoryItemType.TmsRoot, TmsProvider.DefaultGroupId);
@@ -338,7 +355,24 @@ namespace MW5.Data.Repository
                 DoDragDrop(layerItem.Identity.Serialize(), DragDropEffects.Copy);
             }
 
-            // TODO: add drag & drop support for TMS providers
+            var tmsItem = RepositoryItem.Get(arr[0]) as ITmsItem;
+            if (tmsItem != null)
+            {
+                DoDragDrop(tmsItem.Serialize(), DragDropEffects.Copy);
+            }
+        }
+
+        public void UpdateTmsState(int providerId)
+        {
+            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
+
+            foreach (var group in root.SubItems)
+            {
+                foreach(var p in group.SubItems.OfType<ITmsItem>())
+                {
+                    p.Active = p.Provider.Id == providerId;
+                }
+            }
         }
 
         public void UpdateState(HashSet<LayerIdentity> layers)
@@ -368,6 +402,8 @@ namespace MW5.Data.Repository
             {
                 item.SubItems.UpdateState(_layers);
             }
+
+            SaveExpandedState(e.Node);
         }
     }
 }

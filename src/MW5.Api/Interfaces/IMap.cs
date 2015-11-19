@@ -38,5 +38,6 @@ namespace MW5.Api.Interfaces
         event EventHandler<TilesLoadedEventArgs> TilesLoaded;
         event EventHandler<EventArgs> HistoryChanged;
         event EventHandler<ValidateShapeEventArgs> ValidateShape;
+        event EventHandler<EventArgs> TmsProviderChanged;
     }
 }

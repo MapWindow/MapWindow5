@@ -377,7 +377,7 @@ namespace MW5.Menu
                 }
             }
 
-            manager.ProviderId = e.ProviderId;
+            _context.Map.SetTileProvider(e.ProviderId);
             _context.Map.Redraw(RedrawType.Minimal);
             _context.View.Update();     //to update provider in status bar
         }

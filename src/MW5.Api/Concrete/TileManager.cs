@@ -136,7 +136,6 @@ namespace MW5.Api.Concrete
         public int ProviderId
         {
             get { return _tiles.ProviderId; }
-            set { _tiles.ProviderId = value; }
         }
 
         public string ProviderName

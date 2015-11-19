@@ -12,6 +12,13 @@ namespace MW5.Api.Helpers
 {
     public static class MapHelper
     {
+        public static void SetGoogleMeractorProjection(this IMuteMap map)
+        {
+            var sr = new SpatialReference();
+            sr.SetGoogleMercator();
+            map.Projection = sr;
+        }
+
         /// <summary>
         /// Creates temporary shapefile, adds it to map and returns layer handle
         /// </summary>

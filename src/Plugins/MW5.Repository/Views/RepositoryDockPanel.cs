@@ -156,14 +156,18 @@ namespace MW5.Plugins.Repository.Views
 
         private void SetTmsProviderContextMenu()
         {
-            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
-                                                   {
-                                                        mnuAddToMap,
-                                                        new ToolStripSeparator(),
-                                                        toolRemoveTms,
-                                                        new ToolStripSeparator(),
-                                                        toolProperties,
-                                                   });
+            var items = contextMenuStripEx1.Items;
+            items.Add(mnuAddToMap);
+            items.Add(new ToolStripSeparator());
+
+            var tms = Tree.SelectedItem as ITmsItem;
+            if (tms != null && tms.Provider.IsCustom)
+            {
+                items.Add(toolRemoveTms);
+                items.Add(new ToolStripSeparator());
+            }
+
+            items.Add(toolProperties);
         }
 
         private void SetTmsRootContextMenu()

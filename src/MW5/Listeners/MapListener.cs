@@ -64,12 +64,18 @@ namespace MW5.Listeners
             _map.ShapeIdentified += MapShapeIdentified;
             _map.ShapeValidationFailed += MapShapeValidationFailed;
             _map.ValidateShape += MapValidateShape;
+            _map.TmsProviderChanged += MapTmsProviderChanged;
 
             var mapControl = (_map as MapControl);
             if (mapControl != null)
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
+        }
+
+        private void MapTmsProviderChanged(object sender, EventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.TmsProviderChanged_, sender as IMuteMap, e);
         }
 
         private void MapSelectBoxFinal(object sender, SelectBoxFinalEventArgs e)
@@ -175,10 +181,37 @@ namespace MW5.Listeners
 
         private void MapFileDropped(object sender, FileDroppedEventArgs e)
         {
+            if (TryParseTmsProviderFromDroppedFilename(e.Filename))
+            {
+                return;
+            }
 
             _layerService.AddLayersFromFilename(e.Filename);
             int handle = _layerService.LastLayerHandle;
             _map.ZoomToLayer(handle);
+        }
+
+        private bool TryParseTmsProviderFromDroppedFilename(string filename)
+        {
+            // expected format: "TmsProvider|" + Provider.Id (see RepositoryTreeView)
+            if (filename.ToLower().StartsWith("tmsprovider"))
+            {
+                var parts = filename.Split('|');
+                if (parts.Length == 2)
+                {
+                    int providerId;
+                    if (Int32.TryParse(parts[1], out providerId))
+                    {
+                        _map.SetTileProvider(providerId);
+                        _map.Redraw(RedrawType.Minimal, true);
+                        _context.View.Update();
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private void MapExtentsChanged(object sender, EventArgs e)

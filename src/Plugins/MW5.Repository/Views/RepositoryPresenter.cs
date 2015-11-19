@@ -11,10 +11,12 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Static;
 using MW5.Data.Enums;
 using MW5.Data.Repository;
 using MW5.Data.Views;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
@@ -38,13 +40,15 @@ namespace MW5.Plugins.Repository.Views
             RepositoryDockPanel view,
             TmsImporter tmsImporter,
             ILayerService layerService,
-            IRepository repository)
+            IRepository repository,
+            MainPlugin plugin)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (tmsImporter == null) throw new ArgumentNullException("tmsImporter");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (repository == null) throw new ArgumentNullException("repository");
+            if (plugin == null) throw new ArgumentNullException("plugin");
 
             _context = context;
             _layerService = layerService;
@@ -54,6 +58,14 @@ namespace MW5.Plugins.Repository.Views
 
             _view.ItemDoubleClicked += ViewItemDoubleClicked;
             _view.TreeViewKeyDown += OnTreeViewKeyDown;
+            view.Tree.UpdateTmsState(_context.Map.Tiles.ProviderId);
+
+            plugin.TmsProviderChanged += OnTmsProviderChanged;
+        }
+
+        private void OnTmsProviderChanged(Api.Interfaces.IMuteMap map, EventArgs e)
+        {
+            View.Tree.UpdateTmsState(map.Tiles.ProviderId);
         }
 
         public Control GetInternalObject()
@@ -224,19 +236,23 @@ namespace MW5.Plugins.Repository.Views
 
             var provider = tms.Provider;
 
-            var providers = _context.Map.Tiles.Providers;
-            providers.Clear(false);
-            if (!providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom, provider.MaxZoom))
+            if (provider.IsCustom)
             {
-                MessageService.Current.Info("Failed to add custom TMS provider.");    
-                return;
-            }
+                // in case of custom provider we need to add definition to the list
+                var providers = _context.Map.Tiles.Providers;
+                providers.Clear(false);
 
-           
+                if (!providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom,
+                        provider.MaxZoom))
+                {
+                    MessageService.Current.Info("Failed to add custom TMS provider.");
+                    return;
+                }
+            }
 
             UpdateTmsBounds(provider, update);
 
-            _context.Map.Tiles.ProviderId = provider.Id;
+            _context.Map.SetTileProvider(provider.Id);
 
             _context.Map.Redraw(RedrawType.Minimal, true);
 
@@ -253,9 +269,7 @@ namespace MW5.Plugins.Repository.Views
 
             if (projectionIsEmpty)
             {
-                var sr = new SpatialReference();
-                sr.SetGoogleMercator();
-                _context.Map.Projection = sr;
+                _context.Map.SetGoogleMeractorProjection();
             }
 
             var mapProvider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == provider.Id);

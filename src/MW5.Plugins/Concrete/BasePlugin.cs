@@ -260,6 +260,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
         internal MapEventHandler<LockedEventArgs> MapLocked_;
         internal MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal_;
+        internal MapEventHandler<EventArgs> TmsProviderChanged_;
 
         // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
@@ -360,6 +361,12 @@ namespace MW5.Plugins.Concrete
         {
             add { ShapeValidationFailed_ += value; }
             remove { ShapeValidationFailed_ -= value; }
+        }
+
+        public event MapEventHandler<EventArgs> TmsProviderChanged
+        {
+            add { TmsProviderChanged_ += value; }
+            remove { TmsProviderChanged_ -= value; }
         }
 
         public event MapEventHandler<EventArgs> HistoryChanged

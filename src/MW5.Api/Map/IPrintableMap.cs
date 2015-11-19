@@ -23,5 +23,6 @@ namespace MW5.Api.Map
         bool LoadTilesForSnapshot(IEnvelope extents, int width, string key);
         TileManager Tiles { get; }
         event EventHandler<TilesLoadedEventArgs> TilesLoaded;
+        void SetTileProvider(int providerId);
     }
 }

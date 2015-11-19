@@ -39,6 +39,7 @@ namespace MW5.Plugins.Model
             Projection = TileProjection.SphericalMercator;
             Url = string.Empty;
             Description = string.Empty;
+            IsCustom = true;
 
             Bounds = DefaultBounds;
         }
@@ -94,7 +95,7 @@ namespace MW5.Plugins.Model
             }
         }
 
-        public bool Editable { get; set; }
+        public bool IsCustom { get; set; }
 
         [DataMember]
         public double MinX { get; set; }

@@ -74,7 +74,7 @@ namespace MW5.Tiles.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            if (!Model.Editable) return true;
+            if (!Model.IsCustom) return true;
             
             if (!Validate())
             {
