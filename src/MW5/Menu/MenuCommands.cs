@@ -117,8 +117,8 @@ namespace MW5.Menu
 
                 new MenuCommand("Set Scale", MenuKeys.SetScale, Resources.img_scale24, ""),
 
-                new MenuCommand("Set Coordinate System", MenuKeys.SetProjection, Resources.icon_crs_change,
-                "Allows to choose coordinate system and projection (deprecated)."),
+                new MenuCommand("Map Projection", MenuKeys.SetProjection, Resources.icon_crs_change,
+                "Chooses coordinate system / projection or displays information about current projection."),
 
                 new MenuCommand("Find Location", MenuKeys.FindLocation, Resources.icon_search,
                 "Searches for a given location by its name."),

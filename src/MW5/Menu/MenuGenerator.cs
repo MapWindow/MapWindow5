@@ -106,6 +106,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.FindLocation]);
 
             items.AddButton(_commands[MenuKeys.SetScale], true);
+            items.AddButton(_commands[MenuKeys.SetProjection]);
 
             items.AddButton(_commands[MenuKeys.RemoveLayer], true);
             items.AddButton(_commands[MenuKeys.ClearLayers]);
@@ -147,20 +148,22 @@ namespace MW5.Menu
         {
             var items = _context.Menu.ViewMenu.SubItems;
 
-            items.AddDropDown("Toolbars", Plugins.Menu.MenuKeys.ViewToolbars, PluginIdentity.Default);
-            items.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, PluginIdentity.Default);
-            items.AddDropDown("Skins", Plugins.Menu.MenuKeys.ViewSkins, PluginIdentity.Default);
+            items.AddButton(_commands[MenuKeys.ZoomIn]);
+            items.AddButton(_commands[MenuKeys.ZoomOut]);
+            items.AddButton(_commands[MenuKeys.ZoomMax]);
+            items.AddButton(_commands[MenuKeys.ZoomPrev], true);
+            items.AddButton(_commands[MenuKeys.ZoomNext]);
+            items.AddButton(_commands[MenuKeys.ZoomToLayer], true);
+            items.AddButton(_commands[MenuKeys.ZoomToBaseLayer]);
 
             items.AddButton(_commands[MenuKeys.ShowZoombar], true);
             items.AddButton(_commands[MenuKeys.ShowScalebar]);
             items.AddButton(_commands[MenuKeys.ShowCoordinates]);
             items.AddButton(_commands[MenuKeys.ShowRedrawTime]);
 
-            items.AddButton(_commands[MenuKeys.ZoomIn], true);
-            items.AddButton(_commands[MenuKeys.ZoomOut]);
-            items.AddButton(_commands[MenuKeys.ZoomMax]);
-            items.AddButton(_commands[MenuKeys.ZoomToLayer], true);
-            items.AddButton(_commands[MenuKeys.ZoomToBaseLayer]);
+            items.AddDropDown("Toolbars", Plugins.Menu.MenuKeys.ViewToolbars, PluginIdentity.Default).BeginGroup = true;
+            items.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, PluginIdentity.Default);
+            items.AddDropDown("Skins", Plugins.Menu.MenuKeys.ViewSkins, PluginIdentity.Default);
 
             _context.Menu.ViewMenu.Update();
 

@@ -47,6 +47,9 @@ namespace MW5.Menu
             FindMenuItem(MenuKeys.ShowScalebar).Checked = config.ShowScalebar;
             FindMenuItem(MenuKeys.ShowZoombar).Checked = config.ShowZoombar;
             FindMenuItem(MenuKeys.ShowRedrawTime).Checked = config.ShowRedrawTime;
+
+            FindMenuItem(MenuKeys.ZoomNext).Enabled = _map.ExtentHistoryUndoCount > 0;
+            FindMenuItem(MenuKeys.ZoomPrev).Enabled = _map.ExtentHistoryRedoCount > 0;
         }
 
         private void UpdateToolbars(bool rendered)
@@ -69,15 +72,6 @@ namespace MW5.Menu
             bool distance = _map.Measuring.Type == MeasuringType.Distance;
             FindToolbarItem(MenuKeys.MeasureArea).Checked = _map.MapCursor == MapCursor.Measure && !distance;
             FindToolbarItem(MenuKeys.MeasureDistance).Checked = _map.MapCursor == MapCursor.Measure && distance;
-
-            var item = FindToolbarItem(MenuKeys.SetProjection);
-            item.Enabled = !_context.Map.Layers.Any();
-            if (rendered)
-            {
-                item.Text = item.Enabled
-                    ? "Set coordinate system and projection"
-                    : "It's not allowed to change projection when layers are already added to the map.";
-            }
 
             FindToolbarItem(MenuKeys.FindLocation).Enabled = !_map.Projection.IsEmpty;
 

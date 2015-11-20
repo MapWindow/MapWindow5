@@ -17,6 +17,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Model;
 using MW5.Plugins.Services;
+using MW5.Projections.Helpers;
 using MW5.Shared;
 using MW5.Tiles.Views;
 using MW5.Views;
@@ -205,7 +206,14 @@ namespace MW5.Menu
                     _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
                     return true;
                 case MenuKeys.SetProjection:
-                    _context.Container.Run<SetProjectionPresenter>();
+                    if (_context.Map.Projection.IsEmpty)
+                    {
+                        _context.ChangeProjection();
+                    }
+                    else
+                    {
+                        _context.ShowMapProjectionProperties();
+                    }
                     return true;
             }
             return false;

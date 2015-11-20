@@ -32,13 +32,27 @@ namespace MW5.Api.Map
             _map.SendMouseUp = true;
             _map.SendMouseMove = true;
             _map.TrapRMouseDown = false;
-            
+            _map.PreviewKeyDown += OnMapPreviewKeyDown;
+
             AllowDrop = true;
 
             DragEnter += MapControl_DragEnter;
             DragDrop += MapControl_DragDrop;
 
             AttachHandlers();
+        }
+
+        private void OnMapPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                case Keys.Right:
+                case Keys.Up:
+                case Keys.Down:
+                    e.IsInputKey = true;
+                    return;
+            }
         }
 
         public event EventHandler<EventArgs> MapCursorChanged;
