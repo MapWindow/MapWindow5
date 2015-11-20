@@ -10,5 +10,7 @@ namespace MW5.Views.Abstract
     internal interface ISetScaleView: IView
     {
         string NewScale { get; }
+
+        bool SnapToZoomLevel { get; }
     }
 }

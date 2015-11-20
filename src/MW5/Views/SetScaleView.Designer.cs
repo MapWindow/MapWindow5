@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtScale = new System.Windows.Forms.TextBox();
             this.cboScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.chkSnap = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.cboScale)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +45,7 @@
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(260, 109);
+            this.btnCancel.Location = new System.Drawing.Point(260, 137);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 2;
@@ -56,7 +57,7 @@
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(90, 26);
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(164, 109);
+            this.btnOk.Location = new System.Drawing.Point(164, 137);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(90, 26);
             this.btnOk.TabIndex = 1;
@@ -98,13 +99,24 @@
             this.cboScale.Size = new System.Drawing.Size(193, 21);
             this.cboScale.TabIndex = 0;
             // 
+            // chkSnap
+            // 
+            this.chkSnap.AutoSize = true;
+            this.chkSnap.Location = new System.Drawing.Point(152, 105);
+            this.chkSnap.Name = "chkSnap";
+            this.chkSnap.Size = new System.Drawing.Size(121, 17);
+            this.chkSnap.TabIndex = 12;
+            this.chkSnap.Text = "Snap to zoom levels";
+            this.chkSnap.UseVisualStyleBackColor = true;
+            // 
             // SetScaleView
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(363, 147);
+            this.ClientSize = new System.Drawing.Size(363, 175);
+            this.Controls.Add(this.chkSnap);
             this.Controls.Add(this.cboScale);
             this.Controls.Add(this.txtScale);
             this.Controls.Add(this.label2);
@@ -127,6 +139,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtScale;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboScale;
+        private System.Windows.Forms.CheckBox chkSnap;
 
     }
 }

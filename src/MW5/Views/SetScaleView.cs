@@ -16,6 +16,7 @@ namespace MW5.Views
 {
     internal partial class SetScaleView : MapWindowView, ISetScaleView
     {
+        private static bool _snapToZoomLevels = true;
         private readonly IMuteMap _map;
 
         public SetScaleView(IMuteMap map)
@@ -26,6 +27,8 @@ namespace MW5.Views
             InitializeComponent();
 
             InitControls();
+
+            FormClosed += (s, e) => _snapToZoomLevels = chkSnap.Checked;
         }
 
         private void InitControls()
@@ -52,11 +55,11 @@ namespace MW5.Views
                                    500000000
                                };
 
-            //var list = scales.Select(s => s.ToString(CultureInfo.InvariantCulture)).ToList();
-
             cboScale.DataSource = scales;
 
-            cboScale.Text = string.Empty;
+            cboScale.Text = txtScale.Text;
+
+            chkSnap.Checked = _snapToZoomLevels;
         }
 
         public ButtonBase OkButton
@@ -67,6 +70,11 @@ namespace MW5.Views
         public string NewScale
         {
             get { return cboScale.Text; }
+        }
+
+        public bool SnapToZoomLevel
+        {
+            get { return chkSnap.Checked; }
         }
     }
 }

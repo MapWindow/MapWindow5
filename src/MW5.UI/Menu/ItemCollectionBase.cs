@@ -231,7 +231,7 @@ namespace MW5.UI.Menu
 
             if (!string.IsNullOrWhiteSpace(key))
             {
-                if (!label)
+                //if (!label)
                 {
                     // if it's main application menu, we want to dispatch all to plugins;
                     // for menus in other forms, just to the control itself

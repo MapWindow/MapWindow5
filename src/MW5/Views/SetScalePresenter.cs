@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -52,7 +54,14 @@ namespace MW5.Views
                 return false;
             }
 
+            var oldBehavior = _context.Map.ZoomBehavior;
+            
+            _context.Map.ZoomBehavior = View.SnapToZoomLevel ? ZoomBehavior.UseTileLevels : ZoomBehavior.Default;
+
             _context.Map.CurrentScale = scale;
+
+            _context.Map.ZoomBehavior = oldBehavior;
+
             return true;
         }
     }

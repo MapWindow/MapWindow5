@@ -97,6 +97,9 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
+                case StatusBarKeys.MapScale:
+                    _context.Container.Run<SetScalePresenter>();
+                    break;
                 case StatusBarKeys.ProjectionDropDown:
                     if (_context.Map.Projection.IsEmpty)
                     {
