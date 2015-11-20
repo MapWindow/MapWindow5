@@ -12,6 +12,7 @@ using MW5.Api.Enums;
 using MW5.Data.Model;
 using MW5.Data.Properties;
 using MW5.Data.Views.Abstract;
+using MW5.Shared;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
@@ -40,6 +41,8 @@ namespace MW5.Data.Views
 
             databaseLayersGrid1.AdjustColumnWidths();
             databaseLayersGrid1.Adapter.HotTracking = true;
+
+            Text = @"Database Layers: " + Model.Connection.Name;
         }
 
         private int GetIcon(VectorLayerGridAdapter info)
@@ -60,7 +63,7 @@ namespace MW5.Data.Views
 
         private IEnumerable<VectorLayerGridAdapter> GetLayers()
         {
-            foreach (var layer in Model.Where(l => l.GeometryType != GeometryType.None))
+            foreach (var layer in Model.Datasource.Where(l => l.GeometryType != GeometryType.None))
             {
                 yield return new VectorLayerGridAdapter(layer);
             }
@@ -75,7 +78,12 @@ namespace MW5.Data.Views
         {
             get { return _layers; }
         }
+
+        private void OnSelectAllChecked(object sender, EventArgs e)
+        {
+            databaseLayersGrid1.Adapter.SetPropertyForEach(item => item.Selected, chkSelectAll.Checked);
+        }
     }
 
-    public class DatabaseLayersViewBase: MapWindowView<VectorDatasource> {}
+    public class DatabaseLayersViewBase: MapWindowView<DatabaseLayersModel> {}
 }

@@ -10,7 +10,7 @@ using MW5.Plugins.Services;
 
 namespace MW5.Data.Views
 {
-    public class DatabaseLayersPresenter: BasePresenter<IDatabaseLayersView, VectorDatasource>
+    public class DatabaseLayersPresenter: BasePresenter<IDatabaseLayersView, DatabaseLayersModel>
     {
         private readonly ILayerService _layerService;
 

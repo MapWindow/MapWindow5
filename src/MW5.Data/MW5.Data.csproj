@@ -181,6 +181,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Model\VectorLayerGridAdapter.cs" />
+    <Compile Include="Views\DatabaseLayersModel.cs" />
     <Compile Include="Views\DatabaseLayersPresenter.cs" />
     <Compile Include="Views\DatabaseLayersView.cs">
       <SubType>Form</SubType>

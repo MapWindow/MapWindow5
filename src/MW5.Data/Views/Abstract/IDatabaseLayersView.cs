@@ -9,7 +9,7 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Data.Views.Abstract
 {
-    public interface IDatabaseLayersView: IView<VectorDatasource>
+    public interface IDatabaseLayersView : IView<DatabaseLayersModel>
     {
         IEnumerable<VectorLayerGridAdapter> Layers { get; }
     }

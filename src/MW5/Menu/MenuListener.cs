@@ -250,9 +250,11 @@ namespace MW5.Menu
             switch (itemKey)
             {
                 case MenuKeys.AddWmsLayer:
-                    var model = new WmsCapabilitiesModel(_context.Repository);
-                    _context.Container.Run<WmsCapabilitiesPresenter, WmsCapabilitiesModel>(model);
-                    return true;
+                    {
+                        var model = new WmsCapabilitiesModel(_context.Repository);
+                        _context.Container.Run<WmsCapabilitiesPresenter, WmsCapabilitiesModel>(model);
+                        return true;
+                    }
                 case MenuKeys.AddDatabaseLayer:
                     var connection = _databaseService.PromptUserForConnection();
                     if (connection != null)
@@ -261,7 +263,8 @@ namespace MW5.Menu
                         {
                             if (ds.Open(connection.ConnectionString))
                             {
-                                _context.Container.Run<DatabaseLayersPresenter, VectorDatasource>(ds);
+                                var model = new DatabaseLayersModel(ds, connection);
+                                _context.Container.Run<DatabaseLayersPresenter, DatabaseLayersModel>(model);
                             }
                         }
                     }
