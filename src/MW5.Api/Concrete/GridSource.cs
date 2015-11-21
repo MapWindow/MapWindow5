@@ -267,6 +267,16 @@ namespace MW5.Api.Concrete
             get { return new SpatialReference(_grid.Header.GeoProjection); }
         }
 
+        /// <summary>
+        /// Assigns projection to the layer if the layer doesn't have one.
+        /// </summary>
+        public void AssignProjection(ISpatialReference proj)
+        {
+            if (proj == null) throw new ArgumentNullException("proj");
+
+            _grid.Header.GeoProjection = proj.Clone().GetInternal();
+        }
+
         public bool IsEmpty
         {
             get { return _grid.SourceType == tkGridSourceType.gstUninitialized; }

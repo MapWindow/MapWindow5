@@ -209,7 +209,7 @@ namespace MW5.Projections.Services
             {
                 case ProjectionAbsence.AssignFromProject:
                     _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Assigned, "");
-                    layer.Projection.CopyFrom(mapProj);
+                    layer.AssignProjection(mapProj);
                     return TestingResult.Ok;
 
                 case ProjectionAbsence.IgnoreAbsence:

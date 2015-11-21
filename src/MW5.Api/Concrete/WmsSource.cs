@@ -195,6 +195,14 @@ namespace MW5.Api.Concrete
             set { _layer.Opacity = value; }
         }
 
+        /// <summary>
+        /// Assigns projection to the layer if the layer doesn't have one.
+        /// </summary>
+        public void AssignProjection(ISpatialReference proj)
+        {
+            Logger.Current.Warn("WmsSource: assign projection method isn't supported.");
+        }
+
         public bool IsEmpty
         {
             get { return _layer.IsEmpty; }

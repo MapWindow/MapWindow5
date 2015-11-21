@@ -268,6 +268,15 @@ namespace MW5.Api.Concrete
             get { return new SpatialReference(_image.GeoProjection); }
         }
 
+        /// <summary>
+        /// Assigns projection to the layer if the layer doesn't have one.
+        /// </summary>
+        public void AssignProjection(ISpatialReference proj)
+        {
+            if (proj == null) throw new ArgumentNullException("proj");
+            _image.SetProjection(proj.ExportToProj4());
+        }
+
         public bool IsEmpty
         {
             get { return _image.IsEmpty; }

@@ -121,6 +121,16 @@ namespace MW5.Api.Concrete
             get { return new SpatialReference(_shapefile.GeoProjection); }
         }
 
+        /// <summary>
+        /// Assigns projection to the layer if the layer doesn't have one.
+        /// </summary>
+        public void AssignProjection(ISpatialReference proj)
+        {
+            if (proj == null) throw new ArgumentNullException("proj");
+
+            _shapefile.GeoProjection = proj.Clone().GetInternal();
+        }
+
         public bool IsEmpty
         {
             // TODO: add Shapefile.IsEmpty property to ocx

@@ -260,6 +260,14 @@ namespace MW5.Api.Concrete
             get { return new SpatialReference(_layer.GeoProjection); }
         }
 
+        /// <summary>
+        /// Assigns projection to the layer if the layer doesn't have one.
+        /// </summary>
+        public void AssignProjection(ISpatialReference proj)
+        {
+            Logger.Current.Warn("VectorLayer: assign projection method isn't supported.");
+        }
+
         public bool IsEmpty
         {
             get { return _layer.FeatureCount == 0; }
