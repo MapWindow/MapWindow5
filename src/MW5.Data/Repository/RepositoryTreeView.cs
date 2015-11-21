@@ -27,6 +27,7 @@ namespace MW5.Data.Repository
         private HashSet<LayerIdentity> _layers;  // storing layers from the last update to be use on folder expansion
         private IRepository _repository;
         private bool _initialized;
+        private HashSet<string> _expandedFolders;
 
         public RepositoryTreeView()
         {
@@ -55,6 +56,8 @@ namespace MW5.Data.Repository
 
             _repository = repository;
 
+            _repository.BeforeSaved += RepositoryBeforeSaved;
+
             PopulateTree();
 
             AttachEvents();
@@ -63,6 +66,29 @@ namespace MW5.Data.Repository
             AfterCollapse += (s, e) => SaveExpandedState(e.Node);
 
             _initialized = true;
+        }
+
+        private void RepositoryBeforeSaved(object sender, EventArgs e)
+        {
+            _repository.ExpandedFolders.Clear();
+
+            var item = GetSpecialItem(RepositoryItemType.FileSystem);
+            if (item != null)
+            {
+                SaveExpadedFolders(item);
+            }
+        }
+
+        private void SaveExpadedFolders(IRepositoryItem root)
+        {
+            foreach (var f in root.SubItems.OfType<IFolderItem>())
+            {
+                if (f.Expanded)
+                {
+                    _repository.ExpandedFolders.Add(f.GetPath());
+                    SaveExpadedFolders(f);
+                }
+            }
         }
 
         private void SaveExpandedState(TreeNodeAdv node)
@@ -135,13 +161,30 @@ namespace MW5.Data.Repository
         {
             // file system
             var folders = Items.AddItem(RepositoryItemType.FileSystem);
-
+            
             foreach (var path in _repository.Folders)
             {
                 folders.SubItems.AddFolder(path, true);
             }
 
             folders.Expand();
+
+             _expandedFolders = new HashSet<string>(_repository.ExpandedFolders.Select(f => f.ToLower()));
+
+            RestoreFoldersExpandedState(folders);
+        }
+
+        private void RestoreFoldersExpandedState(IRepositoryItem root)
+        {
+            foreach (var f in root.SubItems.OfType<IFolderItem>())
+            {
+                if (_expandedFolders.Contains(f.GetPath().ToLower()))
+                {
+                    f.ForceExpand();
+
+                    RestoreFoldersExpandedState(f);
+                }
+            }
         }
 
         private void PopulateDatabases()

@@ -18,6 +18,11 @@ namespace MW5.Data.Repository
 
         public bool ExpandedOnce { get; private set; }
 
+        public bool Expanded
+        {
+            get { return _node.Expanded; }
+        }
+
         public bool IsParentOf(LayerIdentity identity)
         {
             return false;

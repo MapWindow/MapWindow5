@@ -19,6 +19,7 @@ namespace MW5.Plugins.Interfaces
         TmsProviderList TmsProviders { get;}
         RepositoryGroupList TmsGroups { get; }
         IEnumerable<TmsProvider> DefaultTmsProviders { get; }
+        List<string> ExpandedFolders { get; }
 
         void Initialize(IAppContext context);
 
@@ -34,10 +35,13 @@ namespace MW5.Plugins.Interfaces
         void RemoveWmsServer(WmsServer server);
         void UpdateWmsServer(WmsServer server);
         void ClearWmsServers();
-
+        
+        event EventHandler BeforeSaved;
         event EventHandler<FolderEventArgs> FolderAdded;
         event EventHandler<FolderEventArgs> FolderRemoved;
         event EventHandler<ConnectionEventArgs> ConnectionAdded;
         event EventHandler<ConnectionEventArgs> ConnectionRemoved;
+
+        void PrepareToSave();
     }
 }

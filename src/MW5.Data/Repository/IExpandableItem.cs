@@ -11,6 +11,8 @@ namespace MW5.Data.Repository
     {
         bool ExpandedOnce { get; }
 
+        bool Expanded { get; }
+
         bool IsParentOf(LayerIdentity identity);
     }
 }

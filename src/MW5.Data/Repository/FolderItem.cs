@@ -38,6 +38,11 @@ namespace MW5.Data.Repository
             
         }
 
+        public bool Expanded
+        {
+            get { return _node.Expanded; }
+        }
+
         public string GetPath()
         {
             return Metadata.Path;
@@ -48,10 +53,14 @@ namespace MW5.Data.Repository
             get { return Metadata.Root; }
         }
 
-        public override void Expand()
+        public void ForceExpand()
         {
-            if (_node.ExpandedOnce) return;
-            
+            ExpandCore();
+            _node.Expanded = true;
+        }
+
+        private void ExpandCore()
+        {
             string root = GetPath();
             var items = SubItems;
 
@@ -67,6 +76,13 @@ namespace MW5.Data.Repository
             }
 
             _node.ExpandedOnce = true;
+        }
+
+        public override void Expand()
+        {
+            if (_node.ExpandedOnce) return;
+
+            ForceExpand();
         }
 
         private void EnumerateFolders(string root, RepositoryItemCollection items)

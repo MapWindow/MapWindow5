@@ -105,6 +105,7 @@ namespace MW5.Services.Concrete
 
             xmlConfig.ApplicationPlugins = plugins.ToList();
 
+            _repository.PrepareToSave();
             xmlConfig.Repository = new XmlRepository(_repository);
 
             return xmlConfig;
@@ -155,6 +156,12 @@ namespace MW5.Services.Concrete
                 _repository.TmsGroups.Clear();
 
                 _repository.TmsGroups.AddRange(xmlConfig.Repository.TmsGroups);
+            }
+            
+            if (xmlConfig.Repository.ExpandedFolders != null)
+            {
+                _repository.ExpandedFolders.Clear();
+                _repository.ExpandedFolders.AddRange(xmlConfig.Repository.ExpandedFolders);
             }
         }
     }

@@ -22,6 +22,11 @@ namespace MW5.Data.Repository
             get { return Metadata.Connection; }
         }
 
+        public bool Expanded
+        {
+            get { return _node.Expanded; }
+        }
+
         public override void Expand()
         {
             if (_node.ExpandedOnce) return;

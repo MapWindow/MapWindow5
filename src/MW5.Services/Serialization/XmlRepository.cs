@@ -22,6 +22,7 @@ namespace MW5.Services.Serialization
             WmsServers = repository.WmsServers.ToList();
             TmsProviders = repository.TmsProviders.ToList();
             TmsGroups = repository.TmsGroups.ToList();
+            ExpandedFolders = repository.ExpandedFolders.ToList();
         }
 
         [DataMember]
@@ -29,6 +30,9 @@ namespace MW5.Services.Serialization
 
         [DataMember]
         public List<string> Folders { get; set; }
+
+        [DataMember]
+        public List<string> ExpandedFolders { get; set; }
 
         [DataMember]
         public List<DatabaseConnection> Connections { get; set; }

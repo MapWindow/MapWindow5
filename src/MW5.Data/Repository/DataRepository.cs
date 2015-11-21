@@ -23,6 +23,7 @@ namespace MW5.Data.Repository
         private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
         private List<string> _folders;
+        private List<string> _expandedFolders;
         private BindingList<WmsServer> _wmsServers;
         private List<DatabaseConnection> _connections;
         private List<TmsProvider> _defaultTmsProviders;
@@ -33,6 +34,11 @@ namespace MW5.Data.Repository
         public event EventHandler<FolderEventArgs> FolderRemoved;
         public event EventHandler<ConnectionEventArgs> ConnectionAdded;
         public event EventHandler<ConnectionEventArgs> ConnectionRemoved;
+
+        public void PrepareToSave()
+        {
+            DelegateHelper.FireEvent(this, BeforeSaved);
+        }
 
         public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService)
         {
@@ -47,6 +53,8 @@ namespace MW5.Data.Repository
         private void Init()
         {
             _folders = new List<string>();
+
+            _expandedFolders = new List<string>();
 
             _connections = new List<DatabaseConnection>();
 
@@ -79,6 +87,11 @@ namespace MW5.Data.Repository
             {
                 Logger.Current.Warn("Failed to enumerate virtual drives on the machine.", ex);
             }
+        }
+
+        public List<string> ExpandedFolders
+        {
+            get { return _expandedFolders; }
         }
 
         public void Initialize(IAppContext context)
@@ -242,6 +255,8 @@ namespace MW5.Data.Repository
         {
             _wmsServers.Clear();
         }
+
+        public event EventHandler BeforeSaved;
 
         private bool HasFolder(string path)
         {
