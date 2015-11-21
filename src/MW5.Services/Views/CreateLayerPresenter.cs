@@ -58,7 +58,7 @@ namespace MW5.Services.Views
         {
             const string shpExt = ".shp";
 
-            string filename = path + _view.LayerName.ToLower();
+            string filename = Path.Combine(path, _view.LayerName.ToLower());
             if (!filename.EndsWith(shpExt))
             {
                 filename += shpExt;
