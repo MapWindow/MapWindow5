@@ -2,6 +2,7 @@
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Mvp;
+using MW5.Shared;
 using MW5.Views.Abstract;
 
 namespace MW5.Views
@@ -32,6 +33,19 @@ namespace MW5.Views
             if (Result == DialogResult.Yes)
             {
                 MapConfig.CompressOverviews = View.Compression;
+
+                if (View.Compression == Api.Enums.TiffCompression.Auto)
+                {
+                    switch (Model.DataType)
+                    {
+                        case Api.Enums.GdalDataType.Float32:
+                        case Api.Enums.GdalDataType.Float64:
+                            MapConfig.CompressOverviews = Api.Enums.TiffCompression.Lzw;
+                            break;
+                    }    
+                }
+
+                // warning is displayed by MapWinGIS
                 Model.BuildDefaultOverviews(View.Sampling);
             }
             

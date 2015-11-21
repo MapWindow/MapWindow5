@@ -19,6 +19,7 @@ namespace MW5.Shared
         {
 #if DEBUG
         DrawTilesGrid = false;
+        LoadToolDocumentation = false;
 #endif
         }
     }
