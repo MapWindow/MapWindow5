@@ -77,6 +77,19 @@ namespace MW5.Plugins.Repository.Views
         {
             switch (command)
             {
+                case RepositoryCommand.Help:
+                    var item = GetSelectedItem<IRepositoryItem>();
+                    if (item != null && item.Type == RepositoryItemType.TmsRoot)
+                    {
+                        MessageService.Current.Info(
+                            "Custom TMS providers can be imported from XML definitions available at https://josm.openstreetmap.de/wiki/Maps. " +
+                            "XML documents should be saved to the disk before import.");
+                    }
+                    else
+                    {
+                        MessageService.Current.Info("No help for this item is available.");
+                    }
+                    break;
                 case RepositoryCommand.ClearTms:
                     if (MessageService.Current.Ask("Remove all custom TMS providers?"))
                     {

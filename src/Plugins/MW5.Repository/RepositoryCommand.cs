@@ -18,5 +18,6 @@
         Properties = 13,
         ImportTms = 14,
         ClearTms = 15,
+        Help = 16,
     }
 }
