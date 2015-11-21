@@ -148,6 +148,8 @@ namespace MW5.Plugins.Symbology.Forms
 
         private void ApplyStyle()
         {
+            Ui2LabelStyle(null, null);
+
             _featureSet.Labels.Style = _category;
 
             dynamicVisibilityControl1.ApplyChanges();
@@ -273,11 +275,11 @@ namespace MW5.Plugins.Symbology.Forms
             listBox1.DataSource = fields.ToList();
 
             var wrappers = fields.Select(f => new FieldAdapter(f)).ToList();
-            wrappers.Add(new FieldAdapter("<expression>"));
+            wrappers.Insert(0, new FieldAdapter("<none>"));
             cboField.DataSource = wrappers.ToList();
 
+            wrappers.Add(new FieldAdapter("<expression>"));
             wrappers = fields.Where(f => f.Type != AttributeType.String).Select(f => new FieldAdapter(f)).ToList();
-            wrappers.Insert(0, new FieldAdapter("<none>"));
             
             cboSortField.DataSource = wrappers.ToList();
         }
@@ -418,8 +420,7 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 SetFieldValue(cboField, name);
             }
-
-
+            
             if (_featureSet != null)
             {
                 SetFieldValue(cboSortField, _featureSet.SortField);
@@ -626,16 +627,26 @@ namespace MW5.Plugins.Symbology.Forms
             }
         }
 
+        private void SetExpressionAfterFieldChange(string expression)
+        {
+            _fieldSelection = true;
+            txtExpression.Text = expression;
+            OnExpressionChanged(null, null);
+            _fieldSelection = false;
+        }
+
         private void OnFieldChanged(object sender, EventArgs e)
         {
+            if (cboField.SelectedIndex == 0)
+            {
+                SetExpressionAfterFieldChange(string.Empty);
+                return;
+            }
+
             var fld = SelectedField;
             if (fld != null)
             {
-                // when another field is selected on the main tab, change the expression
-                _fieldSelection = true;
-                txtExpression.Text = "[" + fld.Name + "]";
-                OnExpressionChanged(null, null);
-                _fieldSelection = false;
+                SetExpressionAfterFieldChange("[" + fld.Name + "]");
             }
             else
             {
@@ -667,6 +678,8 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 return;
             }
+
+            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
 
             tabNumber = tabControlAdv1.SelectedIndex;
 

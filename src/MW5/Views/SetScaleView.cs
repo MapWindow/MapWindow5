@@ -16,7 +16,7 @@ namespace MW5.Views
 {
     internal partial class SetScaleView : MapWindowView, ISetScaleView
     {
-        private static bool _snapToZoomLevels = true;
+        private static bool _snapToZoomLevels = false;
         private readonly IMuteMap _map;
 
         public SetScaleView(IMuteMap map)
