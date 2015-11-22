@@ -10,8 +10,8 @@ namespace MW5.Api.Interfaces
     {
         int NumOverviews { get; }
 
-        bool BuildDefaultOverviews(RasterOverviewSampling method);
-        bool BuildOverviews(RasterOverviewSampling  method, IEnumerable<int> scales);
+        bool BuildDefaultOverviews(RasterOverviewSampling method, TiffCompression compression = TiffCompression.Auto);
+        bool BuildOverviews(RasterOverviewSampling method, IEnumerable<int> scales, TiffCompression compression = TiffCompression.Auto);
         bool ClearOverviews();
         bool NeedsOverviews { get; }
         IEnumerable<int> GetDefaultOverviewRatios();

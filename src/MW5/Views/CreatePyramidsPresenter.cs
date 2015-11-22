@@ -32,21 +32,8 @@ namespace MW5.Views
         {
             if (Result == DialogResult.Yes)
             {
-                MapConfig.CompressOverviews = View.Compression;
-
-                if (View.Compression == Api.Enums.TiffCompression.Auto)
-                {
-                    switch (Model.DataType)
-                    {
-                        case Api.Enums.GdalDataType.Float32:
-                        case Api.Enums.GdalDataType.Float64:
-                            MapConfig.CompressOverviews = Api.Enums.TiffCompression.Lzw;
-                            break;
-                    }    
-                }
-
                 // warning is displayed by MapWinGIS
-                Model.BuildDefaultOverviews(View.Sampling);
+                Model.BuildDefaultOverviews(View.Sampling, View.Compression);
             }
             
             ReturnValue = Result != DialogResult.Cancel;

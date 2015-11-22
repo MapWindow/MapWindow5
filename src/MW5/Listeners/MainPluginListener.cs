@@ -167,17 +167,9 @@ namespace MW5.Listeners
 
             if (!config.ShowPyramidDialog && config.CreatePyramidsOnOpening)
             {
-                MapConfig.CompressOverviews = config.PyramidCompression;
-                bool result = raster.BuildDefaultOverviews(config.PyramidSampling);
+                bool result = raster.BuildDefaultOverviews(config.PyramidSampling, config.PyramidCompression);
 
-                if (result)
-                {
-                    Logger.Current.Info("Overviews were built: " + raster.Filename);
-                }
-                else
-                {
-                    Logger.Current.Warn("Failed to build overviews: " + raster.Filename);
-                }
+
 
                 return true;
             }

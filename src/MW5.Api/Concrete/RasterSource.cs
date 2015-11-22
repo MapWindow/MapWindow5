@@ -6,6 +6,7 @@ using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 using MW5.Shared;
 using Image = MapWinGIS.Image;
 
@@ -92,13 +93,37 @@ namespace MW5.Api.Concrete
             get { return _image.NumOverviews; }
         }
 
-        public bool BuildDefaultOverviews(RasterOverviewSampling method)
+        public bool BuildDefaultOverviews(RasterOverviewSampling method, TiffCompression compression = TiffCompression.Auto)
         {
-            return BuildOverviews(method, GetDefaultOverviewRatios());
+            bool result = BuildOverviews(method, GetDefaultOverviewRatios(), compression);
+
+            if (result)
+            {
+                Logger.Current.Info("Overviews were built: " + Filename);
+            }
+            else
+            {
+                Logger.Current.Warn("Failed to build overviews: " + Filename);
+            }
+
+            return result;
         }
 
-        public bool BuildOverviews(RasterOverviewSampling method, IEnumerable<int> scales)
+        public bool BuildOverviews(RasterOverviewSampling method, IEnumerable<int> scales, TiffCompression compression = TiffCompression.Auto)
         {
+            if (compression == TiffCompression.Auto)
+            {
+                switch (DataType)
+                {
+                    case GdalDataType.Float32:
+                    case GdalDataType.Float64:
+                        compression = TiffCompression.Lzw;
+                        break;
+                }
+            }
+
+            MapConfig.CompressOverviews = compression;
+
             scales = scales.ToList();
             return _image.BuildOverviews((tkGDALResamplingMethod) method, scales.Count(), scales.ToArray());
         }
