@@ -530,7 +530,18 @@ namespace MW5.Projections.Services
                 }
                 else
                 {
-                    Logger.Current.Debug("Source geographic CS for projected CS wasn't found: " + pcs.Code);
+                    switch (pcs.Code)
+                    {
+                        case 5819:
+                        case 5820:
+                        case 5821:
+                            // they are fictitious, don't report them 
+                            // https ://mapwindow.atlassian.net/browse/CORE-51
+                            break;
+                        default:
+                            Logger.Current.Debug("Source geographic CS for projected CS wasn't found: " + pcs.Code);
+                            break;
+                    }
                 }
             
             }
