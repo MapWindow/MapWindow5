@@ -82,11 +82,17 @@ namespace MW5.Tools.Views
 
         private void CreateBarProgress()
         {
-            if (!_task.IsFinished && _node.CustomControl == null)
+            if (!_task.IsFinished && _node.Nodes.Count == 0)
             {
-                var ctrl = new ProgressBarWrapper();
-                _node.CustomControl = ctrl;
+                int width = Math.Min(100, _treeView.Width - 50);
+                var ctrl = new ProgressBarWrapper { Width = width };
                 _progress = ctrl.ProgressBar;
+
+                var subNode = new TreeNodeAdv { Text = "", CustomControl = ctrl, IsSelectable = false };
+
+                _node.Nodes.Clear();
+                _node.Nodes.Add(subNode);
+                _node.Expanded = true;
             }
         }
 
@@ -103,7 +109,13 @@ namespace MW5.Tools.Views
         {
             // CustomControl.Visible = false property doesn't work,
             // have to set custom control to null instead
-            _node.CustomControl = null;
+            if (_node.Nodes.Count > 0)
+            {
+                _node.Nodes[0].CustomControl = null;
+                _node.Nodes.Clear();
+                _node.Expanded = false;
+                
+            }
         }
 
         private void UpdateStatusIcon()

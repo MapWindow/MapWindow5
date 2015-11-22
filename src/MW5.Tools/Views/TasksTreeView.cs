@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Windows.Forms;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
@@ -39,6 +41,43 @@ namespace MW5.Tools.Views
             yield return Resources.img_pause16;
             yield return Resources.img_tasks16;
             yield return Resources.img_clock16;
+        }
+
+        /// <summary>
+        /// Attempting to override default keyboard navigation (disabled for now).
+        /// </summary>
+        private void OnTreeKeyDown(object sender, KeyEventArgs e)
+        {
+            if (SelectedNode == null) return;
+
+            if (SelectedNode.Parent == null || SelectedNode.Parent != _rootNode)
+            {
+                return;
+            }
+
+            if (e.KeyCode == Keys.Down && SelectedNode.NextSelectableNode != null)
+            {
+                SelectedNode = SelectedNode.NextSelectableNode;
+                e.Handled = true;
+            }
+
+            if (e.KeyCode == Keys.Up && SelectedNode.PrevSelectableNode != null)
+            {
+                SelectedNode = SelectedNode.PrevSelectableNode;
+                e.Handled = true;
+            }
+
+            if (e.KeyCode == Keys.Left)
+            {
+                SelectedNode.Expanded = false;
+                e.Handled = true;
+            }
+
+            if (e.KeyCode == Keys.Right)
+            {
+                SelectedNode.Expanded = true;
+                e.Handled = true;
+            }
         }
 
         private void AddRootNode()
