@@ -243,7 +243,7 @@ namespace MW5.Plugins.Symbology.Views
 
                 string s = string.Format("The chosen field = {1}.\nThe number of unique values = {0}.\n" + 
                                          "Large number of categories negatively affects performance.\nDo you want to continue?", 
-                                            set.Count, "[" + View.FieldName.ToUpper() + "]");
+                                            set.Count, "[" + View.FieldName.Trim().ToUpper() + "]");
 
                 if (!MessageService.Current.Ask(s))
                 {

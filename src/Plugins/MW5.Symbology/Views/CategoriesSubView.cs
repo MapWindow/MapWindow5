@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -236,6 +237,21 @@ namespace MW5.Plugins.Symbology.Views
 
         #region Methods
 
+        private bool CheckFieldType(AttributeType type, bool uniqueValues)
+        {
+            switch (type)
+            {
+                case AttributeType.String:
+                    return uniqueValues;
+                case AttributeType.Integer:
+                    return true;
+                case AttributeType.Double:
+                    return !uniqueValues;
+                default:
+                    throw new ArgumentOutOfRangeException("type");
+            }
+        }
+
         /// <summary>
         /// Fills the list of fields
         /// </summary>
@@ -253,13 +269,8 @@ namespace MW5.Plugins.Symbology.Views
             // adding names
             var fs = FeatureSet;
 
-            foreach (var fld in fs.Fields)
+            foreach (var fld in fs.Fields.Where(f => CheckFieldType(f.Type, chkUniqueValues.Checked)))
             {
-                if (!chkUniqueValues.Checked && fld.Type == AttributeType.String || chkUniqueValues.Checked && fld.Type != AttributeType.String)
-                {
-                    continue;
-                }
-
                 lstFields1.Items.Add("  " + fld.Name);
             }
 
