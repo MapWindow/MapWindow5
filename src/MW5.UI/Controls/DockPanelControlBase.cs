@@ -30,5 +30,10 @@ namespace MW5.UI.Controls
                 return Visible;
             }
         }
+
+        public virtual void SetFocus()
+        {
+            Focus();
+        }
     }
 }

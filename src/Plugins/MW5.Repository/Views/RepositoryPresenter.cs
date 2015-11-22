@@ -57,7 +57,7 @@ namespace MW5.Plugins.Repository.Views
             _tmsImporter = tmsImporter;
 
             _view.ItemDoubleClicked += ViewItemDoubleClicked;
-            _view.TreeViewKeyDown += OnTreeViewKeyDown;
+            _view.RepositoryKeyDown += OnRepositoryKeyDown;
             view.Tree.UpdateTmsState(_context.Map.Tiles.ProviderId);
 
             plugin.TmsProviderChanged += OnTmsProviderChanged;
@@ -324,11 +324,16 @@ namespace MW5.Plugins.Repository.Views
             return item;
         }
 
-        private void OnTreeViewKeyDown(object sender, KeyEventArgs e)
+        private void OnRepositoryKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            switch (e.KeyCode)
             {
-                RemoveSelectedItem();
+                case Keys.Delete:
+                    RemoveSelectedItem();
+                    break;
+                case Keys.Enter:
+                    AddToMap();
+                    break;
             }
         }
 

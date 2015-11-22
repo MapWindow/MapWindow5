@@ -118,6 +118,11 @@ namespace MW5.Data.Repository
             PopulateTms();
 
             PopulateFileSystem();
+
+            if (Nodes.Count > 0)
+            {
+                SelectedNode = Nodes[0];
+            }
         }
 
         private void PopulateTms()

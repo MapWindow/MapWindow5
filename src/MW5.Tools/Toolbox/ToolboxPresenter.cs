@@ -26,6 +26,15 @@ namespace MW5.Tools.Toolbox
             _context = context;
 
             View.ToolClicked += (s, e) => RunTool(e.Tool, e.BatchMode);
+            View.ToolboxKeyDown += OnToolboxKeyDown;
+        }
+
+        private void OnToolboxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && View.SelectedTool != null)
+            {
+                RunCommand(ToolboxCommand.Run);
+            }
         }
 
         public override void RunCommand(ToolboxCommand command)

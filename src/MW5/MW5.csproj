@@ -632,6 +632,7 @@
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
     <Content Include="MW5.ico" />
+    <None Include="Resources\img_toolbox24.png" />
     <None Include="Resources\img_coordinates32.png" />
     <None Include="Resources\img_vector32_1.png" />
     <None Include="Resources\img_eye32.png" />

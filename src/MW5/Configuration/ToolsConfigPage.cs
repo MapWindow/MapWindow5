@@ -46,7 +46,7 @@ namespace MW5.Configuration
         /// </summary>
         public bool VariableHeight 
         {
-            get { return false; } 
+            get { return true; } 
         }
 
         public void Initialize()

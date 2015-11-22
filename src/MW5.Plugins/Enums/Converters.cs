@@ -177,7 +177,7 @@ namespace MW5.Plugins.Enums
                 case ZoomBehavior.Default:
                     return "Default (no discrete levels)";
                 case ZoomBehavior.UseTileLevels:
-                    return "Snap to tile levels";
+                    return "Snap to zoom levels";
             }
 
             return string.Empty;

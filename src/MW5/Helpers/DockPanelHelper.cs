@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using MW5.Api.Legend;
 using MW5.Plugins;
@@ -89,12 +90,23 @@ namespace MW5.Helpers
             locator.Size = new Size(size.Width, 250);
         }
 
-        public static void CloseTableEditor(IAppContext context)
+        public static void ClosePanel(IAppContext context, string dockPanelKey)
         {
-            var panel = context.DockPanels.Find(DockPanelKeys.TableEditor);
+            var panel = context.DockPanels.Find(dockPanelKey);
             if (panel != null)
             {
                 panel.Visible = false;
+            }
+        }
+
+        public static void ShowPanel(IAppContext context, string dockPanelKey)
+        {
+            var panel = context.DockPanels.Find(dockPanelKey);
+            if (panel != null)
+            {
+                panel.Visible = true;
+                panel.Activate();
+                panel.Focus();
             }
         }
 

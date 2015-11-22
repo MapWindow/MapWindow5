@@ -537,6 +537,7 @@ namespace MW5.Api.Legend
         {
             switch (element.Type)
             {
+                case LayerElementType.RasterColorBox:
                 case LayerElementType.ColorBox:
                     if (element.Index == -1)
                     {
@@ -602,7 +603,6 @@ namespace MW5.Api.Legend
 
                 case LayerElementType.CategoriesCaption:
                 case LayerElementType.ChartsCaption:
-                case LayerElementType.RasterColorBox:
                     Logger.Current.Info("Legend element clicked: " + element.Type + ". No handler is attached");
                     return true;
                 case LayerElementType.Name:

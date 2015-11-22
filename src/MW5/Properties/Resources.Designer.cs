@@ -783,6 +783,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_toolbox24 {
+            get {
+                object obj = ResourceManager.GetObject("img_toolbox24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_tools32 {
             get {
                 object obj = ResourceManager.GetObject("img_tools32", resourceCulture);

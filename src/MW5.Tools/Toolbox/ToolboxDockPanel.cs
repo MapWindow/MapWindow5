@@ -45,10 +45,21 @@ namespace MW5.Tools.Toolbox
             _treeView.ToolClicked += (s, e) => FireToolClicked(e.Tool);
         }
 
+        public event KeyEventHandler ToolboxKeyDown
+        {
+            add { _treeView.KeyDown += value; }
+            remove { _treeView.KeyDown -= value; }
+        }
+
         private void OnContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var tool = _treeView.SelectedTool;
             mnuBatchRun.Enabled = tool != null && tool.SupportsBatchExecution;
+        }
+
+        public override void SetFocus()
+        {
+            _treeView.Focus();
         }
 
         public ITool SelectedTool
@@ -161,6 +172,16 @@ namespace MW5.Tools.Toolbox
 
                 group.Tools.Add(tool);
             }
+            
+            SelectGroup(Groups.FirstOrDefault());
+        }
+
+        private void SelectGroup(IToolboxGroup group)
+        {
+            if (group != null)
+            {
+                _treeView.SelectedNode = group.InnerObject as TreeNodeAdv;
+            }
         }
 
         /// <summary>
@@ -169,6 +190,25 @@ namespace MW5.Tools.Toolbox
         public void OpenToolDialog(ITool tool, bool batchMode)
         {
             FireToolClicked(tool);
+        }
+
+        public void SelectGroup(string groupKey)
+        {
+            SelectGroupCore(Groups, groupKey);
+        }
+
+        private void SelectGroupCore(IToolboxGroups groups, string groupKey)
+        {
+            foreach (var g in Groups)
+            {
+                if (g.Key == groupKey)
+                {
+                    _treeView.SelectedNode = g.InnerObject as TreeNodeAdv;
+                    break;
+                }
+
+                SelectGroupCore(g.SubGroups, groupKey);
+            }
         }
 
         private void FireToolClicked(ITool tool)

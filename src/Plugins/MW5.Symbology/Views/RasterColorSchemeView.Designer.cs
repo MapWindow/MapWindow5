@@ -1,4 +1,6 @@
-﻿namespace MW5.Plugins.Symbology.Views
+﻿using System.Windows.Forms;
+
+namespace MW5.Plugins.Symbology.Views
 {
     partial class RasterColorSchemeView
     {
@@ -35,9 +37,8 @@
             this.btnAddInterval = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnRemoveInterval = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnClear = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.chkGradientWithinCategory = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkGradientWithinCategory = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.rasterColorSchemeGrid1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).BeginInit();
             this.SuspendLayout();
             // 
             // rasterColorSchemeGrid1
@@ -125,14 +126,11 @@
             // chkGradientWithinCategory
             // 
             this.chkGradientWithinCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkGradientWithinCategory.BeforeTouchSize = new System.Drawing.Size(159, 21);
             this.chkGradientWithinCategory.Location = new System.Drawing.Point(12, 415);
-            this.chkGradientWithinCategory.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkGradientWithinCategory.Name = "chkGradientWithinCategory";
             this.chkGradientWithinCategory.Size = new System.Drawing.Size(159, 21);
             this.chkGradientWithinCategory.TabIndex = 44;
             this.chkGradientWithinCategory.Text = "Gradient within category";
-            this.chkGradientWithinCategory.ThemesEnabled = false;
             this.chkGradientWithinCategory.CheckStateChanged += new System.EventHandler(this.chkGradientWithinCategory_CheckStateChanged);
             // 
             // RasterColorSchemeView
@@ -148,9 +146,8 @@
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.rasterColorSchemeGrid1);
             this.Name = "RasterColorSchemeView";
-            this.Text = "Edit raster color scheme";
+            this.Text = "Edit Raster Color Scheme";
             ((System.ComponentModel.ISupportInitialize)(this.rasterColorSchemeGrid1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -163,6 +160,6 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnAddInterval;
         private Syncfusion.Windows.Forms.ButtonAdv btnRemoveInterval;
         private Syncfusion.Windows.Forms.ButtonAdv btnClear;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkGradientWithinCategory;
+        private CheckBox chkGradientWithinCategory;
     }
 }

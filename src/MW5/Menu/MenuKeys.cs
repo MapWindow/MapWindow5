@@ -45,6 +45,9 @@
 
         public const string PluginsConfigure = "PluginsConfigure";
 
+        public const string ShowRepository = "ShowRepository";
+        public const string ShowToolbox = "ShowToolbox";
+
         public const string BingApiKey = "BingApiKey";
         public const string TilesConfigure = "TilesConfigure";
         public const string CustomProviders = "CustomProviders";

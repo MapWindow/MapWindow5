@@ -35,6 +35,10 @@ namespace MW5.Menu
             Commands[MenuKeys.Settings].ShortcutKeys = Keys.Shift | Keys.Alt | Keys.S;
 
             Commands[MenuKeys.SetScale].ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+
+            Commands[MenuKeys.ShowRepository].ShortcutKeys = Keys.Control | Keys.R;
+
+            Commands[MenuKeys.ShowToolbox].ShortcutKeys = Keys.Control | Keys.T;
         }
 
         public override IEnumerable<MenuCommand> GetCommands()
@@ -149,6 +153,12 @@ namespace MW5.Menu
 
                 new MenuCommand("Clear Layers", MenuKeys.ClearLayers, Resources.icon_layer_clear,
                 "Removes all layers from the map."), 
+
+                new MenuCommand("Show Repository", MenuKeys.ShowRepository, Resources.icon_folder,
+                "Opens and and sets focus to the repository panel."), 
+
+                new MenuCommand("Show Toolbox", MenuKeys.ShowToolbox, Resources.img_toolbox24,
+                "Opens and and sets focus to the toolbox panel."), 
             };
         }
     }

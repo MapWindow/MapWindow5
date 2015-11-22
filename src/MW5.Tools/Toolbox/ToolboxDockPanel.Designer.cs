@@ -35,10 +35,10 @@ namespace MW5.Tools.Toolbox
             this.components = new System.ComponentModel.Container();
             this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
             this._treeView = new MW5.Tools.Toolbox.ToolboxTreeView();
-            this._textbox = new System.Windows.Forms.RichTextBox();
             this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
             this.mnuRun = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBatchRun = new System.Windows.Forms.ToolStripMenuItem();
+            this._textbox = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerAdv1)).BeginInit();
             this.splitContainerAdv1.Panel1.SuspendLayout();
             this.splitContainerAdv1.Panel2.SuspendLayout();
@@ -72,7 +72,8 @@ namespace MW5.Tools.Toolbox
             this._treeView.ApplyStyle = true;
             this._treeView.BackColor = System.Drawing.Color.White;
             this._treeView.BeforeTouchSize = new System.Drawing.Size(150, 107);
-            this._treeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this._treeView.BorderSingle = System.Windows.Forms.ButtonBorderStyle.None;
+            this._treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._treeView.CanSelectDisabledNode = false;
             this._treeView.ContextMenuStrip = this.contextMenuStripEx1;
             this._treeView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -82,6 +83,7 @@ namespace MW5.Tools.Toolbox
             this._treeView.HelpTextControl.Location = new System.Drawing.Point(0, 0);
             this._treeView.HelpTextControl.Name = "helpText";
             this._treeView.HelpTextControl.TabIndex = 0;
+            this._treeView.HideSelection = false;
             this._treeView.Location = new System.Drawing.Point(0, 0);
             this._treeView.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._treeView.Name = "_treeView";
@@ -98,6 +100,29 @@ namespace MW5.Tools.Toolbox
             this._treeView.ToolTipControl.TabIndex = 1;
             this._treeView.ToolTipDuration = 0;
             // 
+            // contextMenuStripEx1
+            // 
+            this.contextMenuStripEx1.DropShadowEnabled = false;
+            this.contextMenuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuRun,
+            this.mnuBatchRun});
+            this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
+            this.contextMenuStripEx1.Name = "contextMenuStripEx1";
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(148, 48);
+            this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
+            // 
+            // mnuRun
+            // 
+            this.mnuRun.Name = "mnuRun";
+            this.mnuRun.Size = new System.Drawing.Size(147, 22);
+            this.mnuRun.Text = "Execute";
+            // 
+            // mnuBatchRun
+            // 
+            this.mnuBatchRun.Name = "mnuBatchRun";
+            this.mnuBatchRun.Size = new System.Drawing.Size(147, 22);
+            this.mnuBatchRun.Text = "Batch execute";
+            // 
             // _textbox
             // 
             this._textbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -107,29 +132,6 @@ namespace MW5.Tools.Toolbox
             this._textbox.Size = new System.Drawing.Size(150, 36);
             this._textbox.TabIndex = 1;
             this._textbox.Text = "";
-            // 
-            // contextMenuStripEx1
-            // 
-            this.contextMenuStripEx1.DropShadowEnabled = false;
-            this.contextMenuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuRun,
-            this.mnuBatchRun});
-            this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
-            this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(153, 70);
-            this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
-            // 
-            // mnuRun
-            // 
-            this.mnuRun.Name = "mnuRun";
-            this.mnuRun.Size = new System.Drawing.Size(152, 22);
-            this.mnuRun.Text = "Execute";
-            // 
-            // mnuBatchRun
-            // 
-            this.mnuBatchRun.Name = "mnuBatchRun";
-            this.mnuBatchRun.Size = new System.Drawing.Size(152, 22);
-            this.mnuBatchRun.Text = "Batch execute";
             // 
             // ToolboxDockPanel
             // 

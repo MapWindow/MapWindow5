@@ -40,9 +40,14 @@ namespace MW5.Plugins.Repository.Views
             Init();
         }
 
+        public override void SetFocus()
+        {
+            treeViewAdv1.Focus();
+        }
+
         public event EventHandler<RepositoryEventArgs> ItemDoubleClicked;
 
-        public event KeyEventHandler TreeViewKeyDown
+        public event KeyEventHandler RepositoryKeyDown
         {
             add { treeViewAdv1.KeyDown += value; }
             remove { treeViewAdv1.KeyDown -= value; }

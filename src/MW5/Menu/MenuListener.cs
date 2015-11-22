@@ -5,7 +5,10 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
@@ -20,6 +23,7 @@ using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
 using MW5.Shared;
 using MW5.Tiles.Views;
+using MW5.UI.Docking;
 using MW5.Views;
 
 namespace MW5.Menu
@@ -57,6 +61,17 @@ namespace MW5.Menu
             TilesMenuHelper.ChooseActiveProvider += OnChooseActiveProvider;
         }
 
+        public static Control FindFocusedControl(Control control)
+        {
+            var container = control as IContainerControl;
+            while (container != null)
+            {
+                control = container.ActiveControl;
+                container = control as IContainerControl;
+            }
+            return control;
+        }
+
         public void RunCommand(string menuKey)
         {
             if (HandleCursorChanged(menuKey) || HandleProjectCommand(menuKey) || HandleDialogs(menuKey) ||
@@ -68,6 +83,12 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.ShowRepository:
+                    DockPanelHelper.ShowPanel(_context, DockPanelKeys.Repository);
+                    return;  // make sure that no View.Update is called or we lose the focus
+                case MenuKeys.ShowToolbox:
+                    DockPanelHelper.ShowPanel(_context, DockPanelKeys.Toolbox);
+                    return;  // make sure that no View.Update is called or we lose the focus
                 case MenuKeys.SetScale:
                     _context.Container.Run<SetScalePresenter>();
                     break;

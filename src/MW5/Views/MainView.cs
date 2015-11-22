@@ -145,7 +145,8 @@ namespace MW5.Views
         {
             RestorePreviousState();
 
-            DockPanelHelper.CloseTableEditor(_context);
+            DockPanelHelper.ClosePanel(_context, DockPanelKeys.TableEditor);
+            DockPanelHelper.ClosePanel(_context, DockPanelKeys.Tasks);
 
             Program.Timer.Stop();
             Logger.Current.Info("Loading time: " + Program.Timer.Elapsed);

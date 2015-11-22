@@ -41,11 +41,16 @@ namespace MW5.UI.Controls
                 if (page == null) return;
 
                 panelContent.Padding = new Padding(page.VariableHeight ? 0 : 10, 10, 0, 0);
-                panelContent.Height = page.VariableHeight ? gradientPanel1.Height - lblDescription.Height - 10 : page.OriginalSize.Height;
+                panelContent.Height = page.VariableHeight ? AvailableHeight : page.OriginalSize.Height;
                 panelContent.Width = page.VariableHeight ? Width : Width - 20;
 
                 panelContent.Controls.Add(value);
             }
+        }
+
+        private int AvailableHeight
+        {
+            get { return gradientPanel1.Height - lblDescription.Height - 10; }
         }
 
         public void HandleMouseWheel(MouseEventArgs e)

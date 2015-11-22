@@ -27,5 +27,6 @@ namespace MW5.Plugins.Interfaces
         bool IsFloating { get; }
         void Float(Rectangle rect, bool tabFloating);
         bool AutoHidden { get; set; }
+        void Focus();
     }
 }

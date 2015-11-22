@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Docking
@@ -142,6 +143,15 @@ namespace MW5.UI.Docking
         {
             get { return _dockingManager.GetAutoHideMode(_control); }
             set { _dockingManager.SetAutoHideMode(_control, value); }
+        }
+
+        public void Focus()
+        {
+            var control = Control as DockPanelControlBase;
+            if (control != null)
+            {
+                control.SetFocus();
+            }
         }
     }
 }
