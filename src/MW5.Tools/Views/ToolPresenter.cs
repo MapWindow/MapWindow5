@@ -156,6 +156,11 @@ namespace MW5.Tools.Views
                 throw new InvalidCastException("GIS tool implementing IParametrizedTool interface is expected");
             }
 
+            if (!tool.CheckMemoryLayersHaveName())
+            {
+                return false;
+            }
+
             var tools = GenerateBatchTools(tool);
             if (tools == null)
             {

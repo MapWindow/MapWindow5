@@ -64,7 +64,7 @@
             this._layerNameTextbox.Name = "_layerNameTextbox";
             this._layerNameTextbox.Size = new System.Drawing.Size(292, 20);
             this._layerNameTextbox.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this._layerNameTextbox.TabIndex = 1;
+            this._layerNameTextbox.TabIndex = 0;
             // 
             // label2
             // 
@@ -83,7 +83,7 @@
             this._layerTypeComboBox.Location = new System.Drawing.Point(103, 91);
             this._layerTypeComboBox.Name = "_layerTypeComboBox";
             this._layerTypeComboBox.Size = new System.Drawing.Size(292, 21);
-            this._layerTypeComboBox.TabIndex = 4;
+            this._layerTypeComboBox.TabIndex = 2;
             // 
             // _okButton
             // 
@@ -118,7 +118,7 @@
             this.opt2D.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.opt2D.Name = "opt2D";
             this.opt2D.Size = new System.Drawing.Size(92, 21);
-            this.opt2D.TabIndex = 8;
+            this.opt2D.TabIndex = 3;
             this.opt2D.Text = "Regular";
             this.opt2D.ThemesEnabled = false;
             // 
@@ -129,7 +129,7 @@
             this.optZ.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.optZ.Name = "optZ";
             this.optZ.Size = new System.Drawing.Size(48, 21);
-            this.optZ.TabIndex = 9;
+            this.optZ.TabIndex = 4;
             this.optZ.TabStop = false;
             this.optZ.Text = "Z";
             this.optZ.ThemesEnabled = false;
@@ -141,7 +141,7 @@
             this.optM.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.optM.Name = "optM";
             this.optM.Size = new System.Drawing.Size(48, 21);
-            this.optM.TabIndex = 10;
+            this.optM.TabIndex = 5;
             this.optM.TabStop = false;
             this.optM.Text = "M";
             this.optM.ThemesEnabled = false;
@@ -152,12 +152,13 @@
             this.chkMemoryLayer.Location = new System.Drawing.Point(303, 59);
             this.chkMemoryLayer.Name = "chkMemoryLayer";
             this.chkMemoryLayer.Size = new System.Drawing.Size(92, 17);
-            this.chkMemoryLayer.TabIndex = 11;
+            this.chkMemoryLayer.TabIndex = 1;
             this.chkMemoryLayer.Text = "Memory Layer";
             this.chkMemoryLayer.UseVisualStyleBackColor = true;
             // 
             // CreateLayerView
             // 
+            this.AcceptButton = this._okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._cancelButton;
