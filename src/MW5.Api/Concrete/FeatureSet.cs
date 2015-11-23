@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -272,9 +273,21 @@ namespace MW5.Api.Concrete
             get { return Table.Fields; }
         }
 
-        public bool SelectShapes(Envelope boundBox, ref object result, double tolerance = 0, MapSelectionMode selectionMode = MapSelectionMode.Intersection)
+        public IEnumerable<IFeature> SelectShapes(IEnvelope boundBox, double tolerance = 0, MapSelectionMode selectionMode = MapSelectionMode.Intersection)
         {
-            throw new NotImplementedException();
+            if (boundBox == null) throw new ArgumentNullException("boundBox");
+            
+            object result = null;
+            if (_shapefile.SelectShapes(boundBox.GetInternal(), tolerance, (SelectMode)selectionMode, ref result))
+            {
+                var indices = result as int[];
+                if (indices != null)
+                {
+                    return indices.ToList().Select(index => new Feature(_shapefile, index));
+                }
+            }
+
+            return new List<IFeature>();
         }
 
         public CollisionMode CollisionMode
