@@ -16,6 +16,8 @@ namespace MW5.Tools.Toolbox
 {
     public class ToolboxTreeView: TreeViewBase
     {
+        public const int TreeViewNodeHeight = 16;
+
         public ToolboxTreeView()
         {
             BorderStyle = BorderStyle.None;

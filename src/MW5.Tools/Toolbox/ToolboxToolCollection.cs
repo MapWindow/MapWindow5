@@ -84,13 +84,13 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// The get enumerator.
         /// </summary>
-        public IEnumerator<ITool> GetEnumerator()
+        public IEnumerator<IToolBoxToolItem> GetEnumerator()
         {
             for (var i = 0; i < _nodes.Count; i++)
             {
                 if (_nodes[i].Tag is ITool)
                 {
-                    yield return _nodes[i].Tag as ITool;
+                    yield return new ToolBoxToolItem(_nodes[i]);
                 }
             }
         }

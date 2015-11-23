@@ -130,6 +130,7 @@
     <Compile Include="Interfaces\IMenu.cs" />
     <Compile Include="Interfaces\IMenuEx.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IToolBoxToolItem.cs" />
     <Compile Include="Interfaces\RepositoryListBase.cs" />
     <Compile Include="Interfaces\ITaskHandle.cs" />
     <Compile Include="Interfaces\IToolbarCollectionEx.cs" />

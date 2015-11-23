@@ -59,7 +59,7 @@ namespace MW5.Tools.Toolbox
 
         public override void SetFocus()
         {
-            _treeView.Focus();
+            txtSearch.Focus();
         }
 
         public ITool SelectedTool
@@ -136,11 +136,20 @@ namespace MW5.Tools.Toolbox
         private void OnGroupSelected(object sender, ToolboxGroupEventArgs e)
         {
             _textbox.SetDescription(e.Group.Name + Environment.NewLine + Environment.NewLine + e.Group.Description);
+            UpdateToolbar();
         }
 
         private void OnToolSelected(object sender, ToolboxToolEventArgs e)
         {
             _textbox.SetDescription(e.Tool.Name + Environment.NewLine + Environment.NewLine + e.Tool.Description);
+            UpdateToolbar();
+        }
+
+        private void UpdateToolbar()
+        {
+            var tool = SelectedTool;
+            toolRun.Enabled = tool != null;
+            toolBatchRun.Enabled = tool != null && tool.SupportsBatchExecution;
         }
 
         public void AddTools(IEnumerable<ITool> tools)
@@ -222,12 +231,78 @@ namespace MW5.Tools.Toolbox
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get { yield return contextMenuStripEx1.Items; }
+            get
+            {
+                yield return contextMenuStripEx1.Items;
+                yield return toolStripEx1.Items;
+            }
         }
 
         public IEnumerable<Control> Buttons
         {
             get { yield break; }
+        }
+
+        private void OnSearchTextChanged(object sender, EventArgs e)
+        {
+            Filter(txtSearch.Text);
+        }
+
+        private void OnSearchKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Filter(txtSearch.Text);
+            }
+        }
+
+        public void Filter(string token)
+        {
+            try
+            {
+                _treeView.BeginUpdate();
+                Filter(Groups, token);
+            }
+            finally
+            {
+                _treeView.EndUpdate();
+            }
+        }
+
+        private bool Filter(IEnumerable<IToolboxGroup> groups, string token)
+        {
+            bool parentVisible = false;
+
+            foreach (var g in groups)
+            {
+                bool result = Filter(g.SubGroups, token);
+
+                foreach (var item in g.Tools)
+                {
+                    bool visible = item.Tool.Name.ContainsIgnoreCase(token);
+                    
+                    item.Visible = visible;
+                    if (item.Visible)
+                    {
+                        result = true;
+                    }
+                }
+
+                var node = g.InnerObject as TreeNodeAdv;
+                if (node != null)
+                {
+                    node.Height = result ? ToolboxTreeView.TreeViewNodeHeight : 0;
+                    node.IsSelectable = result;
+                    node.Expanded = result;
+                }
+
+                if (result)
+                {
+                    parentVisible = true;
+                }
+            }
+
+            return parentVisible;
         }
     }
 }

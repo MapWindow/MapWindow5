@@ -10,7 +10,7 @@ namespace MW5.Plugins.Interfaces
     /// <summary>
     /// A wrapper for the list of tools
     /// </summary>
-    public interface IToolCollection : IEnumerable<ITool>
+    public interface IToolCollection : IEnumerable<IToolBoxToolItem>
     {
         void Clear();
         int Count { get; }

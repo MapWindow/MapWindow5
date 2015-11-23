@@ -259,4 +259,10 @@
   <data name="img_clock16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_clock16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_run24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_run24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_run_batch24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_run_batch24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
