@@ -274,7 +274,7 @@ namespace MW5.Api.Concrete
         public void AssignProjection(ISpatialReference proj)
         {
             if (proj == null) throw new ArgumentNullException("proj");
-            _image.SetProjection(proj.ExportToProj4());
+            _image.GeoProjection = proj.Clone().GetInternal();
         }
 
         public bool IsEmpty

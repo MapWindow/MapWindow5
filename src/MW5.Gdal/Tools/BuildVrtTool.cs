@@ -109,6 +109,11 @@ namespace MW5.Gdal.Tools
             get { return PluginIdentity.Default; }
         }
 
+        public override bool SupportsBatchExecution
+        {
+            get { return false; }
+        }
+
         /// <summary>
         /// Gets the options.
         /// </summary>

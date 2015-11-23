@@ -283,7 +283,7 @@ namespace MW5.Api.Concrete
                 var indices = result as int[];
                 if (indices != null)
                 {
-                    return indices.ToList().Select(index => new Feature(_shapefile, index));
+                    return indices.Select(index => new Feature(_shapefile, index));
                 }
             }
 
