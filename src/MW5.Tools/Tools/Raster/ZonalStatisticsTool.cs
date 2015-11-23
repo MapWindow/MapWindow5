@@ -20,7 +20,8 @@ namespace MW5.Tools.Tools.Raster
     public class ZonalStatisticsTool: GisTool
     {
         [Input("Input grid filename", 0)]
-        [ControlHint(ControlHint.RasterFilename)]
+        [ControlHint(ControlHint.Filename)]
+        [DataTypeHint(DataSourceType.Raster)]
         public string GridFilename { get; set; }
 
         [Output("Vector layer to write results to", 0)]

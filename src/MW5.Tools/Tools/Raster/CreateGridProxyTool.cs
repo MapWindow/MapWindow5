@@ -24,7 +24,8 @@ namespace MW5.Tools.Tools.Raster
     public class CreateGridProxyTool: GisTool
     {
         [Input("Input grid filename", 0)]
-        [ControlHint(ControlHint.RasterFilename)]
+        [ControlHint(ControlHint.Filename)]
+        [DataTypeHint(DataSourceType.Raster)]
         public string Input { get; set; }               // probably grid filename will be more appropriate
 
         [Input("Proxy format", 1)]

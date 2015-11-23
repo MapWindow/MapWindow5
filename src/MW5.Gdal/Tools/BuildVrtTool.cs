@@ -13,6 +13,7 @@ using MW5.Gdal.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Services;
@@ -22,13 +23,13 @@ namespace MW5.Gdal.Tools
     [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalPresenter))]
     public partial class BuildVrtTool: GdalTool
     {
-        // TODO: multiple names must be allowed
-        [ControlHint(ControlHint.RasterFilename)]
+        [ControlHint(ControlHint.MultipleFilename, 200)]
+        [DataTypeHint(DataSourceType.Raster)]
         [Input("Input filename", 0)]
-        public string InputFilename { get; set; }
+        public string[] Filenames { get; set; }
 
         [Output("Output filename", 0)]
-        [OutputLayer("{input}.vrt", LayerType.Image, false)]
+        [OutputLayer("{input_folder}\\datasource.vrt", LayerType.Image, false)]
         public override OutputLayerInfo Output { get; set; }
 
         /// <summary>
@@ -131,7 +132,9 @@ namespace MW5.Gdal.Tools
         public override bool Run(ITaskHandle task)
         {
             string options = GetOptions();
-            options += InputFilename;
+
+            options += StringHelper.Join(Filenames, " ");
+
             return GdalUtils.Instance.GdalBuildVrt(Output.Filename, options);
         }
     }

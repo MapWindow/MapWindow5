@@ -19,9 +19,12 @@ namespace MW5.Tools.Model.Parameters
                 return;
             }
 
-            string name = Path.GetFileNameWithoutExtension(inputFilename);
+			// TODO: remove when tested
+            //string name = Path.GetFileNameWithoutExtension(inputFilename);
+            //s = s.Replace(TemplateNameResolver.Input, name);
 
-            s = s.Replace(TemplateVariables.Input, name);
+            s = TemplateNameResolver.Resolve(inputFilename, s, true);
+
             SetToolValue(s);
         }
 

@@ -272,8 +272,6 @@ namespace MW5
 
         public void Close()
         {
-            // TODO: save application settings
-            // TODO: save toolbar positions
             _mainView.Close();
         }
     }

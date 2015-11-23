@@ -25,6 +25,7 @@ namespace MW5.Plugins.Repository.Services
                 panel.Caption = "Repository";
                 panel.SetIcon(Resources.ico_folder24);
                 panel.DockTo(panels.Toolbox, DockPanelState.Tabbed, 300);
+                panel.TabPosition = 0;
             }
             finally
             {

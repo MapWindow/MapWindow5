@@ -215,18 +215,7 @@ namespace MW5.Tools.Controls.Parameters
                     return;
                 }
 
-                if (chkMemoryLayer.Checked)
-                {
-                    string input = Path.GetFileNameWithoutExtension(_inputFilename);
-                    string name = _templateName.Replace(TemplateVariables.Input, input);
-                    textBoxExt1.Text = Path.GetFileNameWithoutExtension(name);
-                }
-                else
-                {
-                    string input = PathHelper.GetFullPathWithoutExtension(_inputFilename);
-                    string name = _templateName.Replace(TemplateVariables.Input, input);
-                    textBoxExt1.Text = name;
-                }
+                textBoxExt1.Text = TemplateNameResolver.Resolve(_inputFilename, _templateName, chkMemoryLayer.Checked);
             }
 
             if (!string.IsNullOrWhiteSpace(_extension))

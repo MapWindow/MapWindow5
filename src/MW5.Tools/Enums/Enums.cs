@@ -18,10 +18,9 @@ namespace MW5.Tools.Enums
         Field = 1, 
         Combo = 2,
         Filename = 3,
-        RasterFilename = 4,
-        VectorFilename = 5,
-        MultiLineString = 6,
-        OutputName = 7,
+        MultiLineString = 4,
+        OutputName = 5,
+        MultipleFilename = 6,
     }
 
     public enum TaskCommand

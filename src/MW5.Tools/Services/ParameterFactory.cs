@@ -56,7 +56,9 @@ namespace MW5.Tools.Services
         /// </summary>
         private static BaseParameter CreateOutputParameter(GisTool tool, PropertyInfo prop, OutputAttribute attr)
         {
-            var param = CreateParameter(prop.PropertyType, GetParameterHint(prop));
+            var param = CreateParameter(prop.PropertyType, prop);
+
+            param.ControlHint = prop.GetAttribute<ControlHintAttribute>();
 
             param.Tool = tool;
             param.ToolProperty = prop;
@@ -87,7 +89,9 @@ namespace MW5.Tools.Services
         /// </summary>
         private static BaseParameter CreateInputParameter(GisTool tool, PropertyInfo prop, InputAttribute attr)
         {
-            var param = CreateParameter(prop.PropertyType, GetParameterHint(prop));
+            var param = CreateParameter(prop.PropertyType, prop);
+
+            param.ControlHint = prop.GetAttribute<ControlHintAttribute>();
 
             param.IsInput = true;
             param.Tool = tool;
@@ -112,6 +116,15 @@ namespace MW5.Tools.Services
         {
             var paramAttr = prop.GetAttribute<ControlHintAttribute>();
             return paramAttr != null ? paramAttr.ControlHint : ControlHint.Auto;
+        }
+
+        /// <summary>
+        /// Gets the control hint for the property.
+        /// </summary>
+        private static DataSourceType GetDataType(PropertyInfo prop)
+        {
+            var paramAttr = prop.GetAttribute<DataTypeHintAttribute>();
+            return paramAttr != null ? paramAttr.DataType : DataSourceType.All;
         }
 
         /// <summary>
@@ -147,8 +160,11 @@ namespace MW5.Tools.Services
         /// <summary>
         /// Creates tool parameter for a property of a given type.
         /// </summary>
-        private static BaseParameter CreateParameter(Type type, ControlHint customType)
+        private static BaseParameter CreateParameter(Type type, PropertyInfo prop)
         {
+            ControlHint customType = GetParameterHint(prop);
+            
+
             switch (customType)
             {
                 case ControlHint.Field:
@@ -156,15 +172,20 @@ namespace MW5.Tools.Services
                 case ControlHint.Combo:
                     return new OptionsParameter();
                 case ControlHint.Filename:
-                    return new FilenameParameter(DataSourceType.All);
-                case ControlHint.VectorFilename:
-                    return new FilenameParameter(DataSourceType.Vector);
-                case ControlHint.RasterFilename:
-                    return new FilenameParameter(DataSourceType.Raster);
+                {
+                    DataSourceType dataType = GetDataType(prop);
+                    return new FilenameParameter(dataType);
+                }
+                case ControlHint.MultipleFilename:
+                {
+                    DataSourceType dataType = GetDataType(prop);
+                    return new MultiFilenameParameter(dataType);
+                }
                 case ControlHint.MultiLineString:
                     return new StringParameter(true);
                 case ControlHint.OutputName:
                     return new OutputNameParameter();
+                
             }
 
             if (customType != ControlHint.Auto)

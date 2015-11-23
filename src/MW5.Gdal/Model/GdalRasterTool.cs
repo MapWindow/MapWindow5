@@ -7,6 +7,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Gdal.Tools;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
@@ -19,7 +20,8 @@ namespace MW5.Gdal.Model
     /// </summary>
     public abstract class GdalRasterTool: GdalTool
     {
-        [ControlHint(ControlHint.RasterFilename)]
+        [ControlHint(ControlHint.Filename)]
+        [DataTypeHint(DataSourceType.Raster)]
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
 

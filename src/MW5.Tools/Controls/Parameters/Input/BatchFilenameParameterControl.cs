@@ -13,6 +13,8 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Controls.Parameters.Interfaces;
+using MW5.UI.Helpers;
+using Syncfusion.Windows.Forms.Grid;
 
 namespace MW5.Tools.Controls.Parameters.Input
 {
@@ -32,7 +34,13 @@ namespace MW5.Tools.Controls.Parameters.Input
             InitializeComponent();
 
             inputFilenameGrid1.DataSource = _filenames;
+            inputFilenameGrid1.TableControl.HScrollBehavior = GridScrollbarMode.Automatic;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether instance of this control is used for multifile selection, rather than batch mode execution.
+        /// </summary>
+        public bool MultiFile { get; set; }
 
         /// <summary>
         /// Gets or sets the caption.
@@ -64,6 +72,11 @@ namespace MW5.Tools.Controls.Parameters.Input
         /// </summary>
         public override object GetValue()
         {
+            if (MultiFile)
+            {
+                return Filenames.ToArray();
+            }
+
             return null;
         }
 
@@ -85,7 +98,7 @@ namespace MW5.Tools.Controls.Parameters.Input
 
         private void OnClickClear(object sender, EventArgs e)
         {
-            if (MessageService.Current.Ask("Remove all layers"))
+            if (MessageService.Current.Ask("Remove all datasources from the input?"))
             {
                 _filenames.Clear();
             }
@@ -104,6 +117,13 @@ namespace MW5.Tools.Controls.Parameters.Input
                 foreach (var f in filenames)
                 {
                     _filenames.Add(new InputFilenameGridAdapter(f));
+                }
+
+                inputFilenameGrid1.AdjustColumnWidths();
+
+                if (MultiFile)
+                {
+                    FireValueChanged();
                 }
             }
         }

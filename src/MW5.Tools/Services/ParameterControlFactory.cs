@@ -56,10 +56,21 @@ namespace MW5.Tools.Services
             {
                 control = _context.Container.GetInstance<ProjectionParameterControl>();
             }
+            else if (parameter is MultiFilenameParameter)
+            {
+                var p = parameter as MultiFilenameParameter;
+                control = CreateInputControl(true, p.DataType, true);
+
+                var bfpc = control as BatchFilenameParameterControl;
+                if (bfpc != null)
+                {
+                    bfpc.MultiFile = true;
+                }
+            }
             else if (parameter is FilenameParameter)
             {
-                var dataType = (parameter as FilenameParameter).DataType;
-                control = CreateInputControl(batchMode, dataType, true);
+                var p = parameter as FilenameParameter;
+                control = CreateInputControl(batchMode, p.DataType, true);
             }
             else if (parameter is FieldParameter)
             {
@@ -104,6 +115,11 @@ namespace MW5.Tools.Services
             if (control == null)
             {
                 throw new ApplicationException("Failed to created control for parameter: " + parameter.DisplayName);
+            }
+
+            if (parameter.ControlHint != null && parameter.ControlHint.ControlHeight != 0)
+            {
+                control.Height = parameter.ControlHint.ControlHeight;
             }
 
             control.ParameterName = parameter.Name;

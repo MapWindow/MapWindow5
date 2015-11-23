@@ -20,7 +20,8 @@ namespace MW5.Tools.Tools.Raster
     public class PolygonizeGridTool: GisTool
     {
         [Input("Input grid filename", 0)]
-        [ControlHint(ControlHint.RasterFilename)]
+        [ControlHint(ControlHint.Filename)]
+        [DataTypeHint(DataSourceType.Raster)]
         public string GridFilename { get; set; }
 
         // TODO: dedicated band index parameter is needed

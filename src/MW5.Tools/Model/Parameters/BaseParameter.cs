@@ -157,5 +157,7 @@ namespace MW5.Tools.Model.Parameters
             var s = val != null ? val.ToString() : string.Empty;
             return string.Format("{0}: {1}", DisplayName, s);
         }
+
+        public ControlHintAttribute ControlHint { get; set; }
     }
 }

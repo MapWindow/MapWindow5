@@ -20,7 +20,8 @@ namespace MW5.Gdal.Tools
     [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalPresenter))]
     public class AddOverviewsTool: GdalTool
     {
-        [ControlHint(ControlHint.RasterFilename)]
+        [ControlHint(ControlHint.Filename)]
+        [DataTypeHint(DataSourceType.Raster)]
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
 

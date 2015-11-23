@@ -179,7 +179,7 @@
     <Compile Include="Helpers\ToolRerunHelper.cs" />
     <Compile Include="Helpers\ParameterSerialization.cs" />
     <Compile Include="Helpers\TabControlHelper.cs" />
-    <Compile Include="Helpers\TemplateVariables.cs" />
+    <Compile Include="Helpers\TemplateNameResolver.cs" />
     <Compile Include="Helpers\ToolConfigHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
@@ -195,6 +195,7 @@
     <Compile Include="Model\Layers\IVectorInput.cs" />
     <Compile Include="Model\Layers\DatasourceInput.cs" />
     <Compile Include="Model\OutputLayerAttribute.cs" />
+    <Compile Include="Model\DataTypeHintAttribute.cs" />
     <Compile Include="Model\Parameters\ExtentsParameter.cs" />
     <Compile Include="Model\Parameters\FilenameParameter.cs" />
     <Compile Include="Model\Parameters\FieldOperationParameter.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Model\Parameters\ISupportsValidation.cs" />
     <Compile Include="Model\Layers\RasterInput.cs" />
     <Compile Include="Model\ControlHintAttribute.cs" />
+    <Compile Include="Model\Parameters\MultiFilenameParameter.cs" />
     <Compile Include="Model\Parameters\OutputNameParameter.cs" />
     <Compile Include="Model\Parameters\GeoProjectionParameter.cs" />
     <Compile Include="Model\Range.cs" />

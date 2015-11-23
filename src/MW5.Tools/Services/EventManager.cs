@@ -95,6 +95,18 @@ namespace MW5.Tools.Services
             var input = _controls.OfType<IInputParameterControl>().FirstOrDefault();
             if (input != null)
             {
+                if (input is BatchFilenameParameterControl)
+                {
+                    input.ValueChanged += (s, e) =>
+                        {
+                            var bi = input as BatchFilenameParameterControl;
+                            if (bi != null && bi.MultiFile)
+                            {
+                                output.OnFilenameChanged(bi.Filenames.FirstOrDefault());
+                            }
+                        };
+                }
+
                 if (input is FilenameParameterControl)
                 {
                     input.ValueChanged += (s, e) => output.OnFilenameChanged(input.GetValue() as string);

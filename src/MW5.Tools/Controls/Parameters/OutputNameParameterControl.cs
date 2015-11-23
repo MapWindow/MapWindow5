@@ -69,7 +69,9 @@ namespace MW5.Tools.Controls.Parameters
             }
             else
             {
-                textBoxExt1.Text = _templateName.Replace(TemplateVariables.Input, _inputFilename);
+				// TODO: remove when tested
+                //textBoxExt1.Text = _templateName.Replace(TemplateNameResolver.Input, _inputFilename);
+                textBoxExt1.Text = TemplateNameResolver.Resolve(_inputFilename, _templateName, false);
             }
         }
     }

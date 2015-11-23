@@ -19,10 +19,5 @@ namespace MW5.UI.Helpers
         {
             grid.TableModel.RowHeights.ResizeToFit(GridRangeInfo.Table());
         }
-
-        public static void AdjustLastRowHeight(this GridGroupingControl grid)
-        {
-            //grid.TableModel.RowHeights.ResizeToFit(GridRangeInfo.Row(grid.TableModel.RowCount - 1));
-        }
     }
 }

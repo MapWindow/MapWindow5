@@ -21,7 +21,8 @@ namespace MW5.Gdal.Tools
     public partial class Ogr2OgrTool: GdalTool
     {
         [Input("Input filename", 0)]
-        [ControlHint(ControlHint.VectorFilename)]
+        [ControlHint(ControlHint.Filename)]
+        [DataTypeHint(DataSourceType.Vector)]
         public string InputFilename { get; set; }
 
         [Output("Output format", 0)]

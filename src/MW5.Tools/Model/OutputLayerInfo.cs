@@ -171,8 +171,11 @@ namespace MW5.Tools.Model
 
         private string GetTemplatedLayerName(string inputLayerName)
         {
-            string name = Path.GetFileNameWithoutExtension(inputLayerName);
-            return _nameTemplate.Replace(TemplateVariables.Input, name);
+			// TODO: remove when tested
+            //string name = Path.GetFileNameWithoutExtension(inputLayerName);
+            //return _nameTemplate.Replace(TemplateNameResolver.Input, name);
+
+            return TemplateNameResolver.Resolve(inputLayerName, _nameTemplate, true);
         }
     }
 }
