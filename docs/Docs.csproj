@@ -44,6 +44,24 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="compile.html" />
+    <Content Include="css\doxygen.css" />
+    <Content Include="css\mw5.css" />
+    <Content Include="css\nav_f.png" />
+    <Content Include="css\nav_h.png" />
+    <Content Include="css\tabs.css" />
+    <Content Include="img\BuildEvents.png" />
+    <Content Include="img\DebugSetting.png" />
+    <Content Include="img\LogoMapWindow_5-100.jpg" />
+    <Content Include="img\LogoMapWindow_5.jpg" />
+    <Content Include="img\MW5-full-369.png" />
+    <Content Include="img\MW5-full.png" />
+    <Content Include="img\Raster-Properties.png" />
+    <Content Include="img\ReferencePaths.png" />
+    <Content Include="img\SourceTree.png" />
+    <Content Include="img\Vector-Properties.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
