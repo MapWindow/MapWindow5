@@ -27,6 +27,9 @@ namespace MW5.Services.Controls
         {
             int columnIndex = Adapter.GetColumnIndex(m => m.Selected);
 
+            int recordIndex = Adapter.RowIndexToRecordIndex(e.Inner.RowIndex);
+            if (recordIndex == -1) return;
+
             var model = Table.TableModel[e.Inner.RowIndex, columnIndex];
             if (model == null)
             {

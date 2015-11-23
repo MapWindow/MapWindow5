@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -21,6 +22,27 @@ namespace MW5.Tools.Helpers
     /// </summary>
     internal static class BatchExecutionHelper
     {
+        public static bool CheckMemoryLayersHaveName(this IParametrizedTool tool)
+        {
+            var inputParameter = tool.GetSingleInputParameter();
+
+            bool hasPath = tool.GetOutputs().Any(output => !string.IsNullOrWhiteSpace(output.TemplatedPath));
+            if (hasPath) return true;
+
+            var inputs = inputParameter.BatchInputs as IEnumerable<IDatasourceInput>;
+            if (inputs != null)
+            {
+                bool hasMemoryLayer = inputs.Any(input => string.IsNullOrWhiteSpace(input.Filename));
+                if (hasMemoryLayer)
+                {
+                    MessageService.Current.Info("Please choose output folder. At least one of the input datasources does not have file associated with it to take folder from.");
+                    return false;
+                }
+            }
+         
+            return true;
+        }
+
         /// <summary>
         /// Generates a new instance of tool for each input file. Works in batch mode only.
         /// </summary>

@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
 using MW5.Api.Interfaces;
 using MW5.Tools.Helpers;
@@ -16,6 +17,7 @@ namespace MW5.Tools.Model
     /// </summary>
     public class OutputLayerInfo
     {
+        public const string EmptyPathPrompt = "<ENTER_YOUR_PATH>";
         private string _nameTemplate = string.Empty;
         private string _path = string.Empty;
 
@@ -23,6 +25,11 @@ namespace MW5.Tools.Model
         /// Gets or sets a value indicating whether the output should be added to the map.
         /// </summary>
         public bool AddToMap { get; set; }
+
+        public string TemplatedPath
+        {
+            get { return _path; }
+        }
 
         /// <summary>
         /// Gets or sets the datasource pointer to be used to delete the previous output on reruning the tool.
@@ -110,7 +117,7 @@ namespace MW5.Tools.Model
 
             if (string.IsNullOrWhiteSpace(Filename))
             {
-                message = "OutputLayer layer name is empty.";
+                message = "Output layer name is empty.";
                 return false;
             }
 
@@ -120,7 +127,25 @@ namespace MW5.Tools.Model
                 return false;
             }
 
-            if (!MemoryLayer && !Overwrite && File.Exists(Filename))
+            if (!Path.IsPathRooted(Filename) && !MemoryLayer)
+            {
+                message = "Please select a target folder to save output.";
+                return false;
+            }
+
+            bool fileExists = false;
+            
+            try
+            {
+                fileExists = File.Exists(Filename);
+            }
+            catch (ArgumentException ex)
+            {
+                message = "Invalid output name.";
+                return false;
+            }
+
+            if (!MemoryLayer && !Overwrite && fileExists)
             {
                 message = "The selected file name already exists but no overwrite flag is checked.";
                 return false;

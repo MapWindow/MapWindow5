@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 using MW5.Shared;
@@ -62,6 +63,14 @@ namespace MW5.Tools.Controls.Parameters
             get { return textBoxExt1; }
         }
 
+        private bool IsInMemoryLayer(IDatasourceInput layer)
+        {
+            return layer != null && 
+                   layer.InputType == Enums.InputType.Layer && 
+                   layer.Datasource is IFeatureSet &&
+                   (layer.Datasource as IFeatureSet).SourceType == FeatureSourceType.InMemory;
+        }
+
         /// <summary>
         /// Called when datasource is changed.
         /// </summary>
@@ -69,7 +78,16 @@ namespace MW5.Tools.Controls.Parameters
         public void OnDatasourceChanged(IDatasourceInput layer)
         {
             _filename = string.Empty;
-            _inputFilename = layer != null ? layer.Filename : string.Empty;
+
+            if (IsInMemoryLayer(layer))
+            {
+                _inputFilename = layer.Name;
+            }
+            else
+            {
+                _inputFilename = layer != null ? layer.Filename : string.Empty;
+            }
+
             RefreshName();
         }
 
