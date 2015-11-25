@@ -138,7 +138,18 @@
                     the visual studio 2013 solution file is <code>D:\dev\MapwinGIS\src\MapWinGIS.sln</code><br />
                     <b>Step 4:</b><br />Make sure the pre-build event to copy the GDAL_SDK files is enabled. Everytime you update the GDAL_SDK this needs to be enabled:<br />
                     <img class="img-responsive" src="img/BuildEvents.png" width="881" height="481" alt="MapWinGIS Build events" /><br />
-                    <b>Step 5:</b><br />Compile the solution for Release|Win32 or Debug|Win32. Visual Studio still can't handle 64Bit ActiveX controls.
+                    <b>Step 5:</b><br/>Compile the solution for Release|Win32 or Debug|Win32. Visual Studio still can't handle 64Bit ActiveX controls.
+                    <h4>Known errors</h4>
+                    <ul>
+                        <li>
+                            <code>cannot open file 'mfc120.lib'</code> The solution is to download and install the
+                            <a href="http://www.microsoft.com/en-us/download/details.aspx?id=40770" title="Download Multibyte MFC Library for Visual Studio 2013">Multibyte MFC Library for Visual Studio 2013</a>
+                        </li>
+                        <li>
+                            <code>Can't register the ActiveX control</code> Most likely you didn't run Visual Studio as an Admin. If you did run VS as admin,
+                            you might want to try to compile the first time with 'Register output' to No. When that compiles fine, set 'Register output' to Yes again and recompile.
+                        </li>
+                    </ul>
                 </p>
             </article>
         </div>
