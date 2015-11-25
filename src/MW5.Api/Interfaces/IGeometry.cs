@@ -53,5 +53,6 @@ namespace MW5.Api.Interfaces
         IEnumerable<IGeometry> SplitByPolyline(IGeometry polyline);
         bool Touches(IGeometry g);
         bool Within(IGeometry g);
+        bool GetPoint(int index, out double x, out double y);
     }
 }

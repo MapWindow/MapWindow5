@@ -66,10 +66,13 @@ namespace MW5.Api.Concrete
         public static IImageSource Open(string filename, bool inRam)
         {
             var img = new Image();
+
             if (!img.Open(filename, ImageType.USE_FILE_EXTENSION, inRam))
             {
-                throw new ApplicationException("Failed to open datasource: " + img.ErrorMsg[img.LastErrorCode]);
+                Logger.Current.Warn("Failed to open datasource: " + img.ErrorMsg[img.LastErrorCode]);
+                return null;
             }
+
             return Wrap(img);
         }
 

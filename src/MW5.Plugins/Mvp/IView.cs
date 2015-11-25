@@ -12,6 +12,8 @@ namespace MW5.Plugins.Mvp
         void StartWait();
 
         void StopWait();
+
+        Form AsForm { get; }
     }
 
     public interface IView<TModel> : IView, IViewInternal<TModel>

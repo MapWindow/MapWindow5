@@ -445,6 +445,12 @@ namespace MW5.Api.Concrete
             return WrapShapefile(sf);
         }
 
+        public IGeometry GetGeometry(int index)
+        {
+            var shp = _shapefile.Shape[index];
+            return shp != null ? new Geometry(shp) : null;
+        }
+
         /// <summary>
         /// Creates featureset with the same projection and set of fields, but differnt geometry type.
         /// </summary>
@@ -773,6 +779,11 @@ namespace MW5.Api.Concrete
         public bool AppendMode
         {
             get { return _shapefile.AppendMode; }
+        }
+
+        public int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false)
+        {
+            return _shapefile.GenerateLabels(fieldIndex, (tkLabelPositioning)position, largestPartOnly);
         }
 
         public IGlobalListener Callback

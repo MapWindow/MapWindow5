@@ -423,7 +423,11 @@ namespace MW5.Api.Map
         public IEnvelope Extents
         {
             get { return new Envelope(_map.Extents as Extents); }
-            
+            set
+            {
+                if (value == null) throw new ArgumentNullException("");
+                _map.Extents = value.GetInternal();
+            }
         }
 
         [Browsable(false)]

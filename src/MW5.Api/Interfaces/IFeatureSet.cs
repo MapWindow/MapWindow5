@@ -20,6 +20,7 @@ namespace MW5.Api.Interfaces
         ILabelsLayer Labels { get; }
         DiagramsLayer Diagrams { get; }
         AttributeFieldList Fields { get; }
+        IGeometry GetGeometry(int index);
 
         IFeatureSet Clone(GeometryType newType, ZValueType zValue = ZValueType.None);
         IFeatureSet Clone();
@@ -108,10 +109,12 @@ namespace MW5.Api.Interfaces
         void StopAppendMode();
         bool AppendMode { get; }
 
+        int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false);
+
         #region Not implemented
 
         //int get_numPoints(int ShapeIndex);
-        //int GenerateLabels(int FieldIndex, tkLabelPositioning Method, bool LargestPartOnly = false);
+        
         //tkGeometryEngine GeometryEngine { get; set; }
         //tkSelectionAppearance SelectionAppearance { get; set; }
         //ShapeDrawingOptions SelectionDrawingOptions { get; set; }

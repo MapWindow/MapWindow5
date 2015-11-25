@@ -109,6 +109,24 @@ namespace MW5.Api.Concrete
             _axMap.RemoveAllLayers();
         }
 
+        public void ClearWithoutClosing()
+        {
+            int count = Count - 1;
+
+            _mapControl.Lock();
+
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                int handle = _axMap.get_LayerHandle(i);
+                if (handle != -1)
+                {
+                    _axMap.RemoveLayerWithoutClosing(handle);
+                }
+            }
+
+            _mapControl.Unlock();
+        }
+
         public virtual bool Remove(int layerHandle)
         {
             _axMap.RemoveLayer(layerHandle);

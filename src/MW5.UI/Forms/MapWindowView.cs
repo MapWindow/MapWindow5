@@ -93,5 +93,10 @@ namespace MW5.UI.Forms
                 ctrl.Enabled = state;
             }
         }
+
+        public Form AsForm
+        {
+            get { return this; }
+        }
     }
 }

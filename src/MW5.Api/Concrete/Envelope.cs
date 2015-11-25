@@ -145,8 +145,8 @@ namespace MW5.Api.Concrete
         /// </summary>
         public string Tag
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get { return string.Empty; }
+            set { }
         }
 
         /// <summary>

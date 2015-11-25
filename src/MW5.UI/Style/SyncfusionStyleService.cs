@@ -105,7 +105,7 @@ namespace MW5.UI.Style
         private void ApplyLabelStyle(Control control)
         {
             var lbl = control as Label;
-            if (lbl != null)
+            if (lbl != null && lbl.Tag == null)
             {
                 lbl.BackColor = Color.Transparent;
             }

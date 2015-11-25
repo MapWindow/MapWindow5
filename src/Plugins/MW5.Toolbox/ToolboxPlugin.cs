@@ -13,6 +13,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
+using MW5.Tools.Helpers;
 
 namespace MW5.Plugins.Toolbox
 {
@@ -35,6 +36,8 @@ namespace MW5.Plugins.Toolbox
             _context = context;
 
             _generator = context.Container.GetInstance<ToolboxGenerator>();
+
+            _context.Toolbox.AddTools(GetType().Assembly.GetTools());
         }
     }
 }

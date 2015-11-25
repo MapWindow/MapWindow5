@@ -15,11 +15,9 @@ namespace MW5.Api.Concrete
 
         internal LabelsLayer(Labels labels)
         {
+            if (labels == null) throw new NullReferenceException("labels");
+
             _labels = labels;
-            if (labels == null)
-            {
-                throw new NullReferenceException("Internal reference is null");
-            }
         }
 
         public bool Empty

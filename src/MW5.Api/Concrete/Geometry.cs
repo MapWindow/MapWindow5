@@ -390,6 +390,14 @@ namespace MW5.Api.Concrete
             get { return _shape.Key; }
             set { _shape.Key = value; }
         }
+
+        public bool GetPoint(int index, out double x, out double y)
+        {
+            x = 0.0;
+            y = 0.0;
+
+            return _shape.get_XY(index, ref x, ref y);
+        }
     }
 }
 
