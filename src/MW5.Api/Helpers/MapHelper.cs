@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 
 namespace MW5.Api.Helpers
 {
@@ -31,8 +32,13 @@ namespace MW5.Api.Helpers
             
             // will be displayed above labels of other layers
             sf.Volatile = true;
-            
+
+            bool oldZoomToFirstLayer = MapConfig.ZoomToFirstLayer;
+            MapConfig.ZoomToFirstLayer = false;
+
             int handle = map.Layers.Add(sf, true, false);
+
+            MapConfig.ZoomToFirstLayer = oldZoomToFirstLayer;
 
             var fill = sf.Style.Fill;
             fill.Color = Color.LightBlue;

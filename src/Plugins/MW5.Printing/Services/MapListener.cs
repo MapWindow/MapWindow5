@@ -41,7 +41,12 @@ namespace MW5.Plugins.Printing.Services
                 if (_context.Container.Run<TemplatePresenter, TemplateModel>(model))
                 {
                     // remove selection before we are drawing the layout
+                    var oldGrabProjectionFromData = _context.Map.GrabProjectionFromData;
+                    _context.Map.GrabProjectionFromData = false;
+
                     _context.Map.Layers.Remove(layerHandle);
+
+                    _context.Map.GrabProjectionFromData = oldGrabProjectionFromData;
 
                     _context.Container.Run<LayoutPresenter, TemplateModel>(model);
                 }

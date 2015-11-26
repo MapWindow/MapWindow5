@@ -13,7 +13,7 @@ namespace MW5.Tools.Helpers
     /// </summary>
     internal static class TemplateNameResolver
     {
-        private const string Input = "{input}";
+        internal const string Input = "{input}";
         private const string InputFolder = "{input_folder}";
 
         public static string Resolve(string inputFilename, string templateName, bool memoryLayer)

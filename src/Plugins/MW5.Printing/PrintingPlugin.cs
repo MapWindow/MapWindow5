@@ -25,6 +25,7 @@ namespace MW5.Plugins.Printing
         private MapListener _mapListener;
         private IAppContext _context;
         private PrinterSettings _printerSettings;
+        private MenuUpdater _menuUpdater;
 
         public PrinterSettings PrinterSettings
         {
@@ -39,6 +40,7 @@ namespace MW5.Plugins.Printing
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
+            _menuUpdater = context.Container.GetInstance<MenuUpdater>();
         }
 
         protected override void RegisterServices(IApplicationContainer container)

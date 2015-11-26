@@ -144,6 +144,8 @@ namespace MW5.Api.Interfaces
 
         void SetTileProvider(int providerId);
 
+        bool IsEmpty { get; }
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;

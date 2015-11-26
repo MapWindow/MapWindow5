@@ -764,6 +764,11 @@ namespace MW5.Api.Map
         {
             return _map.LoadTilesForSnapshot(envelope.GetInternal(), width, key);
         }
+
+        public bool IsEmpty
+        {
+            get { return _map.NumLayers == 0 && (Projection.IsEmpty || Tiles.Visible == false); }
+        }
     }
 }
 
