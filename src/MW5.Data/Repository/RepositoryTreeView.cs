@@ -302,6 +302,7 @@ namespace MW5.Data.Repository
                 Resources.img_mysql16,
                 Resources.img_tms16,
                 Resources.img_map16,
+                Resources.img_layer_stack16
             };
         }
 

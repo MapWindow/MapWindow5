@@ -133,6 +133,16 @@ namespace MW5.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_layer_stack16 {
+            get {
+                object obj = ResourceManager.GetObject("img_layer_stack16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_line {
             get {
                 object obj = ResourceManager.GetObject("img_line", resourceCulture);

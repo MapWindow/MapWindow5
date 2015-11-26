@@ -147,15 +147,20 @@ namespace MW5.Data.Repository
 
         private void AssignCustomFileIcons(TreeNodeAdv node, string filename, RepositoryItemType itemType)
         {
-            if (filename.ToLower().EndsWith(".sqlite"))
-            {
-                node.LeftImageIndices = new[] { (int)RepositoryIcon.Sqlite };
-            }
-
             if (itemType == RepositoryItemType.Vector && filename.ToLower().EndsWith(".shp"))
             {
                 var type = ShapefileHelper.GetGeometryType(filename);
                 node.LeftImageIndices = new[] { GetVectorIcon(type) };
+            }
+
+            if (filename.ToLower().EndsWith(".vrt"))
+            {
+                node.LeftImageIndices = new[] { (int)RepositoryIcon.VrtFile };
+            }
+
+            if (filename.ToLower().EndsWith(".sqlite"))
+            {
+                node.LeftImageIndices = new[] { (int)RepositoryIcon.Sqlite };
             }
         }
 

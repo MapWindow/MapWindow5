@@ -14,7 +14,7 @@ namespace MW5.Api.Concrete
 {
     public class RasterSource : BitmapSource, IRasterSource
     {
-        public RasterSource(Image image)
+        internal RasterSource(Image image)
             : base(image)
         {
             _image.AllowHillshade = true;

@@ -32,6 +32,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolboxDockPanel));
             this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
             this._treeView = new MW5.Tools.Toolbox.ToolboxTreeView();
@@ -147,7 +148,7 @@ namespace MW5.Tools.Toolbox
             // txtSearch
             // 
             this.txtSearch.BackColor = System.Drawing.Color.White;
-            this.txtSearch.BeforeTouchSize = new System.Drawing.Size(252, 21);
+            this.txtSearch.BeforeTouchSize = new System.Drawing.Size(224, 20);
             this.txtSearch.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Cue = "Enter tool name";

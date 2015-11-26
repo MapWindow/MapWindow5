@@ -71,6 +71,8 @@ namespace MW5.Tools.Services
         /// </summary>
         private void GenerateIntoPanel(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
         {
+            var list = new List<ParameterControlBase>();
+
             foreach (var p in parameters)
             {
                 var ctrl = GenerateControl(p, batchMode);
@@ -80,8 +82,17 @@ namespace MW5.Tools.Services
                     panel.Controls.Add(ctrl);
 
                     // value changed handler will be assigned here
-                    _manager.AddControl(ctrl);
+                    list.Add(ctrl);
+                    
                 }
+            }
+
+            // we are adding in reverse order to the panel, but 
+            // manager should have them in the normal order to bind output to the first input
+            list.Reverse();
+            foreach (var ctrl in list)
+            {
+                _manager.AddControl(ctrl);
             }
         }
 

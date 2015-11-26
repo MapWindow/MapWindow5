@@ -15,6 +15,7 @@ namespace MW5.Tools.Helpers
     {
         internal const string Input = "{input}";
         private const string InputFolder = "{input_folder}";
+        internal const string Extension = "{ext}";
 
         public static string Resolve(string inputFilename, string templateName, bool memoryLayer)
         {
@@ -27,6 +28,8 @@ namespace MW5.Tools.Helpers
             {
                 string name = templateName.Replace(Input, Shared.PathHelper.GetFullPathWithoutExtension(inputFilename));
                 name = name.Replace(InputFolder, Path.GetDirectoryName(inputFilename));
+                string ext = Path.GetExtension(inputFilename);
+                name = name.Replace("." + Extension, ext);
                 return name;
             }
         }

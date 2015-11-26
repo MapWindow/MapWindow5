@@ -39,6 +39,7 @@ namespace MW5.Data.Enums
         MySql = 13,
         TmsRoot = 14,
         TmsItem = 15,
+        VrtFile = 16
     }
 
     public enum FormatType

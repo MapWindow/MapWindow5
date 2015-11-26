@@ -357,6 +357,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\Projections\ReprojectTool.cs" />
+    <Compile Include="Tools\Raster\ClipGridWithPolygonTool.cs" />
     <Compile Include="Tools\Raster\CreateGridProxyTool.cs" />
     <Compile Include="Tools\Raster\PolygonizeGridTool.cs" />
     <Compile Include="Tools\Raster\ZonalStatisticsTool.cs" />
