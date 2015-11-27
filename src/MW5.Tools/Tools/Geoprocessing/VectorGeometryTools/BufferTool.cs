@@ -20,7 +20,7 @@ using MW5.Tools.Services;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
     public class BufferTool : AppendModeGisTool
     {
         [Input("Input layer", 0)]

@@ -23,7 +23,7 @@ using MW5.Tools.Model.Layers;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
     public class OverlayTool : GisTool
     {
         [Input("First layer", 0)]

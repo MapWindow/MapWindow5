@@ -23,7 +23,7 @@ using MW5.Tools.Views.Custom;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.Validation)]
     public class ValidateShapefileTool: GisTool
     {
         private int _errorCount = 0;

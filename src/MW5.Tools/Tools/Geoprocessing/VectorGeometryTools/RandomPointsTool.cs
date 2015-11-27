@@ -26,7 +26,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// Generates random points within extents of selected datasource.
     /// </summary>
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]

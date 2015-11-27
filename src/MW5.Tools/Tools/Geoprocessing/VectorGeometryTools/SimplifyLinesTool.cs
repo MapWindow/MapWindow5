@@ -16,7 +16,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.Geoprocessing)]
     public class SimplifyLinesTool: GisTool
     {
         [Input("Input datasource", 0)]

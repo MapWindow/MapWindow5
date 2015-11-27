@@ -18,7 +18,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.Validation)]
     public class FixShapefileTool : AppendModeGisTool
     {
         [Input("Input datasource", 0)]

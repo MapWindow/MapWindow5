@@ -27,7 +27,7 @@ namespace MW5.Tools.Helpers
             else
             {
                 string name = templateName.Replace(Input, Shared.PathHelper.GetFullPathWithoutExtension(inputFilename));
-                name = name.Replace(InputFolder, Path.GetDirectoryName(inputFilename));
+                name = name.Replace(InputFolder + @"\", Path.GetDirectoryName(inputFilename));
                 string ext = Path.GetExtension(inputFilename);
                 name = name.Replace("." + Extension, ext);
                 return name;

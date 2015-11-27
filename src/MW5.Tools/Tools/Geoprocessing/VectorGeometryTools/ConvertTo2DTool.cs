@@ -11,7 +11,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.Basic)]
     public class ConvertTo2DTool: AppendModeGisTool
     {
         [Input("Input datasource", 0)]

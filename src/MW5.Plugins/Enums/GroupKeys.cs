@@ -11,44 +11,21 @@ namespace MW5.Plugins.Enums
     /// </summary>
     public static class GroupKeys
     {
-        /// <summary>
-        /// The geo databases
-        /// </summary>
-        public const string GeoDatabases = "GeoDatabases";
-
-        /// <summary>
-        /// The geoprocessing
-        /// </summary>
-        public const string Geoprocessing = "Geoprocessing";
-
-        /// <summary>
-        /// The projections
-        /// </summary>
-        public const string Projections = "Projections";
-
-        /// <summary>
-        /// Fake tools
-        /// </summary>
         public const string Fake = "Testing";
 
-        /// <summary>
-        /// The vector geometry tools
-        /// </summary>
-        public const string VectorGeometryTools = "VectorGeometryTools";
+        public const string Projections = "Projections";
 
-        /// <summary>
-        /// Gdal tools
-        /// </summary>
+        public const string GeoDatabases = "GeoDatabases";
+        
         public const string GdalTools = "GdalTools";
 
-        /// <summary>
-        /// Raster tools
-        /// </summary>
         public const string Raster = "Raster";
 
-        /// <summary>
-        /// Tools that work with attributes values of vector layers.
-        /// </summary>
+        public const string VectorTools = "VectorTools";
+        public const string Geoprocessing = "Geoprocessing";
         public const string Attributes = "Attributes";
+        public const string Selection = "Selection";
+        public const string Basic = "Basic";
+        public const string Validation = "Validation";
     }
 }

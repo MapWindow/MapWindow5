@@ -29,7 +29,7 @@ namespace MW5.Gdal.Tools
         public string[] Filenames { get; set; }
 
         [Output("Output filename", 0)]
-        [OutputLayer("{input_folder}\\datasource.vrt", LayerType.Image, false)]
+        [OutputLayer(@"{input_folder}\datasource.vrt", LayerType.Image, false)]
         public override OutputLayerInfo Output { get; set; }
 
         /// <summary>

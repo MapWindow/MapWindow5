@@ -20,7 +20,7 @@ using MW5.Tools.Model.Layers;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.Geoprocessing)]
     public class CentroidTool: GisTool
     {
         [Input("Input datasource", 0)]
