@@ -106,6 +106,15 @@ namespace MW5.Views
                 view.Map.Unlock();
                 context.Legend.Unlock();
             }
+
+            View.AsForm.Shown += ViewShown;
+        }
+
+        private void ViewShown(object sender, EventArgs e)
+        {
+            Application.DoEvents();
+
+            LoadLastProject();
         }
 
         public override bool ViewOkClicked()
@@ -134,10 +143,6 @@ namespace MW5.Views
 
         private void OnBeforeShow()
         {
-            Application.DoEvents();
-
-            LoadLastProject();
-
             if (AppConfig.Instance.ShowWelcomeDialog)
             {
                 _menuListener.RunCommand(MenuKeys.Welcome);
