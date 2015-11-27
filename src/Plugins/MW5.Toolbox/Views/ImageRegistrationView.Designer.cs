@@ -31,31 +31,33 @@ namespace MW5.Plugins.Toolbox.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.Envelope envelope3 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference3 = new MW5.Api.Concrete.SpatialReference();
-            MW5.Api.Concrete.Envelope envelope4 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference4 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             this.splitContainer1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
             this.label3 = new System.Windows.Forms.Label();
             this.mapControl1 = new MW5.Api.Map.MapControl();
             this.label4 = new System.Windows.Forms.Label();
             this.mapControl2 = new MW5.Api.Map.MapControl();
             this.btnRemovePoint = new System.Windows.Forms.Button();
-            this.mnuSelect = new System.Windows.Forms.RadioButton();
-            this.mnuPan = new System.Windows.Forms.RadioButton();
-            this.mnuZoomOut = new System.Windows.Forms.RadioButton();
-            this.mnuZoomIn = new System.Windows.Forms.RadioButton();
-            this.btnZoomMax = new System.Windows.Forms.Button();
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusPointCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.status1 = new Syncfusion.Windows.Forms.Tools.StatusStripButton();
             this.statusError = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnApply = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.btnLoadImage = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.pointPairGrid1 = new MW5.Plugins.Toolbox.Controls.PointPairGrid();
             this.btnZoomToPoint = new System.Windows.Forms.Button();
             this.btnClearPoints = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnApply = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnLoadImage = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnZoomMax = new System.Windows.Forms.Button();
+            this.mnuZoomIn = new System.Windows.Forms.RadioButton();
+            this.mnuZoomOut = new System.Windows.Forms.RadioButton();
+            this.mnuPan = new System.Windows.Forms.RadioButton();
+            this.mnuSelect = new System.Windows.Forms.RadioButton();
+            this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -111,8 +113,8 @@ namespace MW5.Plugins.Toolbox.Views
             this.mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl1.ExtentHistory = 20;
             this.mapControl1.ExtentPad = 0.02D;
-            envelope3.Tag = "";
-            this.mapControl1.Extents = envelope3;
+            envelope1.Tag = "";
+            this.mapControl1.Extents = envelope1;
             this.mapControl1.GrabProjectionFromData = true;
             this.mapControl1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this.mapControl1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -124,8 +126,8 @@ namespace MW5.Plugins.Toolbox.Views
             this.mapControl1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.mapControl1.MouseWheelSpeed = 0.5D;
             this.mapControl1.Name = "mapControl1";
-            spatialReference3.Tag = "";
-            this.mapControl1.Projection = spatialReference3;
+            spatialReference1.Tag = "";
+            this.mapControl1.Projection = spatialReference1;
             this.mapControl1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.mapControl1.ReuseTileBuffer = true;
             this.mapControl1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
@@ -169,8 +171,8 @@ namespace MW5.Plugins.Toolbox.Views
             this.mapControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl2.ExtentHistory = 20;
             this.mapControl2.ExtentPad = 0.02D;
-            envelope4.Tag = "";
-            this.mapControl2.Extents = envelope4;
+            envelope2.Tag = "";
+            this.mapControl2.Extents = envelope2;
             this.mapControl2.GrabProjectionFromData = true;
             this.mapControl2.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this.mapControl2.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -182,8 +184,8 @@ namespace MW5.Plugins.Toolbox.Views
             this.mapControl2.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.mapControl2.MouseWheelSpeed = 0.5D;
             this.mapControl2.Name = "mapControl2";
-            spatialReference4.Tag = "";
-            this.mapControl2.Projection = spatialReference4;
+            spatialReference2.Tag = "";
+            this.mapControl2.Projection = spatialReference2;
             this.mapControl2.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.mapControl2.ReuseTileBuffer = true;
             this.mapControl2.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
@@ -212,62 +214,6 @@ namespace MW5.Plugins.Toolbox.Views
             this.btnRemovePoint.Text = "Remove point";
             this.btnRemovePoint.UseVisualStyleBackColor = true;
             this.btnRemovePoint.Click += new System.EventHandler(this.OnRemoveClick);
-            // 
-            // mnuSelect
-            // 
-            this.mnuSelect.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuSelect.Checked = true;
-            this.mnuSelect.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_cursor24;
-            this.mnuSelect.Location = new System.Drawing.Point(656, 124);
-            this.mnuSelect.Name = "mnuSelect";
-            this.mnuSelect.Size = new System.Drawing.Size(40, 33);
-            this.mnuSelect.TabIndex = 23;
-            this.mnuSelect.TabStop = true;
-            this.mnuSelect.UseVisualStyleBackColor = true;
-            this.mnuSelect.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
-            // 
-            // mnuPan
-            // 
-            this.mnuPan.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuPan.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_pan24;
-            this.mnuPan.Location = new System.Drawing.Point(795, 124);
-            this.mnuPan.Name = "mnuPan";
-            this.mnuPan.Size = new System.Drawing.Size(40, 33);
-            this.mnuPan.TabIndex = 24;
-            this.mnuPan.UseVisualStyleBackColor = true;
-            this.mnuPan.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
-            // 
-            // mnuZoomOut
-            // 
-            this.mnuZoomOut.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuZoomOut.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_out24;
-            this.mnuZoomOut.Location = new System.Drawing.Point(748, 124);
-            this.mnuZoomOut.Name = "mnuZoomOut";
-            this.mnuZoomOut.Size = new System.Drawing.Size(40, 33);
-            this.mnuZoomOut.TabIndex = 25;
-            this.mnuZoomOut.UseVisualStyleBackColor = true;
-            this.mnuZoomOut.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
-            // 
-            // mnuZoomIn
-            // 
-            this.mnuZoomIn.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuZoomIn.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_in24;
-            this.mnuZoomIn.Location = new System.Drawing.Point(702, 124);
-            this.mnuZoomIn.Name = "mnuZoomIn";
-            this.mnuZoomIn.Size = new System.Drawing.Size(40, 33);
-            this.mnuZoomIn.TabIndex = 26;
-            this.mnuZoomIn.UseVisualStyleBackColor = true;
-            this.mnuZoomIn.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
-            // 
-            // btnZoomMax
-            // 
-            this.btnZoomMax.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_max24;
-            this.btnZoomMax.Location = new System.Drawing.Point(841, 124);
-            this.btnZoomMax.Name = "btnZoomMax";
-            this.btnZoomMax.Size = new System.Drawing.Size(40, 33);
-            this.btnZoomMax.TabIndex = 27;
-            this.btnZoomMax.UseVisualStyleBackColor = true;
-            this.btnZoomMax.Click += new System.EventHandler(this.OnZoomMaxClick);
             // 
             // statusStripEx1
             // 
@@ -305,52 +251,22 @@ namespace MW5.Plugins.Toolbox.Views
             this.statusError.Size = new System.Drawing.Size(57, 15);
             this.statusError.Text = "Error: n/d";
             // 
-            // btnApply
-            // 
-            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApply.BeforeTouchSize = new System.Drawing.Size(129, 33);
-            this.btnApply.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_apply24;
-            this.btnApply.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApply.IsBackStageButton = false;
-            this.btnApply.Location = new System.Drawing.Point(823, 44);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnApply.Size = new System.Drawing.Size(129, 33);
-            this.btnApply.TabIndex = 32;
-            this.btnApply.Text = "Apply";
-            this.btnApply.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnApply.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
-            // btnLoadImage
-            // 
-            this.btnLoadImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadImage.BeforeTouchSize = new System.Drawing.Size(129, 31);
-            this.btnLoadImage.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_folder24;
-            this.btnLoadImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadImage.IsBackStageButton = false;
-            this.btnLoadImage.Location = new System.Drawing.Point(822, 7);
-            this.btnLoadImage.Name = "btnLoadImage";
-            this.btnLoadImage.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnLoadImage.Size = new System.Drawing.Size(129, 31);
-            this.btnLoadImage.TabIndex = 33;
-            this.btnLoadImage.Text = "Choose Image";
-            this.btnLoadImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadImage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(129, 33);
+            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(129, 31);
+            this.btnCancel.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_cancel24;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancel.IsBackStageButton = false;
             this.btnCancel.Location = new System.Drawing.Point(823, 44);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnCancel.Size = new System.Drawing.Size(129, 33);
+            this.btnCancel.Size = new System.Drawing.Size(129, 31);
             this.btnCancel.TabIndex = 34;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.btnCancel, "Remove tranformed image fromt he map and continue editing the points");
             // 
             // pointPairGrid1
             // 
@@ -397,16 +313,127 @@ namespace MW5.Plugins.Toolbox.Views
             this.btnClearPoints.UseVisualStyleBackColor = true;
             this.btnClearPoints.Click += new System.EventHandler(this.OnClearPointsClick);
             // 
+            // btnApply
+            // 
+            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnApply.BeforeTouchSize = new System.Drawing.Size(129, 31);
+            this.btnApply.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_apply24;
+            this.btnApply.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApply.IsBackStageButton = false;
+            this.btnApply.Location = new System.Drawing.Point(822, 44);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnApply.Size = new System.Drawing.Size(129, 31);
+            this.btnApply.TabIndex = 32;
+            this.btnApply.Text = "Apply";
+            this.btnApply.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApply.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.btnApply, "Apply tranformation and save the world file");
+            // 
+            // btnLoadImage
+            // 
+            this.btnLoadImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoadImage.BeforeTouchSize = new System.Drawing.Size(129, 31);
+            this.btnLoadImage.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_folder24;
+            this.btnLoadImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadImage.IsBackStageButton = false;
+            this.btnLoadImage.Location = new System.Drawing.Point(822, 7);
+            this.btnLoadImage.Name = "btnLoadImage";
+            this.btnLoadImage.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnLoadImage.Size = new System.Drawing.Size(129, 31);
+            this.btnLoadImage.TabIndex = 33;
+            this.btnLoadImage.Text = "Choose Image";
+            this.btnLoadImage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadImage.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.toolTip1.SetToolTip(this.btnLoadImage, "Choose image to register");
+            // 
+            // btnZoomMax
+            // 
+            this.btnZoomMax.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_max24;
+            this.btnZoomMax.Location = new System.Drawing.Point(841, 124);
+            this.btnZoomMax.Name = "btnZoomMax";
+            this.btnZoomMax.Size = new System.Drawing.Size(40, 33);
+            this.btnZoomMax.TabIndex = 27;
+            this.toolTip1.SetToolTip(this.btnZoomMax, "Zoom to Maximum Extents");
+            this.btnZoomMax.UseVisualStyleBackColor = true;
+            this.btnZoomMax.Click += new System.EventHandler(this.OnZoomMaxClick);
+            // 
+            // mnuZoomIn
+            // 
+            this.mnuZoomIn.Appearance = System.Windows.Forms.Appearance.Button;
+            this.mnuZoomIn.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_in24;
+            this.mnuZoomIn.Location = new System.Drawing.Point(702, 124);
+            this.mnuZoomIn.Name = "mnuZoomIn";
+            this.mnuZoomIn.Size = new System.Drawing.Size(40, 33);
+            this.mnuZoomIn.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.mnuZoomIn, "Zoom In");
+            this.mnuZoomIn.UseVisualStyleBackColor = true;
+            this.mnuZoomIn.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
+            // 
+            // mnuZoomOut
+            // 
+            this.mnuZoomOut.Appearance = System.Windows.Forms.Appearance.Button;
+            this.mnuZoomOut.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_out24;
+            this.mnuZoomOut.Location = new System.Drawing.Point(748, 124);
+            this.mnuZoomOut.Name = "mnuZoomOut";
+            this.mnuZoomOut.Size = new System.Drawing.Size(40, 33);
+            this.mnuZoomOut.TabIndex = 25;
+            this.toolTip1.SetToolTip(this.mnuZoomOut, "Zoom Out");
+            this.mnuZoomOut.UseVisualStyleBackColor = true;
+            this.mnuZoomOut.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
+            // 
+            // mnuPan
+            // 
+            this.mnuPan.Appearance = System.Windows.Forms.Appearance.Button;
+            this.mnuPan.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_pan24;
+            this.mnuPan.Location = new System.Drawing.Point(795, 124);
+            this.mnuPan.Name = "mnuPan";
+            this.mnuPan.Size = new System.Drawing.Size(40, 33);
+            this.mnuPan.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.mnuPan, "Pan");
+            this.mnuPan.UseVisualStyleBackColor = true;
+            this.mnuPan.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
+            // 
+            // mnuSelect
+            // 
+            this.mnuSelect.Appearance = System.Windows.Forms.Appearance.Button;
+            this.mnuSelect.Checked = true;
+            this.mnuSelect.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_cursor24;
+            this.mnuSelect.Location = new System.Drawing.Point(656, 124);
+            this.mnuSelect.Name = "mnuSelect";
+            this.mnuSelect.Size = new System.Drawing.Size(40, 33);
+            this.mnuSelect.TabIndex = 23;
+            this.mnuSelect.TabStop = true;
+            this.toolTip1.SetToolTip(this.mnuSelect, "Select Point");
+            this.mnuSelect.UseVisualStyleBackColor = true;
+            this.mnuSelect.CheckedChanged += new System.EventHandler(this.MnuSelectCheckedChanged);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.BeforeTouchSize = new System.Drawing.Size(129, 33);
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.IsBackStageButton = false;
+            this.btnClose.Location = new System.Drawing.Point(823, 81);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnClose.Size = new System.Drawing.Size(129, 33);
+            this.btnClose.TabIndex = 38;
+            this.btnClose.Text = "Close";
+            this.btnClose.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            // 
             // ImageRegistrationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(961, 610);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnClearPoints);
             this.Controls.Add(this.btnZoomToPoint);
             this.Controls.Add(this.pointPairGrid1);
-            this.Controls.Add(this.btnApply);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnLoadImage);
             this.Controls.Add(this.statusStripEx1);
             this.Controls.Add(this.btnZoomMax);
@@ -416,6 +443,8 @@ namespace MW5.Plugins.Toolbox.Views
             this.Controls.Add(this.mnuSelect);
             this.Controls.Add(this.btnRemovePoint);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.btnApply);
+            this.Controls.Add(this.btnCancel);
             this.MinimizeBox = false;
             this.Name = "ImageRegistrationView";
             this.ShowInTaskbar = false;
@@ -458,5 +487,7 @@ namespace MW5.Plugins.Toolbox.Views
         private System.Windows.Forms.ToolStripStatusLabel statusError;
         private System.Windows.Forms.Button btnZoomToPoint;
         private System.Windows.Forms.Button btnClearPoints;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnClose;
     }
 }

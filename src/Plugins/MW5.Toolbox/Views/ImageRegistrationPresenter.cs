@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Toolbox.Enums;
@@ -27,15 +28,18 @@ namespace MW5.Plugins.Toolbox.Views
             "The registration of the current image is not finished.\nDo you want to cancel it and discard the points?";
 
         private readonly ILeastSquaresSolver _solver;
+        private readonly IAppContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageRegistrationPresenter"/> class.
         /// </summary>
-        public ImageRegistrationPresenter(IImageRegistrationView view, ILeastSquaresSolver solver)
+        public ImageRegistrationPresenter(IImageRegistrationView view, ILeastSquaresSolver solver, IAppContext context)
             : base(view)
         {
             if (solver == null) throw new ArgumentNullException("solver");
+            if (context == null) throw new ArgumentNullException("context");
             _solver = solver;
+            _context = context;
 
             View.RecalculationNeeded += () => Calculate();
 
@@ -64,7 +68,6 @@ namespace MW5.Plugins.Toolbox.Views
             switch (command)
             {
                 case ImageRegistrationCommand.LoadImage:
-                    
                     LoadImage();
                     break;
                 case ImageRegistrationCommand.Apply:
@@ -73,7 +76,6 @@ namespace MW5.Plugins.Toolbox.Views
                 case ImageRegistrationCommand.Cancel:
                     if (Model.Registered && MessageService.Current.Ask("Do you want to cancel image registration?"))
                     {
-                        // TODO: apply empty geotransform
                         Model.Registered = false;
                         View.RemoveTransformedImage();
                     }
@@ -181,12 +183,19 @@ namespace MW5.Plugins.Toolbox.Views
                 return;
             }
 
+            if (!Model.Points.Last().Complete)
+            {
+                MessageService.Current.Info("There is no pair for the last point. Please enter it before applying the transformation.");
+                return;
+            }
+
             var cf = Calculate();
             if (cf == null) return;
 
-            string path = Model.ImageFilename + "w";
-
-            WriteWorldFile(path, cf);
+            if (!SaveTranformation(cf))
+            {
+                return;
+            }
 
             Model.Registered = true;
             View.LoadTransformedImage();
@@ -194,11 +203,34 @@ namespace MW5.Plugins.Toolbox.Views
             MessageService.Current.Info("The image was transformed successfully.");
         }
 
-        private void WriteWorldFile(string path, double[] cf)
+        private bool SaveTranformation(double[] cf)
         {
+            string filename = Model.ImageFilename;
+
+            bool result;
+            
+            if (Model.Image.ImageFormat == Api.Enums.ImageFormat.Tiff)
+            {
+                result = SetGeoTranform(filename, cf);
+            }
+            else
+            {
+                result = WriteWorldFile(cf);
+            }
+
+            if (!result)
+            {
+                MessageService.Current.Warn("Failed to save new transformation. Please see error log for details.");
+            }
+
+            return result;
+        }
+
+        private bool WriteWorldFile(double[] cf)
+        {
+            string path = Model.ImageFilename + "w";
             try
             {
-                // TODO: apply it via GDAL instead
                 using (var w = new StreamWriter(path))
                 {
                     w.WriteLine(cf[1]);
@@ -212,7 +244,28 @@ namespace MW5.Plugins.Toolbox.Views
             catch (Exception ex)
             {
                 Logger.Current.Warn("Failed to write world file: " + path, ex);
+                return false;
             }
+
+            Model.Image.AssignProjection(_context.Map.Projection.Clone());
+            return true;
+        }
+
+        private bool SetGeoTranform(string filename, double[] cf)
+        {
+            using (var ds = new GdalRasterDataset())
+            {
+                if (ds.Open(filename, false))
+                {
+                    if (ds.SetGeoTransform(cf[0], cf[1], cf[2], cf[3], cf[4], cf[5]) &&
+                        ds.SetProjection(_context.Map.Projection.ExportToWkt()))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

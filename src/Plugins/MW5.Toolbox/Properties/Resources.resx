@@ -121,6 +121,9 @@
   <data name="img_apply24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_apply24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_cancel24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_cancel24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_cursor24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_cursor24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

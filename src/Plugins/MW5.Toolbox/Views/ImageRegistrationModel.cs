@@ -107,7 +107,21 @@ namespace MW5.Plugins.Toolbox.Views
             _imageName = filename;
             _image = BitmapSource.Open(filename, false);
 
+            CheckImageFormat();
+
             return _image;
+        }
+
+        private void CheckImageFormat()
+        {
+            if (_image.ImageFormat == ImageFormat.Bmp)
+            {
+                MessageService.Current.Info("Image registration for BMP format currently is not supported.");
+
+                _image.Dispose();
+                _image = null;
+                _imageName = string.Empty;
+            }
         }
 
         private string OpenFileDialog(IWin32Window parent)
@@ -123,26 +137,61 @@ namespace MW5.Plugins.Toolbox.Views
             return string.Empty;
         }
 
+        private IEnumerable<string> GetProjectionFilenames(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename)) yield break;
+
+            yield return filename + "w";
+
+            string ext = Path.GetExtension(filename);
+            if (ext.Length == 4)
+            {
+                yield return Path.ChangeExtension(filename, ext.Substring(1, 1) + ext.Substring(3,1) + "w");
+            }
+
+            yield return Path.ChangeExtension(filename, ".wld");
+
+            yield return Path.ChangeExtension(filename, ".prj");
+        }
+
         private bool RemovePreviousWorldFile(string filename)
         {
-            string name = filename + "w";
-
-            if (File.Exists(name))
+            if (filename.ToLower().EndsWith(".tif"))
             {
-                if (MessageService.Current.Ask("The world file for the image already exists. Do you want to remove it?"))
+                // do nothing, we won't be applying empty tranform
+                return true;
+            }
+
+            var names = GetProjectionFilenames(filename).ToList();
+
+            if (!names.Any(File.Exists)) return true;
+
+            string msg = string.Format("The world file for the image already exists.{0}Do you want to remove it?", Environment.NewLine);
+
+            var result = MessageService.Current.AskWithCancel(msg);
+
+            if (result == DialogResult.Cancel)
+            {
+                return false;
+            }
+
+            if (result == DialogResult.Yes)
+            {
+                foreach (var name in names)
                 {
                     try
                     {
-                        File.Delete(name);
-                        return true;
+                        if (File.Exists(name))
+                        {
+                            File.Delete(name);
+                        }
                     }
                     catch (Exception ex)
                     {
                         MessageService.Current.Info("Failed to remove file: " + ex.Message);
+                        return false;
                     }
                 }
-
-                return false;
             }
 
             return true;

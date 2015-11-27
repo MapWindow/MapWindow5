@@ -73,6 +73,7 @@
     <Compile Include="Concrete\EditorSettings.cs" />
     <Compile Include="Concrete\ExpressionFunction.cs" />
     <Compile Include="Concrete\ExpressionEvaluator.cs" />
+    <Compile Include="Concrete\GdalRasterDataset.cs" />
     <Compile Include="Concrete\GeoAngle.cs" />
     <Compile Include="Concrete\GeoSize.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />

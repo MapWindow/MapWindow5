@@ -171,7 +171,6 @@
       <DependentUpon>ImageRegistrationView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\img_pan24.png" />
   </ItemGroup>
@@ -183,6 +182,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_zoom_out24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_cancel24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

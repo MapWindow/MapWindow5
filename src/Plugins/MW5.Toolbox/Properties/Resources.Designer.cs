@@ -73,6 +73,16 @@ namespace MW5.Plugins.Toolbox.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_cancel24 {
+            get {
+                object obj = ResourceManager.GetObject("img_cancel24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_cursor24 {
             get {
                 object obj = ResourceManager.GetObject("img_cursor24", resourceCulture);

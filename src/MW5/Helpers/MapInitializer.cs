@@ -88,6 +88,8 @@ namespace MW5.Helpers
             map.ScalebarUnits = config.ScalebarUnits;
             map.ZoomBehavior = config.ZoomBehavior;
 
+            map.Identifier.Mode = config.IdentifierMode;
+
             map.BackgroundColor = config.MapBackgroundColor;
 
             UpdateMeasuringSettings(map.Measuring.Options, config);

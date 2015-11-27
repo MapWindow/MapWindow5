@@ -89,11 +89,14 @@ namespace MW5.Plugins.Toolbox.Views
             resultImage.SetTransparentColor(Color.Black);
             _resultHandle = mapControl1.Layers.Add(resultImage);
 
-            int pos = mapControl1.Layers.ItemByHandle(_resultHandle).Position;
-            mapControl1.Layers.MoveTop(pos);
-            mapControl1.ZoomToLayer(_resultHandle);
+            if (_resultHandle != -1)
+            {
+                int pos = mapControl1.Layers.ItemByHandle(_resultHandle).Position;
+                mapControl1.Layers.MoveTop(pos);
+                mapControl1.ZoomToLayer(_resultHandle);
+            }
 
-            btnApply.SendToBack();
+            UpdateView();
         }
 
         public event Action RecalculationNeeded;
@@ -103,9 +106,9 @@ namespace MW5.Plugins.Toolbox.Views
             if (_resultHandle != -1)
             {
                 mapControl1.Layers.Remove(_resultHandle);
-                btnApply.BringToFront();
-                UpdateView();
             }
+
+            UpdateView();
         }
 
         /// <summary>
@@ -160,6 +163,12 @@ namespace MW5.Plugins.Toolbox.Views
             if (!Model.ImageLoaded)
             {
                 MessageService.Current.Info("Please load an image.");
+                return;
+            }
+
+            if (Model.Registered)
+            {
+                MessageService.Current.Info("The tranformation was already applied.");
                 return;
             }
 
@@ -347,36 +356,50 @@ namespace MW5.Plugins.Toolbox.Views
 
             pointPairGrid1.AdjustColumnWidths();
 
-            btnApply.Enabled = ready;
+            btnApply.Enabled = ready && Model.Points.All(p => p.Complete);
             btnRemovePoint.Enabled = pointPairGrid1.Adapter.SelectedItem != null;
             btnZoomToPoint.Enabled = pointPairGrid1.Adapter.SelectedItem != null;
             btnClearPoints.Enabled = Model.Points.Any();
 
-            statusPointCount.Text = "Number of points: " + Model.Points.Count;
+            statusPointCount.Text = "Number of points: " + Model.ActivePoints.Count();
 
             double value = UnitConversionHelper.Convert(_context.Map.MapUnits, LengthUnits.Meters, Model.StdError);
             statusError.Text = "Error: " +  value.ToString("0.00 m");
 
             UpdateStatusMessage();
+
+            if (Model.Registered)
+            {
+                btnApply.SendToBack();
+            }
+            else
+            {
+                btnCancel.SendToBack();
+            }
         }
 
         private void UpdateStatusMessage()
         {
             if (!Model.ImageLoaded)
             {
-                status1.Text = "Please load an image to register";
+                status1.Text = "Please load an image to register.";
             }
             else if (Model.Registered)
             {
                 status1.Text = "The image was registered";
             }
+            else if (Model.Points.Count > 0 && !Model.Points.Last().Complete)
+            {
+                var last = Model.Points.Last();
+                status1.Text = last.Exists(true) ? "Please choose the target point on the left panel" : "Please choose the source point on the right panel";
+            }
             else if (Model.ActivePoints.Count() < 3)
             {
-                status1.Text = "Not enough points for registration";
+                status1.Text = "Not enough points for registration. Please choose them on the map with selection tool";
             }
             else
             {
-                status1.Text = "Ready";
+                status1.Text = "Ready to apply transformation";
             }
         }
 
@@ -428,7 +451,8 @@ namespace MW5.Plugins.Toolbox.Views
 
             int index = Model.Points.IndexOf(point);
 
-            ZoomToPoint(_fs1, index, 1000.0, mapControl1);
+            double pad = UnitConversionHelper.Convert(_context.Map.MapUnits, LengthUnits.Meters, 1000.0);
+            ZoomToPoint(_fs1, index, pad, mapControl1);
 
             ZoomToPoint(_fs2, index, 100.0, mapControl2);
         }
