@@ -29,6 +29,11 @@ namespace MW5.Plugins.Helpers
             return GetConfigPath() + @"\mwconfig.xml";
         }
 
+        public static string GetRepositoryConfigPath()
+        {
+            return GetConfigPath() + @"\repository.xml";
+        }
+
         public static string GetDockingConfigPath()
         {
             return GetConfigPath() + @"\Toolbars\dockstate";

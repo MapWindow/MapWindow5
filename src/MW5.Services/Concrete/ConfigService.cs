@@ -40,7 +40,19 @@ namespace MW5.Services.Concrete
             get { return ConfigPathHelper.GetConfigPath(); }
         }
 
-        public bool Save()
+        public void SaveAll()
+        {
+            SaveConfig();
+            SaveRepository();
+        }
+
+        public void LoadAll()
+        {
+            LoadConfig();
+            LoadRepository();
+        }
+
+        public bool SaveConfig()
         {
             try
             {
@@ -62,7 +74,7 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool Load()
+        public bool LoadConfig()
         {
             string path = ConfigPathHelper.GetConfigFilePath();
             if (!File.Exists(path))
@@ -83,9 +95,63 @@ namespace MW5.Services.Concrete
                 ApplyXmlConfig(xmlConfig);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageService.Current.Info("Failed to save app settings: " + ex.Message);
+                MessageService.Current.Info("Failed to load app settings: " + ex.Message);
+            }
+            return false;
+        }
+
+
+        private bool SaveRepository()
+        {
+            _repository.PrepareToSave();
+
+            try
+            {
+                using (var stream = new StreamWriter(ConfigPathHelper.GetRepositoryConfigPath(), false))
+                {
+                    var state = new XmlRepository(_repository).Serialize(false);
+                    stream.Write(state);
+                    stream.Flush();
+                    stream.Close();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                const string msg = "Failed to save the state of the repository.";
+                Logger.Current.Error(msg, ex);
+                MessageService.Current.Info(msg);
+            }
+            return false;
+        }
+
+        private bool LoadRepository()
+        {
+            string path = ConfigPathHelper.GetRepositoryConfigPath();
+            
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
+            try
+            {
+                XmlRepository xmlRepository;
+                using (var stream = new StreamReader(path, Encoding.UTF8))
+                {
+                    string state = stream.ReadToEnd();
+                    xmlRepository = state.Deserialize<XmlRepository>();
+                    stream.Close();
+                }
+
+                ApplyRepositoryConfig(xmlRepository);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Info("Failed to load the state of the repository: " + ex.Message);
             }
             return false;
         }
@@ -105,64 +171,64 @@ namespace MW5.Services.Concrete
 
             xmlConfig.ApplicationPlugins = plugins.ToList();
 
-            _repository.PrepareToSave();
-            xmlConfig.Repository = new XmlRepository(_repository);
-
             return xmlConfig;
+        }
+
+        private void ApplyRepositoryConfig(XmlRepository xmlRepository)
+        {
+            if (xmlRepository == null) return;
+
+            if (xmlRepository.Folders != null)
+            {
+                foreach (var item in xmlRepository.Folders)
+                {
+                    _repository.AddFolderLink(item);
+                }
+            }
+
+            if (xmlRepository.Connections != null)
+            {
+                foreach (var item in xmlRepository.Connections)
+                {
+                    _repository.AddConnection(item);
+                }
+            }
+
+            if (xmlRepository.WmsServers != null)
+            {
+                _repository.ClearWmsServers();
+
+                foreach (var item in xmlRepository.WmsServers)
+                {
+                    _repository.AddWmsServer(item);
+                }
+            }
+
+            if (xmlRepository.TmsProviders != null)
+            {
+                _repository.TmsProviders.Clear();
+
+                _repository.TmsProviders.AddRange(xmlRepository.TmsProviders);
+            }
+
+            if (xmlRepository.TmsGroups != null)
+            {
+                _repository.TmsGroups.Clear();
+
+                _repository.TmsGroups.AddRange(xmlRepository.TmsGroups);
+            }
+
+            if (xmlRepository.ExpandedFolders != null)
+            {
+                _repository.ExpandedFolders.Clear();
+                _repository.ExpandedFolders.AddRange(xmlRepository.ExpandedFolders);
+            }
         }
 
         private void ApplyXmlConfig(XmlConfig xmlConfig)
         {
             AppConfig.Instance = xmlConfig.Settings;
             AppConfig.Instance.ApplicationPlugins = xmlConfig.ApplicationPlugins.Select(p => p.Guid).ToList();
-
-            if (xmlConfig.Repository == null) return;
-
-            if (xmlConfig.Repository.Folders != null)
-            {
-                foreach (var item in xmlConfig.Repository.Folders)
-                {
-                    _repository.AddFolderLink(item);
-                }
-            }
-
-            if (xmlConfig.Repository.Connections != null)
-            {
-                foreach (var item in xmlConfig.Repository.Connections)
-                {
-                    _repository.AddConnection(item);
-                }
-            }
-
-            if (xmlConfig.Repository.WmsServers != null)
-            {
-                _repository.ClearWmsServers();
-
-                foreach (var item in xmlConfig.Repository.WmsServers)
-                {
-                    _repository.AddWmsServer(item);
-                }
-            }
-
-            if (xmlConfig.Repository.TmsProviders != null)
-            {
-                _repository.TmsProviders.Clear();
-
-                _repository.TmsProviders.AddRange(xmlConfig.Repository.TmsProviders);
-            }
-
-            if (xmlConfig.Repository.TmsGroups != null)
-            {
-                _repository.TmsGroups.Clear();
-
-                _repository.TmsGroups.AddRange(xmlConfig.Repository.TmsGroups);
-            }
-            
-            if (xmlConfig.Repository.ExpandedFolders != null)
-            {
-                _repository.ExpandedFolders.Clear();
-                _repository.ExpandedFolders.AddRange(xmlConfig.Repository.ExpandedFolders);
-            }
         }
     }
 }

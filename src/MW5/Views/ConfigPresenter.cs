@@ -70,7 +70,7 @@ namespace MW5.Views
                 case ConfigCommand.Save:
                     ApplySettings();
 
-                    bool result = _configService.Save();
+                    bool result = _configService.SaveConfig();
                     if (result)
                     {
                         MessageService.Current.Info("Configuration was saved successfully.");
@@ -138,7 +138,7 @@ namespace MW5.Views
         public override bool ViewOkClicked()
         {
             ApplySettings();
-            _configService.Save();
+            _configService.SaveAll();
             return true;
         }
     }

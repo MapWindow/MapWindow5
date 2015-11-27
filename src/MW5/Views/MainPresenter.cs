@@ -146,7 +146,7 @@ namespace MW5.Views
         private void OnViewClosing(object sender, CancelEventArgs e)
         {
             _configService.Config.LastProjectPath = _projectService.Filename;
-            _configService.Save();
+            _configService.SaveAll();
 
             if (!_projectService.TryClose())
             {

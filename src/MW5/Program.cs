@@ -79,7 +79,7 @@ namespace MW5
             MapInitializer.InitMapConfig();
 
             var configService = container.GetSingleton<IConfigService>();
-            configService.Load();
+            configService.LoadAll();
         }
 
         private static IApplicationContainer CreateContainer()

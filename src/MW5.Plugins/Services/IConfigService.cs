@@ -9,8 +9,10 @@ namespace MW5.Plugins.Services
 {
     public interface IConfigService
     {
-        bool Save();
-        bool Load();
+        void SaveAll();
+        void LoadAll();
+        bool SaveConfig();
+        bool LoadConfig();
         AppConfig Config { get; }
         string ConfigPath { get; }
     }
