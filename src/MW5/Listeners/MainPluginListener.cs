@@ -167,10 +167,13 @@ namespace MW5.Listeners
 
             if (!config.ShowPyramidDialog && config.CreatePyramidsOnOpening)
             {
-                bool result = raster.BuildDefaultOverviews(config.PyramidSampling, config.PyramidCompression);
+                if (raster.ImageFormat == ImageFormat.Vrt)
+                {
+                    Logger.Current.Info("Automatic creation of pyramids for .vrt dataset is skipped." );
+                    return true;
+                }
 
-
-
+                raster.BuildDefaultOverviews(config.PyramidSampling, config.PyramidCompression);
                 return true;
             }
 
