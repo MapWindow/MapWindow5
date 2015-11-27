@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Legend;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Serialization;
@@ -14,7 +15,7 @@ using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
-    public class ProjectLoaderLegacy
+    public class ProjectLoaderLegacy: ProjectLoaderBase
     {
         private readonly ImageSerializationService _imageSerializationService;
         private readonly ILayerService _layerService;
@@ -154,8 +155,14 @@ namespace MW5.Services.Concrete
             }
 
             var layers = project.MapwinGis.Layers;
+            int step = 0;
+            int count = layers.Count;
+            
             foreach (var xmlLayer in layers)
             {
+                step++;
+                FireProgressChanged(step, count, "Loading layer: " + xmlLayer.LayerName);
+
                 if (string.IsNullOrWhiteSpace(xmlLayer.Filename))
                 {
                     Logger.Current.Info("Failed to load layer: " + (xmlLayer.LayerName ?? ""));

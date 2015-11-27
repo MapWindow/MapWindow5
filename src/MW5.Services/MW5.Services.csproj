@@ -88,6 +88,7 @@
     <Compile Include="Concrete\FlexibleMessageService.cs" />
     <Compile Include="Concrete\BaseLogger.cs" />
     <Compile Include="Concrete\NominatimGeoLocationService.cs" />
+    <Compile Include="Concrete\ProjectLoaderBase.cs" />
     <Compile Include="Concrete\SelectLayerService.cs" />
     <Compile Include="Concrete\LogLevelConverter.cs" />
     <Compile Include="Concrete\ProjectLoaderLegacy.cs" />
@@ -148,6 +149,12 @@
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\ICreateLayerView.cs" />
+    <Compile Include="Views\ProjectLoadingView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ProjectLoadingView.Designer.cs">
+      <DependentUpon>ProjectLoadingView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectLayerGridAdapter.cs" />
     <Compile Include="Views\MissingLayersPresenter.cs" />
     <Compile Include="Views\MissingLayersView.cs">
@@ -200,6 +207,9 @@
     <None Include="Resources\img_question32.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\ProjectLoadingView.resx">
+      <DependentUpon>ProjectLoadingView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SelectLayerGrid.resx">
       <DependentUpon>SelectLayerGrid.cs</DependentUpon>
     </EmbeddedResource>

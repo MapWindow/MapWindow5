@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Controls;
 using MW5.Helpers;
@@ -133,6 +134,8 @@ namespace MW5.Views
 
         private void OnBeforeShow()
         {
+            Application.DoEvents();
+
             LoadLastProject();
 
             if (AppConfig.Instance.ShowWelcomeDialog)

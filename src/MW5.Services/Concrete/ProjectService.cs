@@ -12,6 +12,7 @@ using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
 using MW5.Services.Serialization.Legacy;
+using MW5.Services.Views;
 using MW5.Shared;
 
 namespace MW5.Services.Concrete
@@ -21,6 +22,7 @@ namespace MW5.Services.Concrete
         private const string ProjectFilter = "MapWindow 5 project (*.mwproj)|*.mwproj|MapWindow 4 project (*.mwprj)|*.mwprj|All projects|*.mwprj;*.mwproj";
         private const int ProjectFilterIndex = 3;
 
+        private ProjectLoadingView _loadingForm;
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileService;
         private readonly IBroadcasterService _broadcaster;
@@ -235,15 +237,62 @@ namespace MW5.Services.Concrete
             string filename;
             if (_fileService.Open(ProjectFilter, out filename, ProjectFilterIndex))
             {
-                if (filename.ToLower().EndsWith(".mwproj"))
-                {
-                    return Open(filename);
-                }
-
-                return OpenLegacyProject(filename);
+                Open(filename);
             }
 
             return false;
+        }
+
+        private ProjectLoaderBase GetCurrentLoader(bool legacy = false)
+        {
+            return legacy ? _projectLoaderLegacy : (ProjectLoaderBase)_projectLoader;
+        }
+
+        public bool Open(string filename, bool silent = true)
+        {
+            ShowLoadingForm(filename);
+
+            bool result;
+
+            bool legacy = !filename.ToLower().EndsWith(".mwproj");
+            var loader = GetCurrentLoader(legacy);
+            loader.ProgressChanged += OnLoadingProgressChanged;
+
+            if (legacy)
+            {
+                result = OpenLegacyProject(filename);
+                
+            }
+            else
+            {
+                result = OpenCore(filename, silent);
+            }
+
+            loader.ProgressChanged -= OnLoadingProgressChanged;
+
+            HideLoadingForm();
+
+            return result;
+        }
+
+        private void OnLoadingProgressChanged(object sender, Plugins.Events.ProgressEventArgs e)
+        {
+            _loadingForm.ShowProgress(e.Percent, e.Message);
+        }
+
+        private void HideLoadingForm()
+        {
+            _loadingForm.Close();
+            _loadingForm.Dispose();
+            _loadingForm = null;
+        }
+
+        private void ShowLoadingForm(string filename)
+        {
+            _loadingForm = new ProjectLoadingView(filename);
+
+            _context.View.ShowChildView(_loadingForm, false);
+            Application.DoEvents();
         }
 
         private bool CheckProjectFilename(string filename, bool silent)
@@ -287,16 +336,23 @@ namespace MW5.Services.Concrete
                 try
                 {
                     var project = state.DeserializeFromXml<MapWin4Project>();
-                    bool result = _projectLoaderLegacy.Restore(project, filename);
+                    if (!_projectLoaderLegacy.Restore(project, filename))
+                    {
+                        Clear();
+                        SetEmptyProject();
+                        return false;
+                    }
 
                     _filename = string.Empty;       // it must be saved in a new format
 
+                    string message = "Legacy MapWindow 4 project was loaded: " + filename;
+
                     if (!silent)
                     {
-                        MessageService.Current.Info("Legacy MapWindow 4 project was loaded: " + result);
+                        MessageService.Current.Info(message);
                     }
 
-                    Logger.Current.Info("Legacy MapWindow 4 project was loaded: " + result);
+                    Logger.Current.Info(message);
 
                     return true;
                 }
@@ -311,7 +367,7 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool Open(string filename, bool silent = true)
+        public bool OpenCore(string filename, bool silent = true)
         {
             if (!CheckProjectFilename(filename, silent))
             {
