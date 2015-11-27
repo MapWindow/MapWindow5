@@ -45,6 +45,9 @@ namespace MW5.Views
                                    25000, 
                                    50000, 
                                    100000, 
+                                   250000, 
+                                   500000, 
+                                   1000000, 
                                    2500000, 
                                    5000000, 
                                    10000000, 
@@ -57,9 +60,28 @@ namespace MW5.Views
 
             cboScale.DataSource = scales;
 
-            cboScale.Text = txtScale.Text;
+            SetInitialScale(scales);
 
             chkSnap.Checked = _snapToZoomLevels;
+        }
+
+        private void SetInitialScale(int[] scales)
+        {
+            double scale = _map.CurrentScale;
+
+            for (int i = 0; i < scales.Length; i++)
+            {
+                if (scale <= scales[i])
+                {
+                    cboScale.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            if (cboScale.SelectedItem == null && cboScale.Items.Count > 0)
+            {
+                cboScale.SelectedItem = cboScale.Items[cboScale.Items.Count - 1];
+            }
         }
 
         public ButtonBase OkButton
