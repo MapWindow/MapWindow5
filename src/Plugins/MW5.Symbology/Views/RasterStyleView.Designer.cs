@@ -151,7 +151,7 @@ namespace MW5.Plugins.Symbology.Views
             // tabControlAdv1
             // 
             this.tabControlAdv1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(636, 443);
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(631, 443);
             this.tabControlAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabControlAdv1.BorderVisible = true;
             this.tabControlAdv1.BorderWidth = 1;
@@ -168,7 +168,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabControlAdv1.Name = "tabControlAdv1";
             this.tabControlAdv1.Padding = new System.Drawing.Point(5, 10);
             this.tabControlAdv1.RotateTextWhenVertical = true;
-            this.tabControlAdv1.Size = new System.Drawing.Size(636, 443);
+            this.tabControlAdv1.Size = new System.Drawing.Size(631, 443);
             this.tabControlAdv1.TabIndex = 0;
             this.tabControlAdv1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererBlendLight);
             this.tabControlAdv1.TextLineAlignment = System.Drawing.StringAlignment.Near;
@@ -195,7 +195,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageGeneral.Name = "tabPageGeneral";
             this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(5);
             this.tabPageGeneral.ShowCloseButton = true;
-            this.tabPageGeneral.Size = new System.Drawing.Size(515, 441);
+            this.tabPageGeneral.Size = new System.Drawing.Size(510, 441);
             this.tabPageGeneral.TabIndex = 1;
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.ThemesEnabled = false;
@@ -281,7 +281,7 @@ namespace MW5.Plugins.Symbology.Views
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 152);
+            this.label5.Location = new System.Drawing.Point(19, 149);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 13);
             this.label5.TabIndex = 7;
@@ -312,7 +312,7 @@ namespace MW5.Plugins.Symbology.Views
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 111);
+            this.label4.Location = new System.Drawing.Point(19, 108);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 13);
             this.label4.TabIndex = 4;
@@ -333,7 +333,7 @@ namespace MW5.Plugins.Symbology.Views
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 70);
+            this.label3.Location = new System.Drawing.Point(19, 67);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 2;
@@ -353,7 +353,7 @@ namespace MW5.Plugins.Symbology.Views
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 31);
+            this.label2.Location = new System.Drawing.Point(19, 28);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 0;
@@ -367,7 +367,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageColors.Location = new System.Drawing.Point(120, 1);
             this.tabPageColors.Name = "tabPageColors";
             this.tabPageColors.ShowCloseButton = true;
-            this.tabPageColors.Size = new System.Drawing.Size(515, 441);
+            this.tabPageColors.Size = new System.Drawing.Size(510, 441);
             this.tabPageColors.TabIndex = 4;
             this.tabPageColors.Text = "Colors";
             this.tabPageColors.ThemesEnabled = false;
@@ -396,7 +396,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageRendering.Location = new System.Drawing.Point(120, 1);
             this.tabPageRendering.Name = "tabPageRendering";
             this.tabPageRendering.ShowCloseButton = true;
-            this.tabPageRendering.Size = new System.Drawing.Size(515, 441);
+            this.tabPageRendering.Size = new System.Drawing.Size(510, 441);
             this.tabPageRendering.TabIndex = 3;
             this.tabPageRendering.Text = "Rendering";
             this.tabPageRendering.ThemesEnabled = false;
@@ -728,7 +728,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageHistogram.Location = new System.Drawing.Point(120, 1);
             this.tabPageHistogram.Name = "tabPageHistogram";
             this.tabPageHistogram.ShowCloseButton = true;
-            this.tabPageHistogram.Size = new System.Drawing.Size(515, 441);
+            this.tabPageHistogram.Size = new System.Drawing.Size(510, 441);
             this.tabPageHistogram.TabIndex = 7;
             this.tabPageHistogram.Text = "Histogram";
             this.tabPageHistogram.ThemesEnabled = false;
@@ -737,7 +737,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.histogramControl1.Location = new System.Drawing.Point(3, 3);
             this.histogramControl1.Name = "histogramControl1";
-            this.histogramControl1.Size = new System.Drawing.Size(509, 435);
+            this.histogramControl1.Size = new System.Drawing.Size(505, 435);
             this.histogramControl1.TabIndex = 0;
             // 
             // tabPagePyramids
@@ -748,7 +748,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPagePyramids.Location = new System.Drawing.Point(120, 1);
             this.tabPagePyramids.Name = "tabPagePyramids";
             this.tabPagePyramids.ShowCloseButton = true;
-            this.tabPagePyramids.Size = new System.Drawing.Size(515, 441);
+            this.tabPagePyramids.Size = new System.Drawing.Size(510, 441);
             this.tabPagePyramids.TabIndex = 5;
             this.tabPagePyramids.Text = "Pyramids";
             this.tabPagePyramids.ThemesEnabled = false;
@@ -759,7 +759,7 @@ namespace MW5.Plugins.Symbology.Views
             this._overviewControl1.Location = new System.Drawing.Point(0, 0);
             this._overviewControl1.Name = "_overviewControl1";
             this._overviewControl1.Padding = new System.Windows.Forms.Padding(10);
-            this._overviewControl1.Size = new System.Drawing.Size(515, 441);
+            this._overviewControl1.Size = new System.Drawing.Size(510, 441);
             this._overviewControl1.TabIndex = 0;
             // 
             // tabPageInfo
@@ -772,7 +772,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageInfo.Location = new System.Drawing.Point(120, 1);
             this.tabPageInfo.Name = "tabPageInfo";
             this.tabPageInfo.ShowCloseButton = true;
-            this.tabPageInfo.Size = new System.Drawing.Size(515, 441);
+            this.tabPageInfo.Size = new System.Drawing.Size(510, 441);
             this.tabPageInfo.TabIndex = 2;
             this.tabPageInfo.Text = "Info";
             this.tabPageInfo.ThemesEnabled = false;
@@ -807,7 +807,7 @@ namespace MW5.Plugins.Symbology.Views
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
-            this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(515, 400);
+            this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(510, 400);
             this.rasterInfoTreeView1.BorderColor = System.Drawing.Color.Silver;
             this.rasterInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rasterInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
@@ -827,7 +827,7 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.ShowColumnsHeader = false;
             this.rasterInfoTreeView1.ShowLines = false;
             this.rasterInfoTreeView1.ShowRootLines = false;
-            this.rasterInfoTreeView1.Size = new System.Drawing.Size(515, 400);
+            this.rasterInfoTreeView1.Size = new System.Drawing.Size(510, 400);
             this.rasterInfoTreeView1.Style = Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.MultiColumnVisualStyle.Metro;
             this.rasterInfoTreeView1.TabIndex = 0;
             this.rasterInfoTreeView1.Text = "rasterInfoTreeView1";

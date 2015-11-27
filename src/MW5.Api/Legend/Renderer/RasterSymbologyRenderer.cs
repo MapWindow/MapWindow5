@@ -56,7 +56,7 @@ namespace MW5.Api.Legend.Renderer
                         RenderColorScheme(g, layer, bounds, ref r, raster.RgbBandMapping, false);
                         break;
                     case RasterRendering.ColorScheme:
-                        RenderColorScheme(g, layer, bounds, ref r, raster.CustomColorScheme, true);
+                        RenderColorScheme(g, layer, bounds, ref r, raster.ActiveColorScheme, true);
                         break;
                     case RasterRendering.BuiltInColorTable:
                         RenderColorScheme(g, layer, bounds, ref r, raster.Bands[1].ColorTable, true, true);

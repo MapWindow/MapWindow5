@@ -423,7 +423,7 @@ namespace MW5.Api.Legend
 
             if (LegendLayerType == LegendLayerType.Grid || LegendLayerType == LegendLayerType.Image)
             {
-                if (RasterSymbologyCount > 0 && expanded)
+                if (expanded)
                 {
                     ret += Constants.CsItemHeightAndPad(); //!string.IsNullOrWhiteSpace(SymbologyCaption) ? Constants.CsItemHeightAndPad() : 0;
 
