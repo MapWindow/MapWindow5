@@ -63,24 +63,20 @@ namespace MW5.Views
             SetInitialScale(scales);
 
             chkSnap.Checked = _snapToZoomLevels;
+
         }
 
-        private void SetInitialScale(int[] scales)
+        private void SetInitialScale(IEnumerable<int> scales)
         {
             double scale = _map.CurrentScale;
 
-            for (int i = 0; i < scales.Length; i++)
-            {
-                if (scale <= scales[i])
-                {
-                    cboScale.SelectedIndex = i;
-                    break;
-                }
-            }
+            var list = scales.Select((item, index) => new { Value = Math.Abs(scale - item), Index = index });
 
-            if (cboScale.SelectedItem == null && cboScale.Items.Count > 0)
+            var newScale = list.OrderBy(item => item.Value).FirstOrDefault();
+
+            if (newScale != null)
             {
-                cboScale.SelectedItem = cboScale.Items[cboScale.Items.Count - 1];
+                cboScale.SelectedIndex = newScale.Index;
             }
         }
 
