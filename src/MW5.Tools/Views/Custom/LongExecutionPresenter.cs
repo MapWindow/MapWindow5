@@ -16,6 +16,7 @@ using MW5.Tools.Views.Custom.Abstract;
 
 namespace MW5.Tools.Views.Custom
 {
+    #if DEBUG
     public class LongExecutionPresenter: BasePresenter<ILongExecutionView, ToolViewModel>
     {
         private readonly IAppContext _context;
@@ -70,4 +71,5 @@ namespace MW5.Tools.Views.Custom
             progress.SafeInvoke(action);
         }
     }
+#endif
 }
