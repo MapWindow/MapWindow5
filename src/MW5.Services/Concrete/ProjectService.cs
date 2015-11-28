@@ -277,6 +277,11 @@ namespace MW5.Services.Concrete
                 result = OpenCore(filename, silent);
             }
 
+            // let's redraw map before hiding the progress
+            _loadingForm.ShowProgress(100, "Rendering map...");
+            _context.Map.Redraw();
+            Application.DoEvents();
+
             loader.ProgressChanged -= OnLoadingProgressChanged;
 
             HideLoadingForm();
