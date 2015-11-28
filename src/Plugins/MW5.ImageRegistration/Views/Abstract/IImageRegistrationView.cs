@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Interfaces;
-using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 
-namespace MW5.Plugins.Toolbox.Views.Abstract
+namespace MW5.Plugins.ImageRegistration.Views.Abstract
 {
     interface IImageRegistrationView : IComplexView<ImageRegistrationModel>
     {

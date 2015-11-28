@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.Toolbox.Controls
+﻿namespace MW5.Plugins.ImageRegistration.Controls
 {
     partial class PointPairGrid
     {

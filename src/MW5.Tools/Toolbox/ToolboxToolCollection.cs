@@ -56,7 +56,18 @@ namespace MW5.Tools.Toolbox
                 Text = item.Name,
                 LeftImageIndices = new[] { GetIconIndex(item) }
             };
-            
+
+            // let's insert it in alphabetical order
+            foreach (var tool in this)
+            {
+                if (String.CompareOrdinal(tool.Tool.Name, item.Name) > 0)
+                {
+                    int index = _nodes.IndexOf(tool.InternalObject);
+                    _nodes.Insert(index, node);
+                    return;
+                }
+            }
+
             _nodes.Add(node);
         }
 

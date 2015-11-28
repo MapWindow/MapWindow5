@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,16 +15,16 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
 using MW5.Api.Static;
+using MW5.Plugins.ImageRegistration.Helpers;
+using MW5.Plugins.ImageRegistration.Model;
+using MW5.Plugins.ImageRegistration.Views.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Plugins.Toolbox.Helpers;
-using MW5.Plugins.Toolbox.Model;
-using MW5.Plugins.Toolbox.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
-namespace MW5.Plugins.Toolbox.Views
+namespace MW5.Plugins.ImageRegistration.Views
 {
     internal partial class ImageRegistrationView : ImageRegistrationViewBase, IImageRegistrationView
     {

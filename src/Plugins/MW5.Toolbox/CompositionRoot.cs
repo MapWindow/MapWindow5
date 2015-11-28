@@ -8,9 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using MW5.Plugins.Mvp;
-using MW5.Plugins.Toolbox.Services;
-using MW5.Plugins.Toolbox.Views;
-using MW5.Plugins.Toolbox.Views.Abstract;
 
 namespace MW5.Plugins.Toolbox
 {
@@ -24,8 +21,7 @@ namespace MW5.Plugins.Toolbox
         /// </summary>
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterView<IImageRegistrationView, ImageRegistrationView>()
-                     .RegisterService<ILeastSquaresSolver, GaussEliminationSolver>();
+            
         }
     }
 }

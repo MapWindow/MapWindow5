@@ -13,5 +13,6 @@ namespace MW5.Plugins.Interfaces
     {
         ITool Tool { get; }
         bool Visible { get; set; }
+        object InternalObject { get; }
     }
 }

@@ -5,21 +5,20 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.ImageRegistration.Enums;
+using MW5.Plugins.ImageRegistration.Services;
+using MW5.Plugins.ImageRegistration.Views.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Plugins.Toolbox.Enums;
-using MW5.Plugins.Toolbox.Services;
-using MW5.Plugins.Toolbox.Views.Abstract;
 using MW5.Shared;
 
-namespace MW5.Plugins.Toolbox.Views
+namespace MW5.Plugins.ImageRegistration.Views
 {
     internal class ImageRegistrationPresenter :
         ComplexPresenter<IImageRegistrationView, ImageRegistrationCommand, ImageRegistrationModel>

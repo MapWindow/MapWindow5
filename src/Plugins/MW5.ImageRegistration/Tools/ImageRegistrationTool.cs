@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Concrete;
+﻿using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
-using MW5.Plugins.Interfaces;
-using MW5.Plugins.Toolbox.Views;
+using MW5.Plugins.ImageRegistration.Views;
+using MW5.Plugins.Toolbox;
 using MW5.Shared;
 using MW5.Tools.Model;
 
-namespace MW5.Plugins.Toolbox.Tools
+namespace MW5.Plugins.ImageRegistration.Tools
 {
     [CustomLayout]
     [GisTool(GroupKeys.Raster)]
@@ -39,7 +34,7 @@ namespace MW5.Plugins.Toolbox.Tools
         /// </summary>
         public override PluginIdentity PluginIdentity
         {
-            get { return PluginIdentityHelper.GetIdentity(typeof(ToolboxPlugin)); }
+            get { return PluginIdentityHelper.GetIdentity(typeof(ImageRegistrationPlugin)); }
         }
 
         /// <summary>

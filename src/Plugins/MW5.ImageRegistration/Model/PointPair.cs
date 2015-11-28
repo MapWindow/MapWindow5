@@ -3,9 +3,8 @@ using System.ComponentModel;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Shared;
-using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Plugins.Toolbox.Model
+namespace MW5.Plugins.ImageRegistration.Model
 {
     internal class PointPair
     {

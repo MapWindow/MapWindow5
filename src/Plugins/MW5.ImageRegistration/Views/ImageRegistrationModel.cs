@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,10 +14,10 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Plugins.ImageRegistration.Model;
 using MW5.Plugins.Services;
-using MW5.Plugins.Toolbox.Model;
 
-namespace MW5.Plugins.Toolbox.Views
+namespace MW5.Plugins.ImageRegistration.Views
 {
     internal class ImageRegistrationModel
     {

@@ -15,6 +15,9 @@ namespace MW5.Tools.Tools.Fake
     #if DEBUG
 
     [GisTool(GroupKeys.Fake, ToolIcon.ToolDefault, typeof(LongExecutionPresenter))]
+
+    #endif
+
     [CustomLayout]
     public class LongExecutionTool: GisTool
     {
@@ -71,6 +74,4 @@ namespace MW5.Tools.Tools.Fake
             return true;   // depends on the run in background check
         }
     }
-
-    #endif
 }

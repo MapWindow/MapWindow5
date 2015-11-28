@@ -1,6 +1,7 @@
-﻿using Syncfusion.Windows.Forms.Tools;
+﻿using MW5.Plugins.ImageRegistration.Controls;
+using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Plugins.Toolbox.Views
+namespace MW5.Plugins.ImageRegistration.Views
 {
     partial class ImageRegistrationView
     {
@@ -46,7 +47,7 @@ namespace MW5.Plugins.Toolbox.Views
             this.status1 = new Syncfusion.Windows.Forms.Tools.StatusStripButton();
             this.statusError = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.pointPairGrid1 = new MW5.Plugins.Toolbox.Controls.PointPairGrid();
+            this.pointPairGrid1 = new PointPairGrid();
             this.btnZoomToPoint = new System.Windows.Forms.Button();
             this.btnClearPoints = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -255,7 +256,7 @@ namespace MW5.Plugins.Toolbox.Views
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(129, 31);
-            this.btnCancel.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_cancel24;
+            this.btnCancel.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_cancel24;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancel.IsBackStageButton = false;
             this.btnCancel.Location = new System.Drawing.Point(823, 44);
@@ -317,7 +318,7 @@ namespace MW5.Plugins.Toolbox.Views
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.BeforeTouchSize = new System.Drawing.Size(129, 31);
-            this.btnApply.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_apply24;
+            this.btnApply.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_apply24;
             this.btnApply.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnApply.IsBackStageButton = false;
             this.btnApply.Location = new System.Drawing.Point(822, 44);
@@ -334,7 +335,7 @@ namespace MW5.Plugins.Toolbox.Views
             // 
             this.btnLoadImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadImage.BeforeTouchSize = new System.Drawing.Size(129, 31);
-            this.btnLoadImage.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_folder24;
+            this.btnLoadImage.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_folder24;
             this.btnLoadImage.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadImage.IsBackStageButton = false;
             this.btnLoadImage.Location = new System.Drawing.Point(822, 7);
@@ -349,7 +350,7 @@ namespace MW5.Plugins.Toolbox.Views
             // 
             // btnZoomMax
             // 
-            this.btnZoomMax.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_max24;
+            this.btnZoomMax.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_zoom_max24;
             this.btnZoomMax.Location = new System.Drawing.Point(841, 124);
             this.btnZoomMax.Name = "btnZoomMax";
             this.btnZoomMax.Size = new System.Drawing.Size(40, 33);
@@ -361,7 +362,7 @@ namespace MW5.Plugins.Toolbox.Views
             // mnuZoomIn
             // 
             this.mnuZoomIn.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuZoomIn.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_in24;
+            this.mnuZoomIn.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_zoom_in24;
             this.mnuZoomIn.Location = new System.Drawing.Point(702, 124);
             this.mnuZoomIn.Name = "mnuZoomIn";
             this.mnuZoomIn.Size = new System.Drawing.Size(40, 33);
@@ -373,7 +374,7 @@ namespace MW5.Plugins.Toolbox.Views
             // mnuZoomOut
             // 
             this.mnuZoomOut.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuZoomOut.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_zoom_out24;
+            this.mnuZoomOut.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_zoom_out24;
             this.mnuZoomOut.Location = new System.Drawing.Point(748, 124);
             this.mnuZoomOut.Name = "mnuZoomOut";
             this.mnuZoomOut.Size = new System.Drawing.Size(40, 33);
@@ -385,7 +386,7 @@ namespace MW5.Plugins.Toolbox.Views
             // mnuPan
             // 
             this.mnuPan.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mnuPan.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_pan24;
+            this.mnuPan.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_pan24;
             this.mnuPan.Location = new System.Drawing.Point(795, 124);
             this.mnuPan.Name = "mnuPan";
             this.mnuPan.Size = new System.Drawing.Size(40, 33);
@@ -398,7 +399,7 @@ namespace MW5.Plugins.Toolbox.Views
             // 
             this.mnuSelect.Appearance = System.Windows.Forms.Appearance.Button;
             this.mnuSelect.Checked = true;
-            this.mnuSelect.Image = global::MW5.Plugins.Toolbox.Properties.Resources.img_cursor24;
+            this.mnuSelect.Image = global::MW5.Plugins.ImageRegistration.Properties.Resources.img_cursor24;
             this.mnuSelect.Location = new System.Drawing.Point(656, 124);
             this.mnuSelect.Name = "mnuSelect";
             this.mnuSelect.Size = new System.Drawing.Size(40, 33);
@@ -483,7 +484,7 @@ namespace MW5.Plugins.Toolbox.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private System.Windows.Forms.ToolStripStatusLabel statusPointCount;
         private StatusStripButton status1;
-        private Controls.PointPairGrid pointPairGrid1;
+        private PointPairGrid pointPairGrid1;
         private System.Windows.Forms.ToolStripStatusLabel statusError;
         private System.Windows.Forms.Button btnZoomToPoint;
         private System.Windows.Forms.Button btnClearPoints;

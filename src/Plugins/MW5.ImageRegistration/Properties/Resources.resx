@@ -117,4 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="img_apply24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_apply24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_cancel24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_cancel24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_cursor24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_cursor24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_folder24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_folder24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_georectify24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_georectify24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_pan24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_pan24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_zoom_in24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_zoom_in24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_zoom_max24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_zoom_max24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_zoom_out24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_zoom_out24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

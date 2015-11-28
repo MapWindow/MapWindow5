@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Plugins.Toolbox.Model;
+﻿using MW5.Plugins.ImageRegistration.Model;
 using MW5.UI.Controls;
 
-namespace MW5.Plugins.Toolbox.Controls
+namespace MW5.Plugins.ImageRegistration.Controls
 {
     internal partial class PointPairGrid : StronglyTypedGrid<PointPair>
     {

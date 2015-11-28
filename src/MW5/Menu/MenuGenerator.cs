@@ -76,7 +76,9 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.ShowRepository]);
             items.AddButton(_commands[MenuKeys.ShowToolbox]);
 
-            items.AddButton(_commands[MenuKeys.Settings], true);
+            var item = items.AddButton(_commands[MenuKeys.Settings], true);
+
+            items.InsertBefore = item;
 
             _context.Menu.ToolsMenu.Update();
         }

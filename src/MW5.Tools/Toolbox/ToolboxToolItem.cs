@@ -32,5 +32,10 @@ namespace MW5.Tools.Toolbox
                 _node.IsSelectable = value;
             }
         }
+
+        public object InternalObject 
+        { 
+            get  { return _node; } 
+        }
     }
 }

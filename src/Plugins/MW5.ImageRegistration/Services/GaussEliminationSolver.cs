@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using MW5.Api.Interfaces;
 
-namespace MW5.Plugins.Toolbox.Services
+namespace MW5.Plugins.ImageRegistration.Services
 {
     internal class GaussEliminationSolver : ILeastSquaresSolver
     {

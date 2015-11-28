@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
-namespace MW5.Plugins.Toolbox.Helpers
+namespace MW5.Plugins.ImageRegistration.Helpers
 {
     internal static class PointLayerHelper
     {
