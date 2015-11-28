@@ -61,11 +61,11 @@ namespace MW5.Views
                 return;    // it was cancelled, let the user go on working with form
             }
 
+            View.Close();
+
             // recent project
             string path = Model.RecentProjects[View.ProjectId];
             _projectService.Open(path);
-
-            View.Close();
         }
     }
 }

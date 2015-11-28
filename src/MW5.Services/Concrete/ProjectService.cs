@@ -250,18 +250,27 @@ namespace MW5.Services.Concrete
 
         public bool Open(string filename, bool silent = true)
         {
-            ShowLoadingForm(filename);
+            if (!CheckProjectFilename(filename, silent))
+            {
+                return false;
+            }
 
-            bool result;
+            if (!TryClose())
+            {
+                return false;
+            }
+
+            ShowLoadingForm(filename);
 
             bool legacy = !filename.ToLower().EndsWith(".mwproj");
             var loader = GetCurrentLoader(legacy);
             loader.ProgressChanged += OnLoadingProgressChanged;
 
+            bool result;
+
             if (legacy)
             {
                 result = OpenLegacyProject(filename);
-                
             }
             else
             {
@@ -315,18 +324,8 @@ namespace MW5.Services.Concrete
             return true;
         }
 
-        public bool OpenLegacyProject(string filename, bool silent = false)
+        private bool OpenLegacyProject(string filename, bool silent = false)
         {
-            if (!CheckProjectFilename(filename, silent))
-            {
-                return false;
-            }
-
-            if (!TryClose())
-            {
-                return false;
-            }
-
             Logger.Current.Info("Start opening legacy MapWindow 4 project: " + filename);
 
             using (var reader = new StreamReader(filename))
@@ -367,19 +366,8 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool OpenCore(string filename, bool silent = true)
+        private bool OpenCore(string filename, bool silent = true)
         {
-            if (!CheckProjectFilename(filename, silent))
-            {
-                return false;
-            }
-
-            // PM: Close current project first:
-            if (!TryClose())
-            {
-                return false;
-            }
-
             using (var reader = new StreamReader(filename))
             {
                 string state = reader.ReadToEnd();
