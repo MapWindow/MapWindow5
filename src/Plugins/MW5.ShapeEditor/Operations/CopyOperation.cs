@@ -7,7 +7,9 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Attributes.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Helpers;
+using MW5.Shared;
 
 namespace MW5.Plugins.ShapeEditor.Operations
 {
@@ -101,7 +103,7 @@ namespace MW5.Plugins.ShapeEditor.Operations
         private void FeatureSetToSystemClipboard(IFeatureSet fs)
         {
             string s = fs.SerializeForClipboard();
-            Clipboard.SetText(s);
+            ClipboardHelper.SetText(s);
         }
 
         private void PopulateBuffer(IFeatureSet sf)

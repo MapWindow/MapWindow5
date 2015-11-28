@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Shared;
 using Syncfusion.Windows.Forms;
 
 namespace MW5.Plugins.Services
@@ -792,7 +793,7 @@ namespace MW5.Plugins.Services
                                          + STANDARD_MESSAGEBOX_SEPARATOR_LINES;
 
                     //Set text in clipboard
-                    Clipboard.SetText(textForClipboard);
+                    ClipboardHelper.SetText(textForClipboard);
                 }
             }
 

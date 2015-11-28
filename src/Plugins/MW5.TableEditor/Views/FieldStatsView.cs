@@ -13,6 +13,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
+using MW5.Shared;
 using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
@@ -56,7 +57,7 @@ namespace MW5.Plugins.TableEditor.Views
                 s += item + Environment.NewLine;
             }
 
-            Clipboard.SetText(s);
+            ClipboardHelper.SetText(s);
         }
 
         private void PopulateFields()

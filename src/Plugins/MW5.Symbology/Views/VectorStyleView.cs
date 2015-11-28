@@ -816,7 +816,8 @@ namespace MW5.Plugins.Symbology.Views
             temp.AddSubItem(data);
             temp.AddSubItem(data2);
             string s = temp.Serialize();
-            Clipboard.SetText(s);
+            
+            ClipboardHelper.SetText(s);
         }
     }
 
