@@ -61,17 +61,6 @@ namespace MW5.Menu
             TilesMenuHelper.ChooseActiveProvider += OnChooseActiveProvider;
         }
 
-        public static Control FindFocusedControl(Control control)
-        {
-            var container = control as IContainerControl;
-            while (container != null)
-            {
-                control = container.ActiveControl;
-                container = control as IContainerControl;
-            }
-            return control;
-        }
-
         public void RunCommand(string menuKey)
         {
             if (HandleCursorChanged(menuKey) || HandleProjectCommand(menuKey) || HandleDialogs(menuKey) ||

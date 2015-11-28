@@ -42,6 +42,14 @@ namespace MW5.Data.Repository
             ItemDrag += RepositoryTreeView_ItemDrag;
         }
 
+        public new event EventHandler DoubleClick;
+
+        protected override void OnDoubleClick(EventArgs e)
+        {
+            // this disabled the default behavior on double click: collapse / expand
+            DelegateHelper.FireEvent(this, DoubleClick);
+        }
+
         public void InitRepository(IRepository repository)
         {
             if (_initialized)

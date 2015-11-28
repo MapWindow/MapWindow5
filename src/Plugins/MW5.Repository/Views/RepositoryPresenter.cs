@@ -488,6 +488,18 @@ namespace MW5.Plugins.Repository.Views
             {
                 RunCommand(RepositoryCommand.AddToMap);
             }
+            else if (e.Item is IServerItem)
+            {
+                RunCommand(RepositoryCommand.AddConnection);
+            }
+            else if (e.Item.Type == RepositoryItemType.TmsRoot)
+            {
+                RunCommand(RepositoryCommand.AddTms);
+            }
+            else if (e.Item.Type == RepositoryItemType.FileSystem)
+            {
+                RunCommand(RepositoryCommand.AddFolder);
+            }
         }
     }
 }

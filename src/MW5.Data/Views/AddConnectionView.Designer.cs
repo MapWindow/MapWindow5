@@ -35,6 +35,7 @@ namespace MW5.Data.Views
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPostGis = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtPostGisHost = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.txtPostGisPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.txtPostGisUserName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.txtPostGisDatabase = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
@@ -43,7 +44,6 @@ namespace MW5.Data.Views
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtPostGisHost = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label1 = new System.Windows.Forms.Label();
             this.tabMsSql = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -78,17 +78,16 @@ namespace MW5.Data.Views
             this.label16 = new System.Windows.Forms.Label();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.btnTestConnection = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPostGis.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisHost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisUserName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisDatabase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisHost)).BeginInit();
             this.tabMsSql.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -108,8 +107,6 @@ namespace MW5.Data.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtMySqlDatabase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMySqlPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMySqlHost)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
-            this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAdv1
@@ -153,6 +150,7 @@ namespace MW5.Data.Views
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txtPostGisHost);
             this.panel2.Controls.Add(this.txtPostGisPassword);
             this.panel2.Controls.Add(this.txtPostGisUserName);
             this.panel2.Controls.Add(this.txtPostGisDatabase);
@@ -161,12 +159,24 @@ namespace MW5.Data.Views
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.txtPostGisHost);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(17, 33);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(333, 270);
-            this.panel2.TabIndex = 16;
+            this.panel2.TabIndex = 0;
+            this.panel2.TabStop = true;
+            // 
+            // txtPostGisHost
+            // 
+            this.txtPostGisHost.BeforeTouchSize = new System.Drawing.Size(224, 20);
+            this.txtPostGisHost.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPostGisHost.Location = new System.Drawing.Point(91, 15);
+            this.txtPostGisHost.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtPostGisHost.Name = "txtPostGisHost";
+            this.txtPostGisHost.Size = new System.Drawing.Size(224, 20);
+            this.txtPostGisHost.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtPostGisHost.TabIndex = 0;
+            this.txtPostGisHost.Text = "127.0.0.1";
             // 
             // txtPostGisPassword
             // 
@@ -178,7 +188,7 @@ namespace MW5.Data.Views
             this.txtPostGisPassword.PasswordChar = '●';
             this.txtPostGisPassword.Size = new System.Drawing.Size(224, 20);
             this.txtPostGisPassword.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPostGisPassword.TabIndex = 14;
+            this.txtPostGisPassword.TabIndex = 4;
             this.txtPostGisPassword.UseSystemPasswordChar = true;
             // 
             // txtPostGisUserName
@@ -190,7 +200,7 @@ namespace MW5.Data.Views
             this.txtPostGisUserName.Name = "txtPostGisUserName";
             this.txtPostGisUserName.Size = new System.Drawing.Size(224, 20);
             this.txtPostGisUserName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPostGisUserName.TabIndex = 12;
+            this.txtPostGisUserName.TabIndex = 3;
             this.txtPostGisUserName.Text = "postgres";
             // 
             // txtPostGisDatabase
@@ -202,7 +212,7 @@ namespace MW5.Data.Views
             this.txtPostGisDatabase.Name = "txtPostGisDatabase";
             this.txtPostGisDatabase.Size = new System.Drawing.Size(224, 20);
             this.txtPostGisDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPostGisDatabase.TabIndex = 10;
+            this.txtPostGisDatabase.TabIndex = 2;
             // 
             // txtPostGisPort
             // 
@@ -213,7 +223,7 @@ namespace MW5.Data.Views
             this.txtPostGisPort.Name = "txtPostGisPort";
             this.txtPostGisPort.Size = new System.Drawing.Size(224, 20);
             this.txtPostGisPort.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPostGisPort.TabIndex = 8;
+            this.txtPostGisPort.TabIndex = 1;
             this.txtPostGisPort.Text = "5432";
             // 
             // label5
@@ -252,18 +262,6 @@ namespace MW5.Data.Views
             this.label2.TabIndex = 9;
             this.label2.Text = "Port";
             // 
-            // txtPostGisHost
-            // 
-            this.txtPostGisHost.BeforeTouchSize = new System.Drawing.Size(224, 20);
-            this.txtPostGisHost.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtPostGisHost.Location = new System.Drawing.Point(91, 15);
-            this.txtPostGisHost.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtPostGisHost.Name = "txtPostGisHost";
-            this.txtPostGisHost.Size = new System.Drawing.Size(224, 20);
-            this.txtPostGisHost.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPostGisHost.TabIndex = 7;
-            this.txtPostGisHost.Text = "127.0.0.1";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -294,7 +292,7 @@ namespace MW5.Data.Views
             this.groupBox3.Location = new System.Drawing.Point(13, 243);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(341, 105);
-            this.groupBox3.TabIndex = 36;
+            this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Connection string";
             // 
@@ -321,7 +319,7 @@ namespace MW5.Data.Views
             this.groupBox2.Location = new System.Drawing.Point(13, 17);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(341, 94);
-            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Server and database";
             // 
@@ -334,7 +332,7 @@ namespace MW5.Data.Views
             this.txtMssqlServer.Name = "txtMssqlServer";
             this.txtMssqlServer.Size = new System.Drawing.Size(224, 20);
             this.txtMssqlServer.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMssqlServer.TabIndex = 16;
+            this.txtMssqlServer.TabIndex = 11;
             this.txtMssqlServer.Text = ".\\";
             this.txtMssqlServer.TextChanged += new System.EventHandler(this.ParametersChanged);
             // 
@@ -365,7 +363,7 @@ namespace MW5.Data.Views
             this.txtMssqlDatabase.Name = "txtMssqlDatabase";
             this.txtMssqlDatabase.Size = new System.Drawing.Size(224, 20);
             this.txtMssqlDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMssqlDatabase.TabIndex = 18;
+            this.txtMssqlDatabase.TabIndex = 12;
             this.txtMssqlDatabase.TextChanged += new System.EventHandler(this.ParametersChanged);
             // 
             // groupBox1
@@ -379,7 +377,7 @@ namespace MW5.Data.Views
             this.groupBox1.Location = new System.Drawing.Point(13, 117);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(341, 120);
-            this.groupBox1.TabIndex = 26;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Authentication";
             // 
@@ -390,7 +388,7 @@ namespace MW5.Data.Views
             this.optSqlAuthentication.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.optSqlAuthentication.Name = "optSqlAuthentication";
             this.optSqlAuthentication.Size = new System.Drawing.Size(107, 21);
-            this.optSqlAuthentication.TabIndex = 25;
+            this.optSqlAuthentication.TabIndex = 23;
             this.optSqlAuthentication.TabStop = false;
             this.optSqlAuthentication.Text = "SQL Server";
             this.optSqlAuthentication.ThemesEnabled = false;
@@ -417,7 +415,7 @@ namespace MW5.Data.Views
             this.txtMssqlUserName.Name = "txtMssqlUserName";
             this.txtMssqlUserName.Size = new System.Drawing.Size(224, 20);
             this.txtMssqlUserName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMssqlUserName.TabIndex = 20;
+            this.txtMssqlUserName.TabIndex = 21;
             this.txtMssqlUserName.TextChanged += new System.EventHandler(this.ParametersChanged);
             // 
             // label7
@@ -538,7 +536,7 @@ namespace MW5.Data.Views
             this.txtMySqlPassword.PasswordChar = '●';
             this.txtMySqlPassword.Size = new System.Drawing.Size(224, 20);
             this.txtMySqlPassword.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMySqlPassword.TabIndex = 14;
+            this.txtMySqlPassword.TabIndex = 4;
             this.txtMySqlPassword.UseSystemPasswordChar = true;
             // 
             // txtMySqlUser
@@ -550,7 +548,7 @@ namespace MW5.Data.Views
             this.txtMySqlUser.Name = "txtMySqlUser";
             this.txtMySqlUser.Size = new System.Drawing.Size(224, 20);
             this.txtMySqlUser.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMySqlUser.TabIndex = 12;
+            this.txtMySqlUser.TabIndex = 3;
             this.txtMySqlUser.Text = "root";
             // 
             // txtMySqlDatabase
@@ -562,7 +560,7 @@ namespace MW5.Data.Views
             this.txtMySqlDatabase.Name = "txtMySqlDatabase";
             this.txtMySqlDatabase.Size = new System.Drawing.Size(224, 20);
             this.txtMySqlDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMySqlDatabase.TabIndex = 10;
+            this.txtMySqlDatabase.TabIndex = 2;
             // 
             // txtMySqlPort
             // 
@@ -573,7 +571,7 @@ namespace MW5.Data.Views
             this.txtMySqlPort.Name = "txtMySqlPort";
             this.txtMySqlPort.Size = new System.Drawing.Size(224, 20);
             this.txtMySqlPort.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMySqlPort.TabIndex = 8;
+            this.txtMySqlPort.TabIndex = 1;
             this.txtMySqlPort.Text = "3306";
             // 
             // label12
@@ -621,7 +619,7 @@ namespace MW5.Data.Views
             this.txtMySqlHost.Name = "txtMySqlHost";
             this.txtMySqlHost.Size = new System.Drawing.Size(224, 20);
             this.txtMySqlHost.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMySqlHost.TabIndex = 7;
+            this.txtMySqlHost.TabIndex = 0;
             this.txtMySqlHost.Text = "127.0.0.1";
             // 
             // label16
@@ -641,10 +639,10 @@ namespace MW5.Data.Views
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(402, 6);
+            this.btnCancel.Location = new System.Drawing.Point(410, 383);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
-            this.btnCancel.TabIndex = 32;
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             // 
             // btnOk
@@ -654,24 +652,11 @@ namespace MW5.Data.Views
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(311, 6);
+            this.btnOk.Location = new System.Drawing.Point(319, 383);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
-            this.btnOk.TabIndex = 31;
+            this.btnOk.TabIndex = 1;
             this.btnOk.Text = "Ok";
-            // 
-            // gradientPanel1
-            // 
-            this.gradientPanel1.BorderColor = System.Drawing.Color.LightGray;
-            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gradientPanel1.Controls.Add(this.btnTestConnection);
-            this.gradientPanel1.Controls.Add(this.btnCancel);
-            this.gradientPanel1.Controls.Add(this.btnOk);
-            this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gradientPanel1.Location = new System.Drawing.Point(7, 377);
-            this.gradientPanel1.Name = "gradientPanel1";
-            this.gradientPanel1.Size = new System.Drawing.Size(488, 35);
-            this.gradientPanel1.TabIndex = 33;
             // 
             // btnTestConnection
             // 
@@ -680,10 +665,10 @@ namespace MW5.Data.Views
             this.btnTestConnection.BeforeTouchSize = new System.Drawing.Size(104, 26);
             this.btnTestConnection.ForeColor = System.Drawing.Color.White;
             this.btnTestConnection.IsBackStageButton = false;
-            this.btnTestConnection.Location = new System.Drawing.Point(0, 6);
+            this.btnTestConnection.Location = new System.Drawing.Point(8, 383);
             this.btnTestConnection.Name = "btnTestConnection";
             this.btnTestConnection.Size = new System.Drawing.Size(104, 26);
-            this.btnTestConnection.TabIndex = 34;
+            this.btnTestConnection.TabIndex = 3;
             this.btnTestConnection.Text = "Test connection";
             // 
             // AddConnectionView
@@ -693,8 +678,10 @@ namespace MW5.Data.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(502, 419);
+            this.Controls.Add(this.btnTestConnection);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.tabControlAdv1);
-            this.Controls.Add(this.gradientPanel1);
             this.Name = "AddConnectionView";
             this.Padding = new System.Windows.Forms.Padding(7);
             this.Text = "Add database connection";
@@ -703,11 +690,11 @@ namespace MW5.Data.Views
             this.tabPostGis.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisHost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPassword)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisUserName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisDatabase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisHost)).EndInit();
             this.tabMsSql.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -732,8 +719,6 @@ namespace MW5.Data.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtMySqlDatabase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMySqlPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMySqlHost)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
-            this.gradientPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -756,7 +741,6 @@ namespace MW5.Data.Views
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabSqlite;
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
-        private GradientPanel gradientPanel1;
         private Syncfusion.Windows.Forms.ButtonAdv btnTestConnection;
         private System.Windows.Forms.GroupBox groupBox1;
         private TextBoxExt txtMssqlUserName;

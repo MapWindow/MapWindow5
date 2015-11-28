@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Data.Db;
 using MW5.Data.Views.Abstract;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.UI.Forms;
 
 namespace MW5.Data.Views
@@ -34,6 +36,8 @@ namespace MW5.Data.Views
             FormClosed += (s, e) => _lastTabPage = tabControlAdv1.SelectedIndex;
 
             UpdateView();
+
+            Shown += (s, e) => tabControlAdv1.Focus(); ;
         }
 
         private void InitIgnoreList()
