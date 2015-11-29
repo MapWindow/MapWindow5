@@ -38,6 +38,18 @@ namespace MW5.Plugins.TableEditor
             plugin.UpdateTableJoin += OnUpdateTableJoin;
             plugin.LayerRemoved += plugin_LayerRemoved;
             plugin.ProjectClosed += OnProjectClosed;
+            plugin.LayerEditingChanged += OnLayerEditingChanged;
+        }
+
+        private void OnLayerEditingChanged(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            var fs = _context.Layers.GetFeatureSet(e.LayerHandle);
+            if (fs != null)
+            {
+                _presenter.View.ReloadDatasource(fs, e.LayerHandle);
+            }
+
+            _presenter.View.UpdateView();
         }
 
         private void OnProjectClosed(object sender, EventArgs e)
@@ -74,7 +86,7 @@ namespace MW5.Plugins.TableEditor
             _presenter.CloseTable(e.LayerHandle);
         }
 
-        private void BeforeRemoveLayer(object sender, LayerRemoveEventArgs e)
+        private void BeforeRemoveLayer(object sender, LayerCancelEventArgs e)
         {
             if (!_presenter.HasLayer(e.LayerHandle))
             {

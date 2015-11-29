@@ -3,9 +3,9 @@ using System.ComponentModel;
 
 namespace MW5.Plugins.Events
 {
-    public class LayerRemoveEventArgs: CancelEventArgs
+    public class LayerCancelEventArgs: CancelEventArgs
     {
-        public LayerRemoveEventArgs(int layerHandle)
+        public LayerCancelEventArgs(int layerHandle)
         {
             LayerHandle = layerHandle;
             if (layerHandle == -1)

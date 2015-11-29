@@ -19,6 +19,7 @@ using MW5.Projections;
 using MW5.Projections.Enums;
 using MW5.Projections.Services.Abstract;
 using MW5.Shared;
+using LayerCancelEventArgs = MW5.Plugins.Events.LayerCancelEventArgs;
 
 namespace MW5.Services.Concrete
 {
@@ -74,7 +75,7 @@ namespace MW5.Services.Concrete
                 }
             }
 
-            var args = new LayerRemoveEventArgs(layerHandle);
+            var args = new LayerCancelEventArgs(layerHandle);
             _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
             if (args.Cancel)
             {

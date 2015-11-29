@@ -11,6 +11,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared.Log;
+using LayerCancelEventArgs = MW5.Plugins.Events.LayerCancelEventArgs;
 
 namespace MW5.Plugins.Concrete
 {
@@ -101,7 +102,8 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
         internal EventHandler<EventArgs> ProjectClosed_;
-        internal EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer_;
+        internal EventHandler<LayerEventArgs> LayerEditingChanged_;
+        internal EventHandler<LayerCancelEventArgs> BeforeRemoveLayer_;
         internal EventHandler<EventArgs> ViewUpdating_;
         internal EventHandler<ToolboxToolEventArgs> ToolboxToolClicked_;
         internal EventHandler<UpdateJoinEventArgs> UpdateTableJoin_;
@@ -125,7 +127,16 @@ namespace MW5.Plugins.Concrete
             remove { ToolboxToolClicked_ -= value; }
         }
 
-        public event EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer
+        /// <summary>
+        /// Occurs when Shape editor plug-in starts or stops editing of a layer.
+        /// </summary>
+        public event EventHandler<LayerEventArgs> LayerEditingChanged
+        {
+            add { LayerEditingChanged_ += value; }
+            remove { LayerEditingChanged_ -= value; }
+        }
+
+        public event EventHandler<LayerCancelEventArgs> BeforeRemoveLayer
         {
             add { BeforeRemoveLayer_ += value; }
             remove { BeforeRemoveLayer_ -= value; }

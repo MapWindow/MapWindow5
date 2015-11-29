@@ -97,6 +97,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuFieldStats = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFieldProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
@@ -158,7 +159,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.toolEdit.Name = "toolEdit";
             this.toolEdit.Padding = new System.Windows.Forms.Padding(4, 0, 4, 2);
             this.toolEdit.Size = new System.Drawing.Size(45, 30);
-            this.toolEdit.Text = "toolStripDropDownButton5";
+            this.toolEdit.Text = "Editing";
             // 
             // mnuStartEdit
             // 
@@ -678,6 +679,7 @@ namespace MW5.Plugins.TableEditor.Views
         private ToolStripMenuItem mnuDiscardChanges;
         private ToolStripSeparator toolStripSeparator13;
         private ToolStripMenuItem mnuRecalculateFields;
+        private ToolTip toolTip1;
 
     }
 }

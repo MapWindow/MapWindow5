@@ -668,12 +668,20 @@ namespace MW5.Api.Concrete
 
         public GeometryValidationInfo LastInputValidation
         {
-            get { return new GeometryValidationInfo(_shapefile.LastInputValidation); }
+            get
+            {
+                var val = _shapefile.LastInputValidation;
+                return val != null ? new GeometryValidationInfo(_shapefile.LastInputValidation) : null;
+            }
         }
 
         public GeometryValidationInfo LastOutputValidation
         {
-            get { return new GeometryValidationInfo(_shapefile.LastOutputValidation); }
+            get
+            {
+                var val = _shapefile.LastOutputValidation;
+                return val != null ? new GeometryValidationInfo(_shapefile.LastOutputValidation) : null;
+            }
         }
 
         public bool HasInvalidShapes()

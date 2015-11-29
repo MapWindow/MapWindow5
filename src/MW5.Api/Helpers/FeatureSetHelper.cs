@@ -7,13 +7,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using MW5.Api.Enums;
-using MW5.Api.Events;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Helpers
 {
     public static class FeatureSetHelper
     {
+        public static bool CanEditTable(this IFeatureSet sf)
+        {
+            switch (sf.SourceType)
+            {
+                case FeatureSourceType.Uninitialized:
+                    return false;
+                case FeatureSourceType.DiskBased:
+                    return sf.EditingTable;
+                case FeatureSourceType.InMemory:
+                    return sf.InteractiveEditing;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Gets extents of the selected features.
         /// </summary>

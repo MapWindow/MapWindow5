@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Attributes.Helpers;
@@ -92,7 +93,7 @@ namespace MW5.Plugins.TableEditor.Views
 
             var fs = layer.FeatureSet;
 
-            if (fs == null || !fs.EditingTable)
+            if (fs == null || !fs.CanEditTable())
             {
                 return true; // nothing to save
             }
@@ -217,6 +218,25 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
+        private bool IsAvailableForMemoryLayer(TableEditorCommand command)
+        {
+            switch (command)
+            {
+                case TableEditorCommand.StartEdit:
+                case TableEditorCommand.DiscardChanges:
+                case TableEditorCommand.SaveChanges:
+                    var fs = FeatureSet;
+                    if (fs != null && fs.SourceType == Api.Enums.FeatureSourceType.InMemory)
+                    {
+                        MessageService.Current.Info("Please use commands of Shape Editor plug-in to start / stop the editing of in-memory layer. ");
+                        return false;
+                    }
+                    break;
+            }
+
+            return true;
+        }
+
         public override void RunCommand(TableEditorCommand command)
         {
             if (HandleLayout(command))
@@ -236,6 +256,11 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             if (!RequestEditSession(command))
+            {
+                return;
+            }
+
+            if (!IsAvailableForMemoryLayer(command))
             {
                 return;
             }

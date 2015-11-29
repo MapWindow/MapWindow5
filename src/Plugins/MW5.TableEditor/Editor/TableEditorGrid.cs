@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
@@ -27,6 +28,7 @@ namespace MW5.Plugins.TableEditor.Editor
         private IAttributeTable _table;
         private bool _ignoreCurrentCellChange;
         private bool _currentCellChanged;
+        private int _layerHandle;
 
         public TableEditorGrid()
         {
@@ -34,35 +36,45 @@ namespace MW5.Plugins.TableEditor.Editor
             CellValuePushed += GridCellValuePushed;
             CurrentCellChanged += OnCurrentCellChanged;
             ColumnHeaderMouseClick += OnColumnHeaderMouseClick;
+
+            _layerHandle = -1;
         }
 
         [Browsable(false)]
         public IFeatureSet TableSource
         {
             get { return _shapefile; }
-            set
+        }
+
+        public int LayerHandle
+        {
+            get { return _layerHandle;  }
+        }
+
+        public void SetTableSource(IFeatureSet fs, int layerHandle)
+        {
+            if (fs == null)
             {
-                if (value == null)
-                {
-                    RowCount = 0;
-                    return;
-                }
-
-                _shapefile = value;
-                _table = value.Table;
-
-                InitColumns(_table);
-
-                RowManager.Reset(_shapefile);
-
                 RowCount = 0;
-                
-                // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
-                RowCount = _table.NumRows;
-
-                bool editing = TableSource.EditingTable;
-                ReadOnly = !editing;
+                return;
             }
+
+            _layerHandle = layerHandle;
+            _shapefile = fs;
+            _table = fs.Table;
+
+            InitColumns(_table);
+
+            RowManager.Reset(_shapefile);
+
+            RowCount = 0;
+
+            // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
+            RowCount = _table.NumRows;
+
+            bool editing = _shapefile.CanEditTable();
+
+            ReadOnly = !editing;
         }
 
         protected override IFeatureSet FeatureSet

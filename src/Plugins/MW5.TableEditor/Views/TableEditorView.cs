@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
@@ -172,8 +173,8 @@ namespace MW5.Plugins.TableEditor.Views
         {
             var grid = CreateGrid();
 
-            grid.TableSource = layer.FeatureSet;
-
+            grid.SetTableSource(layer.FeatureSet, layer.Handle);
+            
             grid.ColumnContextNeeded += (s, e) => ShowContextMenu(s, e.ColumnIndex);
             grid.CellContextMenuStripNeeded += (s, e) => ShowContextMenu(s, e.ColumnIndex);
 
@@ -255,14 +256,31 @@ namespace MW5.Plugins.TableEditor.Views
         }
 
         /// <summary>
-        ///     Completely reloads the datasource applying all pending changes.
+        /// Reloads featureset for certain layer. 
+        /// Useful for OGR layer when another instance of shapefile has been created under the hood.
+        /// </summary>
+        public void ReloadDatasource(IFeatureSet fs, int layerHandle)
+        {
+            foreach (var panel in _panels)
+            {
+                var grid = panel.Control as TableEditorGrid;
+                if (grid != null && grid.LayerHandle == layerHandle)
+                {
+                    grid.SetTableSource(fs, layerHandle);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Completely reloads the datasource applying all pending changes.
         /// </summary>
         public void UpdateDatasource()
         {
             var grid = ActiveGrid;
             if (grid != null)
             {
-                grid.TableSource = grid.TableSource;
+                grid.SetTableSource(grid.TableSource, grid.LayerHandle);
             }
 
             UpdateView();
@@ -284,7 +302,7 @@ namespace MW5.Plugins.TableEditor.Views
             var fs = layer.FeatureSet;
             if (fs != null)
             {
-                if (fs.EditingTable)
+                if (fs.CanEditTable())
                 {
                     msg += "*";
                 }
@@ -372,12 +390,13 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
-            var editing = fs.Table.EditMode;
+            var editing = fs.CanEditTable();
 
             var img = editing ? Resources.icon_save1 : Resources.icon_layer_edit;
 
             toolStripEx1.SuspendLayout();
             toolEdit.Image = img;
+
             toolStripEx1.ResumeLayout();
         }
 
@@ -389,7 +408,7 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
-            var editing = fs.Table.EditMode;
+            var editing = fs.CanEditTable();
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
             mnuDiscardChanges.Enabled = editing;

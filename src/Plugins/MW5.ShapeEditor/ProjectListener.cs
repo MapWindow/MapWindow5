@@ -28,7 +28,7 @@ namespace MW5.Plugins.ShapeEditor
             plugin.BeforeRemoveLayer += plugin_BeforeRemoveLayer;
         }
 
-        private void plugin_BeforeRemoveLayer(object sender, LayerRemoveEventArgs e)
+        private void plugin_BeforeRemoveLayer(object sender, LayerCancelEventArgs e)
         {
             if (_context.Map.GeometryEditor.LayerHandle == e.LayerHandle)
             {

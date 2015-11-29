@@ -7,6 +7,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Views;
@@ -20,16 +21,20 @@ namespace MW5.Plugins.ShapeEditor.Services
         private readonly IAppContext _context;
         private readonly ILayerService _layerService;
         private readonly IFileDialogService _dialogService;
+        private readonly IBroadcasterService _broadcaster;
 
-        public LayerEditingService(IAppContext context, ILayerService layerService, IFileDialogService dialogService)
+        public LayerEditingService(IAppContext context, ILayerService layerService, IFileDialogService dialogService,
+                                   IBroadcasterService _broadcaster)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (dialogService == null) throw new ArgumentNullException("dialogService");
+            if (_broadcaster == null) throw new ArgumentNullException("_broadcaster");
 
             _context = context;
             _layerService = layerService;
             _dialogService = dialogService;
+            this._broadcaster = _broadcaster;
         }
 
         /// <summary>
@@ -49,7 +54,10 @@ namespace MW5.Plugins.ShapeEditor.Services
 
             if (fs.InteractiveEditing)
             {
-                SaveLayerChanges(handle);
+                if (!SaveLayerChanges(handle))
+                {
+                    return;
+                }
             }
             else
             {
@@ -66,8 +74,11 @@ namespace MW5.Plugins.ShapeEditor.Services
                         return;
                     }
                 }
+
                 fs.InteractiveEditing = true;
             }
+
+            _broadcaster.BroadcastEvent(p => p.LayerEditingChanged_, _context.Legend, new LayerEventArgs(handle));
 
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
         }
@@ -154,13 +165,15 @@ namespace MW5.Plugins.ShapeEditor.Services
 
             if (!success)
             {
+                // TODO: display them in a dialog when the command was called from toolbar for a single layer
                 Logger.Current.Warn("Failed to save OGR layer changes: " + ogrLayer.Filename);
                 DisplayOgrErrors(ogrLayer);
             }
-
-            // TODO: do we need to show message in case of success?
-            string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
-            MessageService.Current.Info(msg);
+            else
+            {
+                string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
+                MessageService.Current.Info(msg);
+            }
 
             return success;
         }
