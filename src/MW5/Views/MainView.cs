@@ -29,6 +29,7 @@ namespace MW5.Views
         private const string WindowTitle = "MapWindow 5";
         private readonly IAppContext _context;
         private bool _rendered;
+        private bool _locked;
 
         public MainView(IAppContext context)
         {
@@ -98,6 +99,17 @@ namespace MW5.Views
         public event EventHandler<CancelEventArgs> ViewClosing;
         public event EventHandler<RenderedEventArgs> ViewUpdating;
         public event Action BeforeShow;
+
+        public void Lock()
+        {
+            _locked = true;
+        }
+
+        public void Unlock()
+        {
+            _locked = false;
+            UpdateView();
+        }
 
         private void FireViewUpdating(bool rendered)
         {
@@ -184,6 +196,8 @@ namespace MW5.Views
 
         public override void UpdateView()
         {
+            if (_locked) return;
+
             Text = GetCaption();
             
             // broadcast to plugins

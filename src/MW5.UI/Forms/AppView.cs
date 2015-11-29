@@ -70,6 +70,16 @@ namespace MW5.UI.Forms
             form.ShowInTaskbar = false;
         }
 
+        public void Lock()
+        {
+            _parent.Lock();
+        }
+
+        public void Unlock()
+        {
+            _parent.Unlock();
+        }
+
         public void Update()
         {
             _parent.UpdateView();

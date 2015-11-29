@@ -268,6 +268,8 @@ namespace MW5.Services.Concrete
 
             bool result;
 
+            _context.View.Lock();
+
             if (legacy)
             {
                 result = OpenLegacyProject(filename);
@@ -280,6 +282,8 @@ namespace MW5.Services.Concrete
             // let's redraw map before hiding the progress
             _loadingForm.ShowProgress(100, "Rendering map...");
             _context.Map.Redraw();
+            _context.View.Unlock();
+
             Application.DoEvents();
 
             loader.ProgressChanged -= OnLoadingProgressChanged;

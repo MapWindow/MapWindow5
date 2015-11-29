@@ -14,5 +14,7 @@ namespace MW5.Plugins.Interfaces
         bool ShowChildView(Form form, IWin32Window parent, bool modal = true);
         void Update();
         IWin32Window MainForm { get; }
+        void Lock();
+        void Unlock();
     }
 }

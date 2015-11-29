@@ -22,5 +22,7 @@ namespace MW5.Plugins.Interfaces
         event EventHandler<CancelEventArgs> ViewClosing;
         event EventHandler<RenderedEventArgs> ViewUpdating;
         event Action BeforeShow;
+        void Lock();
+        void Unlock();
     }
 }
