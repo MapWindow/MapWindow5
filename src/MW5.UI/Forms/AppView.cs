@@ -80,9 +80,9 @@ namespace MW5.UI.Forms
             _parent.Unlock();
         }
 
-        public void Update()
+        public void Update(bool focusMap = true)
         {
-            _parent.UpdateView();
+            _parent.DoUpdateView(focusMap);
         }
 
         public IWin32Window MainForm

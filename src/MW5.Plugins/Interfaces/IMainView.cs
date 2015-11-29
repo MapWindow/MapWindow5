@@ -24,5 +24,6 @@ namespace MW5.Plugins.Interfaces
         event Action BeforeShow;
         void Lock();
         void Unlock();
+        void DoUpdateView(bool focusMap = true);
     }
 }

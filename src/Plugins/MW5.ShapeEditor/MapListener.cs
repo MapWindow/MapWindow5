@@ -111,6 +111,9 @@ namespace MW5.Plugins.ShapeEditor
                     }
                 }
             }
+
+            // to show the number of modified features
+            _context.View.Update();
         }
 
         private void OnShapeValidationFailed(IMuteMap map, ShapeValidationFailedEventArgs e)

@@ -182,6 +182,11 @@ namespace MW5.Api.Concrete
             return new AttributeField(_shapefile.Field[fieldIndex], fieldIndex);
         }
 
+        public bool RowModified
+        {
+            get { return _shapefile.Table.RowIsModified[_shapeIndex]; }
+        }
+
         #endregion
     }
 }

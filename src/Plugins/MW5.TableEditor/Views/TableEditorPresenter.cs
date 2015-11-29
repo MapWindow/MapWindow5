@@ -237,6 +237,12 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
+        private void UpdataDatasourceAndUI()
+        {
+            View.UpdateView();
+            _context.View.Update();
+        }
+
         public override void RunCommand(TableEditorCommand command)
         {
             if (HandleLayout(command))
@@ -277,7 +283,7 @@ namespace MW5.Plugins.TableEditor.Views
 
                     if (_context.Container.Run<RecalculateFieldsPresenter, IAttributeTable>(table))
                     {
-                        View.UpdateView();
+                        UpdataDatasourceAndUI();
                     }
                     break;
                 case TableEditorCommand.ClearSorting:
@@ -325,13 +331,13 @@ namespace MW5.Plugins.TableEditor.Views
                     if (MessageService.Current.Ask("Do you want to stop all joins for this table?"))
                     {
                         table.StopAllJoins();
-                        View.UpdateDatasource();
+                        UpdataDatasourceAndUI();
                     }
                     break;
                 case TableEditorCommand.ImportFieldDefinitions:
                     if (DbfImportHelper.ImportFieldsFromDbf(_dialogService, table))
                     {
-                        View.UpdateDatasource();
+                        UpdataDatasourceAndUI();
                     }
                     break;
                 case TableEditorCommand.ReloadTable:
@@ -398,7 +404,7 @@ namespace MW5.Plugins.TableEditor.Views
 
                                 if (fields.Remove(index))
                                 {
-                                    View.UpdateDatasource();
+                                    UpdataDatasourceAndUI();
                                 }    
                             }
                         }
@@ -416,7 +422,7 @@ namespace MW5.Plugins.TableEditor.Views
 
                             if (_context.Container.Run<FieldPropertiesPresenter, FieldPropertiesModel>(model))
                             {
-                                View.UpdateDatasource();
+                                UpdataDatasourceAndUI();
                             }
                         }
                     }
@@ -441,12 +447,12 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.UpdateMeasurements:
                     if (_context.Container.Run<UpdateMeasurementsPresenter, IFeatureSet>(View.ActiveFeatureSet))
                     {
-                        View.UpdateDatasource();
+                        UpdataDatasourceAndUI();
                     }
                     break;
                 case TableEditorCommand.Join:
                     _context.Container.Run<JoinsPresenter, IAttributeTable>(table);
-                    View.UpdateDatasource();
+                    UpdataDatasourceAndUI();
                     break;
                 case TableEditorCommand.StartEdit:
                     StartEditing();
@@ -462,7 +468,7 @@ namespace MW5.Plugins.TableEditor.Views
                         var model = new FieldCalculatorModel(table, table.Fields[View.ActiveColumnIndex]);
                         if (_context.Container.Run<FieldCalculatorPresenter, FieldCalculatorModel>(model))
                         {
-                            View.UpdateDatasource();
+                            UpdataDatasourceAndUI();
                         }
                     }
                     break;
@@ -470,7 +476,7 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.RemoveFields:
                     if (_context.Container.Run<DeleteFieldsPresenter, IAttributeTable>(table))
                     {
-                        View.UpdateDatasource();
+                        UpdataDatasourceAndUI();
                     }
                     break;
                 case TableEditorCommand.ShowSelected:
@@ -598,8 +604,17 @@ namespace MW5.Plugins.TableEditor.Views
         private void CreateNewTable(ILegendLayer layer)
         {
             var info = View.CreateTablePanel(layer);
+            info.Grid.CellValueEdited += GridCellValueEdited;
+
             _tables.Add(layer.Handle, info);
             info.Grid.SelectionChanged += (s, e) => OnViewSelectionChanged(layer.Handle);
+        }
+
+        private void GridCellValueEdited(object sender, EventArgs e)
+        {
+            // to show the number of modified records
+            View.UpdateView();
+            _context.View.Update(false);
         }
 
         private void Find(bool replace)

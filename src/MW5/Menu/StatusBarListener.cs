@@ -71,7 +71,7 @@ namespace MW5.Menu
 
             bar.Items.AddLabel("Map units: ", StatusBarKeys.MapUnits, Identity).BeginGroup = true;
             bar.Items.AddLabel("Selected: ", StatusBarKeys.SelectedCount, Identity).BeginGroup = true;
-            
+            bar.Items.AddLabel("Modified: ", StatusBarKeys.ModifiedCount, Identity).BeginGroup = true;
 
             bar.AlignNewItemsRight = true;
 
@@ -148,6 +148,8 @@ namespace MW5.Menu
             statusUnits.Text = "Units: " + _context.Map.MapUnits.EnumToString().ToLower();
 
             UpdateTmsProvider();
+
+            UpdateModifiedCount();
         }
 
         private void UpdateTmsProvider()
@@ -167,6 +169,22 @@ namespace MW5.Menu
 
             var statusProvider = _context.StatusBar.FindItem(StatusBarKeys.TileProvider, Identity);
             statusProvider.Text = msg;
+        }
+
+        private void UpdateModifiedCount()
+        {
+            var status = _context.StatusBar.FindItem(StatusBarKeys.ModifiedCount, Identity);
+
+            var layer = _context.Map.Layers.Current;
+            if (layer != null && layer.IsVector && layer.FeatureSet.InteractiveEditing)
+            {
+                int featureCount = layer.FeatureSet.Features.Count(f => f.Modified);
+                status.Text = string.Format("Modified: {0} features", featureCount);
+                status.Visible = true;
+                return;
+            }
+            
+            status.Visible = false;
         }
 
         private void UpdateSelectionMessage()

@@ -13,6 +13,7 @@ namespace MW5.Menu
         public const string ProjectionProperties = "statusProjectionProperties";
         public const string ProjectionConfig = "statusProjectionConfig";
         public const string SelectedCount = "statusSelectedCount";
+        public const string ModifiedCount = "statusModifiedCount";
         public const string MapUnits = "statusMapUnits";
 
         public const string TileProvider = "statusTileProvider";

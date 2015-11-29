@@ -23,6 +23,7 @@ namespace MW5.Plugins.TableEditor.Editor
     {
         private readonly Color _joinColumnBackColor = Color.OldLace;
         public event EventHandler<ColumnEventArgs> ColumnContextNeeded;
+        public event EventHandler CellValueEdited;
 
         private IFeatureSet _shapefile;
         private IAttributeTable _table;
@@ -132,6 +133,7 @@ namespace MW5.Plugins.TableEditor.Editor
         {
             int realIndex = RowManager.RealIndex(e.RowIndex);
             _table.EditCellValue(e.ColumnIndex, realIndex, e.Value);
+            DelegateHelper.FireEvent(this, CellValueEdited);
         }
 
         private void GridCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)

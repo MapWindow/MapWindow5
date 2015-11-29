@@ -194,22 +194,27 @@ namespace MW5.Views
             return caption;
         }
 
-        public override void UpdateView()
+        public void DoUpdateView(bool focusMap = true)
         {
             if (_locked) return;
 
             Text = GetCaption();
-            
+
             // broadcast to plugins
             if (_rendered)
             {
                 FireViewUpdating(_rendered);
             }
 
-            if (ActiveForm == _mapControl1.ParentForm)
+            if (ActiveForm == _mapControl1.ParentForm && focusMap)
             {
                 _mapControl1.Focus();
             }
+        }
+
+        public override void UpdateView()
+        {
+            DoUpdateView();
         }
 
         public ButtonBase OkButton

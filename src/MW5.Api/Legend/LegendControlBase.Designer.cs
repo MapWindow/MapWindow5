@@ -54,7 +54,7 @@ namespace MW5.Api.Legend
             this._icons.Images.SetKeyName(5, "");
             this._icons.Images.SetKeyName(6, "img_label.png");
             this._icons.Images.SetKeyName(7, "img_label_grey.png");
-            this._icons.Images.SetKeyName(8, "pen.png");
+            this._icons.Images.SetKeyName(8, "img_pen16.png");
             this._icons.Images.SetKeyName(9, "database5.png");
             this._icons.Images.SetKeyName(10, "img_folder_open.png");
             this._icons.Images.SetKeyName(11, "img_folder_open.png");
@@ -62,6 +62,7 @@ namespace MW5.Api.Legend
             this._icons.Images.SetKeyName(13, "tag_gray.png");
             this._icons.Images.SetKeyName(14, "tag_blue.png");
             this._icons.Images.SetKeyName(15, "");
+            this._icons.Images.SetKeyName(16, "pen.png");
             // 
             // LegendControlBase
             // 

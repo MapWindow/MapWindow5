@@ -309,7 +309,13 @@ namespace MW5.Plugins.TableEditor.Views
 
                 if (fs.NumSelected > 0)
                 {
-                    msg += string.Format(" - selected {0} from {1}", fs.NumSelected, fs.NumFeatures);
+                    msg += string.Format(" - selected: {0} / {1}", fs.NumSelected, fs.NumFeatures);
+                }
+
+                if (fs.CanEditTable())
+                {
+                    int modified = fs.Features.Count(ft => ft.RowModified);
+                    msg += string.Format(" - modified: {0} / {1}", modified, fs.NumFeatures);
                 }
             }
 
