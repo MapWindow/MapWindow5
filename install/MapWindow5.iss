@@ -9,8 +9,9 @@
 #define MyAppName "MapWindow5"
 #define MyAppPublisher "MapWindow Open Source GIS Community"
 #define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
+#define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
 
-#define x64BitVersion true
+;;#define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"
@@ -49,7 +50,7 @@ WizardImageFile=WizImage-MW.bmp
 WizardSmallImageFile=WizSmallImage-MW.bmp
 AppCopyright={#MyAppPublisher}
 PrivilegesRequired=none
-MinVersion=0,5.01sp3
+MinVersion=0,6.0
 ChangesEnvironment=no
 AlwaysShowDirOnReadyPage=True
 AlwaysShowGroupOnReadyPage=true
@@ -68,7 +69,7 @@ AlwaysShowComponentsList=false
 #ifdef x64BitVersion
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-#endif                  
+#endif
 
 [Components]
 Name: "MapWindow"; Description: "MapWindow5 files"; Types: full custom compact; Flags: fixed
@@ -108,6 +109,8 @@ Source: "{#SamplePath}\MapWindow-Projects\UnitedStates\Shapefiles\*"; DestDir: "
 ;; VC++ files
 Source: "{#vcredist}"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion {#SystemFlag}
 
+;; Release notes:
+Source: "{#ReleaseNotes}"; DestDir: "{app}"; Flags: ignoreversion; Components: MapWindow
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -123,6 +126,7 @@ Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Ch
 #endif
 Filename: "{app}\MapWindow.exe"; Flags: shellexec runasoriginaluser postinstall nowait skipifsilent; Description: "Start MapWindow5 GIS?"
 Filename: "{code:GetDataDir}"; Flags: shellexec runasoriginaluser nowait skipifsilent; Description: "Open sample data folder"; Components: USASampleData
+Filename: "{app}\ReleaseNotes.rtf"; Description: View the Release Notes; Flags: postinstall shellexec skipifsilent
 
 [Icons]
 ;; In start menu:
