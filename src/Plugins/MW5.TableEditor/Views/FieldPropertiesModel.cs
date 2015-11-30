@@ -12,11 +12,13 @@ namespace MW5.Plugins.TableEditor.Views
 {
     internal class FieldPropertiesModel
     {
-        public FieldPropertiesModel(IAttributeTable table, IAttributeField field, bool addField)
+        private bool _allowEditing;
+
+        public FieldPropertiesModel(IAttributeTable table, IAttributeField field, bool addField, bool allowEditing)
         {
             if (table == null) throw new ArgumentNullException("table");
 
-            if (field == null)
+            if (field == null) 
             {
                 field = new AttributeField();
             }
@@ -24,13 +26,15 @@ namespace MW5.Plugins.TableEditor.Views
             Field = field;
             AddField = addField;
             Table = table;
+
+            _allowEditing = allowEditing;
         }
 
         public bool AddField { get; private set; }
 
         public bool AllowEditing
         {
-            get { return Table.EditMode; }
+            get { return _allowEditing; }
         }
 
         public IAttributeField Field { get; private set; }

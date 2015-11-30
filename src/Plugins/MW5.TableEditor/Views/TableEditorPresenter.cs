@@ -196,11 +196,14 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.RemoveFields:
                 case TableEditorCommand.RecalculateFields:
                     {
-                        var table = ActiveTable;
-
-                        if (table.EditMode)
+                        if (FeatureSet.CanEditTable())
                         {
                             return true;
+                        }
+
+                        if (!CanStartEditingDirectly())
+                        {
+                            return false;
                         }
 
                         string msg = "The requested operation needs to change data." + Environment.NewLine;
@@ -218,6 +221,19 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
+        private bool CanStartEditingDirectly()
+        {
+            var fs = FeatureSet;
+            if (fs != null && fs.SourceType == Api.Enums.FeatureSourceType.InMemory)
+            {
+                MessageService.Current.Info("Please use commands of Shape Editor plug-in to start / stop " +
+                                            "the editing of in-memory or database layer. ");
+                return false;
+            }
+
+            return true;
+        }
+
         private bool IsAvailableForMemoryLayer(TableEditorCommand command)
         {
             switch (command)
@@ -225,13 +241,7 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.StartEdit:
                 case TableEditorCommand.DiscardChanges:
                 case TableEditorCommand.SaveChanges:
-                    var fs = FeatureSet;
-                    if (fs != null && fs.SourceType == Api.Enums.FeatureSourceType.InMemory)
-                    {
-                        MessageService.Current.Info("Please use commands of Shape Editor plug-in to start / stop the editing of in-memory layer. ");
-                        return false;
-                    }
-                    break;
+                    return CanStartEditingDirectly();
             }
 
             return true;
@@ -239,7 +249,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         private void UpdataDatasourceAndUI()
         {
-            View.UpdateView();
+            View.UpdateDatasource();
             _context.View.Update();
         }
 
@@ -418,11 +428,17 @@ namespace MW5.Plugins.TableEditor.Views
                         {
                             bool newField = command == TableEditorCommand.AddField;
                             var fld = newField ? null : grid.GetField(View.ActiveColumnIndex);
-                            var model = new FieldPropertiesModel(table, fld, newField);
+
+                            bool allowEditing = FeatureSet.CanEditTable();
+                            var model = new FieldPropertiesModel(table, fld, newField, allowEditing);
 
                             if (_context.Container.Run<FieldPropertiesPresenter, FieldPropertiesModel>(model))
                             {
-                                UpdataDatasourceAndUI();
+                                if (allowEditing || newField)
+                                {
+                                    model.Field.Modified = true;
+                                    UpdataDatasourceAndUI();
+                                }
                             }
                         }
                     }

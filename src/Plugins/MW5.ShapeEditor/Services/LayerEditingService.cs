@@ -173,6 +173,9 @@ namespace MW5.Plugins.ShapeEditor.Services
             {
                 string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
                 MessageService.Current.Info(msg);
+
+                // reload from datasource to be sure that there is no stale data
+                ogrLayer.ReloadFromSource();
             }
 
             return success;

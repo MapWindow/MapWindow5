@@ -138,5 +138,11 @@ namespace MW5.Api.Concrete
                 }
             }
         }
+
+        public bool Modified
+        {
+            get { return _field.Modified; }
+            set { _field.Modified = value; }
+        }
     }
 }

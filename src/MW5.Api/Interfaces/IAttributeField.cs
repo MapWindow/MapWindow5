@@ -37,5 +37,7 @@ namespace MW5.Api.Interfaces
         bool Visible { get; set; }
 
         int Width { get; }
+
+        bool Modified { get; set; }
     }
 }
