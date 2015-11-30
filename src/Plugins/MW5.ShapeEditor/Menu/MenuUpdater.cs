@@ -29,7 +29,13 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             plugin.ViewUpdating += OnViewUpdating;
             plugin.MapCursorChanged += OnMapCursorChanged;
-            plugin.HistoryChanged += OnViewUpdating;
+            plugin.HistoryChanged += (s, e) =>
+                {
+                    OnViewUpdating(null, null);
+
+                    // we need to trigger the update of status bar 
+                    _context.View.Update();
+                };
 
             var item = FindMenuItem(MenuKeys.MainMenuEditKey) as IDropDownMenuItem;
             if (item != null)
