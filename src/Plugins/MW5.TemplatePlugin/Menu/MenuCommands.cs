@@ -51,7 +51,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             // Create a list of MenuCommands for every toolbar button created in MenuGenerator:
             return new List<MenuCommand>
                        {
-                           new MenuCommand("Show dialog", MenuKeys.ShowDockableWindow, Resources.monitor)
+                           new MenuCommand("Show Dialog", MenuKeys.ShowDockableWindow, Resources.monitor)
                        };
         }
 

@@ -14,7 +14,7 @@ namespace MW5.Plugins.Identifier.Menu
         {
             return new List<MenuCommand>()
             {
-                new MenuCommand("Identify shapes", MenuKeys.IdentifyTool, Resources.icon_identify)
+                new MenuCommand("Identify Shapes and Raster Values", MenuKeys.IdentifyTool, Resources.icon_identify)
             };
         }
     }

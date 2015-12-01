@@ -73,7 +73,7 @@ namespace MW5.Menu
                 new MenuCommand("Save Project As", MenuKeys.SaveProjectAs, Resources.icon_save_as,
                 "Saves the current project under new name."),
 
-                new MenuCommand("Quit", Plugins.Menu.MenuKeys.Quit, Resources.icon_quit, 
+                new MenuCommand("Close", Plugins.Menu.MenuKeys.Quit, Resources.icon_quit, 
                 "Quits the application"),
 
                 new MenuCommand("Test", MenuKeys.Test, Resources.img_test24, 
@@ -96,10 +96,10 @@ namespace MW5.Menu
                 new MenuCommand("Zoom Out", MenuKeys.ZoomOut, Resources.icon_zoom_out,
                 "Zooms out the map."),
 
-                new MenuCommand("Zoom to previous", MenuKeys.ZoomPrev, Resources.img_zoom_prev24,
+                new MenuCommand("Zoom to Previous", MenuKeys.ZoomPrev, Resources.img_zoom_prev24,
                 "Zooms map to the previous extents recorded in the history."),
 
-                new MenuCommand("Zoom to next", MenuKeys.ZoomNext, Resources.img_zoom_next24,
+                new MenuCommand("Zoom to Next", MenuKeys.ZoomNext, Resources.img_zoom_next24,
                 "Zooms map to the next extents recorded in the history."),
 
                 new MenuCommand("Zoom to Maximum Extents", MenuKeys.ZoomMax, Resources.icon_zoom_max_extents,

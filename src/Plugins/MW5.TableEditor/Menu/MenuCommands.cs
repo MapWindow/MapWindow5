@@ -19,7 +19,7 @@ namespace MW5.Plugins.TableEditor.Menu
         {
             return new List<MenuCommand>()
             {
-                new MenuCommand("Attribute table", MenuKeys.ShowTable, Resources.table_editor),
+                new MenuCommand("Attribute Table", MenuKeys.ShowTable, Resources.table_editor),
             };
         }
     }
