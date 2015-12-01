@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
@@ -72,7 +74,13 @@ namespace MW5.Tools.Tools.Database
 
             if (ds.Open(Database.ConnectionString))
             {
-                if (!ds.ImportLayer(InputLayer.Datasource, NewLayerName, options))
+                if (InputLayer.Datasource.HasInvalidShapes())
+                {
+                    Log.Warn("Datasource has invalid shapes. Please run Fix tool before importing it.", null);
+                    return false;
+                }
+
+                if (!ds.ImportLayer(InputLayer.Datasource, NewLayerName, options, ValidationMode.NoValidation))
                 {
                     Log.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg, null);
                     return false;

@@ -18,7 +18,10 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
         protected override void AssignShortcutKeys()
         {
-            Commands[MenuKeys.Copy].ShortcutKeys = Keys.Control | Keys.C;
+            // it overrides copy command in panels, Debug window for example
+            // so let's comment for the time being
+            //Commands[MenuKeys.Copy].ShortcutKeys = Keys.Control | Keys.C;
+
             Commands[MenuKeys.Paste].ShortcutKeys = Keys.Control | Keys.V;
             Commands[MenuKeys.Cut].ShortcutKeys = Keys.Control | Keys.X;
 
