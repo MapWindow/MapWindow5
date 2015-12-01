@@ -91,7 +91,7 @@ namespace MW5.Plugins.ShapeEditor.Operations
 
                 _buffer.Table.CopyAttributes(i, fs.Table, shapeIndex, fieldMap);   // TODO: don't use field map for the same FeatureSet
                 history.Add(UndoOperation.AddShape, layerHandle, shapeIndex);
-                fs.Features[i].Selected = true;
+                fs.Features[shapeIndex].Selected = true;
             }
 
             history.EndBatch();

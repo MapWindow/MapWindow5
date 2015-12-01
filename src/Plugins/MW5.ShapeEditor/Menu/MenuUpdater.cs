@@ -29,6 +29,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             plugin.ViewUpdating += OnViewUpdating;
             plugin.MapCursorChanged += OnMapCursorChanged;
+
             plugin.HistoryChanged += (s, e) =>
                 {
                     OnViewUpdating(null, null);
@@ -41,7 +42,16 @@ namespace MW5.Plugins.ShapeEditor.Menu
             if (item != null)
             {
                 item.DropDownOpening += MenuDropDownOpening;
+                item.DropDownClosed += MenuDropDownClosed;
             }
+        }
+
+        void MenuDropDownClosed(object sender, EventArgs e)
+        {
+            // enable them to make hotkeys working
+            FindMenuItem(MenuKeys.Cut).Enabled = true;
+            FindMenuItem(MenuKeys.Paste).Enabled = true;
+            FindMenuItem(MenuKeys.Copy).Enabled = true;
         }
         
         private void OnMapCursorChanged(IMuteMap sender, EventArgs e)

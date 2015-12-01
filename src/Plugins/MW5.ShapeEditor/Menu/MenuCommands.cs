@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.ShapeEditor.Properties;
 
@@ -13,6 +14,16 @@ namespace MW5.Plugins.ShapeEditor.Menu
         public MenuCommands(PluginIdentity identity)
             : base(identity)
         {
+        }
+
+        protected override void AssignShortcutKeys()
+        {
+            Commands[MenuKeys.Copy].ShortcutKeys = Keys.Control | Keys.C;
+            Commands[MenuKeys.Paste].ShortcutKeys = Keys.Control | Keys.V;
+            Commands[MenuKeys.Cut].ShortcutKeys = Keys.Control | Keys.X;
+
+            // see MapControl.OnMapPreviewKeyDown for details
+            Commands[MenuKeys.Undo].ShortcutKeys = Keys.Control | Keys.Z;
         }
 
         public override IEnumerable<MenuCommand> GetCommands()

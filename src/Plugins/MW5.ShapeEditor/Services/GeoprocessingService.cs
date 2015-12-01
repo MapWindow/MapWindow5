@@ -112,7 +112,7 @@ namespace MW5.Plugins.ShapeEditor.Services
         public void PasteShapes()
         {
             var layer = _context.Legend.SelectedLayer;
-            if (layer != null && layer.IsVector)
+            if (layer != null && layer.IsVector && layer.FeatureSet.InteractiveEditing)
             {
                 var result = _copyOperation.Paste(layer.Handle, layer.FeatureSet);
                 switch (result)
@@ -135,7 +135,7 @@ namespace MW5.Plugins.ShapeEditor.Services
         public void CutShapes()
         {
             var layer = _context.Legend.SelectedLayer;
-            if (layer != null && layer.IsVector)
+            if (layer != null && layer.IsVector && layer.FeatureSet.InteractiveEditing)
             {
                 _copyOperation.Cut(layer.Handle, layer.FeatureSet);
                 _context.Map.Redraw();

@@ -48,6 +48,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnDivide = new Syncfusion.Windows.Forms.ButtonAdv();
             this.fieldTypeGrid1 = new MW5.Attributes.Controls.FieldTypeGrid();
             this.btnTest = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.lblType = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.functionTreeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).BeginInit();
@@ -94,6 +95,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.functionTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
             this.functionTreeView1.HelpTextControl.TabIndex = 0;
             this.functionTreeView1.HelpTextControl.Text = "help text";
+            this.functionTreeView1.HideSelection = false;
             this.functionTreeView1.Location = new System.Drawing.Point(361, 52);
             this.functionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.functionTreeView1.Name = "functionTreeView1";
@@ -255,12 +257,22 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnTest.TabIndex = 66;
             this.btnTest.Text = "Test";
             // 
+            // lblType
+            // 
+            this.lblType.Location = new System.Drawing.Point(206, 217);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(144, 13);
+            this.lblType.TabIndex = 67;
+            this.lblType.Text = "Type";
+            this.lblType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FieldCalculatorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(575, 417);
+            this.Controls.Add(this.lblType);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.fieldTypeGrid1);
             this.Controls.Add(this.btnClear);
@@ -304,5 +316,6 @@ namespace MW5.Plugins.TableEditor.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnDivide;
         private FieldTypeGrid fieldTypeGrid1;
         private Syncfusion.Windows.Forms.ButtonAdv btnTest;
+        private System.Windows.Forms.Label lblType;
     }
 }

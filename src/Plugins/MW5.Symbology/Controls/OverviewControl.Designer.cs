@@ -54,7 +54,8 @@
             // 
             // configPanelControl1
             // 
-            this.configPanelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.configPanelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.configPanelControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.configPanelControl1.Controls.Add(this.cboCompression);
@@ -189,7 +190,8 @@
             // 
             // _overviewGrid1
             // 
-            this._overviewGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this._overviewGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._overviewGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this._overviewGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
@@ -200,7 +202,7 @@
             this._overviewGrid1.FreezeCaption = false;
             this._overviewGrid1.Location = new System.Drawing.Point(264, 53);
             this._overviewGrid1.Name = "_overviewGrid1";
-            this._overviewGrid1.Size = new System.Drawing.Size(233, 150);
+            this._overviewGrid1.Size = new System.Drawing.Size(233, 160);
             this._overviewGrid1.TabIndex = 49;
             this._overviewGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
             this._overviewGrid1.TableOptions.AllowDropDownCell = true;

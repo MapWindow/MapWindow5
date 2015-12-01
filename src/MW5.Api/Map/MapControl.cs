@@ -53,6 +53,13 @@ namespace MW5.Api.Map
                     e.IsInputKey = true;
                     return;
             }
+
+            // this shortcut must be passed to MapWinGIS directly
+            if (e.KeyCode == Keys.Z | e.KeyCode == Keys.Control)
+            {
+                e.IsInputKey = true;
+                return;
+            }
         }
 
         public event EventHandler<EventArgs> MapCursorChanged;
