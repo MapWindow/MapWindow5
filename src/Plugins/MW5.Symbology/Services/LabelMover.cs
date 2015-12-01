@@ -195,7 +195,7 @@ namespace MW5.Plugins.Symbology.Services
                 for (int i = layerCount - 1; i >= 0; i--)    // we are starting from the layers which were drawn last
                 {
                     var layer = _map.Layers[i];
-                    if (layer == null)
+                    if (layer == null || !layer.IsVector || layer.FeatureSet == null)
                     {
                         continue;
                     }
