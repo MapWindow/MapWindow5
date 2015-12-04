@@ -71,6 +71,7 @@ namespace MW5.Helpers
             MapConfig.BingApiKey = config.BingApiKey;
             MapConfig.WmsDiskCaching = config.WmsDiskCaching;
             MapConfig.MouseTolerance = config.MouseTolerance;
+            MapConfig.OgrLayerMaxFeatureCount = config.OgrMaxFeatureCount;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;

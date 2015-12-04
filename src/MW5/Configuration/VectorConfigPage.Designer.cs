@@ -30,9 +30,11 @@ namespace MW5.Configuration
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorConfigPage));
             this.cboProjectionAbsence = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboProjectionMismatch = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkFastMode = new System.Windows.Forms.CheckBox();
             this.chkCacheDbfRecords = new System.Windows.Forms.CheckBox();
             this.chkCacheRenderingData = new System.Windows.Forms.CheckBox();
             this.configPanelControl3 = new MW5.UI.Controls.ConfigPanelControl();
@@ -40,7 +42,10 @@ namespace MW5.Configuration
             this.label2 = new System.Windows.Forms.Label();
             this.chkCreateSpatialIndex = new System.Windows.Forms.CheckBox();
             this.chkSpatialIndexDialog = new System.Windows.Forms.CheckBox();
-            this.chkFastMode = new System.Windows.Forms.CheckBox();
+            this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtMaxOgrCount = new Syncfusion.Windows.Forms.Tools.IntegerTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionAbsence)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionMismatch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
@@ -48,6 +53,9 @@ namespace MW5.Configuration
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
             this.configPanelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSpatialIndexCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
+            this.configPanelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMaxOgrCount)).BeginInit();
             this.SuspendLayout();
             // 
             // cboProjectionAbsence
@@ -82,6 +90,15 @@ namespace MW5.Configuration
             this.configPanelControl1.Name = "configPanelControl1";
             this.configPanelControl1.Size = new System.Drawing.Size(394, 122);
             this.configPanelControl1.TabIndex = 14;
+            // 
+            // chkFastMode
+            // 
+            this.chkFastMode.Enabled = false;
+            this.chkFastMode.Location = new System.Drawing.Point(21, 34);
+            this.chkFastMode.Name = "chkFastMode";
+            this.chkFastMode.Size = new System.Drawing.Size(292, 21);
+            this.chkFastMode.TabIndex = 12;
+            this.chkFastMode.Text = "Fast mode (don\'t use COM points)";
             // 
             // chkCacheDbfRecords
             // 
@@ -160,24 +177,66 @@ namespace MW5.Configuration
             this.chkSpatialIndexDialog.TabIndex = 9;
             this.chkSpatialIndexDialog.Text = "Show spatial index creation dialog";
             // 
-            // chkFastMode
+            // configPanelControl2
             // 
-            this.chkFastMode.Enabled = false;
-            this.chkFastMode.Location = new System.Drawing.Point(21, 34);
-            this.chkFastMode.Name = "chkFastMode";
-            this.chkFastMode.Size = new System.Drawing.Size(292, 21);
-            this.chkFastMode.TabIndex = 12;
-            this.chkFastMode.Text = "Fast mode (don\'t use COM points)";
+            this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl2.Controls.Add(this.label3);
+            this.configPanelControl2.Controls.Add(this.label1);
+            this.configPanelControl2.Controls.Add(this.txtMaxOgrCount);
+            this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.configPanelControl2.HeaderText = "OGR datasources";
+            this.configPanelControl2.Location = new System.Drawing.Point(0, 265);
+            this.configPanelControl2.Name = "configPanelControl2";
+            this.configPanelControl2.Size = new System.Drawing.Size(394, 155);
+            this.configPanelControl2.TabIndex = 15;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Location = new System.Drawing.Point(18, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(358, 57);
+            this.label3.TabIndex = 3;
+            this.label3.Text = resources.GetString("label3.Text");
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Location = new System.Drawing.Point(18, 41);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(329, 18);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Maximum number of features allowed to be loaded from the source:";
+            // 
+            // txtMaxOgrCount
+            // 
+            this.txtMaxOgrCount.BackGroundColor = System.Drawing.SystemColors.Window;
+            this.txtMaxOgrCount.BeforeTouchSize = new System.Drawing.Size(301, 20);
+            this.txtMaxOgrCount.BorderColor = System.Drawing.Color.LightGray;
+            this.txtMaxOgrCount.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMaxOgrCount.IntegerValue = ((long)(1));
+            this.txtMaxOgrCount.Location = new System.Drawing.Point(21, 62);
+            this.txtMaxOgrCount.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMaxOgrCount.MinValue = ((long)(0));
+            this.txtMaxOgrCount.Name = "txtMaxOgrCount";
+            this.txtMaxOgrCount.NullString = "";
+            this.txtMaxOgrCount.Size = new System.Drawing.Size(100, 20);
+            this.txtMaxOgrCount.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMaxOgrCount.TabIndex = 1;
+            this.txtMaxOgrCount.Text = "1";
             // 
             // VectorConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.configPanelControl2);
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl3);
             this.Name = "VectorConfigPage";
-            this.Size = new System.Drawing.Size(394, 273);
+            this.Size = new System.Drawing.Size(394, 427);
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionAbsence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionMismatch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
@@ -186,6 +245,10 @@ namespace MW5.Configuration
             this.configPanelControl3.ResumeLayout(false);
             this.configPanelControl3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSpatialIndexCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
+            this.configPanelControl2.ResumeLayout(false);
+            this.configPanelControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMaxOgrCount)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,5 +266,9 @@ namespace MW5.Configuration
         private CheckBox chkCacheDbfRecords;
         private CheckBox chkCacheRenderingData;
         private CheckBox chkFastMode;
+        private UI.Controls.ConfigPanelControl configPanelControl2;
+        private Label label3;
+        private Label label1;
+        private Syncfusion.Windows.Forms.Tools.IntegerTextBox txtMaxOgrCount;
     }
 }

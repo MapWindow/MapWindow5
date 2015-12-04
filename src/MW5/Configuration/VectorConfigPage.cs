@@ -53,6 +53,8 @@ namespace MW5.Configuration
             chkCacheDbfRecords.Checked = config.CacheDbfRecords;
             chkCacheRenderingData.Checked = config.CacheRenderingData;
 
+            txtMaxOgrCount.IntegerValue = config.OgrMaxFeatureCount;
+
             udSpatialIndexCount.SetValue(config.SpatialIndexFeatureCount);
         }
 
@@ -70,6 +72,8 @@ namespace MW5.Configuration
 
             config.CacheDbfRecords = chkCacheDbfRecords.Checked;
             config.CacheRenderingData = chkCacheRenderingData.Checked;
+
+            config.OgrMaxFeatureCount = (int)txtMaxOgrCount.IntegerValue;
 
             config.SpatialIndexFeatureCount = (int)udSpatialIndexCount.Value;
         }

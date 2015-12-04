@@ -236,6 +236,9 @@ namespace MW5.Plugins.Concrete
         public int MouseTolerance { get; set; }
 
         [DataMember]
+        public int OgrMaxFeatureCount { get; set; }
+
+        [DataMember]
         public bool OverviewBackgroundVisible { get; set; }
 
         [DataMember]
@@ -485,6 +488,7 @@ namespace MW5.Plugins.Concrete
             MeasuringShowTotalLength = true;
             MouseTolerance = 10;
             MouseWheelDirection = MouseWheelDirection.Forward;
+            OgrMaxFeatureCount = 50000;
             OverviewBackgroundVisible = true;
             PrintingUnits = 0;
             PrintingMargins = new Margins(25, 25, 50, 50);

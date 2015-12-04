@@ -117,4 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label3.Text" xml:space="preserve">
+    <value>If the layer has more features than specified here, an attempt will be made to load them dynamically for particular map extents as you zoom in. But for the time being no features will be displayed as the map is zoomed to the full extents of this layer.</value>
+  </data>
 </root>

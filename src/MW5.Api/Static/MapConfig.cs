@@ -330,6 +330,12 @@ namespace MW5.Api.Static
             set { _settings.CallbackVerbosity = (tkCallbackVerbosity)value; }
         }
 
+        public static int OgrLayerMaxFeatureCount
+        {
+            get { return _settings.OgrLayerMaxFeatureCount; }
+            set { _settings.OgrLayerMaxFeatureCount = value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea
@@ -386,11 +392,7 @@ namespace MW5.Api.Static
             set { throw new NotImplementedException(); }
         }
         
-        public static int OgrLayerMaxFeatureCount
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
+        
          
         public static bool AutoChooseOgrLoadingMode
         {
