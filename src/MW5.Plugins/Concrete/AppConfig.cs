@@ -272,6 +272,12 @@ namespace MW5.Plugins.Concrete
         public RasterOverviewSampling PyramidSampling { get; set; }
 
         [DataMember]
+        public bool QueryBuilderShowValue { get; set; }
+
+        [DataMember]
+        public SelectionOperation QueryBuilderSelectionOperation { get; set; }
+
+        [DataMember]
         public InterpolationType RasterDownsamplingMode { get; set; }
 
         [DataMember]
@@ -500,6 +506,8 @@ namespace MW5.Plugins.Concrete
             ProjectionShowLoadingReport = true;
             PyramidCompression = TiffCompression.Auto;
             PyramidSampling = RasterOverviewSampling.Nearest;
+            QueryBuilderShowValue = true;
+            QueryBuilderSelectionOperation = SelectionOperation.New;
             RasterDownsamplingMode = InterpolationType.Bilinear;
             RasterUpsamplingMode = InterpolationType.None;
             ResizeBehavior = ResizeBehavior.KeepScale;

@@ -11,13 +11,16 @@ namespace MW5.Attributes.Views
 {
     public class QueryBuilderModel
     {
-        public QueryBuilderModel(ILayer layer, string expression)
+        public QueryBuilderModel(ILayer layer, string expression, bool query = true)
         {
             if (layer == null) throw new ArgumentNullException("layer");
 
             Layer = layer;
             Expression = expression;
+            IsQuery = query;
         }
+
+        public bool IsQuery { get; private set; }
 
         public string Expression { get; set; }
 

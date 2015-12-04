@@ -353,6 +353,9 @@
     <EmbeddedResource Include="Forms\CheckBoxForm.resx">
       <DependentUpon>CheckBoxForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TypedOptionsForm.resx">
+      <DependentUpon>TypedOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>
     </EmbeddedResource>

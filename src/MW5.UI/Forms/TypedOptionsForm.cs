@@ -61,5 +61,19 @@ namespace MW5.UI.Forms
                 }
             }
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // TypedOptionsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(378, 217);
+            this.Name = "TypedOptionsForm";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
     }
 }

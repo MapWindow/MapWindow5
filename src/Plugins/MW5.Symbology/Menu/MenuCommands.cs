@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Symbology.Properties;
 
@@ -12,6 +13,11 @@ namespace MW5.Plugins.Symbology.Menu
     {
         public MenuCommands(PluginIdentity identity) : base(identity)
         {
+        }
+
+        protected override void AssignShortcutKeys()
+        {
+            Commands[MenuKeys.QueryBuilder].ShortcutKeys = Keys.Control | Keys.Q;
         }
 
         public override IEnumerable<MenuCommand> GetCommands()

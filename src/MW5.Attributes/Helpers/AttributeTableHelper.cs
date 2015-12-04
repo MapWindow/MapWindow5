@@ -54,31 +54,50 @@ namespace MW5.Attributes.Helpers
 
         public static IEnumerable<ValueCountItem> GetUniqueValues(this IAttributeTable table, int fieldIndex)
         {
-            var hashTable = new SortedDictionary<string, int>();
+            var hashTable = new SortedDictionary<object, int>();
 
-            bool isString = (table.Fields[fieldIndex].Type == AttributeType.String);
+            var type = table.Fields[fieldIndex].Type;
 
             for (int i = 0; i < table.NumRows; i++)
             {
                 var obj = table.CellValue(fieldIndex, i);
-                string s = obj != null ? obj.ToString() : string.Empty;
 
-                if (isString)
+                switch (type)
                 {
-                    s = "\"" + s + "\"";
+                    case AttributeType.String:
+                        string s = obj != null ? obj.ToString() : string.Empty;
+                        s = "\"" + s + "\"";
+                        obj = s;
+                        break;
+                    case AttributeType.Integer:
+                        obj = obj ?? 0;
+                        break;
+                    case AttributeType.Double:
+                        obj = obj ?? 0.0;
+                        break;
                 }
 
-                if (hashTable.ContainsKey(s))
+                if (hashTable.ContainsKey(obj))
                 {
-                    hashTable[s] += 1;
+                    hashTable[obj] += 1;
                 }
                 else
                 {
-                    hashTable.Add(s, 1);
+                    hashTable.Add(obj, 1);
                 }
             }
 
-            return hashTable.Select(item => new ValueCountItem(item.Key, item.Value));
+            switch (type)
+            {
+                case AttributeType.String:
+                    return hashTable.Select(item => new ValueCountItem(item.Key.ToString(), item.Value));
+                case AttributeType.Integer:
+                    return hashTable.Select(item => new ValueCountItem((int)item.Key, item.Value));
+                case AttributeType.Double:
+                    return hashTable.Select(item => new ValueCountItem((double)item.Key, item.Value));
+            }
+
+            return new List<ValueCountItem>();
         }
     }
 }

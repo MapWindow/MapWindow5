@@ -74,6 +74,7 @@
             this.chkDontShow.TabIndex = 7;
             this.chkDontShow.Text = "Always use this value";
             this.chkDontShow.UseVisualStyleBackColor = true;
+            this.chkDontShow.Visible = false;
             // 
             // OptionsForm
             // 

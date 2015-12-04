@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Attributes.Views.Abstract;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Attributes.Views
@@ -19,6 +21,7 @@ namespace MW5.Attributes.Views
     public class QueryBuilderPresenter : BasePresenter<IQueryBuilderView, QueryBuilderModel>
     {
         private readonly IAppContext _context;
+        private string _lastQuery = string.Empty;
 
         public QueryBuilderPresenter(IQueryBuilderView view, IAppContext context)
             : base(view)
@@ -32,6 +35,13 @@ namespace MW5.Attributes.Views
 
         public override bool ViewOkClicked()
         {
+            if (Model.IsQuery && !_lastQuery.EqualsIgnoreCase(View.Expression))
+            {
+                // run the query on hitting OK button
+                // if the query has not been executed yet
+                OnRunClicked();
+            }
+
             Model.Expression = View.Expression;
             return true;
         }
@@ -42,6 +52,8 @@ namespace MW5.Attributes.Views
             {
                 return;
             }
+
+            _lastQuery = View.Expression;
 
             var results = new List<int>();
             if (Query(results))
@@ -54,11 +66,13 @@ namespace MW5.Attributes.Views
                                    SelectionOperation.Invert,
                                };
 
-                var operation = SelectionOperation.New;
+                var operation = AppConfig.Instance.QueryBuilderSelectionOperation;
                 const string msg = "Please choose selection mode:";
 
                 if (OptionListHelper.Select(list, ref operation, msg, View as IWin32Window))
                 {
+                    AppConfig.Instance.QueryBuilderSelectionOperation = operation;
+
                     Model.Layer.UpdateSelection(results, operation);
                     _context.Map.Redraw();
                 }

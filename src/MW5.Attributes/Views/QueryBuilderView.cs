@@ -13,6 +13,7 @@ using MW5.Api.Interfaces;
 using MW5.Attributes.Helpers;
 using MW5.Attributes.Model;
 using MW5.Attributes.Views.Abstract;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 using MW5.UI.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
@@ -33,6 +34,22 @@ namespace MW5.Attributes.Views
 
             btnTest.Click += (s, e) => Invoke(TestClicked);
             btnRun.Click += (s, e) => Invoke(RunClicked);
+
+            chkShowValues.Checked = AppConfig.Instance.QueryBuilderShowValue;
+
+            FormClosing += (s, e) => AppConfig.Instance.QueryBuilderShowValue = chkShowValues.Checked;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case (Keys.Control | Keys.R):
+                    Invoke(RunClicked);
+                    break;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private int FieldIndex
@@ -72,7 +89,7 @@ namespace MW5.Attributes.Views
 
             InitTextBox();
 
-            //ShowValues();   // too slow
+            btnRun.Enabled = Model.IsQuery;            
 
             ValidateOnTheFly(true);
         }
@@ -123,7 +140,14 @@ namespace MW5.Attributes.Views
             fieldTypeGrid1.DataSource = list;
             fieldTypeGrid1.Adapter.SelectFirstRecord();
 
-            fieldTypeGrid1.SelectedRecordsChanged += (s, e) => ShowValues();
+            fieldTypeGrid1.SelectedRecordsChanged += (s, e) =>
+                {
+                    if (chkShowValues.Checked)
+                    {
+                        ShowValues();
+                    }
+                };
+
             fieldTypeGrid1.TableControlCellDoubleClick += OnFieldGridDoubleClick;
         }
 
@@ -183,7 +207,9 @@ namespace MW5.Attributes.Views
                 return;
             }
 
-            valueCountGrid1.DataSource = _table.GetUniqueValues(FieldIndex).ToList();
+            var list = _table.GetUniqueValues(FieldIndex).ToList();
+
+            valueCountGrid1.DataSource = list;
         }
     }
 

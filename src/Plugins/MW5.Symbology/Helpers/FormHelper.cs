@@ -104,7 +104,7 @@ namespace MW5.Plugins.Symbology.Helpers
 
         internal static bool ShowQueryBuilder(IAppContext context, ILayer layer, IWin32Window parent, ref string expression, bool selectionMode)
         {
-            var model = new QueryBuilderModel(layer, expression);
+            var model = new QueryBuilderModel(layer, expression, false);
             bool result = context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model, parent);
             
             if (result)
