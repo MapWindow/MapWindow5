@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Attributes.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
@@ -43,10 +44,10 @@ namespace MW5.Plugins.TableEditor
 
         private void OnLayerEditingChanged(object sender, Api.Legend.Events.LayerEventArgs e)
         {
-            var fs = _context.Layers.GetFeatureSet(e.LayerHandle);
-            if (fs != null)
+            var layer = _context.Layers.ItemByHandle(e.LayerHandle);
+            if (layer.IsVector)
             {
-                _presenter.View.ReloadDatasource(fs, e.LayerHandle);
+                _presenter.View.ReloadDatasource(layer.FeatureSet, e.LayerHandle, layer.LayerType == LayerType.VectorLayer);
             }
 
             _presenter.View.UpdateView();

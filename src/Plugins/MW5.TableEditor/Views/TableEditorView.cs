@@ -173,7 +173,7 @@ namespace MW5.Plugins.TableEditor.Views
         {
             var grid = CreateGrid();
 
-            grid.SetTableSource(layer.FeatureSet, layer.Handle);
+            grid.SetTableSource(layer.FeatureSet, layer.Handle, layer.LayerType == Api.Enums.LayerType.VectorLayer);
             
             grid.ColumnContextNeeded += (s, e) => ShowContextMenu(s, e.ColumnIndex);
             grid.CellContextMenuStripNeeded += (s, e) => ShowContextMenu(s, e.ColumnIndex);
@@ -259,16 +259,32 @@ namespace MW5.Plugins.TableEditor.Views
         /// Reloads featureset for certain layer. 
         /// Useful for OGR layer when another instance of shapefile has been created under the hood.
         /// </summary>
-        public void ReloadDatasource(IFeatureSet fs, int layerHandle)
+        public void ReloadDatasource(IFeatureSet fs, int layerHandle, bool ogr)
         {
             foreach (var panel in _panels)
             {
                 var grid = panel.Control as TableEditorGrid;
                 if (grid != null && grid.LayerHandle == layerHandle)
                 {
-                    grid.SetTableSource(fs, layerHandle);
+                    UpdateDatasourceCore(grid, fs);
+
                     break;
                 }
+            }
+        }
+
+        private void UpdateDatasourceCore(TableEditorGrid grid, IFeatureSet fs)
+        {
+            var manager = grid.RowManager;
+
+            int cmnIndex = manager.SortColumnIndex;
+            bool ascending = manager.SortAscending;
+
+            grid.SetTableSource(fs, grid.LayerHandle, grid.IsOgr);
+
+            if (cmnIndex != -1)
+            {
+                grid.SortByColumn(cmnIndex, ascending);
             }
         }
 
@@ -280,7 +296,7 @@ namespace MW5.Plugins.TableEditor.Views
             var grid = ActiveGrid;
             if (grid != null)
             {
-                grid.SetTableSource(grid.TableSource, grid.LayerHandle);
+                UpdateDatasourceCore(grid, grid.TableSource);
             }
 
             UpdateView();
@@ -453,6 +469,17 @@ namespace MW5.Plugins.TableEditor.Views
         private void OnLayoutDropDownOpening(object sender, System.EventArgs e)
         {
             mnuFormatValues.Checked = AppConfig.Instance.TableEditorFormatValues;
+        }
+
+        private void OnContextOpening(object sender, CancelEventArgs e)
+        {
+            if (ActiveGrid == null) return;
+
+            bool keyField = ActiveGrid.IsOgr && ActiveColumnIndex == 0;
+
+            mnuCalculateField.Enabled = !keyField;
+            mnuRemoveField.Enabled = !keyField;
+            mnuFieldProperties.Enabled = !keyField;
         }
     }
 

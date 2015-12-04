@@ -470,50 +470,50 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.mnuLayoutVertical.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_vertical16;
             this.mnuLayoutVertical.Name = "mnuLayoutVertical";
-            this.mnuLayoutVertical.Size = new System.Drawing.Size(152, 22);
+            this.mnuLayoutVertical.Size = new System.Drawing.Size(149, 22);
             this.mnuLayoutVertical.Text = "Vertical";
             // 
             // mnuLayoutHorizontal
             // 
             this.mnuLayoutHorizontal.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_horizontal_16;
             this.mnuLayoutHorizontal.Name = "mnuLayoutHorizontal";
-            this.mnuLayoutHorizontal.Size = new System.Drawing.Size(152, 22);
+            this.mnuLayoutHorizontal.Size = new System.Drawing.Size(149, 22);
             this.mnuLayoutHorizontal.Text = "Horizontal";
             // 
             // mnuLayoutTabbed
             // 
             this.mnuLayoutTabbed.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_tabbed16;
             this.mnuLayoutTabbed.Name = "mnuLayoutTabbed";
-            this.mnuLayoutTabbed.Size = new System.Drawing.Size(152, 22);
+            this.mnuLayoutTabbed.Size = new System.Drawing.Size(149, 22);
             this.mnuLayoutTabbed.Text = "Tabbed";
             // 
             // toolStripSeparator16
             // 
             this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator16.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuFormatValues
             // 
             this.mnuFormatValues.Name = "mnuFormatValues";
-            this.mnuFormatValues.Size = new System.Drawing.Size(152, 22);
+            this.mnuFormatValues.Size = new System.Drawing.Size(149, 22);
             this.mnuFormatValues.Text = "Format Values";
             // 
             // toolStripSeparator18
             // 
             this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator18.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuReloadTable
             // 
             this.mnuReloadTable.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_refresh16;
             this.mnuReloadTable.Name = "mnuReloadTable";
-            this.mnuReloadTable.Size = new System.Drawing.Size(152, 22);
+            this.mnuReloadTable.Size = new System.Drawing.Size(149, 22);
             this.mnuReloadTable.Text = "Reload Table";
             // 
             // mnuClearSorting
             // 
             this.mnuClearSorting.Name = "mnuClearSorting";
-            this.mnuClearSorting.Size = new System.Drawing.Size(152, 22);
+            this.mnuClearSorting.Size = new System.Drawing.Size(149, 22);
             this.mnuClearSorting.Text = "Clear Sorting";
             // 
             // lblNoLayers
@@ -543,74 +543,75 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldProperties});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(160, 182);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(161, 204);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             this.contextMenuStripEx1.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnContextMenuClosed);
+            this.contextMenuStripEx1.Opening += new System.ComponentModel.CancelEventHandler(this.OnContextOpening);
             // 
             // mnuFieldSortAsc
             // 
             this.mnuFieldSortAsc.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_sort_asc16;
             this.mnuFieldSortAsc.Name = "mnuFieldSortAsc";
-            this.mnuFieldSortAsc.Size = new System.Drawing.Size(159, 22);
-            this.mnuFieldSortAsc.Text = "Sort ascending";
+            this.mnuFieldSortAsc.Size = new System.Drawing.Size(160, 22);
+            this.mnuFieldSortAsc.Text = "Sort Ascending";
             // 
             // mnuFieldSortDesc
             // 
             this.mnuFieldSortDesc.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_sort_desc16;
             this.mnuFieldSortDesc.Name = "mnuFieldSortDesc";
-            this.mnuFieldSortDesc.Size = new System.Drawing.Size(159, 22);
-            this.mnuFieldSortDesc.Text = "Sort descending";
+            this.mnuFieldSortDesc.Size = new System.Drawing.Size(160, 22);
+            this.mnuFieldSortDesc.Text = "Sort Descending";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(156, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(157, 6);
             // 
             // mnuFieldHide
             // 
             this.mnuFieldHide.Name = "mnuFieldHide";
-            this.mnuFieldHide.Size = new System.Drawing.Size(159, 22);
-            this.mnuFieldHide.Text = "Hide field";
+            this.mnuFieldHide.Size = new System.Drawing.Size(160, 22);
+            this.mnuFieldHide.Text = "Hide Field";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(156, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(157, 6);
             // 
             // mnuCalculateField
             // 
             this.mnuCalculateField.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_calculate16;
             this.mnuCalculateField.Name = "mnuCalculateField";
-            this.mnuCalculateField.Size = new System.Drawing.Size(159, 22);
-            this.mnuCalculateField.Text = "Calculate field";
+            this.mnuCalculateField.Size = new System.Drawing.Size(160, 22);
+            this.mnuCalculateField.Text = "Calculate Field";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(156, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(157, 6);
             // 
             // mnuRemoveField
             // 
             this.mnuRemoveField.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_remove16;
             this.mnuRemoveField.Name = "mnuRemoveField";
-            this.mnuRemoveField.Size = new System.Drawing.Size(159, 22);
-            this.mnuRemoveField.Text = "Remove field";
+            this.mnuRemoveField.Size = new System.Drawing.Size(160, 22);
+            this.mnuRemoveField.Text = "Remove Field";
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(156, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(157, 6);
             // 
             // mnuFieldStats
             // 
             this.mnuFieldStats.Name = "mnuFieldStats";
-            this.mnuFieldStats.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldStats.Size = new System.Drawing.Size(160, 22);
             this.mnuFieldStats.Text = "Statistics";
             // 
             // mnuFieldProperties
             // 
             this.mnuFieldProperties.Name = "mnuFieldProperties";
-            this.mnuFieldProperties.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldProperties.Size = new System.Drawing.Size(160, 22);
             this.mnuFieldProperties.Text = "Properties";
             // 
             // TableEditorView

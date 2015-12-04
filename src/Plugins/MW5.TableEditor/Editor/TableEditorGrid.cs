@@ -22,6 +22,7 @@ namespace MW5.Plugins.TableEditor.Editor
     public class TableEditorGrid: VirtualGrid
     {
         private readonly Color _joinColumnBackColor = Color.OldLace;
+        private readonly Color _ogrKeyColor = Color.FromArgb(245, 245, 245);
         public event EventHandler<ColumnEventArgs> ColumnContextNeeded;
         public event EventHandler CellValueEdited;
 
@@ -30,6 +31,7 @@ namespace MW5.Plugins.TableEditor.Editor
         private bool _ignoreCurrentCellChange;
         private bool _currentCellChanged;
         private int _layerHandle;
+        private bool _ogr;
 
         public TableEditorGrid()
         {
@@ -42,8 +44,6 @@ namespace MW5.Plugins.TableEditor.Editor
             _layerHandle = -1;
         }
 
-       
-
         [Browsable(false)]
         public IFeatureSet TableSource
         {
@@ -55,7 +55,12 @@ namespace MW5.Plugins.TableEditor.Editor
             get { return _layerHandle;  }
         }
 
-        public void SetTableSource(IFeatureSet fs, int layerHandle)
+        public bool IsOgr
+        {
+            get { return _ogr; }
+        }
+
+        public void SetTableSource(IFeatureSet fs, int layerHandle, bool ogr)
         {
             if (fs == null)
             {
@@ -66,6 +71,7 @@ namespace MW5.Plugins.TableEditor.Editor
             _layerHandle = layerHandle;
             _shapefile = fs;
             _table = fs.Table;
+            _ogr = ogr;
 
             InitColumns(_table);
 
@@ -108,6 +114,7 @@ namespace MW5.Plugins.TableEditor.Editor
 
             bool showAliases = AppConfig.Instance.TableEditorShowAliases;
 
+            bool first = true;
             foreach(var fld in table.Fields)
             {
                 var cmn = new DataGridViewTextBoxColumn
@@ -126,6 +133,13 @@ namespace MW5.Plugins.TableEditor.Editor
                 if (table.FieldIsJoined(fld.Index))
                 {
                     cmn.CellTemplate.Style.BackColor = _joinColumnBackColor;    
+                }
+
+                if (_ogr && first)
+                {
+                    cmn.CellTemplate.Style.BackColor = _ogrKeyColor;
+                    cmn.ReadOnly = true;
+                    first = false;
                 }
 
                 Columns.Add(cmn);
@@ -171,8 +185,8 @@ namespace MW5.Plugins.TableEditor.Editor
                     {
                         MessageService.Current.Info("The string is too long and will be truncated.");
                         s = s.Substring(0, fld.Width);
-                        _table.EditCellValue(e.ColumnIndex, realIndex, s);
                     }
+                    _table.EditCellValue(e.ColumnIndex, realIndex, s);
                     break;
                 case AttributeType.Integer:
                     {

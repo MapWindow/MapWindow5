@@ -44,6 +44,6 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
 
         void OnSelectionChanged();
 
-        void ReloadDatasource(IFeatureSet fs, int layerHandle);
+        void ReloadDatasource(IFeatureSet fs, int layerHandle, bool isOgr);
     }
 }
