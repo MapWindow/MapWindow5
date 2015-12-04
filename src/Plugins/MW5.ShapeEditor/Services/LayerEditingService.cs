@@ -112,13 +112,17 @@ namespace MW5.Plugins.ShapeEditor.Services
             switch (result)
             {
                 case DialogResult.Yes:
-                    return SaveChangesCore(layerHandle);
+                    SaveChangesCore(layerHandle);
+                    break;
                 case DialogResult.No:
                     DiscardChangesCore(layerHandle);
-                    return true;
+                    break;
                 default:
                     return false;
             }
+
+            _broadcaster.BroadcastEvent(p => p.LayerEditingChanged_, _context.Legend, new LayerEventArgs(layerHandle));
+            return true;
         }
 
         /// <summary>

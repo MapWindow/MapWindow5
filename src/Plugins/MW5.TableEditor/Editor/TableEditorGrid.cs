@@ -37,9 +37,12 @@ namespace MW5.Plugins.TableEditor.Editor
             CellValuePushed += GridCellValuePushed;
             CurrentCellChanged += OnCurrentCellChanged;
             ColumnHeaderMouseClick += OnColumnHeaderMouseClick;
+            CellFormatting += OnCellFormatting;
 
             _layerHandle = -1;
         }
+
+       
 
         [Browsable(false)]
         public IFeatureSet TableSource
@@ -129,10 +132,76 @@ namespace MW5.Plugins.TableEditor.Editor
             }
         }
 
+        private void OnCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value == null) return;
+
+            if (!AppConfig.Instance.TableEditorFormatValues) return;
+
+            var fld = _table.Fields[e.ColumnIndex];
+
+            if (fld.Type == AttributeType.Double)
+            {
+                var value = (double)e.Value;
+
+                string s = value.ToString("f" + fld.Precision);
+
+                if (s.Length > fld.Width)
+                {
+                    s = s.Substring(0, fld.Width);
+                }
+            
+                e.Value = s;
+            }
+        }
+
         private void GridCellValuePushed(object sender, DataGridViewCellValueEventArgs e)
         {
+            var s = e.Value as string;
+            if (s == null) return;
+
             int realIndex = RowManager.RealIndex(e.RowIndex);
-            _table.EditCellValue(e.ColumnIndex, realIndex, e.Value);
+
+            var fld = _table.Fields[e.ColumnIndex];
+
+            switch (fld.Type)
+            {
+                case AttributeType.String:
+                    if (fld.Width < s.Length)
+                    {
+                        MessageService.Current.Info("The string is too long and will be truncated.");
+                        s = s.Substring(0, fld.Width);
+                        _table.EditCellValue(e.ColumnIndex, realIndex, s);
+                    }
+                    break;
+                case AttributeType.Integer:
+                    {
+                        int val;
+                        if (Int32.TryParse(s, out val))
+                        {
+                            _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                        }
+                        else
+                        {
+                            MessageService.Current.Info("The string is not recognized as an integer value.");
+                        }
+                    }
+                    break;
+                case AttributeType.Double:
+                    {
+                        double val;
+                        if (Double.TryParse(s, out val))
+                        {
+                            _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                        }
+                        else
+                        {
+                            MessageService.Current.Info("The string is not recognized as a floating point numeric value.");
+                        }
+                    }
+                    break;
+            }
+
             DelegateHelper.FireEvent(this, CellValueEdited);
         }
 

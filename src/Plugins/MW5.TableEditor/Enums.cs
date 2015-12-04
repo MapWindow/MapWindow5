@@ -39,6 +39,7 @@
         ClearSorting = 35,
         RecalculateFields = 36,
         DiscardChanges = 37,
+        FormatValues = 38,
     }
 
     /// <summary>

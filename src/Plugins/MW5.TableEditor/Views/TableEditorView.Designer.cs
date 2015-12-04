@@ -82,6 +82,8 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuLayoutHorizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLayoutTabbed = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuFormatValues = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuReloadTable = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClearSorting = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNoLayers = new System.Windows.Forms.Label();
@@ -452,6 +454,8 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuLayoutHorizontal,
             this.mnuLayoutTabbed,
             this.toolStripSeparator16,
+            this.mnuFormatValues,
+            this.toolStripSeparator18,
             this.mnuReloadTable,
             this.mnuClearSorting});
             this.toolLayout.ForeColor = System.Drawing.Color.Black;
@@ -460,44 +464,56 @@ namespace MW5.Plugins.TableEditor.Views
             this.toolLayout.Name = "toolLayout";
             this.toolLayout.Size = new System.Drawing.Size(56, 30);
             this.toolLayout.Text = "Layout";
+            this.toolLayout.DropDownOpening += new System.EventHandler(this.OnLayoutDropDownOpening);
             // 
             // mnuLayoutVertical
             // 
             this.mnuLayoutVertical.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_vertical16;
             this.mnuLayoutVertical.Name = "mnuLayoutVertical";
-            this.mnuLayoutVertical.Size = new System.Drawing.Size(142, 22);
+            this.mnuLayoutVertical.Size = new System.Drawing.Size(152, 22);
             this.mnuLayoutVertical.Text = "Vertical";
             // 
             // mnuLayoutHorizontal
             // 
             this.mnuLayoutHorizontal.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_horizontal_16;
             this.mnuLayoutHorizontal.Name = "mnuLayoutHorizontal";
-            this.mnuLayoutHorizontal.Size = new System.Drawing.Size(142, 22);
+            this.mnuLayoutHorizontal.Size = new System.Drawing.Size(152, 22);
             this.mnuLayoutHorizontal.Text = "Horizontal";
             // 
             // mnuLayoutTabbed
             // 
             this.mnuLayoutTabbed.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_tabbed16;
             this.mnuLayoutTabbed.Name = "mnuLayoutTabbed";
-            this.mnuLayoutTabbed.Size = new System.Drawing.Size(142, 22);
+            this.mnuLayoutTabbed.Size = new System.Drawing.Size(152, 22);
             this.mnuLayoutTabbed.Text = "Tabbed";
             // 
             // toolStripSeparator16
             // 
             this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(139, 6);
+            this.toolStripSeparator16.Size = new System.Drawing.Size(149, 6);
+            // 
+            // mnuFormatValues
+            // 
+            this.mnuFormatValues.Name = "mnuFormatValues";
+            this.mnuFormatValues.Size = new System.Drawing.Size(152, 22);
+            this.mnuFormatValues.Text = "Format Values";
+            // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuReloadTable
             // 
             this.mnuReloadTable.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_refresh16;
             this.mnuReloadTable.Name = "mnuReloadTable";
-            this.mnuReloadTable.Size = new System.Drawing.Size(142, 22);
+            this.mnuReloadTable.Size = new System.Drawing.Size(152, 22);
             this.mnuReloadTable.Text = "Reload Table";
             // 
             // mnuClearSorting
             // 
             this.mnuClearSorting.Name = "mnuClearSorting";
-            this.mnuClearSorting.Size = new System.Drawing.Size(142, 22);
+            this.mnuClearSorting.Size = new System.Drawing.Size(152, 22);
             this.mnuClearSorting.Text = "Clear Sorting";
             // 
             // lblNoLayers
@@ -680,6 +696,8 @@ namespace MW5.Plugins.TableEditor.Views
         private ToolStripSeparator toolStripSeparator13;
         private ToolStripMenuItem mnuRecalculateFields;
         private ToolTip toolTip1;
+        private ToolStripMenuItem mnuFormatValues;
+        private ToolStripSeparator toolStripSeparator18;
 
     }
 }

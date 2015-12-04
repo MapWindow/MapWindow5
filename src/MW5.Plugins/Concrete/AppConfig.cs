@@ -345,6 +345,9 @@ namespace MW5.Plugins.Concrete
         public TableEditorLayout TableEditorLayout { get; set; }
 
         [DataMember]
+        public bool TableEditorFormatValues { get; set; }
+
+        [DataMember]
         public bool TableEditorShowAliases { get; set; }
 
         [DataMember]
@@ -527,6 +530,7 @@ namespace MW5.Plugins.Concrete
             ShowZoombar = true;
             SpatialIndexFeatureCount = 10000;
             SymbolobyStorage = SymbologyStorage.Project;
+            TableEditorFormatValues = true;
             TableEditorLayout = TableEditorLayout.Tabbed;
             TableEditorShowAliases = true;
             TaskRunInBackground = false;

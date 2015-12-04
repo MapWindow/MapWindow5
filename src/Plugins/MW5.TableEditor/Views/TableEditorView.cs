@@ -449,6 +449,11 @@ namespace MW5.Plugins.TableEditor.Views
                 grid.SetSelectionMode(DataGridViewSelectionMode.CellSelect);
             }
         }
+
+        private void OnLayoutDropDownOpening(object sender, System.EventArgs e)
+        {
+            mnuFormatValues.Checked = AppConfig.Instance.TableEditorFormatValues;
+        }
     }
 
     public class TableEditorViewBase : MapWindowView<ILayer>

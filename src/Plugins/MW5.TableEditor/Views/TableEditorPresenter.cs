@@ -283,7 +283,10 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
-            
+                case TableEditorCommand.FormatValues:
+                    AppConfig.Instance.TableEditorFormatValues = !AppConfig.Instance.TableEditorFormatValues;
+                    UpdataDatasourceAndUI();
+                    break;
                 case TableEditorCommand.RecalculateFields:
                     if (!table.Fields.Any(f => string.IsNullOrWhiteSpace(f.Expression)))
                     {
