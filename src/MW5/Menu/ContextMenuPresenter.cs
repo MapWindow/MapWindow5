@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -12,12 +13,16 @@ namespace MW5.Menu
     public class ContextMenuPresenter : CommandDispatcher<ContextMenuView, ContextMenuCommand>
     {
         private readonly IAppContext _context;
+        private readonly IConfigService _configService;
 
-        public ContextMenuPresenter(IAppContext context, ContextMenuView view)
+        public ContextMenuPresenter(IAppContext context, ContextMenuView view, IConfigService configService)
             :base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (configService == null) throw new ArgumentNullException("configService");
+
             _context = context;
+            _configService = configService;
         }
 
         public ContextMenuStrip MeasuringMenu
@@ -78,10 +83,14 @@ namespace MW5.Menu
                     measuring.Options.ShowLength = !measuring.Options.ShowLength;
                     return true;
                 case ContextMenuCommand.Metric:
-                    measuring.Options.LengthUnits = LengthDisplay.Metric;
+                    _configService.Config.MeasuringAreaUnits = AreaDisplay.Metric;
+                    _configService.Config.MeasuringLengthUnits = LengthDisplay.Metric;
+                    _context.Map.ApplyConfig(_configService);
                     return true;
                 case ContextMenuCommand.American:
-                    measuring.Options.LengthUnits = LengthDisplay.American;
+                    _configService.Config.MeasuringAreaUnits = AreaDisplay.American;
+                    _configService.Config.MeasuringLengthUnits = LengthDisplay.American;
+                    _context.Map.ApplyConfig(_configService);
                     return true;
                 case ContextMenuCommand.Degrees:
                     measuring.Options.AngleFormat = AngleFormat.Degrees;
