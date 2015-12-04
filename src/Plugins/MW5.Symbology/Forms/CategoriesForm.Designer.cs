@@ -388,6 +388,9 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // gradientPanel1
             // 
+            this.gradientPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gradientPanel1.BorderColor = System.Drawing.Color.LightGray;
             this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.gradientPanel1.Controls.Add(this.lblEmpty);
