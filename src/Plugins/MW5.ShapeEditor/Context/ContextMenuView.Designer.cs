@@ -70,9 +70,9 @@
             this.ctxSnappingCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxSnappingAll = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxHighlighting = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxHighlightingNone = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxHighlightingCurrent = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxHighlightingAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHighlightNone = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHighlightCurrent = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHighlightAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxSaveShape = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxClearEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -373,30 +373,30 @@
             // ctxHighlighting
             // 
             this.ctxHighlighting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxHighlightingNone,
-            this.ctxHighlightingCurrent,
-            this.ctxHighlightingAll});
+            this.mnuHighlightNone,
+            this.mnuHighlightCurrent,
+            this.mnuHighlightAll});
             this.ctxHighlighting.Name = "ctxHighlighting";
             this.ctxHighlighting.Size = new System.Drawing.Size(184, 26);
             this.ctxHighlighting.Text = "Highlighting";
             // 
-            // ctxHighlightingNone
+            // mnuHighlightNone
             // 
-            this.ctxHighlightingNone.Name = "ctxHighlightingNone";
-            this.ctxHighlightingNone.Size = new System.Drawing.Size(142, 22);
-            this.ctxHighlightingNone.Text = "No layers";
+            this.mnuHighlightNone.Name = "mnuHighlightNone";
+            this.mnuHighlightNone.Size = new System.Drawing.Size(152, 22);
+            this.mnuHighlightNone.Text = "No layers";
             // 
-            // ctxHighlightingCurrent
+            // mnuHighlightCurrent
             // 
-            this.ctxHighlightingCurrent.Name = "ctxHighlightingCurrent";
-            this.ctxHighlightingCurrent.Size = new System.Drawing.Size(142, 22);
-            this.ctxHighlightingCurrent.Text = "Current layer";
+            this.mnuHighlightCurrent.Name = "mnuHighlightCurrent";
+            this.mnuHighlightCurrent.Size = new System.Drawing.Size(152, 22);
+            this.mnuHighlightCurrent.Text = "Current layer";
             // 
-            // ctxHighlightingAll
+            // mnuHighlightAll
             // 
-            this.ctxHighlightingAll.Name = "ctxHighlightingAll";
-            this.ctxHighlightingAll.Size = new System.Drawing.Size(142, 22);
-            this.ctxHighlightingAll.Text = "All layers";
+            this.mnuHighlightAll.Name = "mnuHighlightAll";
+            this.mnuHighlightAll.Size = new System.Drawing.Size(152, 22);
+            this.mnuHighlightAll.Text = "All layers";
             // 
             // toolStripSeparator7
             // 
@@ -470,9 +470,9 @@
         private System.Windows.Forms.ToolStripMenuItem ctxSnappingCurrent;
         private System.Windows.Forms.ToolStripMenuItem ctxSnappingAll;
         private System.Windows.Forms.ToolStripMenuItem ctxHighlighting;
-        private System.Windows.Forms.ToolStripMenuItem ctxHighlightingNone;
-        private System.Windows.Forms.ToolStripMenuItem ctxHighlightingCurrent;
-        private System.Windows.Forms.ToolStripMenuItem ctxHighlightingAll;
+        private System.Windows.Forms.ToolStripMenuItem mnuHighlightNone;
+        private System.Windows.Forms.ToolStripMenuItem mnuHighlightCurrent;
+        private System.Windows.Forms.ToolStripMenuItem mnuHighlightAll;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem ctxSaveShape;
         private System.Windows.Forms.ToolStripMenuItem ctxClearEditor;

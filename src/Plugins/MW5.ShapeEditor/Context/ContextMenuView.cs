@@ -83,9 +83,9 @@ namespace MW5.Plugins.ShapeEditor.Context
             ctxSnappingNone.Checked = editor.SnapBehavior == LayerSelectionMode.NoLayer;
             ctxSnappingCurrent.Checked = editor.SnapBehavior == LayerSelectionMode.ActiveLayer;
 
-            ctxHighlightingCurrent.Checked = editor.HighlightVertices == LayerSelectionMode.ActiveLayer;
-            ctxHighlightingAll.Checked = editor.HighlightVertices == LayerSelectionMode.AllLayers;
-            ctxHighlightingNone.Checked = editor.HighlightVertices == LayerSelectionMode.NoLayer;
+            mnuHighlightCurrent.Checked = editor.HighlightVertices == LayerSelectionMode.ActiveLayer;
+            mnuHighlightAll.Checked = editor.HighlightVertices == LayerSelectionMode.AllLayers;
+            mnuHighlightNone.Checked = editor.HighlightVertices == LayerSelectionMode.NoLayer;
 
             ctxHighlighting.Enabled = true;
             ctxSnapping.Enabled = true;
