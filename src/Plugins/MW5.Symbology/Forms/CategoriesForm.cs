@@ -43,8 +43,8 @@ namespace MW5.Plugins.Symbology.Forms
         private const int CMN_VISIBLE = 0;
         private const int CMN_STYLE = 1;
         private const int CMN_NAME = 2;
-        private const int CMN_COUNT = 3;
-        private const int CMN_WIDTH = 4;
+        private const int CMN_EXPRESSION = 3;
+        private const int CMN_COUNT = 4;
 
         private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
@@ -82,41 +82,6 @@ namespace MW5.Plugins.Symbology.Forms
             _noEvents = true;
             ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _shapefile);
 
-            icbFillStyle.ComboStyle = ImageComboStyle.HatchStyleWithNone;
-            icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
-
-            groupLine.Visible = false;
-            groupFill.Visible = false;
-            groupPoint.Visible = false;
-
-            groupLine.Parent = groupFill.Parent;
-            groupPoint.Parent = groupFill.Parent;
-            groupLine.Top = groupFill.Top;
-            groupLine.Left = groupFill.Left;
-            groupPoint.Top = groupFill.Top;
-            groupPoint.Left = groupFill.Left;
-
-            if (_shapefile.GeometryType == GeometryType.Point)
-            {
-                groupPoint.Visible = true;
-            }
-            else if (_shapefile.GeometryType == GeometryType.Polyline)
-            {
-                groupLine.Visible = true;
-            }
-            else if (_shapefile.GeometryType == GeometryType.Polygon)
-            {
-                groupFill.Visible = true;
-            }
-
-            clpLine.SelectedColorChanged += Ui2Categories;
-            clpPointFill.SelectedColorChanged += Ui2Categories;
-            clpPolygonFill.SelectedColorChanged += Ui2Categories;
-
-            icbFillStyle.SelectedIndexChanged += Ui2Categories;
-            icbLineWidth.SelectedIndexChanged += Ui2Categories;
-            udPointSize.ValueChanged += Ui2Categories;
-
             // updates the list
             RefreshCategoriesList();
             _noEvents = false;
@@ -134,24 +99,23 @@ namespace MW5.Plugins.Symbology.Forms
         {
             using (var form = new GenerateCategoriesForm(_context, _layer))
             {
-                if (_context.View.ShowChildView(form, this))
-                {
-                    Enabled = false;
-                    Cursor = Cursors.WaitCursor;
-                    try
-                    {
-                        RefreshCategoriesList();
-                    }
-                    finally
-                    {
-                        Enabled = true;
-                        Cursor = Cursors.Default;
-                    }
+                if (!_context.View.ShowChildView(form, this)) return;
 
-                    if (dgvCategories.RowCount > 0)
-                    {
-                        dgvCategories.CurrentCell = dgvCategories[1, 0];
-                    }
+                Enabled = false;
+                Cursor = Cursors.WaitCursor;
+                try
+                {
+                    RefreshCategoriesList();
+                }
+                finally
+                {
+                    Enabled = true;
+                    Cursor = Cursors.Default;
+                }
+
+                if (dgvCategories.RowCount > 0)
+                {
+                    dgvCategories.CurrentCell = dgvCategories[1, 0];
                 }
             }
         }
@@ -163,46 +127,45 @@ namespace MW5.Plugins.Symbology.Forms
         {
             using (var form = new AddCategoriesForm())
             {
-                if (_context.View.ShowChildView(form, this))
+                if (!_context.View.ShowChildView(form, this)) return;
+
+                var blend = form.icbColors.ColorSchemes[form.icbColors.SelectedIndex];
+                var scheme = blend.ToColorScheme();
+                int count = (int) form.numericUpDownExt1.Value;
+
+                for (int i = 0; i < count; i++)
                 {
-                    var blend = form.icbColors.ColorSchemes[form.icbColors.SelectedIndex];
-                    var scheme = blend.ToColorScheme();
-                    int count = (int) form.numericUpDownExt1.Value;
-
-                    for (int i = 0; i < count; i++)
+                    Color color;
+                    if (form.chkRandom.Checked)
                     {
-                        Color color;
-                        if (form.chkRandom.Checked)
-                        {
-                            color = scheme.GetRandomColor((i + 1)/(double) count);
-                        }
-                        else
-                        {
-                            color = scheme.GetGraduatedColor((i + 1)/(double) count);
-                        }
-
-                        var cat = _shapefile.Categories.Add("Category " + _shapefile.Categories.Count);
-
-                        if (_shapefile.PointOrMultiPoint || _shapefile.GeometryType == GeometryType.Polygon)
-                        {
-                            cat.Style.Fill.Color = color;
-                        }
-                        else if (_shapefile.GeometryType == GeometryType.Polyline)
-                        {
-                            cat.Style.Line.Color = color;
-                        }
+                        color = scheme.GetRandomColor((i + 1)/(double) count);
+                    }
+                    else
+                    {
+                        color = scheme.GetGraduatedColor((i + 1)/(double) count);
                     }
 
-                    form.Dispose();
+                    var cat = _shapefile.Categories.Add("Category " + _shapefile.Categories.Count);
 
-                    int rowIndex = dgvCategories.CurrentCell != null ? dgvCategories.CurrentCell.RowIndex : 0;
-
-                    RefreshCategoriesList();
-
-                    if (dgvCategories.RowCount > 0)
+                    if (_shapefile.PointOrMultiPoint || _shapefile.GeometryType == GeometryType.Polygon)
                     {
-                        dgvCategories.CurrentCell = dgvCategories[rowIndex, 0];
+                        cat.Style.Fill.Color = color;
                     }
+                    else if (_shapefile.GeometryType == GeometryType.Polyline)
+                    {
+                        cat.Style.Line.Color = color;
+                    }
+                }
+
+                form.Dispose();
+
+                int rowIndex = dgvCategories.CurrentCell != null ? dgvCategories.CurrentCell.RowIndex : 0;
+
+                RefreshCategoriesList();
+
+                if (dgvCategories.RowCount > 0)
+                {
+                    dgvCategories.CurrentCell = dgvCategories[rowIndex, 0];
                 }
             }
         }
@@ -217,22 +180,26 @@ namespace MW5.Plugins.Symbology.Forms
                 return;
             }
 
-            int index = dgvCategories.CurrentCell.RowIndex;
-            int cmnIndex = dgvCategories.CurrentCell.ColumnIndex;
-            _shapefile.Categories.RemoveAt(index);
-
-            RefreshCategoriesList();
-
-            if (dgvCategories.Rows.Count != 0)
+            if (MessageService.Current.Ask("Do you want to remove the selected category?"))
             {
-                if (index > dgvCategories.Rows.Count - 1) 
-                {
-                    index--;
-                }
-                dgvCategories.CurrentCell = dgvCategories[cmnIndex, index];
-            }
+                int index = dgvCategories.CurrentCell.RowIndex;
+                int cmnIndex = dgvCategories.CurrentCell.ColumnIndex;
+                _shapefile.Categories.RemoveAt(index);
 
-            RefreshControlState();
+                RefreshCategoriesList();
+
+                if (dgvCategories.Rows.Count != 0)
+                {
+                    if (index > dgvCategories.Rows.Count - 1)
+                    {
+                        index--;
+                    }
+
+                    dgvCategories.CurrentCell = dgvCategories[cmnIndex, index];
+                }
+
+                RefreshControlState();
+            }
         }
 
         /// <summary>
@@ -299,7 +266,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Clears all the categories
         /// </summary>
-        private void btnCategoriesClear_Click(object sender, EventArgs e)
+        private void OnCategoriesClearClick(object sender, EventArgs e)
         {
             if (MessageService.Current.Ask("Do you want to remove all the categories?"))
             {
@@ -314,6 +281,11 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void btnEditExpression_Click(object sender, EventArgs e)
         {
+            DoEditExpression();
+        }
+
+        private void DoEditExpression()
+        {
             if (dgvCategories.CurrentCell != null)
             {
                 int index = dgvCategories.CurrentCell.RowIndex;
@@ -323,7 +295,6 @@ namespace MW5.Plugins.Symbology.Forms
                 if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref expression, false))
                 {
                     category.Expression = expression;
-                    txtExpression.Text = category.Expression;
                     RefreshCategoriesCount();
                 }
             }
@@ -382,6 +353,7 @@ namespace MW5.Plugins.Symbology.Forms
             var cat = _shapefile.Categories[index];
             dgvCategories[CMN_VISIBLE, index].Value = cat.Style.Visible;
             dgvCategories[CMN_NAME, index].Value = cat.Name;
+            dgvCategories[CMN_EXPRESSION, index].Value = cat.Expression;
             
             if (!_noEvents)
             {
@@ -406,6 +378,8 @@ namespace MW5.Plugins.Symbology.Forms
             dgvCategories.Rows.Clear();
 
             int numCategories = _shapefile.Categories.Count;
+
+            lblEmpty.Visible = numCategories == 0;
 
             dgvCategories.ColumnHeadersVisible = numCategories > 0;
             if (numCategories == 0)
@@ -460,7 +434,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Opening forms for editing the category
         /// </summary>
-        private void dgvLabelCategories_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void OnGridCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
             {
@@ -470,6 +444,11 @@ namespace MW5.Plugins.Symbology.Forms
             if (e.ColumnIndex == CMN_STYLE )
             {
                 ChangeCategoryStyle(e.RowIndex);
+            }
+
+            if (e.ColumnIndex == CMN_EXPRESSION)
+            {
+                DoEditExpression();
             }
         }
 
@@ -489,30 +468,31 @@ namespace MW5.Plugins.Symbology.Forms
                 if (img == null) return;
 
                 var cat = _shapefile.Categories[e.RowIndex];
-                if (cat == null)
-                {
-                    return;
-                }
+                if (cat == null) return;
+
                 IGeometryStyle sdo = cat.Style;
 
-                Graphics g = Graphics.FromImage(img);
-                g.Clear(Color.White);
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.SmoothingMode = SmoothingMode.HighQuality;
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    g.Clear(Color.White);
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = SmoothingMode.HighQuality;
 
-                if (_shapefile.GeometryType == GeometryType.Polygon)
-                {
-                    sdo.DrawRectangle(g, 0.0f, 0.0f, img.Width - 1, img.Height - 1, true, img.Width, img.Height,  dgvCategories.BackgroundColor);
+                    if (_shapefile.GeometryType == GeometryType.Polygon)
+                    {
+                        sdo.DrawRectangle(g, 0.0f, 0.0f, img.Width - 1, img.Height - 1, true, img.Width, img.Height,
+                            dgvCategories.BackgroundColor);
+                    }
+                    else if (_shapefile.GeometryType == GeometryType.Polyline)
+                    {
+                        sdo.DrawLine(g, 0.0f, 0.0f, img.Width - 1, img.Height - 1, true, img.Width, img.Height,
+                            dgvCategories.BackgroundColor);
+                    }
+                    else if (_shapefile.PointOrMultiPoint)
+                    {
+                        sdo.DrawPoint(g, 0.0f, 0.0f, img.Width, img.Height, dgvCategories.BackgroundColor);
+                    }
                 }
-                else if (_shapefile.GeometryType == GeometryType.Polyline)
-                {
-                    sdo.DrawLine(g, 0.0f, 0.0f, img.Width - 1, img.Height - 1, true, img.Width, img.Height,  dgvCategories.BackgroundColor);
-                }
-                else if (_shapefile.PointOrMultiPoint)
-                {
-                    sdo.DrawPoint(g, 0.0f, 0.0f, img.Width, img.Height,  dgvCategories.BackgroundColor);
-                }
-                g.Dispose();
             }
         }
 
@@ -584,7 +564,7 @@ namespace MW5.Plugins.Symbology.Forms
             int index = e.RowIndex;
             if (e.ColumnIndex == CMN_VISIBLE)
             {
-                bool visible = (bool)dgvCategories[e.ColumnIndex, e.RowIndex].Value;
+                var visible = (bool)dgvCategories[e.ColumnIndex, e.RowIndex].Value;
                 _shapefile.Categories[index].Style.Visible = visible;
             }
             btnApply.Enabled = true;
@@ -623,36 +603,6 @@ namespace MW5.Plugins.Symbology.Forms
 
             int index = dgv.CurrentCell.RowIndex;
             
-            var category = _shapefile.Categories[index];
-            if (category != null)
-            {
-                            
-                if (_shapefile.PointOrMultiPoint)
-                {
-                    category.Style.Fill.Color =  clpPointFill.Color;
-                    category.Style.Marker.Size = (float)udPointSize.Value;
-                }
-                else if (_shapefile.GeometryType == GeometryType.Polyline)
-                {
-                    category.Style.Line.Color =  clpLine.Color;
-                    category.Style.Line.Width = icbLineWidth.SelectedIndex;
-                }
-                else if (_shapefile.GeometryType == GeometryType.Polygon)
-                {
-                    category.Style.Fill.Color =  clpPolygonFill.Color;
-                    icbFillStyle.Color1 = clpPolygonFill.Color;
-                    if (icbFillStyle.SelectedIndex == 0 && category.Style.Fill.Type == FillType.Hatch)
-                    {
-                        category.Style.Fill.Type = FillType.Solid;
-                    }
-                    else
-                    {
-                        category.Style.Fill.Type = FillType.Hatch;
-                        category.Style.Fill.HatchStyle = (HatchStyle)icbFillStyle.SelectedIndex - 1;
-                    }
-                }
-            }
-            
             UpdateGridCategory(index);
             btnApply.Enabled = true;
         }
@@ -682,88 +632,19 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 bool exists = (dgv.CurrentCell != null);
 
-                icbFillStyle.Enabled = exists;
-                clpPolygonFill.Enabled = exists;
-                icbLineWidth.Enabled = exists;
-                udPointSize.Enabled = exists;
-                clpLine.Enabled = exists;
-                clpPointFill.Enabled = exists;
-                txtExpression.Visible = exists;
-                groupExpression.Enabled = exists;
-                groupFill.Enabled = exists;
-                groupLine.Enabled = exists;
-                groupPoint.Enabled = exists;
-
                 btnCategoryRemove.Enabled = exists;
                 btnCategoryMoveUp.Enabled = exists;
                 btnCategoryMoveDown.Enabled = exists;
                 btnCategoryStyle.Enabled = exists;
                 btnEditExpression.Enabled = exists;
                    
-                //txtExpression.ReadOnly = exists;
-
                 if (dgv.CurrentCell != null)
                 {
                     int index = dgv.CurrentCell.RowIndex;
-                    UpdateCategoryOptions(index);
                     btnCategoryMoveUp.Enabled = index > 0;
                     btnCategoryMoveDown.Enabled = index < _shapefile.Categories.Count - 1;
                 }
-                else
-                {
-                    clpLine.Color = Color.White;
-                    clpPointFill.Color = Color.White;
-                    clpPolygonFill.Color = Color.White;
-                    txtExpression.Text = "";
-                }
             }
-        }
-
-        /// <summary>
-        /// Updates the state of the category appearance controls
-        /// </summary>
-        void UpdateCategoryOptions(int index)
-        {
-            var category = _shapefile.Categories[index];
-            if (category == null)
-            {
-                return;
-            }
-
-            _noEvents = true;
-                
-            txtExpression.Text = category.Expression;
-               
-            if (_shapefile.PointOrMultiPoint)
-            {
-                clpPointFill.Color =  category.Style.Fill.Color;
-                //udMarker.Size.SetValue(category.Style.Marker.Size);
-            }
-            else if (_shapefile.GeometryType == GeometryType.Polyline)
-            {
-                clpLine.Color =  category.Style.Line.Color;
-                icbLineWidth.SelectedIndex = (int)category.Style.Line.Width;
-            }
-            else if (_shapefile.GeometryType == GeometryType.Polygon)
-            {
-                clpPolygonFill.Color =  category.Style.Fill.Color;
-                icbFillStyle.Color1 = clpPolygonFill.Color;
-
-                bool canChangeColor = category.Style.Fill.Type != FillType.Picture;
-                icbFillStyle.Enabled = canChangeColor;
-                clpPolygonFill.Enabled = canChangeColor;
-
-                if (category.Style.Fill.Type != FillType.Hatch)
-                {
-                    icbFillStyle.SelectedIndex = 0;
-                }
-                else
-                {
-                    icbFillStyle.SelectedIndex = (int)category.Style.Fill.HatchStyle + 1;
-                }
-                icbFillStyle.Invalidate();
-            }
-            _noEvents = false;
         }
 
         #endregion
@@ -773,7 +654,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Applies the options, saves the settings
         /// </summary>
-        private void btnOk_Click(object sender, EventArgs e)
+        private void OnOkButtonClicked(object sender, EventArgs e)
         {
             if (_shapefile.Categories.Serialize() != _initState)
             {
@@ -784,7 +665,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Reverts  changes and closes the form
         /// </summary>
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void OnCancelButtonClicked(object sender, EventArgs e)
         {
             // cancel will be run in form_closing handler
         }
@@ -792,7 +673,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Saves changes and updates map without closing the form
         /// </summary>
-        private void btnApply_Click(object sender, EventArgs e)
+        private void OnApplyButtonClicked(object sender, EventArgs e)
         {
             _shapefile.Categories.ApplyExpressions();
             RefreshCategoriesCount();
@@ -803,37 +684,9 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
-        /// Shows apply button after editing expression
-        /// </summary>
-        private void txtExpression_TextChanged(object sender, EventArgs e)
-        {
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-        }
-
-        /// <summary>
-        /// Applying the expression entered
-        /// </summary>
-        private void txtExpression_Validated(object sender, EventArgs e)
-        {
-            if (dgvCategories.CurrentCell != null)
-            {
-                int index = dgvCategories.CurrentCell.RowIndex;
-                   
-                var category = _shapefile.Categories[index];
-                if (category != null)
-                {
-                    category.Expression = txtExpression.Text;
-                }
-            }
-        }
-
-        /// <summary>
         /// Cancels edits if needed
         /// </summary>
-        private void frmCategories_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnCategoriesFormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult == DialogResult.Cancel)
             {
@@ -856,43 +709,8 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
-        /// Copies categories from labels
-        /// </summary>
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-            //if (dgvCategories.Rows.Count  > 0)
-            //{
-            //    if (!MessageService.Current.Ask("Do you want to copy categories definitions from labels?"))
-            //    {
-            //        return;
-            //    }
-            //}
-            
-            // clear categories
-            //var categories = _shapefile.Categories;
-            //var labels = _shapefile.Labels;
-            //categories.Clear();
-
-            //for (int i = 0; i < labels.NumCategories; i++)
-            //{
-            //    MapWinGIS.LabelCategory labelCat = labels.get_Category(i);
-            //    if (labelCat != null)
-            //    {
-            //        MapWinGIS.ShapefileCategory cat = categories.Add(labelCat.Name);
-            //        cat.Expression = labelCat.Expression;
-            //    }
-            //}
-            
-            //RefreshCategoriesList();
-            //RefreshControlState();
-            //btnApply.Enabled = true;
-        }
-
-        /// <summary>
         ///  Shows context menu with additional options
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnMore_Click(object sender, EventArgs e)
         {
             contextMenuStrip1.Show(Cursor.Position);
@@ -903,40 +721,10 @@ namespace MW5.Plugins.Symbology.Forms
         #region Context menu
         
         /// <summary>
-        /// Handles clicks of context menu
-        /// </summary>
-        private void contextMenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            contextMenuStrip1.Visible = false;
-            Application.DoEvents();
-
-            switch(e.ClickedItem.Name)
-            {
-                case "btnSaveCategories":
-                    SaveToXml();
-                    break;
-                case "btnLoadCategories":
-                    LoadFromXml();
-                    break;
-                case "btnClear":
-                    btnCategoriesClear_Click(null, null);
-                    break;
-                case "btnCopy":
-                    MessageService.Current.Info("Not implemented");
-                    break;
-                case "btnAddRange":
-                    btnAddCategory_Click(null, null);
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Before opening context menu
         /// </summary>
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-            btnCopyFrom.Text = "Create categories for labels";
-            btnCopyFrom.Enabled = false;
             btnSaveCategories.Enabled = _shapefile.Categories.Count > 0;
             btnClear.Enabled = _shapefile.Categories.Count > 0;
             btnSaveCategories.Visible = true;
@@ -978,34 +766,39 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         public void LoadFromXml()
         {
-            var dlg = new OpenFileDialog {Filter = CATEGORIES_FILE_FILTER};
-
-            if (_shapefile.SourceType == FeatureSourceType.DiskBased)
+            using (var dlg = new OpenFileDialog { Filter = CATEGORIES_FILE_FILTER })
             {
-                dlg.InitialDirectory = Path.GetDirectoryName(_shapefile.Filename);
-            }
+                if (_shapefile.SourceType == FeatureSourceType.DiskBased)
+                {
+                    dlg.InitialDirectory = Path.GetDirectoryName(_shapefile.Filename);
+                }
 
-            if (dlg.ShowDialog(this) == DialogResult.OK)
-            {
-                try
+                if (dlg.ShowDialog(this) == DialogResult.OK)
                 {
-                    _shapefile.Categories.LoadFromFile(dlg.FileName);
-                    RefreshCategoriesList();
-                    RefreshControlState();
-                }
-                catch(Exception ex)
-                {
-                    MessageService.Current.Warn("Failed to load categories: " + ex.Message);
+                    try
+                    {
+                        _shapefile.Categories.LoadFromFile(dlg.FileName);
+                        RefreshCategoriesList();
+                        RefreshControlState();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageService.Current.Warn("Failed to load categories: " + ex.Message);
+                    }
                 }
             }
-            dlg.Dispose();
         }
 
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
+        private void toolSaveCategories_Click(object sender, EventArgs e)
         {
-            MessageService.Current.Info("Not implemented");
+            SaveToXml();
+        }
+
+        private void toolRemoveStyle_Click(object sender, EventArgs e)
+        {
+            LoadFromXml();
         }
     }
 }

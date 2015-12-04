@@ -38,33 +38,16 @@ namespace MW5.Plugins.Symbology.Forms
             this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
             this.cmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmnExpression = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnMore = new System.Windows.Forms.Button();
-            this.groupExpression = new System.Windows.Forms.GroupBox();
-            this.txtExpression = new System.Windows.Forms.TextBox();
-            this.groupFill = new System.Windows.Forms.GroupBox();
-            this.icbFillStyle = new MW5.UI.Controls.ImageCombo();
-            this.clpPolygonFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.btnCategoryStyle = new System.Windows.Forms.Button();
             this.btnCategoryRemove = new System.Windows.Forms.Button();
             this.btnEditExpression = new System.Windows.Forms.Button();
             this.btnCategoryMoveDown = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.btnCategoryMoveUp = new System.Windows.Forms.Button();
-            this.groupLine = new System.Windows.Forms.GroupBox();
-            this.clpLine = new MW5.UI.Controls.Office2007ColorPicker(this.components);
-            this.label6 = new System.Windows.Forms.Label();
-            this.icbLineWidth = new MW5.UI.Controls.ImageCombo();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupPoint = new System.Windows.Forms.GroupBox();
-            this.clpPointFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
-            this.udPointSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnApply = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -72,18 +55,23 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSaveCategories = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLoadCategories = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnCopyFrom = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolAddRange = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolSaveCategories = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRemoveStyle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblEmpty = new System.Windows.Forms.Label();
+            this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
-            this.groupExpression.SuspendLayout();
-            this.groupFill.SuspendLayout();
-            this.groupLine.SuspendLayout();
-            this.groupPoint.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udPointSize)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            this.toolStripEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
+            this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvCategories
@@ -92,12 +80,13 @@ namespace MW5.Plugins.Symbology.Forms
             this.dgvCategories.AllowUserToDeleteRows = false;
             this.dgvCategories.AllowUserToResizeRows = false;
             this.dgvCategories.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dgvCategories.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvCategories.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cmnVisible,
             this.cmnStyle,
             this.cmnName,
+            this.cmnExpression,
             this.Count});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
@@ -107,17 +96,18 @@ namespace MW5.Plugins.Symbology.Forms
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCategories.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.dgvCategories.Location = new System.Drawing.Point(12, 12);
+            this.dgvCategories.Location = new System.Drawing.Point(0, 0);
             this.dgvCategories.Name = "dgvCategories";
             this.dgvCategories.RowHeadersVisible = false;
             this.dgvCategories.RowHeadersWidth = 15;
             this.dgvCategories.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCategories.ShowCellErrors = false;
-            this.dgvCategories.Size = new System.Drawing.Size(278, 323);
+            this.dgvCategories.Size = new System.Drawing.Size(498, 324);
             this.dgvCategories.TabIndex = 83;
             this.dgvCategories.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvCategories_CellBeginEdit);
-            this.dgvCategories.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLabelCategories_CellDoubleClick);
+            this.dgvCategories.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellDoubleClick);
             this.dgvCategories.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellEndEdit);
             this.dgvCategories.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCategories_CellFormatting);
             this.dgvCategories.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvLabelCategories_CellPainting);
@@ -147,6 +137,13 @@ namespace MW5.Plugins.Symbology.Forms
             this.cmnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cmnName.Width = 135;
             // 
+            // cmnExpression
+            // 
+            this.cmnExpression.HeaderText = "Expression";
+            this.cmnExpression.Name = "cmnExpression";
+            this.cmnExpression.ReadOnly = true;
+            this.cmnExpression.Width = 220;
+            // 
             // Count
             // 
             this.Count.HeaderText = "Count";
@@ -158,304 +155,105 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(413, 348);
+            this.btnOk.Location = new System.Drawing.Point(427, 346);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(96, 25);
+            this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 88;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.Click += new System.EventHandler(this.OnOkButtonClicked);
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(515, 348);
+            this.btnCancel.Location = new System.Drawing.Point(518, 346);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(96, 25);
+            this.btnCancel.Size = new System.Drawing.Size(91, 26);
             this.btnCancel.TabIndex = 89;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnMore
-            // 
-            this.btnMore.Location = new System.Drawing.Point(218, 341);
-            this.btnMore.Name = "btnMore";
-            this.btnMore.Size = new System.Drawing.Size(72, 32);
-            this.btnMore.TabIndex = 113;
-            this.btnMore.Text = "More...";
-            this.btnMore.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnMore.UseVisualStyleBackColor = true;
-            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
-            // 
-            // groupExpression
-            // 
-            this.groupExpression.Controls.Add(this.txtExpression);
-            this.groupExpression.Location = new System.Drawing.Point(300, 121);
-            this.groupExpression.Name = "groupExpression";
-            this.groupExpression.Size = new System.Drawing.Size(311, 185);
-            this.groupExpression.TabIndex = 111;
-            this.groupExpression.TabStop = false;
-            this.groupExpression.Text = "Expression";
-            // 
-            // txtExpression
-            // 
-            this.txtExpression.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtExpression.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtExpression.Location = new System.Drawing.Point(3, 16);
-            this.txtExpression.Multiline = true;
-            this.txtExpression.Name = "txtExpression";
-            this.txtExpression.Size = new System.Drawing.Size(305, 166);
-            this.txtExpression.TabIndex = 86;
-            this.txtExpression.TextChanged += new System.EventHandler(this.txtExpression_TextChanged);
-            this.txtExpression.Validated += new System.EventHandler(this.txtExpression_Validated);
-            // 
-            // groupFill
-            // 
-            this.groupFill.Controls.Add(this.icbFillStyle);
-            this.groupFill.Controls.Add(this.clpPolygonFill);
-            this.groupFill.Controls.Add(this.label12);
-            this.groupFill.Controls.Add(this.label13);
-            this.groupFill.Location = new System.Drawing.Point(300, 12);
-            this.groupFill.Name = "groupFill";
-            this.groupFill.Size = new System.Drawing.Size(311, 74);
-            this.groupFill.TabIndex = 111;
-            this.groupFill.TabStop = false;
-            this.groupFill.Text = "Options";
-            // 
-            // icbFillStyle
-            // 
-            this.icbFillStyle.Color1 = System.Drawing.Color.Gray;
-            this.icbFillStyle.Color2 = System.Drawing.Color.Gray;
-            this.icbFillStyle.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
-            this.icbFillStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.icbFillStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.icbFillStyle.FormattingEnabled = true;
-            this.icbFillStyle.Location = new System.Drawing.Point(154, 31);
-            this.icbFillStyle.Name = "icbFillStyle";
-            this.icbFillStyle.OutlineColor = System.Drawing.Color.Black;
-            this.icbFillStyle.Size = new System.Drawing.Size(86, 21);
-            this.icbFillStyle.TabIndex = 110;
-            // 
-            // clpPolygonFill
-            // 
-            this.clpPolygonFill.Color = System.Drawing.Color.Black;
-            this.clpPolygonFill.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpPolygonFill.DropDownHeight = 1;
-            this.clpPolygonFill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpPolygonFill.FormattingEnabled = true;
-            this.clpPolygonFill.IntegralHeight = false;
-            this.clpPolygonFill.Items.AddRange(new object[] {
-            "Color"});
-            this.clpPolygonFill.Location = new System.Drawing.Point(28, 31);
-            this.clpPolygonFill.Name = "clpPolygonFill";
-            this.clpPolygonFill.Size = new System.Drawing.Size(58, 21);
-            this.clpPolygonFill.TabIndex = 109;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(92, 34);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(45, 13);
-            this.label12.TabIndex = 106;
-            this.label12.Text = "Fill color";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(246, 34);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(43, 13);
-            this.label13.TabIndex = 108;
-            this.label13.Text = "Fill style";
+            this.btnCancel.Click += new System.EventHandler(this.OnCancelButtonClicked);
             // 
             // btnCategoryStyle
             // 
-            this.btnCategoryStyle.Location = new System.Drawing.Point(502, 92);
+            this.btnCategoryStyle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCategoryStyle.Location = new System.Drawing.Point(518, 45);
             this.btnCategoryStyle.Name = "btnCategoryStyle";
-            this.btnCategoryStyle.Size = new System.Drawing.Size(106, 23);
+            this.btnCategoryStyle.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryStyle.TabIndex = 8;
-            this.btnCategoryStyle.Text = "More options...";
+            this.btnCategoryStyle.Text = "Style...";
             this.btnCategoryStyle.UseVisualStyleBackColor = true;
             this.btnCategoryStyle.Click += new System.EventHandler(this.btnCategoryStyle_Click);
             // 
             // btnCategoryRemove
             // 
-            this.btnCategoryRemove.Image = global::MW5.Plugins.Symbology.Properties.Resources.layer_remove;
-            this.btnCategoryRemove.Location = new System.Drawing.Point(55, 341);
+            this.btnCategoryRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCategoryRemove.Location = new System.Drawing.Point(518, 177);
             this.btnCategoryRemove.Name = "btnCategoryRemove";
-            this.btnCategoryRemove.Size = new System.Drawing.Size(32, 32);
+            this.btnCategoryRemove.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryRemove.TabIndex = 103;
-            this.toolTip1.SetToolTip(this.btnCategoryRemove, "Remove category");
+            this.btnCategoryRemove.Text = "Remove";
             this.btnCategoryRemove.UseVisualStyleBackColor = true;
             this.btnCategoryRemove.Click += new System.EventHandler(this.btnCategoriesRemove_Click);
             // 
             // btnEditExpression
             // 
-            this.btnEditExpression.Location = new System.Drawing.Point(520, 312);
+            this.btnEditExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditExpression.Location = new System.Drawing.Point(518, 78);
             this.btnEditExpression.Name = "btnEditExpression";
-            this.btnEditExpression.Size = new System.Drawing.Size(91, 23);
+            this.btnEditExpression.Size = new System.Drawing.Size(91, 26);
             this.btnEditExpression.TabIndex = 108;
-            this.btnEditExpression.Text = "Edit...";
+            this.btnEditExpression.Text = "Expression...";
             this.btnEditExpression.UseVisualStyleBackColor = true;
             this.btnEditExpression.Click += new System.EventHandler(this.btnEditExpression_Click);
             // 
             // btnCategoryMoveDown
             // 
-            this.btnCategoryMoveDown.Image = global::MW5.Plugins.Symbology.Properties.Resources.down;
-            this.btnCategoryMoveDown.Location = new System.Drawing.Point(131, 341);
+            this.btnCategoryMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCategoryMoveDown.Location = new System.Drawing.Point(518, 144);
             this.btnCategoryMoveDown.Name = "btnCategoryMoveDown";
-            this.btnCategoryMoveDown.Size = new System.Drawing.Size(32, 32);
+            this.btnCategoryMoveDown.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryMoveDown.TabIndex = 105;
+            this.btnCategoryMoveDown.Text = "Down";
             this.btnCategoryMoveDown.UseVisualStyleBackColor = true;
             this.btnCategoryMoveDown.Click += new System.EventHandler(this.btnCategoryMoveDown_Click);
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Image = global::MW5.Plugins.Symbology.Properties.Resources.layer_vector_thematic_add;
-            this.btnGenerate.Location = new System.Drawing.Point(12, 341);
+            this.btnGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGenerate.Location = new System.Drawing.Point(518, 12);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(37, 32);
+            this.btnGenerate.Size = new System.Drawing.Size(91, 26);
             this.btnGenerate.TabIndex = 100;
-            this.toolTip1.SetToolTip(this.btnGenerate, "Generate categories");
+            this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // btnCategoryMoveUp
             // 
-            this.btnCategoryMoveUp.Image = global::MW5.Plugins.Symbology.Properties.Resources.up;
-            this.btnCategoryMoveUp.Location = new System.Drawing.Point(93, 341);
+            this.btnCategoryMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCategoryMoveUp.Location = new System.Drawing.Point(518, 111);
             this.btnCategoryMoveUp.Name = "btnCategoryMoveUp";
-            this.btnCategoryMoveUp.Size = new System.Drawing.Size(32, 32);
+            this.btnCategoryMoveUp.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryMoveUp.TabIndex = 104;
+            this.btnCategoryMoveUp.Text = "Up";
             this.btnCategoryMoveUp.UseVisualStyleBackColor = true;
             this.btnCategoryMoveUp.Click += new System.EventHandler(this.btnCategoryMoveUp_Click);
             // 
-            // groupLine
-            // 
-            this.groupLine.Controls.Add(this.clpLine);
-            this.groupLine.Controls.Add(this.label6);
-            this.groupLine.Controls.Add(this.icbLineWidth);
-            this.groupLine.Controls.Add(this.label7);
-            this.groupLine.Location = new System.Drawing.Point(644, 105);
-            this.groupLine.Name = "groupLine";
-            this.groupLine.Size = new System.Drawing.Size(311, 74);
-            this.groupLine.TabIndex = 95;
-            this.groupLine.TabStop = false;
-            this.groupLine.Text = "Options";
-            // 
-            // clpLine
-            // 
-            this.clpLine.Color = System.Drawing.Color.Black;
-            this.clpLine.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpLine.DropDownHeight = 1;
-            this.clpLine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpLine.FormattingEnabled = true;
-            this.clpLine.IntegralHeight = false;
-            this.clpLine.Items.AddRange(new object[] {
-            "Color"});
-            this.clpLine.Location = new System.Drawing.Point(23, 31);
-            this.clpLine.Name = "clpLine";
-            this.clpLine.Size = new System.Drawing.Size(60, 21);
-            this.clpLine.TabIndex = 105;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(236, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Line width";
-            // 
-            // icbLineWidth
-            // 
-            this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
-            this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
-            this.icbLineWidth.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
-            this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.icbLineWidth.FormattingEnabled = true;
-            this.icbLineWidth.Location = new System.Drawing.Point(158, 31);
-            this.icbLineWidth.Name = "icbLineWidth";
-            this.icbLineWidth.OutlineColor = System.Drawing.Color.Black;
-            this.icbLineWidth.Size = new System.Drawing.Size(72, 21);
-            this.icbLineWidth.TabIndex = 4;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(91, 34);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Line color";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(89, 32);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(45, 13);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Fill color";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(212, 31);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Point size";
-            // 
-            // groupPoint
-            // 
-            this.groupPoint.Controls.Add(this.clpPointFill);
-            this.groupPoint.Controls.Add(this.udPointSize);
-            this.groupPoint.Controls.Add(this.label8);
-            this.groupPoint.Controls.Add(this.label5);
-            this.groupPoint.Location = new System.Drawing.Point(644, 25);
-            this.groupPoint.Name = "groupPoint";
-            this.groupPoint.Size = new System.Drawing.Size(311, 74);
-            this.groupPoint.TabIndex = 110;
-            this.groupPoint.TabStop = false;
-            this.groupPoint.Text = "Options";
-            // 
-            // clpPointFill
-            // 
-            this.clpPointFill.Color = System.Drawing.Color.Black;
-            this.clpPointFill.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpPointFill.DropDownHeight = 1;
-            this.clpPointFill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpPointFill.FormattingEnabled = true;
-            this.clpPointFill.IntegralHeight = false;
-            this.clpPointFill.Items.AddRange(new object[] {
-            "Color"});
-            this.clpPointFill.Location = new System.Drawing.Point(22, 31);
-            this.clpPointFill.Name = "clpPointFill";
-            this.clpPointFill.Size = new System.Drawing.Size(58, 21);
-            this.clpPointFill.TabIndex = 9;
-            // 
-            // udPointSize
-            // 
-            this.udPointSize.Location = new System.Drawing.Point(148, 29);
-            this.udPointSize.Name = "udPointSize";
-            this.udPointSize.Size = new System.Drawing.Size(56, 20);
-            this.udPointSize.TabIndex = 8;
-            // 
             // btnApply
             // 
+            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.Enabled = false;
-            this.btnApply.Location = new System.Drawing.Point(311, 348);
+            this.btnApply.Location = new System.Drawing.Point(336, 346);
             this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(96, 25);
+            this.btnApply.Size = new System.Drawing.Size(85, 26);
             this.btnApply.TabIndex = 111;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            this.btnApply.Click += new System.EventHandler(this.OnApplyButtonClicked);
             // 
             // contextMenuStrip1
             // 
@@ -464,14 +262,11 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripSeparator3,
             this.btnSaveCategories,
             this.btnLoadCategories,
-            this.toolStripSeparator1,
-            this.btnCopyFrom,
             this.toolStripSeparator2,
             this.btnClear});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(158, 132);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(158, 104);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            this.contextMenuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip1_ItemClicked);
             // 
             // btnAddRange
             // 
@@ -496,17 +291,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnLoadCategories.Size = new System.Drawing.Size(157, 22);
             this.btnLoadCategories.Text = "Load categories";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
-            // 
-            // btnCopyFrom
-            // 
-            this.btnCopyFrom.Name = "btnCopyFrom";
-            this.btnCopyFrom.Size = new System.Drawing.Size(157, 22);
-            this.btnCopyFrom.Text = "Copy from";
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -518,60 +302,132 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnClear.Size = new System.Drawing.Size(157, 22);
             this.btnClear.Text = "Clear";
             // 
-            // button1
+            // toolStripEx1
             // 
-            this.button1.Location = new System.Drawing.Point(300, 92);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 23);
-            this.button1.TabIndex = 114;
-            this.button1.Text = "Labels...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.toolStripEx1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.toolStripEx1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripEx1.Image = null;
+            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStyle});
+            this.toolStripEx1.Location = new System.Drawing.Point(12, 347);
+            this.toolStripEx1.Name = "toolStripEx1";
+            this.toolStripEx1.Office12Mode = false;
+            this.toolStripEx1.ShowCaption = false;
+            this.toolStripEx1.Size = new System.Drawing.Size(67, 25);
+            this.toolStripEx1.TabIndex = 168;
+            this.toolStripEx1.Text = "Style";
+            this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
+            // 
+            // toolStyle
+            // 
+            this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolAddRange,
+            this.toolStripSeparator5,
+            this.toolSaveCategories,
+            this.toolRemoveStyle,
+            this.toolStripSeparator4,
+            this.toolOpenLocation});
+            this.toolStyle.ForeColor = System.Drawing.Color.Black;
+            this.toolStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_settings;
+            this.toolStyle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStyle.Name = "toolStyle";
+            this.toolStyle.Size = new System.Drawing.Size(64, 22);
+            this.toolStyle.Text = "More";
+            // 
+            // toolAddRange
+            // 
+            this.toolAddRange.Name = "toolAddRange";
+            this.toolAddRange.Size = new System.Drawing.Size(157, 22);
+            this.toolAddRange.Text = "Add range...";
+            this.toolAddRange.Click += new System.EventHandler(this.btnAddCategory_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(154, 6);
+            // 
+            // toolSaveCategories
+            // 
+            this.toolSaveCategories.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
+            this.toolSaveCategories.Name = "toolSaveCategories";
+            this.toolSaveCategories.Size = new System.Drawing.Size(157, 22);
+            this.toolSaveCategories.Text = "Save categories";
+            this.toolSaveCategories.Click += new System.EventHandler(this.toolSaveCategories_Click);
+            // 
+            // toolRemoveStyle
+            // 
+            this.toolRemoveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_folder_open;
+            this.toolRemoveStyle.Name = "toolRemoveStyle";
+            this.toolRemoveStyle.Size = new System.Drawing.Size(157, 22);
+            this.toolRemoveStyle.Text = "Load categories";
+            this.toolRemoveStyle.Click += new System.EventHandler(this.toolRemoveStyle_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(154, 6);
+            // 
+            // toolOpenLocation
+            // 
+            this.toolOpenLocation.Name = "toolOpenLocation";
+            this.toolOpenLocation.Size = new System.Drawing.Size(157, 22);
+            this.toolOpenLocation.Text = "Clear";
+            this.toolOpenLocation.Click += new System.EventHandler(this.OnCategoriesClearClick);
+            // 
+            // lblEmpty
+            // 
+            this.lblEmpty.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEmpty.Location = new System.Drawing.Point(0, 0);
+            this.lblEmpty.Name = "lblEmpty";
+            this.lblEmpty.Size = new System.Drawing.Size(498, 324);
+            this.lblEmpty.TabIndex = 169;
+            this.lblEmpty.Text = "There are no categories for this layer yet.";
+            this.lblEmpty.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // gradientPanel1
+            // 
+            this.gradientPanel1.BorderColor = System.Drawing.Color.LightGray;
+            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientPanel1.Controls.Add(this.lblEmpty);
+            this.gradientPanel1.Controls.Add(this.dgvCategories);
+            this.gradientPanel1.Location = new System.Drawing.Point(12, 12);
+            this.gradientPanel1.Name = "gradientPanel1";
+            this.gradientPanel1.Size = new System.Drawing.Size(500, 326);
+            this.gradientPanel1.TabIndex = 171;
             // 
             // CategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(621, 385);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnMore);
+            this.ClientSize = new System.Drawing.Size(615, 379);
+            this.Controls.Add(this.gradientPanel1);
+            this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.btnApply);
-            this.Controls.Add(this.groupExpression);
-            this.Controls.Add(this.groupPoint);
-            this.Controls.Add(this.groupFill);
-            this.Controls.Add(this.groupLine);
             this.Controls.Add(this.btnCategoryStyle);
             this.Controls.Add(this.btnCategoryRemove);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.btnEditExpression);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCategoryMoveDown);
-            this.Controls.Add(this.dgvCategories);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.btnCategoryMoveUp);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(470, 350);
             this.Name = "CategoriesForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Shapefile categories";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCategories_FormClosing);
+            this.Text = "Layer Categories";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnCategoriesFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).EndInit();
-            this.groupExpression.ResumeLayout(false);
-            this.groupExpression.PerformLayout();
-            this.groupFill.ResumeLayout(false);
-            this.groupFill.PerformLayout();
-            this.groupLine.ResumeLayout(false);
-            this.groupLine.PerformLayout();
-            this.groupPoint.ResumeLayout(false);
-            this.groupPoint.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udPointSize)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.toolStripEx1.ResumeLayout(false);
+            this.toolStripEx1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
+            this.gradientPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -584,41 +440,31 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.Button btnCategoryMoveDown;
         private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.Button btnCategoryMoveUp;
-        private System.Windows.Forms.GroupBox groupLine;
-        private System.Windows.Forms.Label label6;
-        private ImageCombo icbLineWidth;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnEditExpression;
         private System.Windows.Forms.Button btnCategoryStyle;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.GroupBox groupPoint;
-        private System.Windows.Forms.GroupBox groupFill;
-        private Office2007ColorPicker clpLine;
-        private Office2007ColorPicker clpPointFill;
-        private NumericUpDownEx udPointSize;
-        private Office2007ColorPicker clpPolygonFill;
-        private ImageCombo icbFillStyle;
-        private System.Windows.Forms.GroupBox groupExpression;
-        private System.Windows.Forms.TextBox txtExpression;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn cmnVisible;
-        private System.Windows.Forms.DataGridViewImageColumn cmnStyle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cmnName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.Button btnApply;
-        private System.Windows.Forms.Button btnMore;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem btnSaveCategories;
         private System.Windows.Forms.ToolStripMenuItem btnLoadCategories;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem btnCopyFrom;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem btnClear;
         private System.Windows.Forms.ToolStripMenuItem btnAddRange;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cmnVisible;
+        private System.Windows.Forms.DataGridViewImageColumn cmnStyle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cmnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cmnExpression;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
+        private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStyle;
+        private System.Windows.Forms.ToolStripMenuItem toolSaveCategories;
+        private System.Windows.Forms.ToolStripMenuItem toolRemoveStyle;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem toolOpenLocation;
+        private System.Windows.Forms.ToolStripMenuItem toolAddRange;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.Label lblEmpty;
+        private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel1;
     }
 }

@@ -32,11 +32,12 @@ namespace MW5.Plugins.Printing.Controls
         private void InitControls()
         {
             cboUnits.AddItemsFromEnum<LayoutUnit>();
+            cboOrientation.AddItemsFromEnum<Orientation>();
         }
 
         public string Description
         {
-            get { return "Settings of layout and printing plug-in."; }
+            get { return "Settings of layout plug-in and printing."; }
         }
 
         public Bitmap Icon
@@ -70,11 +71,14 @@ namespace MW5.Plugins.Printing.Controls
         public void Initialize()
         {
             cboUnits.SetValue(ConfigHelper.GetUnits());
+            cboOrientation.SetValue(AppConfig.Instance.PrintingOrientation);
+            txtFormat.Text = AppConfig.Instance.PrintingPaperFormat;
         }
 
         public void Save()
         {
             AppConfig.Instance.PrintingUnits = (int)cboUnits.GetValue<LayoutUnit>();
+            AppConfig.Instance.PrintingOrientation = cboOrientation.GetValue<Orientation>();
         }
     }
 }
