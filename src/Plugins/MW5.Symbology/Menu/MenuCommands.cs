@@ -18,8 +18,8 @@ namespace MW5.Plugins.Symbology.Menu
         {
             return new List<MenuCommand>()
             {
-                new MenuCommand("Query Builder", MenuKeys.QueryBuilder, Resources.img_sql),
-                new MenuCommand("Categories", MenuKeys.Categories, Resources.layer_vector_thematic_add),
+                new MenuCommand("Query Builder", MenuKeys.QueryBuilder, Resources.img_database_search32),
+                new MenuCommand("Categories", MenuKeys.Categories, Resources.img_categories32),
                 new MenuCommand("Label Mover", MenuKeys.LabelMover, Resources.label_mover),
                 new MenuCommand("Labels", MenuKeys.Labels, Resources.img_label24),
                 new MenuCommand("Charts", MenuKeys.Charts, Resources.img_chart24),

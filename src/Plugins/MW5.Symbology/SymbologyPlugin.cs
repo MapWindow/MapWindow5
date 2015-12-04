@@ -22,7 +22,8 @@ namespace MW5.Plugins.Symbology
     {
         private static IAppContext _context;
         private LegendListener _legendListener;
-        private MenuService _menuService;
+        private MenuGenerator _menuGenerator;
+        private MenuListener _menuListener;
         private LabelMover _labelMover;
         private SymbologyMetadataService _metadataService;
 
@@ -69,12 +70,13 @@ namespace MW5.Plugins.Symbology
             _metadataService = context.Container.GetSingleton<SymbologyMetadataService>();
             _labelMover = context.Container.GetSingleton<LabelMover>();
             _legendListener = context.Container.GetInstance<LegendListener>();
-            _menuService = context.Container.GetInstance<MenuService>();
+            _menuGenerator = context.Container.GetInstance<MenuGenerator>();
+            _menuListener = context.Container.GetInstance<MenuListener>();
         }
 
         public override void Terminate()
         {
-            _menuService.OnPluginUnloaded();
+            _menuListener.OnPluginUnloaded();
         }
     }
 }

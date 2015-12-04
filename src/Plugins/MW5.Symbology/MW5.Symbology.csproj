@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="Helpers\ChartHelper.cs" />
     <Compile Include="Helpers\VectorInfoHelper.cs" />
+    <Compile Include="Menu\MenuListener.cs" />
     <Compile Include="Model\FieldAdapter.cs" />
     <Compile Include="Model\SymbologyConfigPage.cs">
       <SubType>UserControl</SubType>
@@ -371,7 +372,7 @@
     <Compile Include="Menu\LegendListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
-    <Compile Include="Menu\MenuService.cs" />
+    <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Services\SymbologyMetadataService.cs" />
     <Compile Include="SymbologyPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -772,6 +773,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_palette32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_database_search32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_categories32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

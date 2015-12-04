@@ -1,50 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Linq;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Api;
-using MW5.Attributes.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
-using MW5.Shared;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.Symbology.Menu
 {
-    // TODO: split into generator and listener
-    public class MenuService: MenuServiceBase
+    internal class MenuListener : MenuServiceBase
     {
-        private readonly MenuCommands _commands;
-
-        public MenuService(IAppContext context, SymbologyPlugin plugin):
-            base(context, plugin.Identity)
+        public MenuListener(IAppContext context, SymbologyPlugin plugin)
+            : base(context, plugin.Identity)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (plugin == null) throw new ArgumentNullException("plugin");
-
-            _commands = new MenuCommands(plugin.Identity);
-
-            InitToolbar();
-
-            InitMenu();
-
             plugin.ItemClicked += PluginItemClicked;
+
             plugin.ViewUpdating += (s, e) => UpdateItems(true);
-        }
 
-        public void OnPluginUnloaded()
-        {
-            var menu = _context.Menu.LayerMenu;
-            
-            menu.Update();
-
-            menu.DropDownOpening -= MenuDropDownOpening;
+            _context.Menu.LayerMenu.DropDownOpening += MenuDropDownOpening;
         }
 
         private void PluginItemClicked(object sender, MenuItemEventArgs e)
@@ -74,27 +51,18 @@ namespace MW5.Plugins.Symbology.Menu
             }
         }
 
-        private void InitMenu()
-        {
-            var menu = _context.Menu.LayerMenu;
-            var items = menu.SubItems;
-
-            items.InsertBefore = null;
-
-            items.AddButton(_commands[MenuKeys.Labels], true);
-            items.AddButton(_commands[MenuKeys.Charts]);
-            items.AddButton(_commands[MenuKeys.Categories]);
-            items.AddButton(_commands[MenuKeys.QueryBuilder]);
-            items.AddButton(_commands[MenuKeys.LayerProperties], true);
-
-            menu.Update();
-
-            menu.DropDownOpening += MenuDropDownOpening;
-        }
-
         private void MenuDropDownOpening(object sender, EventArgs e)
         {
             UpdateItems(false);
+        }
+
+        public void OnPluginUnloaded()
+        {
+            var menu = _context.Menu.LayerMenu;
+
+            menu.Update();
+
+            menu.DropDownOpening -= MenuDropDownOpening;
         }
 
         private void UpdateItems(bool toolbar)
@@ -126,21 +94,6 @@ namespace MW5.Plugins.Symbology.Menu
             }
 
             return fn(key);
-        }
-
-        private void InitToolbar()
-        {
-            // file toolbar
-            var items = _context.Toolbars.FileToolbar.Items;
-
-            items.AddButton(_commands[MenuKeys.Categories], true);
-            items.AddButton(_commands[MenuKeys.QueryBuilder]);
-            _context.Toolbars.FileToolbar.Update();
-
-            // map toolbar
-            items = _context.Toolbars.MapToolbar.Items;
-            items.AddButton(_commands[MenuKeys.LabelMover]);
-            _context.Toolbars.FileToolbar.Update();
         }
     }
 }
