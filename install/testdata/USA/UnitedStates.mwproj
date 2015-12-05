@@ -1,0 +1,391 @@
+<MapWindow5 xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/MW5.Services.Serialization">
+  <Groups>
+    <XmlGroup>
+      <Expanded>true</Expanded>
+      <Layers xmlns:d4p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+        <d4p1:guid>005de91d-fa9d-4281-b5db-494d12bc3161</d4p1:guid>
+        <d4p1:guid>32c9d56a-c3cc-49fc-90a0-95bf586d56e8</d4p1:guid>
+        <d4p1:guid>c7af579d-f248-4962-910e-07b0f608d3b8</d4p1:guid>
+        <d4p1:guid>515d71ca-b710-4656-acb0-e765bf58e51a</d4p1:guid>
+        <d4p1:guid>bd234dfe-e22f-4f40-b301-848f6f5599fe</d4p1:guid>
+        <d4p1:guid>9a060a0f-8fa6-4bef-be90-2e2fb95adcbc</d4p1:guid>
+      </Layers>
+      <Name>Data Layers</Name>
+    </XmlGroup>
+  </Groups>
+  <Layers>
+    <XmlLayer>
+      <ColorSchemeCaption />
+      <CustomObjects />
+      <Expanded>false</Expanded>
+      <Guid>005de91d-fa9d-4281-b5db-494d12bc3161</Guid>
+      <HideFromLegend>false</HideFromLegend>
+      <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
+        <d4p1:Connection i:nil="true" />
+        <d4p1:Filename>D:\dev\GIS-Data\MapWindow-Projects\UnitedStates\Shapefiles\states.shp</d4p1:Filename>
+        <d4p1:IdentityType>File</d4p1:IdentityType>
+        <d4p1:Query i:nil="true" />
+      </Identity>
+      <LayerType>Shapefile</LayerType>
+      <Name>states</Name>
+      <OcxLayer>
+        <Layer LayerType="Shapefile" LayerName="states" LayerVisible="1" LayerKey="" MinVisibleScale="3505685.000000" Filename="" xmlns="">
+          <ShapefileClass FastMode="1">
+            <DefaultDrawingOptions FillBgColor="0" FillColor="10395354" FillColor2="3027590" FillGradientType="2" FillType="2" LineStipple="2" LineWidth="2.000000" PointShapeRatio="1.000000" />
+            <ShapefileCategoriesClass ClassificationField="1" FieldType="0">
+              <ShapefileCategoryClass Name="Alabama" Expression="[STATE_NAME] = &quot;Alabama&quot;" ValueType="2" Value="Alabama" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3300560" FillColor2="8169215" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Arizona" Expression="[STATE_NAME] = &quot;Arizona&quot;" ValueType="2" Value="Arizona" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2587731" FillColor2="7456413" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Arkansas" Expression="[STATE_NAME] = &quot;Arkansas&quot;" ValueType="2" Value="Arkansas" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3514166" FillColor2="8382848" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="California" Expression="[STATE_NAME] = &quot;California&quot;" ValueType="2" Value="California" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6411953" FillColor2="11272187" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Colorado" Expression="[STATE_NAME] = &quot;Colorado&quot;" ValueType="2" Value="Colorado" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6607833" FillColor2="11468799" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Connecticut" Expression="[STATE_NAME] = &quot;Connecticut&quot;" ValueType="2" Value="Connecticut" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2725727" FillColor2="7594409" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Delaware" Expression="[STATE_NAME] = &quot;Delaware&quot;" ValueType="2" Value="Delaware" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6208685" FillColor2="11075575" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="District of Columbia" Expression="[STATE_NAME] = &quot;District of Columbia&quot;" ValueType="2" Value="District of Columbia" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="9616301" FillColor2="14483447" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Florida" Expression="[STATE_NAME] = &quot;Florida&quot;" ValueType="2" Value="Florida" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="166" FillColor2="4665840" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Georgia" Expression="[STATE_NAME] = &quot;Georgia&quot;" ValueType="2" Value="Georgia" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3737294" FillColor2="8605951" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Idaho" Expression="[STATE_NAME] = &quot;Idaho&quot;" ValueType="2" Value="Idaho" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6404006" FillColor2="11272176" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Illinois" Expression="[STATE_NAME] = &quot;Illinois&quot;" ValueType="2" Value="Illinois" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6723801" FillColor2="11592447" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Indiana" Expression="[STATE_NAME] = &quot;Indiana&quot;" ValueType="2" Value="Indiana" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="5480664" FillColor2="10349311" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Iowa" Expression="[STATE_NAME] = &quot;Iowa&quot;" ValueType="2" Value="Iowa" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3425474" FillColor2="8294143" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Kansas" Expression="[STATE_NAME] = &quot;Kansas&quot;" ValueType="2" Value="Kansas" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="7852443" FillColor2="12713957" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Kentucky" Expression="[STATE_NAME] = &quot;Kentucky&quot;" ValueType="2" Value="Kentucky" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2313685" FillColor2="7182335" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Louisiana" Expression="[STATE_NAME] = &quot;Louisiana&quot;" ValueType="2" Value="Louisiana" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4173111" FillColor2="9041793" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Maine" Expression="[STATE_NAME] = &quot;Maine&quot;" ValueType="2" Value="Maine" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4370688" FillColor2="9239366" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Maryland" Expression="[STATE_NAME] = &quot;Maryland&quot;" ValueType="2" Value="Maryland" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="7256479" FillColor2="12124137" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Massachusetts" Expression="[STATE_NAME] = &quot;Massachusetts&quot;" ValueType="2" Value="Massachusetts" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2258688" FillColor2="7127370" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Michigan" Expression="[STATE_NAME] = &quot;Michigan&quot;" ValueType="2" Value="Michigan" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="9093800" FillColor2="13959154" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Minnesota" Expression="[STATE_NAME] = &quot;Minnesota&quot;" ValueType="2" Value="Minnesota" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4763609" FillColor2="9632255" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Mississippi" Expression="[STATE_NAME] = &quot;Mississippi&quot;" ValueType="2" Value="Mississippi" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2566600" FillColor2="7435263" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Missouri" Expression="[STATE_NAME] = &quot;Missouri&quot;" ValueType="2" Value="Missouri" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4566385" FillColor2="9435067" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Montana" Expression="[STATE_NAME] = &quot;Montana&quot;" ValueType="2" Value="Montana" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="5816241" FillColor2="10682363" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Nebraska" Expression="[STATE_NAME] = &quot;Nebraska&quot;" ValueType="2" Value="Nebraska" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4104723" FillColor2="8973405" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Nevada" Expression="[STATE_NAME] = &quot;Nevada&quot;" ValueType="2" Value="Nevada" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="8636880" FillColor2="13500415" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="New Hampshire" Expression="[STATE_NAME] = &quot;New Hampshire&quot;" ValueType="2" Value="New Hampshire" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3504218" FillColor2="8372900" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="New Jersey" Expression="[STATE_NAME] = &quot;New Jersey&quot;" ValueType="2" Value="New Jersey" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6141584" FillColor2="11010010" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="New Mexico" Expression="[STATE_NAME] = &quot;New Mexico&quot;" ValueType="2" Value="New Mexico" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="1976505" FillColor2="6845183" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="New York" Expression="[STATE_NAME] = &quot;New York&quot;" ValueType="2" Value="New York" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="9621894" FillColor2="14483408" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="North Carolina" Expression="[STATE_NAME] = &quot;North Carolina&quot;" ValueType="2" Value="North Carolina" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="935346" FillColor2="5804028" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="North Dakota" Expression="[STATE_NAME] = &quot;North Dakota&quot;" ValueType="2" Value="North Dakota" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4355165" FillColor2="9223847" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Ohio" Expression="[STATE_NAME] = &quot;Ohio&quot;" ValueType="2" Value="Ohio" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6275032" FillColor2="11141119" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Oklahoma" Expression="[STATE_NAME] = &quot;Oklahoma&quot;" ValueType="2" Value="Oklahoma" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2206519" FillColor2="7075201" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Oregon" Expression="[STATE_NAME] = &quot;Oregon&quot;" ValueType="2" Value="Oregon" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2169799" FillColor2="7038463" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Pennsylvania" Expression="[STATE_NAME] = &quot;Pennsylvania&quot;" ValueType="2" Value="Pennsylvania" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6344154" FillColor2="11206655" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Rhode Island" Expression="[STATE_NAME] = &quot;Rhode Island&quot;" ValueType="2" Value="Rhode Island" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="5551321" FillColor2="10419967" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="South Carolina" Expression="[STATE_NAME] = &quot;South Carolina&quot;" ValueType="2" Value="South Carolina" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="9813464" FillColor2="14680063" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="South Dakota" Expression="[STATE_NAME] = &quot;South Dakota&quot;" ValueType="2" Value="South Dakota" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3319361" FillColor2="8188043" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Tennessee" Expression="[STATE_NAME] = &quot;Tennessee&quot;" ValueType="2" Value="Tennessee" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="5944742" FillColor2="10813424" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Texas" Expression="[STATE_NAME] = &quot;Texas&quot;" ValueType="2" Value="Texas" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="5621142" FillColor2="10485728" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Utah" Expression="[STATE_NAME] = &quot;Utah&quot;" ValueType="2" Value="Utah" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="6014869" FillColor2="10878943" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Vermont" Expression="[STATE_NAME] = &quot;Vermont&quot;" ValueType="2" Value="Vermont" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2008114" FillColor2="6876796" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Virginia" Expression="[STATE_NAME] = &quot;Virginia&quot;" ValueType="2" Value="Virginia" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="3059784" FillColor2="7928466" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Washington" Expression="[STATE_NAME] = &quot;Washington&quot;" ValueType="2" Value="Washington" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="1517737" FillColor2="6386419" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="West Virginia" Expression="[STATE_NAME] = &quot;West Virginia&quot;" ValueType="2" Value="West Virginia" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2456645" FillColor2="7325327" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Wisconsin" Expression="[STATE_NAME] = &quot;Wisconsin&quot;" ValueType="2" Value="Wisconsin" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="2918198" FillColor2="7786880" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+              <ShapefileCategoryClass Name="Wyoming" Expression="[STATE_NAME] = &quot;Wyoming&quot;" ValueType="2" Value="Wyoming" MaxValue="">
+                <ShapeDrawingOptionsClass FillBgColor="0" FillColor="4565064" FillColor2="9433746" FillGradientType="2" FillType="2" LineStipple="2" PointShapeRatio="1.000000" />
+              </ShapefileCategoryClass>
+            </ShapefileCategoriesClass>
+            <LabelsClass FontColor="12349952" FrameBackColor="12582911" FrameBackColor2="13553390" FrameGradientMode="0" FrameVisible="-1" Generated="1" MaxVisibleScale="1000000000.000000" MinVisibleScale="3000000.000000" AutoOffset="0" DynamicVisibility="-1" Positioning="1" Expression="[STATE_ABBR] " />
+            <ChartsClass Visible="-1" />
+            <CategoryIndices Count="49">45,24,17,32,39,48,47,10,43,21,35,27,13,19,25,30,36,5,37,28,12,26,42,3,33,11,7,6,46,18,4,15,14,44,23,1,34,31,40,41,29,0,22,9,38,2,16,8,20,</CategoryIndices>
+            <TableClass>
+              <Fields />
+            </TableClass>
+          </ShapefileClass>
+        </Layer>
+      </OcxLayer>
+    </XmlLayer>
+    <XmlLayer>
+      <ColorSchemeCaption />
+      <CustomObjects>
+        <XmlCustomObject>
+          <Guid>7b9df651-4b8b-4aa8-a4a9-c1463a35dac7</Guid>
+          <Object>
+            <SymbologyMetadata xmlns="" />
+          </Object>
+        </XmlCustomObject>
+      </CustomObjects>
+      <Expanded>true</Expanded>
+      <Guid>32c9d56a-c3cc-49fc-90a0-95bf586d56e8</Guid>
+      <HideFromLegend>false</HideFromLegend>
+      <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
+        <d4p1:Connection i:nil="true" />
+        <d4p1:Filename>D:\dev\GIS-Data\MapWindow-Projects\UnitedStates\Shapefiles\counties.shp</d4p1:Filename>
+        <d4p1:IdentityType>File</d4p1:IdentityType>
+        <d4p1:Query i:nil="true" />
+      </Identity>
+      <LayerType>Shapefile</LayerType>
+      <Name>counties</Name>
+      <OcxLayer>
+        <Layer LayerType="Shapefile" LayerName="counties" LayerVisible="1" LayerKey="" MinVisibleScale="1.000000" MaxVisibleScale="4901750.000000" Filename="" xmlns="">
+          <ShapefileClass>
+            <DefaultDrawingOptions FillBgColor="0" FillColor="2928376" FillVisible="0" LineColor="4224439" PointShapeRatio="1.000000" />
+            <ShapefileCategoriesClass ClassificationField="-1" />
+            <LabelsClass FrameOutlineColor="1971946" FrameType="1" FrameVisible="-1" Generated="0" MaxVisibleScale="4901750.000000" MinVisibleScale="1.000000" AutoOffset="0" Positioning="1" Expression="[MWShapeID] " />
+            <ChartsClass Visible="-1" />
+            <Selection TotalCount="3111" SelectedCount="1">000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Selection>
+            <TableClass>
+              <Fields />
+            </TableClass>
+          </ShapefileClass>
+        </Layer>
+      </OcxLayer>
+    </XmlLayer>
+    <XmlLayer>
+      <ColorSchemeCaption />
+      <CustomObjects />
+      <Expanded>true</Expanded>
+      <Guid>c7af579d-f248-4962-910e-07b0f608d3b8</Guid>
+      <HideFromLegend>false</HideFromLegend>
+      <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
+        <d4p1:Connection i:nil="true" />
+        <d4p1:Filename>D:\dev\GIS-Data\MapWindow-Projects\UnitedStates\Shapefiles\lakes.shp</d4p1:Filename>
+        <d4p1:IdentityType>File</d4p1:IdentityType>
+        <d4p1:Query i:nil="true" />
+      </Identity>
+      <LayerType>Shapefile</LayerType>
+      <Name>lakes</Name>
+      <OcxLayer>
+        <Layer LayerType="Shapefile" LayerName="lakes" LayerVisible="1" LayerKey="" Filename="" xmlns="">
+          <ShapefileClass>
+            <DefaultDrawingOptions FillColor="13161410" LineColor="9868950" />
+            <ShapefileCategoriesClass ClassificationField="-1" />
+            <LabelsClass Generated="0" Positioning="1" TextRenderingHint="3" />
+            <ChartsClass />
+            <Selection TotalCount="29" SelectedCount="1">00000000000000010000000000000</Selection>
+            <TableClass>
+              <Fields />
+            </TableClass>
+          </ShapefileClass>
+        </Layer>
+      </OcxLayer>
+    </XmlLayer>
+    <XmlLayer>
+      <ColorSchemeCaption />
+      <CustomObjects />
+      <Expanded>true</Expanded>
+      <Guid>515d71ca-b710-4656-acb0-e765bf58e51a</Guid>
+      <HideFromLegend>false</HideFromLegend>
+      <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
+        <d4p1:Connection i:nil="true" />
+        <d4p1:Filename>D:\dev\GIS-Data\MapWindow-Projects\UnitedStates\Shapefiles\rivers.shp</d4p1:Filename>
+        <d4p1:IdentityType>File</d4p1:IdentityType>
+        <d4p1:Query i:nil="true" />
+      </Identity>
+      <LayerType>Shapefile</LayerType>
+      <Name>rivers</Name>
+      <OcxLayer>
+        <Layer LayerType="Shapefile" LayerName="rivers" LayerVisible="1" LayerKey="" Filename="" xmlns="">
+          <ShapefileClass>
+            <DefaultDrawingOptions FillColor="16777215" LineColor="7628642" />
+            <ShapefileCategoriesClass ClassificationField="-1" />
+            <LabelsClass Generated="0" Positioning="6" TextRenderingHint="3" />
+            <ChartsClass />
+            <Selection TotalCount="49" SelectedCount="1">0010000000000000000000000000000000000000000000000</Selection>
+            <TableClass>
+              <Fields />
+            </TableClass>
+          </ShapefileClass>
+        </Layer>
+      </OcxLayer>
+    </XmlLayer>
+    <XmlLayer>
+      <ColorSchemeCaption />
+      <CustomObjects />
+      <Expanded>true</Expanded>
+      <Guid>bd234dfe-e22f-4f40-b301-848f6f5599fe</Guid>
+      <HideFromLegend>false</HideFromLegend>
+      <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
+        <d4p1:Connection i:nil="true" />
+        <d4p1:Filename>D:\dev\GIS-Data\MapWindow-Projects\UnitedStates\Shapefiles\roads.shp</d4p1:Filename>
+        <d4p1:IdentityType>File</d4p1:IdentityType>
+        <d4p1:Query i:nil="true" />
+      </Identity>
+      <LayerType>Shapefile</LayerType>
+      <Name>roads</Name>
+      <OcxLayer>
+        <Layer LayerType="Shapefile" LayerName="roads" LayerVisible="1" LayerKey="" Filename="" xmlns="">
+          <ShapefileClass>
+            <DefaultDrawingOptions FillColor="16777215" LineColor="5406305" />
+            <ShapefileCategoriesClass ClassificationField="-1" />
+            <LabelsClass Generated="0" Positioning="6" TextRenderingHint="3" />
+            <ChartsClass />
+            <TableClass>
+              <Fields />
+            </TableClass>
+          </ShapefileClass>
+        </Layer>
+      </OcxLayer>
+    </XmlLayer>
+    <XmlLayer>
+      <ColorSchemeCaption />
+      <CustomObjects>
+        <XmlCustomObject>
+          <Guid>7b9df651-4b8b-4aa8-a4a9-c1463a35dac7</Guid>
+          <Object>
+            <SymbologyMetadata xmlns="" />
+          </Object>
+        </XmlCustomObject>
+      </CustomObjects>
+      <Expanded>true</Expanded>
+      <Guid>9a060a0f-8fa6-4bef-be90-2e2fb95adcbc</Guid>
+      <HideFromLegend>false</HideFromLegend>
+      <Identity xmlns:d4p1="http://schemas.datacontract.org/2004/07/MW5.Api.Concrete">
+        <d4p1:Connection i:nil="true" />
+        <d4p1:Filename>D:\dev\GIS-Data\MapWindow-Projects\UnitedStates\Shapefiles\cities.shp</d4p1:Filename>
+        <d4p1:IdentityType>File</d4p1:IdentityType>
+        <d4p1:Query i:nil="true" />
+      </Identity>
+      <LayerType>Shapefile</LayerType>
+      <Name>cities</Name>
+      <OcxLayer>
+        <Layer LayerType="Shapefile" LayerName="cities" LayerVisible="1" LayerKey="" Filename="" xmlns="">
+          <ShapefileClass>
+            <DefaultDrawingOptions FillColor="3299469" LineColor="9868950" />
+            <ShapefileCategoriesClass ClassificationField="-1" />
+            <LabelsClass Alignment="5" Generated="0" Positioning="0" TextRenderingHint="3" />
+            <ChartsClass />
+            <TableClass>
+              <Fields />
+            </TableClass>
+          </ShapefileClass>
+        </Layer>
+      </OcxLayer>
+    </XmlLayer>
+  </Layers>
+  <Locator i:nil="true" />
+  <Map>
+    <Envelope>
+      <MaxX>-59.7159332236663</MaxX>
+      <MaxY>53.706702938079836</MaxY>
+      <MinX>-131.98533783346264</MinX>
+      <MinY>20.851919765472417</MinY>
+    </Envelope>
+    <Projection>GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4326"]]</Projection>
+  </Map>
+  <Plugins>
+    <XmlPlugin>
+      <Guid>f0cdf80f-5f74-48f6-8c8d-75f9b505eee0</Guid>
+      <Name>Debug Window Plug-in</Name>
+    </XmlPlugin>
+    <XmlPlugin>
+      <Guid>65beb2fd-eec2-461c-965e-f20a0cef2aa2</Guid>
+      <Name>Identifier plugin</Name>
+    </XmlPlugin>
+    <XmlPlugin>
+      <Guid>f24e7086-1762-4a7c-8403-d1169309cbc6</Guid>
+      <Name>Data Repository</Name>
+    </XmlPlugin>
+    <XmlPlugin>
+      <Guid>7b9df651-4b8b-4aa8-a4a9-c1463a35dac7</Guid>
+      <Name>Symbology Editor</Name>
+    </XmlPlugin>
+    <XmlPlugin>
+      <Guid>894e958f-69dd-48df-b35b-16871ec5d309</Guid>
+      <Name>Table editor</Name>
+    </XmlPlugin>
+    <XmlPlugin>
+      <Guid>f383fe43-0754-4ee2-951c-0066e87b28ab</Guid>
+      <Name>GIS Toolbox</Name>
+    </XmlPlugin>
+  </Plugins>
+  <Settings>
+    <SavedAsFilename>d:\dev\gis-data\mapwindow-projects\unitedstates\shapefiles\unitedstates.mwproj</SavedAsFilename>
+  </Settings>
+</MapWindow5>
