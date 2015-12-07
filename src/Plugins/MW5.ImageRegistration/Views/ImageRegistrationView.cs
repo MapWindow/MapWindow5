@@ -45,6 +45,8 @@ namespace MW5.Plugins.ImageRegistration.Views
             InitializeComponent();
 
             AttachEvents();
+
+            statusStripEx1.ContextMenuStrip = null;
         }
 
         private void SetColumnFormats()

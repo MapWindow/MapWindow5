@@ -123,7 +123,7 @@ namespace MW5.Menu
                     _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
                     break;
                 default:
-                    MessageService.Current.Info("There is no handler for the item: " + e.ItemKey);
+                    // do nothing
                     break;
             }
         }

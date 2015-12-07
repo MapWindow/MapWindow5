@@ -21,5 +21,22 @@ namespace MW5.Menu
         public const string ProgressBar = "statusProgressBar";
 
         public const string MapScale = "statusMapScale";
+
+        public static string GetStatusItemName(string key)
+        {
+            switch (key)
+            {
+                case ProjectionDropDown:
+                    return "Coordinate System and Projection";
+                case TileProvider:
+                    return "Base Layer";
+                case MapScale:
+                    return "Map Scale";
+                case MapUnits:
+                    return "Map Units";
+            }
+
+            return key;
+        }
     }
 }

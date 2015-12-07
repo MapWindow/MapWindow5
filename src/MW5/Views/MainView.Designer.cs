@@ -35,7 +35,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
@@ -111,11 +112,13 @@ namespace MW5.Views
             this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this._mapControl1.BackColor = System.Drawing.Color.White;
             this._mapControl1.BackgroundColor = System.Drawing.Color.White;
-            this._mapControl1.CurrentScale = 0.020526640715426633D;
+            this._mapControl1.CurrentScale = 14.267262562525739D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
+            envelope2.Tag = "";
+            this._mapControl1.Extents = envelope2;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -128,8 +131,8 @@ namespace MW5.Views
             this._mapControl1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this._mapControl1.MouseWheelSpeed = 0.5D;
             this._mapControl1.Name = "_mapControl1";
-            spatialReference1.Tag = "";
-            this._mapControl1.Projection = spatialReference1;
+            spatialReference2.Tag = "";
+            this._mapControl1.Projection = spatialReference2;
             this._mapControl1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this._mapControl1.ReuseTileBuffer = true;
             this._mapControl1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;

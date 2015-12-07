@@ -84,6 +84,8 @@ namespace MW5.Plugins.Printing.Views
 
             RestorePreviousState();
 
+            statusStripEx1.ContextMenuStrip = null;
+
             FormClosing += LayoutViewFormClosing;
         }
 

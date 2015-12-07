@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,6 +8,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Forms;
 using MW5.Helpers;
+using MW5.Menu;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
@@ -17,6 +19,7 @@ using MW5.UI.Docking;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
+using MW5.UI.Menu;
 
 namespace MW5.Views
 {
@@ -171,6 +174,8 @@ namespace MW5.Views
             // with reallocation of buffer when panels / toolbars are loaded
             _mapControl1.Dock = DockStyle.Fill;
 
+            statusStripEx1.ContextMenuStrip.Opening += OnStatusBarCustomizationMenuOpening;
+
             Invoke(BeforeShow);
 
             AppConfig.Instance.FirstRun = false;
@@ -180,6 +185,50 @@ namespace MW5.Views
             Activate();
 
             Application.Run(this);
+        }
+
+        private void UpdateStatusBarCustomizationMenu()
+        {
+          
+            var hash = new HashSet<string>
+                           {
+                               StatusBarKeys.TileProvider, 
+                               StatusBarKeys.MapScale,
+                               StatusBarKeys.MapUnits,
+                               StatusBarKeys.ProjectionDropDown,
+                           };
+            try
+            {
+                foreach (ToolStripItem item in statusStripEx1.ContextMenuStrip.Items)
+                {
+                    var status = ReflectionHelper.GetInstanceField(item, "m_item") as ToolStripItem;
+                    if (status == null)
+                    {
+                        item.Visible = false;
+                        continue;
+                    }
+
+                    var metadata = status.Tag as MenuItemMetadata;
+
+                    if (metadata != null && hash.Contains(metadata.Key))
+                    {
+                        item.Text = StatusBarKeys.GetStatusItemName(metadata.Key);
+                        item.Visible = true;
+                        continue;
+                    }
+
+                    item.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to update status bar customization menu.", ex);
+            }
+        }
+
+        private void OnStatusBarCustomizationMenuOpening(object sender, CancelEventArgs e)
+        {
+            UpdateStatusBarCustomizationMenu();
         }
 
         private string GetCaption()
