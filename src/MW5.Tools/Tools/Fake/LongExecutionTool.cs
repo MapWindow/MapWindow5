@@ -40,6 +40,11 @@ namespace MW5.Tools.Tools.Fake
             get { return "Fakes the execution of the long task"; }
         }
 
+        public override bool SupportsCancel
+        {
+            get  { return true; }
+        }
+        
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>

@@ -52,11 +52,6 @@ namespace MW5.Tools.Tools.Raster
                          "sets to no data value pixels that are not within polygon. "; }
         }
 
-        public override bool SupportsCancel
-        {
-            get { return false; }
-        }
-
         protected override bool BeforeRun()
         {
             if (Vector.Datasource.GeometryType != GeometryType.Polygon)

@@ -95,11 +95,6 @@ namespace MW5.Gdal.Tools
             get { return PluginIdentity.Default; }
         }
 
-        public override bool SupportsCancel
-        {
-            get { return false; }
-        }
-
         public override string TaskName
         {
             get { return "Translate: " + Path.GetFileName(Output.Filename); }

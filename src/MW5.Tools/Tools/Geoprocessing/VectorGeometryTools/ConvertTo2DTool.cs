@@ -45,6 +45,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return PluginIdentity.Default; }
         }
 
+        public override bool SupportsBatchExecution
+        {
+            get  { return true; }
+        }
+
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>

@@ -47,14 +47,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         }
 
         /// <summary>
-        /// BufferDistance doesn't supports cancelling in the ocx
-        /// </summary>
-        public override bool SupportsCancel
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
         public override PluginIdentity PluginIdentity

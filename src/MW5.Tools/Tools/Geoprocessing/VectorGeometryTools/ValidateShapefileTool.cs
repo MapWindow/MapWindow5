@@ -77,6 +77,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return PluginIdentity.Default; }
         }
 
+        public override bool SupportsCancel
+        {
+            get  { return true; }
+        }
+
         /// <summary>
         /// Gets the name to be displayed as a name of the task.
         /// </summary>

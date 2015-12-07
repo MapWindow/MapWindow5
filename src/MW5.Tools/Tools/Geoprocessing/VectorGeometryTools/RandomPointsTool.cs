@@ -63,6 +63,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Random points"; }
         }
 
+        public override bool SupportsCancel
+        {
+            get  { return false; }
+        }
+
         /// <summary>
         /// Runs the tool.
         /// </summary>

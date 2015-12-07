@@ -113,7 +113,7 @@ namespace MW5.Tools.Model
         /// </summary>
         public virtual bool SupportsCancel
         {
-            get { return true; }
+            get { return false; }
         }
 
         /// <summary>

@@ -90,6 +90,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return InputLayer.Name + ": " + GetShortOperationString(Operation); }
         }
 
+        public override bool SupportsCancel
+        {
+            get  { return true; }
+        }
+
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>

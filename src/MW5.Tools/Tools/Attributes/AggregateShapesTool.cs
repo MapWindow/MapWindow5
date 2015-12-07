@@ -68,14 +68,6 @@ namespace MW5.Tools.Tools.Attributes
         }
 
         /// <summary>
-        /// AggregateShapes doesn't supports cancelling in the ocx
-        /// </summary>
-        public override bool SupportsCancel
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         /// Gets description of the tool.
         /// </summary>
         public override string Description

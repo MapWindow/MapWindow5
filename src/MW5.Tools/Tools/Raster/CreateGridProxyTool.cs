@@ -77,11 +77,6 @@ namespace MW5.Tools.Tools.Raster
             get { return "Creates an RGB image file to be used for fast visualisation of the grid."; }
         }
 
-        public override bool SupportsCancel
-        {
-            get { return false; }
-        }
-
         public override string TaskName
         {
             get { return "Proxy: " + Path.GetFileName(Input); }

@@ -68,14 +68,6 @@ namespace MW5.Tools.Tools.Raster
         }
 
         /// <summary>
-        /// Gets a value indicating whether the tool supports canceling.
-        /// </summary>
-        public override bool SupportsCancel
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
