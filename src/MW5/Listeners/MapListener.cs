@@ -19,21 +19,24 @@ namespace MW5.Listeners
         private readonly IBroadcasterService _broadcaster;
         private readonly ILayerService _layerService;
         private readonly ContextMenuPresenter _contextMenuPresenter;
+        private readonly IProjectService _projectService;
         private readonly IMap _map;
         private readonly IAppContext _context;
         
         public MapListener(IAppContext context, IBroadcasterService broadcaster, ILayerService layerService,
-                ContextMenuPresenter contextMenuPresenter)
+                ContextMenuPresenter contextMenuPresenter, IProjectService projectService)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (broadcaster == null) throw new ArgumentNullException("broadcaster");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (contextMenuPresenter == null) throw new ArgumentNullException("contextMenuPresenter");
+            if (projectService == null) throw new ArgumentNullException("projectService");
 
             _context = context;
             _broadcaster = broadcaster;
             _layerService = layerService;
             _contextMenuPresenter = contextMenuPresenter;
+            _projectService = projectService;
 
             _map = _context.Map as IMap;
             if (_map == null)
@@ -183,6 +186,13 @@ namespace MW5.Listeners
         {
             if (TryParseTmsProviderFromDroppedFilename(e.Filename))
             {
+                return;
+            }
+
+            if (e.Filename.ToLower().EndsWith(".mwproj") ||
+                e.Filename.ToLower().EndsWith(".mwprj"))
+            {
+                _projectService.Open(e.Filename, false);
                 return;
             }
 
