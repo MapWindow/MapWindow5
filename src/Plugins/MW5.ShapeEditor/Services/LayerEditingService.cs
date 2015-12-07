@@ -88,6 +88,11 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// </summary>
         public bool SaveLayerChanges(int layerHandle)
         {
+            if (!_context.Map.GeometryEditor.SaveChanges())
+            {
+                return false;
+            }
+
             bool success = SaveLayerChangesCore(layerHandle);
 
             if (success)
