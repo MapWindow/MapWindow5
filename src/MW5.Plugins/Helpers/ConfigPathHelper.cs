@@ -16,12 +16,24 @@ namespace MW5.Plugins.Helpers
 
             string path = Path.Combine(folder, AppName);
 
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
+            CreateIfNotExists(path);
 
             return path;
+        }
+
+        private static void CreateIfNotExists(string path)
+        {
+            try
+            {
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to create folder: " + path, ex);
+            }
         }
 
         public static string GetConfigFilePath()
@@ -46,22 +58,30 @@ namespace MW5.Plugins.Helpers
 
         public static string GetToolsConfigPath()
         {
-            return GetConfigPath() + @"\Tools\";
+            string path = GetConfigPath() + @"\Tools\";
+            CreateIfNotExists(path);
+            return path;
         }
 
         public static string GetDriversConfigPath()
         {
-            return GetConfigPath() + @"\Drivers\";
+            string path = GetConfigPath() + @"\Drivers\";
+            CreateIfNotExists(path);
+            return path;
         }
 
         public static string GetWmsCachePath()
         {
-            return GetConfigPath() + @"\WMS\";
+            string path = GetConfigPath() + @"\WMS\";
+            CreateIfNotExists(path);
+            return path;
         }
 
         public static string GetLayoutPath()
         {
-            return GetConfigPath() + @"\Layout\";
+            string path = GetConfigPath() + @"\Layout\";
+            CreateIfNotExists(path);
+            return path;
         }
     }
 }

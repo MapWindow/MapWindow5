@@ -175,6 +175,11 @@ namespace MW5.Plugins.Printing.Views
 
         private SizeF GetUsablePaperSize()
         {
+            if (string.IsNullOrWhiteSpace(View.PaperFormat))
+            {
+                return default(SizeF);
+            }
+
             var paperSize = PaperSizes.PaperSizeByFormatName(View.PaperFormat, Model.PrinterSettings);
             if (paperSize != null)
             {
