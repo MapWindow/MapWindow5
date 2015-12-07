@@ -172,6 +172,7 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.FieldProperties:
                 case TableEditorCommand.CalculateField:
                 case TableEditorCommand.RemoveField:
+                case TableEditorCommand.FieldHide:
                     if (View.ActiveColumnIndex == -1)
                     {
                         MessageService.Current.Info("Active column is expected for this command");
