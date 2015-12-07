@@ -59,7 +59,8 @@ namespace MW5.Services.Concrete
 
                 RestorePlugins(project);
 
-                if (!RestoreLayers(project))
+                int selectedLayerHandle;
+                if (!RestoreLayers(project, out selectedLayerHandle))
                 {
                     return false;
                 }
@@ -69,6 +70,11 @@ namespace MW5.Services.Concrete
                 RestoreExtents(project);
 
                 RestoreLocator(project);
+
+                if (selectedLayerHandle != -1)
+                {
+                    _context.Legend.SelectedLayerHandle = selectedLayerHandle;
+                }
 
                 return true;
             }
@@ -116,8 +122,10 @@ namespace MW5.Services.Concrete
             }
         }
 
-        private bool RestoreLayers(XmlProject project)
+        private bool RestoreLayers(XmlProject project, out int selectedLayerHandle)
         {
+            selectedLayerHandle = -1;
+
             if (!ValidateLayers(project))
             {
                 return false;
@@ -126,7 +134,7 @@ namespace MW5.Services.Concrete
             var layers = _context.Map.Layers;
             int step = 0;
             int count = project.Layers.Count;
-            
+
             foreach (var xmlLayer in project.Layers)
             {
                 step++;
@@ -143,6 +151,11 @@ namespace MW5.Services.Concrete
                     int handle = _layerService.LastLayerHandle;
                     var layer = layers.ItemByHandle(handle) as ILegendLayer;
                     xmlLayer.RestoreLayer(layer, _broadcaster);
+
+                    if (xmlLayer.Selected)
+                    {
+                        selectedLayerHandle = handle;
+                    }
                 }
             }
 

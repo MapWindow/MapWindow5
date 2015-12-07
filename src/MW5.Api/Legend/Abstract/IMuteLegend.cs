@@ -137,7 +137,7 @@ namespace MW5.Api.Legend.Abstract
         Bitmap Snapshot(bool visibleLayersOnly, int imgWidth);
 
         /// <summary>
-        /// Gets the selected layer within a legend or null if none is selected.
+        /// Gets or sets the selected layer within a legend or null if none is selected.
         /// </summary>
         int SelectedLayerHandle { get; set; }
 

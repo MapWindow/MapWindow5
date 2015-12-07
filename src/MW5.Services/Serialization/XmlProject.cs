@@ -21,7 +21,9 @@ namespace MW5.Services.Serialization
     {
         public XmlProject(ISerializableContext context, string filename)
         {
-            Layers = context.Legend.Layers.Select(l => new XmlLayer(l)).ToList();
+            int selectedHandle = context.Legend.SelectedLayerHandle;
+
+            Layers = context.Legend.Layers.Select(l => new XmlLayer(l, l.Handle == selectedHandle)).ToList();
 
             Groups = context.Legend.Groups.Select(g => new XmlGroup(g)).ToList();
 

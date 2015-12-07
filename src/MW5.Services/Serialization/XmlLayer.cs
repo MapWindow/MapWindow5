@@ -29,7 +29,7 @@ namespace MW5.Services.Serialization
             get { return AppConfig.Instance.SymbolobyStorage == SymbologyStorage.Project; }
         }
 
-        public XmlLayer(ILegendLayer layer)
+        public XmlLayer(ILegendLayer layer, bool selected = false)
         {
             if (ProjectStorage)
             {
@@ -51,6 +51,7 @@ namespace MW5.Services.Serialization
             LayerType = layer.LayerType;
             Name = layer.Name;
             SkipLoading = false;
+            Selected = selected;
 
             SerializeCustomObjects(layer);
         }
@@ -159,6 +160,7 @@ namespace MW5.Services.Serialization
         [DataMember] public XmlElement OcxLayer { get; set; }
         [DataMember] public LayerIdentity Identity { get; set; }
         [DataMember] public LayerType LayerType { get; set; }
+        [DataMember] public bool Selected { get; set; }
 
         public bool SkipLoading { get; set; }
     }
