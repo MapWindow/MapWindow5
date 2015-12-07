@@ -167,7 +167,6 @@ namespace MW5.Menu
 
             items.AddDropDown("Toolbars", Plugins.Menu.MenuKeys.ViewToolbars, PluginIdentity.Default).BeginGroup = true;
             items.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, PluginIdentity.Default);
-            items.AddDropDown("Skins", Plugins.Menu.MenuKeys.ViewSkins, PluginIdentity.Default);
 
             _context.Menu.ViewMenu.Update();
 

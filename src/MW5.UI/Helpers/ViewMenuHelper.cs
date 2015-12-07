@@ -35,23 +35,8 @@ namespace MW5.UI.Helpers
             InitToolbars();
 
             InitWindows();
-
-            InitSkins();
         }
         
-        #region Skins
-
-        private static void InitSkins()
-        {
-            var item = _menu.FindItem(MenuKeys.ViewSkins, PluginIdentity.Default) as IDropDownMenuItem;
-            if (item != null)
-            {
-                item.SubItems.AddButton("Default", PluginIdentity.Default);
-            }
-        }
-
-        #endregion
-
         #region Windows
 
         private static void InitWindows()

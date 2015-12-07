@@ -16,6 +16,5 @@ namespace MW5.Plugins.Menu
 
         public const string ViewToolbars = "ViewToolbars";
         public const string ViewWindows = "ViewWindows";
-        public const string ViewSkins = "ViewSkins";
     }
 }

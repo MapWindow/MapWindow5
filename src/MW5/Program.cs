@@ -51,10 +51,10 @@ namespace MW5
             var container = CreateContainer();
             CompositionRoot.Compose(container);
 
-            SplashView.Instance.ShowStatus("Loading Config");
+            SplashView.Instance.ShowStatus("Loading config");
             LoadConfig(container);
 
-            SplashView.Instance.ShowStatus("Running Application");
+            SplashView.Instance.ShowStatus("Running application");
             container.Run<MainPresenter>();
         }
 
@@ -69,7 +69,7 @@ namespace MW5
         private static void ShowSplashScreen()
         {
             var splashScreen = SplashView.Instance;
-            splashScreen.ShowStatus("Composing DI Container");
+            splashScreen.ShowStatus("Composing DI container");
             splashScreen.Show();
             Application.DoEvents();
         }
