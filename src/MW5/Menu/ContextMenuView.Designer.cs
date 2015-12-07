@@ -44,13 +44,13 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxMeasuringProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.contextZooming = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
-            this.ctxScale = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxZoomOut = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctxZoomToLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctxZoomToLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxZoomToMaxExtents = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctxScale = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMeasuring.SuspendLayout();
             this.contextZooming.SuspendLayout();
             this.SuspendLayout();
@@ -77,7 +77,7 @@
             this.ctxUndoPoint.Name = "ctxUndoPoint";
             this.ctxUndoPoint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
             this.ctxUndoPoint.Size = new System.Drawing.Size(175, 22);
-            this.ctxUndoPoint.Text = "Undo point";
+            this.ctxUndoPoint.Text = "Undo Point";
             // 
             // toolStripSeparator4
             // 
@@ -88,13 +88,13 @@
             // 
             this.ctxShowLength.Name = "ctxShowLength";
             this.ctxShowLength.Size = new System.Drawing.Size(175, 22);
-            this.ctxShowLength.Text = "Show length";
+            this.ctxShowLength.Text = "Show Length";
             // 
             // ctxShowBearing
             // 
             this.ctxShowBearing.Name = "ctxShowBearing";
             this.ctxShowBearing.Size = new System.Drawing.Size(175, 22);
-            this.ctxShowBearing.Text = "Show bearing";
+            this.ctxShowBearing.Text = "Show Bearing";
             // 
             // toolStripSeparator2
             // 
@@ -113,13 +113,13 @@
             // ctxMetric
             // 
             this.ctxMetric.Name = "ctxMetric";
-            this.ctxMetric.Size = new System.Drawing.Size(125, 22);
+            this.ctxMetric.Size = new System.Drawing.Size(152, 22);
             this.ctxMetric.Text = "Metric";
             // 
             // ctxAmerican
             // 
             this.ctxAmerican.Name = "ctxAmerican";
-            this.ctxAmerican.Size = new System.Drawing.Size(125, 22);
+            this.ctxAmerican.Size = new System.Drawing.Size(152, 22);
             this.ctxAmerican.Text = "American";
             // 
             // ctxAngleFormat
@@ -130,24 +130,24 @@
             this.ctxSeconds});
             this.ctxAngleFormat.Name = "ctxAngleFormat";
             this.ctxAngleFormat.Size = new System.Drawing.Size(175, 22);
-            this.ctxAngleFormat.Text = "Angle format";
+            this.ctxAngleFormat.Text = "Angle Format";
             // 
             // ctxDegrees
             // 
             this.ctxDegrees.Name = "ctxDegrees";
-            this.ctxDegrees.Size = new System.Drawing.Size(118, 22);
+            this.ctxDegrees.Size = new System.Drawing.Size(152, 22);
             this.ctxDegrees.Text = "Degrees";
             // 
             // ctxMinutes
             // 
             this.ctxMinutes.Name = "ctxMinutes";
-            this.ctxMinutes.Size = new System.Drawing.Size(118, 22);
+            this.ctxMinutes.Size = new System.Drawing.Size(152, 22);
             this.ctxMinutes.Text = "Minutes";
             // 
             // ctxSeconds
             // 
             this.ctxSeconds.Name = "ctxSeconds";
-            this.ctxSeconds.Size = new System.Drawing.Size(118, 22);
+            this.ctxSeconds.Size = new System.Drawing.Size(152, 22);
             this.ctxSeconds.Text = "Seconds";
             // 
             // toolStripSeparator3
@@ -176,12 +176,6 @@
             this.contextZooming.Size = new System.Drawing.Size(186, 148);
             this.contextZooming.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
-            // ctxScale
-            // 
-            this.ctxScale.Name = "ctxScale";
-            this.ctxScale.Size = new System.Drawing.Size(185, 22);
-            this.ctxScale.Text = "Scale";
-            // 
             // ctxZoomIn
             // 
             this.ctxZoomIn.Name = "ctxZoomIn";
@@ -194,27 +188,33 @@
             this.ctxZoomOut.Size = new System.Drawing.Size(185, 22);
             this.ctxZoomOut.Text = "Zoom out";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
-            // 
-            // ctxZoomToLayer
-            // 
-            this.ctxZoomToLayer.Name = "ctxZoomToLayer";
-            this.ctxZoomToLayer.Size = new System.Drawing.Size(185, 22);
-            this.ctxZoomToLayer.Text = "Zoom to layer";
-            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(182, 6);
             // 
+            // ctxZoomToLayer
+            // 
+            this.ctxZoomToLayer.Name = "ctxZoomToLayer";
+            this.ctxZoomToLayer.Size = new System.Drawing.Size(185, 22);
+            this.ctxZoomToLayer.Text = "Zoom to Layer";
+            // 
             // ctxZoomToMaxExtents
             // 
             this.ctxZoomToMaxExtents.Name = "ctxZoomToMaxExtents";
             this.ctxZoomToMaxExtents.Size = new System.Drawing.Size(185, 22);
-            this.ctxZoomToMaxExtents.Text = "Zoom to max extents";
+            this.ctxZoomToMaxExtents.Text = "Zoom to Max Extents";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            // 
+            // ctxScale
+            // 
+            this.ctxScale.Name = "ctxScale";
+            this.ctxScale.Size = new System.Drawing.Size(185, 22);
+            this.ctxScale.Text = "Scale";
             // 
             // ContextMenuView
             // 

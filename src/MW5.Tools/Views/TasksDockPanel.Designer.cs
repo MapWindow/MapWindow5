@@ -98,71 +98,71 @@
             this.mnuRemoveOutput});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(204, 220);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(209, 198);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
             // toolOpenLog
             // 
             this.toolOpenLog.Name = "toolOpenLog";
-            this.toolOpenLog.Size = new System.Drawing.Size(203, 22);
-            this.toolOpenLog.Text = "Open log";
+            this.toolOpenLog.Size = new System.Drawing.Size(208, 22);
+            this.toolOpenLog.Text = "Open Log";
             // 
             // toolRerun
             // 
             this.toolRerun.Name = "toolRerun";
-            this.toolRerun.Size = new System.Drawing.Size(203, 22);
+            this.toolRerun.Size = new System.Drawing.Size(208, 22);
             this.toolRerun.Text = "Rerun";
             // 
             // toolRunAnother
             // 
             this.toolRunAnother.Name = "toolRunAnother";
-            this.toolRunAnother.Size = new System.Drawing.Size(203, 22);
-            this.toolRunAnother.Text = "Run another";
+            this.toolRunAnother.Size = new System.Drawing.Size(208, 22);
+            this.toolRunAnother.Text = "Run Another";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(205, 6);
             // 
             // toolCancelTask
             // 
             this.toolCancelTask.Name = "toolCancelTask";
-            this.toolCancelTask.Size = new System.Drawing.Size(203, 22);
+            this.toolCancelTask.Size = new System.Drawing.Size(208, 22);
             this.toolCancelTask.Text = "Cancel";
             // 
             // toolPauseTask
             // 
             this.toolPauseTask.Name = "toolPauseTask";
-            this.toolPauseTask.Size = new System.Drawing.Size(203, 22);
+            this.toolPauseTask.Size = new System.Drawing.Size(208, 22);
             this.toolPauseTask.Text = "Pause";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(205, 6);
             // 
             // mnuOpenLocation
             // 
             this.mnuOpenLocation.Name = "mnuOpenLocation";
-            this.mnuOpenLocation.Size = new System.Drawing.Size(203, 22);
-            this.mnuOpenLocation.Text = "Open output location";
+            this.mnuOpenLocation.Size = new System.Drawing.Size(208, 22);
+            this.mnuOpenLocation.Text = "Open Output Location";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(205, 6);
             // 
             // toolRemoveTask
             // 
             this.toolRemoveTask.Name = "toolRemoveTask";
-            this.toolRemoveTask.Size = new System.Drawing.Size(203, 22);
+            this.toolRemoveTask.Size = new System.Drawing.Size(208, 22);
             this.toolRemoveTask.Text = "Remove";
             // 
             // mnuRemoveOutput
             // 
             this.mnuRemoveOutput.Name = "mnuRemoveOutput";
-            this.mnuRemoveOutput.Size = new System.Drawing.Size(203, 22);
-            this.mnuRemoveOutput.Text = "Remove task and output";
+            this.mnuRemoveOutput.Size = new System.Drawing.Size(208, 22);
+            this.mnuRemoveOutput.Text = "Remove Task and Output";
             // 
             // tasksTreeView1
             // 

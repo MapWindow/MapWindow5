@@ -38,7 +38,7 @@ namespace MW5.Projections.Forms
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this._projectionTreeView1 = new ProjectionTreeView();
+            this._projectionTreeView1 = new MW5.Projections.Controls.ProjectionTreeView();
             this.txtSearch = new MW5.UI.Controls.WatermarkTextbox();
             this.chkUpdate = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
@@ -118,6 +118,7 @@ namespace MW5.Projections.Forms
             this._projectionTreeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this._projectionTreeView1.ApplyStyle = true;
             this._projectionTreeView1.BackColor = System.Drawing.Color.White;
             this._projectionTreeView1.BeforeTouchSize = new System.Drawing.Size(450, 443);
             this._projectionTreeView1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -130,6 +131,7 @@ namespace MW5.Projections.Forms
             this._projectionTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
             this._projectionTreeView1.HelpTextControl.Name = "helpText";
             this._projectionTreeView1.HelpTextControl.TabIndex = 0;
+            this._projectionTreeView1.HideSelection = false;
             this._projectionTreeView1.Location = new System.Drawing.Point(12, 61);
             this._projectionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._projectionTreeView1.Name = "_projectionTreeView1";
@@ -164,6 +166,7 @@ namespace MW5.Projections.Forms
             this.txtSearch.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtSearch.MinimumSize = new System.Drawing.Size(24, 20);
             this.txtSearch.Name = "txtSearch";
+            this.txtSearch.ShowClearButton = true;
             this.txtSearch.Size = new System.Drawing.Size(290, 21);
             this.txtSearch.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Metro;
             this.txtSearch.TabIndex = 33;

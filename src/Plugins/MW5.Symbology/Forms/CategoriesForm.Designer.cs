@@ -265,41 +265,41 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripSeparator2,
             this.btnClear});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(158, 104);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 104);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // btnAddRange
             // 
             this.btnAddRange.Name = "btnAddRange";
-            this.btnAddRange.Size = new System.Drawing.Size(157, 22);
-            this.btnAddRange.Text = "Add range...";
+            this.btnAddRange.Size = new System.Drawing.Size(168, 22);
+            this.btnAddRange.Text = "Add Range...";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
             // 
             // btnSaveCategories
             // 
             this.btnSaveCategories.Name = "btnSaveCategories";
-            this.btnSaveCategories.Size = new System.Drawing.Size(157, 22);
-            this.btnSaveCategories.Text = "Save categories";
+            this.btnSaveCategories.Size = new System.Drawing.Size(168, 22);
+            this.btnSaveCategories.Text = "Save Categories...";
             // 
             // btnLoadCategories
             // 
             this.btnLoadCategories.Name = "btnLoadCategories";
-            this.btnLoadCategories.Size = new System.Drawing.Size(157, 22);
-            this.btnLoadCategories.Text = "Load categories";
+            this.btnLoadCategories.Size = new System.Drawing.Size(168, 22);
+            this.btnLoadCategories.Text = "Load Categories...";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(165, 6);
             // 
             // btnClear
             // 
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(157, 22);
+            this.btnClear.Size = new System.Drawing.Size(168, 22);
             this.btnClear.Text = "Clear";
             // 
             // toolStripEx1

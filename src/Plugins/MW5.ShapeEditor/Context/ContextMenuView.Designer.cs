@@ -105,7 +105,7 @@
             this.ctxUndoPoint.Name = "ctxUndoPoint";
             this.ctxUndoPoint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
             this.ctxUndoPoint.Size = new System.Drawing.Size(175, 22);
-            this.ctxUndoPoint.Text = "Undo point";
+            this.ctxUndoPoint.Text = "Undo Point";
             // 
             // toolStripSeparator2
             // 
@@ -116,19 +116,19 @@
             // 
             this.ctxSnapNone.Name = "ctxSnapNone";
             this.ctxSnapNone.Size = new System.Drawing.Size(175, 22);
-            this.ctxSnapNone.Text = "No snapping";
+            this.ctxSnapNone.Text = "No Snapping";
             // 
             // ctxSnapCurrent
             // 
             this.ctxSnapCurrent.Name = "ctxSnapCurrent";
             this.ctxSnapCurrent.Size = new System.Drawing.Size(175, 22);
-            this.ctxSnapCurrent.Text = "Current layer";
+            this.ctxSnapCurrent.Text = "Current Layer";
             // 
             // ctxSnapAll
             // 
             this.ctxSnapAll.Name = "ctxSnapAll";
             this.ctxSnapAll.Size = new System.Drawing.Size(175, 22);
-            this.ctxSnapAll.Text = "All layers";
+            this.ctxSnapAll.Text = "All Layers";
             // 
             // toolStripSeparator1
             // 
@@ -139,19 +139,19 @@
             // 
             this.ctxHighlightNone.Name = "ctxHighlightNone";
             this.ctxHighlightNone.Size = new System.Drawing.Size(175, 22);
-            this.ctxHighlightNone.Text = "No highlighting";
+            this.ctxHighlightNone.Text = "No Highlighting";
             // 
             // ctxHighlightCurrent
             // 
             this.ctxHighlightCurrent.Name = "ctxHighlightCurrent";
             this.ctxHighlightCurrent.Size = new System.Drawing.Size(175, 22);
-            this.ctxHighlightCurrent.Text = "Current layer";
+            this.ctxHighlightCurrent.Text = "Current Layer";
             // 
             // ctxHighlightAll
             // 
             this.ctxHighlightAll.Name = "ctxHighlightAll";
             this.ctxHighlightAll.Size = new System.Drawing.Size(175, 22);
-            this.ctxHighlightAll.Text = "All layers";
+            this.ctxHighlightAll.Text = "All Layers";
             // 
             // toolStripSeparator3
             // 
@@ -162,13 +162,13 @@
             // 
             this.ctxFinishShape.Name = "ctxFinishShape";
             this.ctxFinishShape.Size = new System.Drawing.Size(175, 22);
-            this.ctxFinishShape.Text = "Finish shape";
+            this.ctxFinishShape.Text = "Finish Shape";
             // 
             // ctxCancelShape
             // 
             this.ctxCancelShape.Name = "ctxCancelShape";
             this.ctxCancelShape.Size = new System.Drawing.Size(175, 22);
-            this.ctxCancelShape.Text = "Cancel shape";
+            this.ctxCancelShape.Text = "Cancel Shape";
             // 
             // contextSelection
             // 
@@ -188,91 +188,91 @@
             this.toolStripSeparator6,
             this.ctxRemoveShapes});
             this.contextSelection.Name = "contextMenuStrip1";
-            this.contextSelection.Size = new System.Drawing.Size(178, 282);
+            this.contextSelection.Size = new System.Drawing.Size(181, 282);
             // 
             // ctxSelectByRectangle
             // 
             this.ctxSelectByRectangle.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ctxSelectByRectangle.Name = "ctxSelectByRectangle";
-            this.ctxSelectByRectangle.Size = new System.Drawing.Size(177, 26);
-            this.ctxSelectByRectangle.Text = "Select by rectangle";
+            this.ctxSelectByRectangle.Size = new System.Drawing.Size(180, 26);
+            this.ctxSelectByRectangle.Text = "Select by Rectangle";
             // 
             // ctxClearSelection
             // 
             this.ctxClearSelection.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ctxClearSelection.Name = "ctxClearSelection";
-            this.ctxClearSelection.Size = new System.Drawing.Size(177, 26);
-            this.ctxClearSelection.Text = "Clear selection";
+            this.ctxClearSelection.Size = new System.Drawing.Size(180, 26);
+            this.ctxClearSelection.Text = "Clear Selection";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // ctxSplitShapes
             // 
             this.ctxSplitShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_split;
             this.ctxSplitShapes.Name = "ctxSplitShapes";
-            this.ctxSplitShapes.Size = new System.Drawing.Size(177, 26);
+            this.ctxSplitShapes.Size = new System.Drawing.Size(180, 26);
             this.ctxSplitShapes.Text = "Explode";
             // 
             // ctxMergeShapes
             // 
             this.ctxMergeShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_merge;
             this.ctxMergeShapes.Name = "ctxMergeShapes";
-            this.ctxMergeShapes.Size = new System.Drawing.Size(177, 26);
+            this.ctxMergeShapes.Size = new System.Drawing.Size(180, 26);
             this.ctxMergeShapes.Text = "Merge";
             // 
             // ctxRotateShapes
             // 
             this.ctxRotateShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_rotate;
             this.ctxRotateShapes.Name = "ctxRotateShapes";
-            this.ctxRotateShapes.Size = new System.Drawing.Size(177, 26);
+            this.ctxRotateShapes.Size = new System.Drawing.Size(180, 26);
             this.ctxRotateShapes.Text = "Rotate";
             // 
             // ctxMoveShapes
             // 
             this.ctxMoveShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_move;
             this.ctxMoveShapes.Name = "ctxMoveShapes";
-            this.ctxMoveShapes.Size = new System.Drawing.Size(177, 26);
+            this.ctxMoveShapes.Size = new System.Drawing.Size(180, 26);
             this.ctxMoveShapes.Text = "Move";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // ctxCopy
             // 
             this.ctxCopy.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_copy;
             this.ctxCopy.Name = "ctxCopy";
-            this.ctxCopy.Size = new System.Drawing.Size(177, 26);
+            this.ctxCopy.Size = new System.Drawing.Size(180, 26);
             this.ctxCopy.Text = "Copy";
             // 
             // ctxCut
             // 
             this.ctxCut.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_cut;
             this.ctxCut.Name = "ctxCut";
-            this.ctxCut.Size = new System.Drawing.Size(177, 26);
+            this.ctxCut.Size = new System.Drawing.Size(180, 26);
             this.ctxCut.Text = "Cut";
             // 
             // ctxPaste
             // 
             this.ctxPaste.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_paste;
             this.ctxPaste.Name = "ctxPaste";
-            this.ctxPaste.Size = new System.Drawing.Size(177, 26);
+            this.ctxPaste.Size = new System.Drawing.Size(180, 26);
             this.ctxPaste.Text = "Paste";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(174, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // ctxRemoveShapes
             // 
             this.ctxRemoveShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.img_delete_selected;
             this.ctxRemoveShapes.Name = "ctxRemoveShapes";
-            this.ctxRemoveShapes.Size = new System.Drawing.Size(177, 26);
+            this.ctxRemoveShapes.Size = new System.Drawing.Size(180, 26);
             this.ctxRemoveShapes.Text = "Delete";
             // 
             // contextVertex
@@ -293,54 +293,54 @@
             this.ctxSaveShape,
             this.ctxClearEditor});
             this.contextVertex.Name = "contextMenuStrip1";
-            this.contextVertex.Size = new System.Drawing.Size(185, 284);
+            this.contextVertex.Size = new System.Drawing.Size(202, 284);
             // 
             // ctxUndo
             // 
             this.ctxUndo.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_undo;
             this.ctxUndo.Name = "ctxUndo";
             this.ctxUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.ctxUndo.Size = new System.Drawing.Size(184, 26);
-            this.ctxUndo.Text = "Undo point";
+            this.ctxUndo.Size = new System.Drawing.Size(201, 26);
+            this.ctxUndo.Text = "Undo Point";
             // 
             // digitizerSeparator
             // 
             this.digitizerSeparator.Name = "digitizerSeparator";
-            this.digitizerSeparator.Size = new System.Drawing.Size(181, 6);
+            this.digitizerSeparator.Size = new System.Drawing.Size(198, 6);
             // 
             // ctxVertexEditor
             // 
             this.ctxVertexEditor.Name = "ctxVertexEditor";
-            this.ctxVertexEditor.Size = new System.Drawing.Size(184, 26);
-            this.ctxVertexEditor.Text = "Vertex editor";
+            this.ctxVertexEditor.Size = new System.Drawing.Size(201, 26);
+            this.ctxVertexEditor.Text = "Vertex Editor";
             // 
             // ctxPartEditor
             // 
             this.ctxPartEditor.Name = "ctxPartEditor";
-            this.ctxPartEditor.Size = new System.Drawing.Size(184, 26);
-            this.ctxPartEditor.Text = "Part editor";
+            this.ctxPartEditor.Size = new System.Drawing.Size(201, 26);
+            this.ctxPartEditor.Text = "Part Editor";
             // 
             // editorSeparator1
             // 
             this.editorSeparator1.Name = "editorSeparator1";
-            this.editorSeparator1.Size = new System.Drawing.Size(181, 6);
+            this.editorSeparator1.Size = new System.Drawing.Size(198, 6);
             // 
             // ctxAddPart
             // 
             this.ctxAddPart.Name = "ctxAddPart";
-            this.ctxAddPart.Size = new System.Drawing.Size(184, 26);
-            this.ctxAddPart.Text = "Add part";
+            this.ctxAddPart.Size = new System.Drawing.Size(201, 26);
+            this.ctxAddPart.Text = "Add Part";
             // 
             // ctxRemovePart
             // 
             this.ctxRemovePart.Name = "ctxRemovePart";
-            this.ctxRemovePart.Size = new System.Drawing.Size(184, 26);
-            this.ctxRemovePart.Text = "Remove by polygon";
+            this.ctxRemovePart.Size = new System.Drawing.Size(201, 26);
+            this.ctxRemovePart.Text = "Remove by Polygon";
             // 
             // editorSeparator2
             // 
             this.editorSeparator2.Name = "editorSeparator2";
-            this.editorSeparator2.Size = new System.Drawing.Size(181, 6);
+            this.editorSeparator2.Size = new System.Drawing.Size(198, 6);
             // 
             // ctxSnapping
             // 
@@ -349,26 +349,26 @@
             this.ctxSnappingCurrent,
             this.ctxSnappingAll});
             this.ctxSnapping.Name = "ctxSnapping";
-            this.ctxSnapping.Size = new System.Drawing.Size(184, 26);
+            this.ctxSnapping.Size = new System.Drawing.Size(201, 26);
             this.ctxSnapping.Text = "Snapping";
             // 
             // ctxSnappingNone
             // 
             this.ctxSnappingNone.Name = "ctxSnappingNone";
             this.ctxSnappingNone.Size = new System.Drawing.Size(152, 22);
-            this.ctxSnappingNone.Text = "No layers";
+            this.ctxSnappingNone.Text = "No Layers";
             // 
             // ctxSnappingCurrent
             // 
             this.ctxSnappingCurrent.Name = "ctxSnappingCurrent";
             this.ctxSnappingCurrent.Size = new System.Drawing.Size(152, 22);
-            this.ctxSnappingCurrent.Text = "Current layer";
+            this.ctxSnappingCurrent.Text = "Current Layer";
             // 
             // ctxSnappingAll
             // 
             this.ctxSnappingAll.Name = "ctxSnappingAll";
             this.ctxSnappingAll.Size = new System.Drawing.Size(152, 22);
-            this.ctxSnappingAll.Text = "All layers";
+            this.ctxSnappingAll.Text = "All Layers";
             // 
             // ctxHighlighting
             // 
@@ -377,43 +377,43 @@
             this.mnuHighlightCurrent,
             this.mnuHighlightAll});
             this.ctxHighlighting.Name = "ctxHighlighting";
-            this.ctxHighlighting.Size = new System.Drawing.Size(184, 26);
+            this.ctxHighlighting.Size = new System.Drawing.Size(201, 26);
             this.ctxHighlighting.Text = "Highlighting";
             // 
             // mnuHighlightNone
             // 
             this.mnuHighlightNone.Name = "mnuHighlightNone";
-            this.mnuHighlightNone.Size = new System.Drawing.Size(152, 22);
+            this.mnuHighlightNone.Size = new System.Drawing.Size(142, 22);
             this.mnuHighlightNone.Text = "No layers";
             // 
             // mnuHighlightCurrent
             // 
             this.mnuHighlightCurrent.Name = "mnuHighlightCurrent";
-            this.mnuHighlightCurrent.Size = new System.Drawing.Size(152, 22);
+            this.mnuHighlightCurrent.Size = new System.Drawing.Size(142, 22);
             this.mnuHighlightCurrent.Text = "Current layer";
             // 
             // mnuHighlightAll
             // 
             this.mnuHighlightAll.Name = "mnuHighlightAll";
-            this.mnuHighlightAll.Size = new System.Drawing.Size(152, 22);
+            this.mnuHighlightAll.Size = new System.Drawing.Size(142, 22);
             this.mnuHighlightAll.Text = "All layers";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(198, 6);
             // 
             // ctxSaveShape
             // 
             this.ctxSaveShape.Name = "ctxSaveShape";
-            this.ctxSaveShape.Size = new System.Drawing.Size(184, 26);
-            this.ctxSaveShape.Text = "Save changes";
+            this.ctxSaveShape.Size = new System.Drawing.Size(201, 26);
+            this.ctxSaveShape.Text = "Save Shape Changes";
             // 
             // ctxClearEditor
             // 
             this.ctxClearEditor.Name = "ctxClearEditor";
-            this.ctxClearEditor.Size = new System.Drawing.Size(184, 26);
-            this.ctxClearEditor.Text = "Discard changes";
+            this.ctxClearEditor.Size = new System.Drawing.Size(201, 26);
+            this.ctxClearEditor.Text = "Discard Shape Changes";
             // 
             // ContextMenuView
             // 

@@ -112,6 +112,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolRemoveStyle = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
@@ -965,7 +966,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
             this.toolStripEx1.TabIndex = 39;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
@@ -975,6 +976,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolLoadStyle,
             this.toolSaveStyle,
+            this.toolStripSeparator2,
             this.toolRemoveStyle,
             this.toolStripSeparator1,
             this.toolOpenFolder});
@@ -989,34 +991,39 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.toolLoadStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_folder_open;
             this.toolLoadStyle.Name = "toolLoadStyle";
-            this.toolLoadStyle.Size = new System.Drawing.Size(144, 22);
-            this.toolLoadStyle.Text = "Load style";
+            this.toolLoadStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolLoadStyle.Text = "Load Style...";
             // 
             // toolSaveStyle
             // 
             this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
             this.toolSaveStyle.Name = "toolSaveStyle";
-            this.toolSaveStyle.Size = new System.Drawing.Size(144, 22);
-            this.toolSaveStyle.Text = "Save style";
+            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolSaveStyle.Text = "Save Style...";
             // 
             // toolRemoveStyle
             // 
             this.toolRemoveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_remove16;
             this.toolRemoveStyle.Name = "toolRemoveStyle";
-            this.toolRemoveStyle.Size = new System.Drawing.Size(144, 22);
-            this.toolRemoveStyle.Text = "Remove style";
+            this.toolRemoveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolRemoveStyle.Text = "Remove Style";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // toolOpenFolder
             // 
             this.toolOpenFolder.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_hard_disk;
             this.toolOpenFolder.Name = "toolOpenFolder";
-            this.toolOpenFolder.Size = new System.Drawing.Size(144, 22);
-            this.toolOpenFolder.Text = "Open  folder";
+            this.toolOpenFolder.Size = new System.Drawing.Size(152, 22);
+            this.toolOpenFolder.Text = "Open  Folder";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // RasterStyleView
             // 
@@ -1154,5 +1161,6 @@ namespace MW5.Plugins.Symbology.Views
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem toolOpenFolder;
         private ToolStripMenuItem toolRemoveStyle;
+        private ToolStripSeparator toolStripSeparator2;
     }
 }

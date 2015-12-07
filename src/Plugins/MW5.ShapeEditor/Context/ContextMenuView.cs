@@ -101,18 +101,18 @@ namespace MW5.Plugins.ShapeEditor.Context
             digitizerSeparator.Visible = !editing;
             ctxUndo.Visible = !editing;
 
-            ctxSaveShape.Text = editing ? "Save changes" : "Finish operation";
+            ctxSaveShape.Text = editing ? "Save Shape Changes" : "Finish Operation";
 
             bool hasChanges = editor.HasChanges;
             if (hasChanges)
             {
                 ctxSaveShape.Enabled = true;
-                ctxClearEditor.Text = editing ? "Discard changes" : "Cancel";
+                ctxClearEditor.Text = editing ? "Discard Shape Changes" : "Cancel";
             }
             else
             {
                 ctxSaveShape.Enabled = false;
-                ctxClearEditor.Text = "Stop editing";
+                ctxClearEditor.Text = "Stop Editing";
             }
         }
 

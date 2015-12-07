@@ -31,6 +31,7 @@ namespace MW5.Controls
         /// </summary>
         private void InitializeComponent()
         {
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this.mapControl1 = new MW5.Api.Map.MapControl();
             this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
@@ -50,11 +51,13 @@ namespace MW5.Controls
             this.mapControl1.BackColor = System.Drawing.Color.White;
             this.mapControl1.BackgroundColor = System.Drawing.Color.White;
             this.mapControl1.ContextMenuStrip = this.contextMenuStripEx1;
-            this.mapControl1.CurrentScale = 66.427059950630564D;
+            this.mapControl1.CurrentScale = 69.82776267847855D;
             this.mapControl1.CurrentZoom = -1;
             this.mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl1.ExtentHistory = 20;
             this.mapControl1.ExtentPad = 0.02D;
+            envelope1.Tag = "";
+            this.mapControl1.Extents = envelope1;
             this.mapControl1.GrabProjectionFromData = true;
             this.mapControl1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this.mapControl1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -99,41 +102,41 @@ namespace MW5.Controls
             this.btnClear});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(213, 104);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(217, 126);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
             // btnDisplayBackground
             // 
             this.btnDisplayBackground.Name = "btnDisplayBackground";
-            this.btnDisplayBackground.Size = new System.Drawing.Size(212, 22);
-            this.btnDisplayBackground.Text = "Background visible";
+            this.btnDisplayBackground.Size = new System.Drawing.Size(216, 22);
+            this.btnDisplayBackground.Text = "Background Visible";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(213, 6);
             // 
             // btnUpdateFull
             // 
             this.btnUpdateFull.Name = "btnUpdateFull";
-            this.btnUpdateFull.Size = new System.Drawing.Size(212, 22);
-            this.btnUpdateFull.Text = "Update using full extents";
+            this.btnUpdateFull.Size = new System.Drawing.Size(216, 22);
+            this.btnUpdateFull.Text = "Update Using Full Extents";
             // 
             // btnUpdateCurrent
             // 
             this.btnUpdateCurrent.Name = "btnUpdateCurrent";
-            this.btnUpdateCurrent.Size = new System.Drawing.Size(212, 22);
-            this.btnUpdateCurrent.Text = "Update using current view";
+            this.btnUpdateCurrent.Size = new System.Drawing.Size(216, 22);
+            this.btnUpdateCurrent.Text = "Update Using Current View";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
             // 
             // btnClear
             // 
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(212, 22);
+            this.btnClear.Size = new System.Drawing.Size(216, 22);
             this.btnClear.Text = "Clear";
             // 
             // LocatorDockPanel

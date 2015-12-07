@@ -119,7 +119,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void SetDatabaseLayerContextMenu(IDatabaseLayerItem layer)
         {
-            mnuAddToMap.Text = layer.AddedToMap ? "Remove from the map" : "Add to the map";
+            mnuAddToMap.Text = layer.AddedToMap ? "Remove from the Map" : "Add to the Map";
 
             contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
                                                    { mnuAddToMap, new ToolStripSeparator(), mnuRemoveLayer });
@@ -132,7 +132,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void SetFileContextMenu(IFileItem file)
         {
-            mnuAddToMap.Text = file.AddedToMap ? "Remove from the map" : "Add to the map";
+            mnuAddToMap.Text = file.AddedToMap ? "Remove From the Map" : "Add to the Map";
 
             contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
                                                    {

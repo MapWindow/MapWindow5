@@ -36,7 +36,8 @@ namespace MW5.Plugins.Symbology.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleView));
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -125,6 +126,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -369,11 +371,13 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 134107785.3835928D;
+            this.axMap1.CurrentScale = 178039646.11270085D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
             this.axMap1.ExtentPad = 0.02D;
+            envelope2.Tag = "";
+            this.axMap1.Extents = envelope2;
             this.axMap1.GrabProjectionFromData = true;
             this.axMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -385,8 +389,8 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
-            spatialReference1.Tag = "";
-            this.axMap1.Projection = spatialReference1;
+            spatialReference2.Tag = "";
+            this.axMap1.Projection = spatialReference2;
             this.axMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.axMap1.ReuseTileBuffer = true;
             this.axMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
@@ -1173,6 +1177,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolSaveStyle,
+            this.toolStripSeparator2,
             this.toolRemoveStyle,
             this.toolStripSeparator1,
             this.toolOpenLocation});
@@ -1187,27 +1192,27 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
             this.toolSaveStyle.Name = "toolSaveStyle";
-            this.toolSaveStyle.Size = new System.Drawing.Size(144, 22);
-            this.toolSaveStyle.Text = "Save style";
+            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolSaveStyle.Text = "Save Style...";
             // 
             // toolRemoveStyle
             // 
             this.toolRemoveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_remove16;
             this.toolRemoveStyle.Name = "toolRemoveStyle";
-            this.toolRemoveStyle.Size = new System.Drawing.Size(144, 22);
-            this.toolRemoveStyle.Text = "Remove style";
+            this.toolRemoveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolRemoveStyle.Text = "Remove Style";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // toolOpenLocation
             // 
             this.toolOpenLocation.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_hard_disk;
             this.toolOpenLocation.Name = "toolOpenLocation";
-            this.toolOpenLocation.Size = new System.Drawing.Size(144, 22);
-            this.toolOpenLocation.Text = "Open folder";
+            this.toolOpenLocation.Size = new System.Drawing.Size(152, 22);
+            this.toolOpenLocation.Text = "Open Folder";
             // 
             // scaleControl2
             // 
@@ -1244,6 +1249,11 @@ namespace MW5.Plugins.Symbology.Views
             this.scaleControl1.Size = new System.Drawing.Size(110, 273);
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // VectorStyleView
             // 
@@ -1403,5 +1413,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.Label label9;
         private InfoGrid infoGrid1;
         private ButtonAdv btnCopyInfo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
