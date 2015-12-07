@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.ShapeEditor.Controls;
 using MW5.Plugins.ShapeEditor.Helpers;
 using MW5.Plugins.ShapeEditor.Menu;
 
@@ -37,6 +39,11 @@ namespace MW5.Plugins.ShapeEditor
             _menuListener = container.GetInstance<MenuListener>();
             _projectListener = container.GetInstance<ProjectListener>();
             _menuUpdater = container.GetInstance<MenuUpdater>();
+        }
+
+        public override IEnumerable<IConfigPage> ConfigPages
+        {
+            get { yield return _context.Container.GetInstance<ShapeEditorConfigPage>(); }
         }
     }
 }

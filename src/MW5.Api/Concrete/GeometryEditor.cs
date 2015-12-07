@@ -168,6 +168,12 @@ namespace MW5.Api.Concrete
             return _editor.SaveChanges();
         }
 
+        public bool ShowArea
+        {
+            get { return _editor.ShowArea; }
+            set { _editor.ShowArea = value;  }
+        }
+
         public bool StartEdit(int layerHandle, int shapeIndex)
         {
             return _editor.StartEdit(layerHandle, shapeIndex);

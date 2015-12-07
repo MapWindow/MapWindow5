@@ -37,5 +37,6 @@ namespace MW5.Api.Interfaces
         bool StartUnboundShape(GeometryType geomType);
         bool UndoPoint();
         IMeasuringSettings Settings { get; }
+        bool ShowArea { get; set; }
     }
 }

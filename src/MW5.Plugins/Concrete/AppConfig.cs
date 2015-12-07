@@ -300,6 +300,36 @@ namespace MW5.Plugins.Concrete
         public ScalebarUnits ScalebarUnits { get; set; }
 
         [DataMember]
+        public bool ShapeEditorShowLabels { get; set; }
+
+        [DataMember]
+        public bool ShapeEditorShowAttributeDialog { get; set; }
+
+        [DataMember]
+        public bool ShapeEditorShowBearing { get; set; }
+        
+        [DataMember]
+        public BearingType ShapeEditorBearingType { get; set; }
+
+        [DataMember]
+        public int ShapeEditorBearingPrecision {get; set; }
+
+        [DataMember]
+        public AngleFormat ShapeEditorAngleFormat { get; set; }
+
+        [DataMember]
+        public bool ShapeEditorShowLength { get; set; }
+
+        [DataMember]
+        public bool ShapeEditorShowArea { get; set; }
+
+        [DataMember]
+        public LengthDisplay ShapeEditorUnits { get; set; }
+
+        [DataMember]
+        public int ShapeEditorUnitPrecision { get; set; }
+
+        [DataMember]
         public bool ShowCoordinates { get; set; }
 
         [DataMember]
@@ -516,6 +546,16 @@ namespace MW5.Plugins.Concrete
             ResizeBehavior = ResizeBehavior.KeepScale;
             ReuseTileBuffer = true;
             ScalebarUnits = ScalebarUnits.GoogleStyle;
+            ShapeEditorShowLabels = true;
+            ShapeEditorShowAttributeDialog = true;
+            ShapeEditorShowBearing = false;
+            ShapeEditorBearingType = BearingType.Absolute;
+            ShapeEditorBearingPrecision = 1;
+            ShapeEditorAngleFormat = AngleFormat.Degrees;
+            ShapeEditorShowLength = true;
+            ShapeEditorShowArea = true;
+            ShapeEditorUnits = LengthDisplay.Metric;
+            ShapeEditorUnitPrecision = 1;
             ShowCoordinates = true;
             ShowMenuToolTips = false;
             ShowPluginInToolTip = false; // perhaps some kind of debug mode will be enough

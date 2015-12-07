@@ -95,6 +95,8 @@ namespace MW5.Helpers
 
             UpdateMeasuringSettings(map.Measuring.Options, config);
 
+            UpdateShapeEditorSettings(map.GeometryEditor, config);
+
             ApplyMouseWheelDirection(map, config.MouseWheelDirection);
 
             var tiles = map.Tiles;
@@ -104,6 +106,24 @@ namespace MW5.Helpers
             ApplyTilesSettings(tiles, config);
 
             ApplyTilesProxy(tiles, config);
+        }
+
+        private static void UpdateShapeEditorSettings(IGeometryEditor editor, AppConfig config)
+        {
+            var settings = editor.Settings;
+
+            editor.ShowArea = config.ShapeEditorShowArea;
+
+            settings.PointLabelsVisible = config.ShapeEditorShowLabels;
+            settings.ShowBearing = config.ShapeEditorShowBearing;
+            settings.BearingType = config.ShapeEditorBearingType;
+            settings.AnglePrecision = config.ShapeEditorBearingPrecision;
+            settings.AngleFormat = config.ShapeEditorAngleFormat;
+            settings.ShowLength = config.ShapeEditorShowLength;
+            settings.AreaUnits = config.ShapeEditorUnits == LengthDisplay.Metric ? AreaDisplay.Metric : AreaDisplay.American;
+            settings.LengthUnits = config.ShapeEditorUnits == LengthDisplay.Metric ? LengthDisplay.Metric : LengthDisplay.American;
+            settings.LengthPrecision = config.ShapeEditorUnitPrecision;
+            settings.AreaPrecision = config.ShapeEditorUnitPrecision;
         }
 
         private static void UpdateMeasuringSettings(IMeasuringSettings measuring, AppConfig config)

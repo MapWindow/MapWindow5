@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Context;
@@ -103,7 +104,7 @@ namespace MW5.Plugins.ShapeEditor
 
         private void OnAfterShapeEdit(IMuteMap map, AfterShapeEditEventArgs e)
         {
-            if (e.Operation == UndoOperation.AddShape)
+            if (e.Operation == UndoOperation.AddShape && AppConfig.Instance.ShapeEditorShowAttributeDialog)
             {
                 var fs = _context.Map.GetFeatureSet(e.LayerHandle);
                 if (fs != null)

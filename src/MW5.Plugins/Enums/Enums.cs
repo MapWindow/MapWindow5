@@ -167,6 +167,7 @@
         DataFormats = 11,
         Tools = 12,
         Identifier = 13,
+        ShapeEditor = 14,
     }
 
     public enum SymbologyStorage
