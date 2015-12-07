@@ -43,6 +43,8 @@ namespace MW5.Configuration
             this.chkNewVersion = new System.Windows.Forms.CheckBox();
             this.chkShowWelcomeDialog = new System.Windows.Forms.CheckBox();
             this.chkLoadLastProject = new System.Windows.Forms.CheckBox();
+            this.configPanelControl4 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkLegendExpanded = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
             this.configPanelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
@@ -50,25 +52,26 @@ namespace MW5.Configuration
             ((System.ComponentModel.ISupportInitialize)(this.cboSymbologyStorage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl4)).BeginInit();
+            this.configPanelControl4.SuspendLayout();
             this.SuspendLayout();
             // 
             // configPanelControl3
             // 
             this.configPanelControl3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.configPanelControl3.Controls.Add(this.chkLocalDocumentation);
-            this.configPanelControl3.Controls.Add(this.chkDynamicVisibilityWarnings);
             this.configPanelControl3.Controls.Add(this.chkShowMenuToolTips);
             this.configPanelControl3.Controls.Add(this.chkShowPluginInToolTip);
             this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl3.HeaderText = "Various";
             this.configPanelControl3.Location = new System.Drawing.Point(0, 246);
             this.configPanelControl3.Name = "configPanelControl3";
-            this.configPanelControl3.Size = new System.Drawing.Size(380, 176);
+            this.configPanelControl3.Size = new System.Drawing.Size(380, 149);
             this.configPanelControl3.TabIndex = 10;
             // 
             // chkLocalDocumentation
             // 
-            this.chkLocalDocumentation.Location = new System.Drawing.Point(15, 139);
+            this.chkLocalDocumentation.Location = new System.Drawing.Point(15, 108);
             this.chkLocalDocumentation.Name = "chkLocalDocumentation";
             this.chkLocalDocumentation.Size = new System.Drawing.Size(283, 21);
             this.chkLocalDocumentation.TabIndex = 11;
@@ -76,7 +79,7 @@ namespace MW5.Configuration
             // 
             // chkDynamicVisibilityWarnings
             // 
-            this.chkDynamicVisibilityWarnings.Location = new System.Drawing.Point(15, 105);
+            this.chkDynamicVisibilityWarnings.Location = new System.Drawing.Point(15, 44);
             this.chkDynamicVisibilityWarnings.Name = "chkDynamicVisibilityWarnings";
             this.chkDynamicVisibilityWarnings.Size = new System.Drawing.Size(283, 21);
             this.chkDynamicVisibilityWarnings.TabIndex = 6;
@@ -175,17 +178,38 @@ namespace MW5.Configuration
             this.chkLoadLastProject.TabIndex = 3;
             this.chkLoadLastProject.Text = "Load last project on startup";
             // 
+            // configPanelControl4
+            // 
+            this.configPanelControl4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl4.Controls.Add(this.chkLegendExpanded);
+            this.configPanelControl4.Controls.Add(this.chkDynamicVisibilityWarnings);
+            this.configPanelControl4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.configPanelControl4.HeaderText = "Legend";
+            this.configPanelControl4.Location = new System.Drawing.Point(0, 395);
+            this.configPanelControl4.Name = "configPanelControl4";
+            this.configPanelControl4.Size = new System.Drawing.Size(380, 115);
+            this.configPanelControl4.TabIndex = 11;
+            // 
+            // chkLegendExpanded
+            // 
+            this.chkLegendExpanded.Location = new System.Drawing.Point(15, 76);
+            this.chkLegendExpanded.Name = "chkLegendExpanded";
+            this.chkLegendExpanded.Size = new System.Drawing.Size(283, 21);
+            this.chkLegendExpanded.TabIndex = 8;
+            this.chkLegendExpanded.Text = "Add new layers in expanded state";
+            // 
             // GeneralConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.configPanelControl3);
+            this.Controls.Add(this.configPanelControl4);
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "GeneralConfigPage";
             this.Padding = new System.Windows.Forms.Padding(0, 0, 10, 10);
-            this.Size = new System.Drawing.Size(390, 431);
+            this.Size = new System.Drawing.Size(390, 520);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
@@ -194,6 +218,8 @@ namespace MW5.Configuration
             ((System.ComponentModel.ISupportInitialize)(this.cboSymbologyStorage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl4)).EndInit();
+            this.configPanelControl4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -213,6 +239,8 @@ namespace MW5.Configuration
         private CheckBox chkDynamicVisibilityWarnings;
         private CheckBox chkLocalDocumentation;
         private CheckBox chkNewVersion;
+        private UI.Controls.ConfigPanelControl configPanelControl4;
+        private CheckBox chkLegendExpanded;
 
     }
 }

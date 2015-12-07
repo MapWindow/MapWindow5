@@ -35,6 +35,7 @@ namespace MW5.Api.Map
             _map.PreviewKeyDown += OnMapPreviewKeyDown;
 
             AllowDrop = true;
+            ExpandLayersOnAdding = true;
 
             DragEnter += MapControl_DragEnter;
             DragDrop += MapControl_DragDrop;
@@ -776,6 +777,11 @@ namespace MW5.Api.Map
         {
             get { return _map.NumLayers == 0 && (Projection.IsEmpty || Tiles.Visible == false); }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a layer should be expanded on adding to the legend.
+        /// </summary>
+        public bool ExpandLayersOnAdding { get; set; }
     }
 }
 

@@ -140,6 +140,9 @@ namespace MW5.Plugins.Concrete
         public string LastProjectPath { get; set; }
 
         [DataMember]
+        public bool LegendExpandLayersOnAdding { get; set; }
+
+        [DataMember]
         public bool LoadLastProject { get; set; }
 
         [DataMember]
@@ -495,6 +498,7 @@ namespace MW5.Plugins.Concrete
             IdentifierMode = IdentifierMode.AllLayersStopOnFirst;
             InnertiaOnPanning = AutoToggle.Auto;
             LastProjectPath = "";
+            LegendExpandLayersOnAdding = true;
             LoadLastProject = true;
             LoadSymbology = true;
             LocalDocumentation = false;

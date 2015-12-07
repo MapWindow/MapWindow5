@@ -46,6 +46,7 @@ namespace MW5.Configuration
             chkDynamicVisibilityWarnings.Checked = config.DisplayDynamicVisibilityWarnings;
             chkLocalDocumentation.Checked = config.LocalDocumentation;
             chkNewVersion.Checked = config.UpdaterCheckNewVersion;
+            chkLegendExpanded.Checked = config.LegendExpandLayersOnAdding;
         }
 
         public string PageName
@@ -65,6 +66,7 @@ namespace MW5.Configuration
             config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
             config.LocalDocumentation = chkLocalDocumentation.Checked;
             config.UpdaterCheckNewVersion = chkNewVersion.Checked;
+            config.LegendExpandLayersOnAdding = chkLegendExpanded.Checked;
         }
 
         public Bitmap Icon

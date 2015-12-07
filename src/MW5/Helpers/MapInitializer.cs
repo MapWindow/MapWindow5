@@ -7,6 +7,8 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
+using MW5.Api.Map;
 using MW5.Api.Static;
 using MW5.Data.Helpers;
 using MW5.Plugins.Concrete;
@@ -60,6 +62,12 @@ namespace MW5.Helpers
 
         public static void ApplyConfig(this IMuteMap map, AppConfig config)
         {
+            var mapControl = map as MapControl;
+            if (mapControl != null)
+            {
+                mapControl.ExpandLayersOnAdding = config.LegendExpandLayersOnAdding;
+            }
+
             MapConfig.LoadSymbologyOnAddLayer = config.LoadSymbology;
             MapConfig.ImageDownsamplingMode = config.RasterDownsamplingMode;
             MapConfig.ImageUpsamplingMode = config.RasterUpsamplingMode;

@@ -129,6 +129,7 @@ namespace MW5.Api.Legend
                 {
                     var lyr = _legend.CreateLayer(mapLayerHandle, newLayer);
                     lyr.HideFromLegend = !legendVisible;
+                    lyr.Expanded = _mapControl.ExpandLayersOnAdding;
 
                     if (positionInGroup == -1)
                     {
