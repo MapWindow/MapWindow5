@@ -353,6 +353,9 @@ namespace MW5.Plugins.TableEditor.Views
 
             toolStripEx1.Enabled = hasPanels;
 
+            var fs = ActiveFeatureSet;
+            toolRemoveSelected.Enabled = fs != null && fs.InteractiveEditing;
+
             UpdateMenus();
 
             UpdateEditingIcon();

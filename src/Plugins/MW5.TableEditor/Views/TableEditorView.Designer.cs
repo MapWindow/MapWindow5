@@ -57,6 +57,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuInvertSelection = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuExportSelected = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRemoveSelected = new System.Windows.Forms.ToolStripMenuItem();
             this.toolFields = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuAddField = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -100,6 +101,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldStats = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFieldProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
@@ -223,7 +225,9 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuClearSelection,
             this.mnuInvertSelection,
             this.toolStripMenuItem3,
-            this.mnuExportSelected});
+            this.mnuExportSelected,
+            this.toolStripSeparator19,
+            this.toolRemoveSelected});
             this.toolSelection.ForeColor = System.Drawing.Color.Black;
             this.toolSelection.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSelection.Name = "toolSelection";
@@ -301,6 +305,13 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuExportSelected.Name = "mnuExportSelected";
             this.mnuExportSelected.Size = new System.Drawing.Size(224, 22);
             this.mnuExportSelected.Text = "Export Selection...";
+            // 
+            // toolRemoveSelected
+            // 
+            this.toolRemoveSelected.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_remove16;
+            this.toolRemoveSelected.Name = "toolRemoveSelected";
+            this.toolRemoveSelected.Size = new System.Drawing.Size(224, 22);
+            this.toolRemoveSelected.Text = "Remove Selected";
             // 
             // toolFields
             // 
@@ -543,7 +554,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldProperties});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(161, 204);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(161, 182);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             this.contextMenuStripEx1.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnContextMenuClosed);
             this.contextMenuStripEx1.Opening += new System.ComponentModel.CancelEventHandler(this.OnContextOpening);
@@ -613,6 +624,11 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldProperties.Name = "mnuFieldProperties";
             this.mnuFieldProperties.Size = new System.Drawing.Size(160, 22);
             this.mnuFieldProperties.Text = "Properties";
+            // 
+            // toolStripSeparator19
+            // 
+            this.toolStripSeparator19.Name = "toolStripSeparator19";
+            this.toolStripSeparator19.Size = new System.Drawing.Size(221, 6);
             // 
             // TableEditorView
             // 
@@ -699,6 +715,8 @@ namespace MW5.Plugins.TableEditor.Views
         private ToolTip toolTip1;
         private ToolStripMenuItem mnuFormatValues;
         private ToolStripSeparator toolStripSeparator18;
+        private ToolStripMenuItem toolRemoveSelected;
+        private ToolStripSeparator toolStripSeparator19;
 
     }
 }

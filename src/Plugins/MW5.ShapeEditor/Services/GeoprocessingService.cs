@@ -1,6 +1,7 @@
 ﻿using System;
 using MW5.Api;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Operations;
@@ -76,15 +77,30 @@ namespace MW5.Plugins.ShapeEditor.Services
         public void RemoveShapes()
         {
             var layer = _context.Layers.Current;
-            if (layer == null)
-            {
-                return;
-            }
+            RemoveSelectedShapesCore(layer);
+        }
+
+        public void RemoveSelectedShapes(int layerHandle)
+        {
+            var layer = _context.Layers.ItemByHandle(layerHandle);
+            RemoveSelectedShapesCore(layer);
+        }
+
+        private void RemoveSelectedShapesCore(ILayer layer)
+        {
+            if (layer == null || layer.FeatureSet == null) return;
 
             var fs = layer.FeatureSet;
 
-            if (fs == null || fs.NumSelected <= 1 || !fs.InteractiveEditing)
+            if (!fs.InteractiveEditing)
             {
+                MessageService.Current.Info("Please start edit mode for the layer (Shape Editor plug-in's toolbar).");
+                return;
+            }
+
+            if (fs.NumSelected == 0)
+            {
+                MessageService.Current.Info("No selected shapes on the layer.");
                 return;
             }
 

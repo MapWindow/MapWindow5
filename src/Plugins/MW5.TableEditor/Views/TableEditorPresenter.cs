@@ -253,6 +253,23 @@ namespace MW5.Plugins.TableEditor.Views
             _context.View.Update();
         }
 
+        private IGeoprocessingService GeoProcessingService
+        {
+            get
+            {
+                try
+                {
+                    return _context.Container.Resolve<IGeoprocessingService>();
+                }
+                catch (Exception ex)
+                {
+                    MessageService.Current.Info("Shape Editor plug-in is not loaded.");
+                }
+
+                return null;
+            }
+        }
+
         public override void RunCommand(TableEditorCommand command)
         {
             if (HandleLayout(command))
@@ -283,6 +300,13 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.RemoveSelected:
+                    var gp = GeoProcessingService;
+                    if (gp != null)
+                    {
+                        gp.RemoveSelectedShapes(View.ActiveLayerHandle);
+                    }
+                    break;
                 case TableEditorCommand.FormatValues:
                     AppConfig.Instance.TableEditorFormatValues = !AppConfig.Instance.TableEditorFormatValues;
                     UpdataDatasourceAndUI();
@@ -626,7 +650,18 @@ namespace MW5.Plugins.TableEditor.Views
             info.Grid.CellValueEdited += GridCellValueEdited;
 
             _tables.Add(layer.Handle, info);
+
+            // TODO: shouldn't we remove these handlers on closing the layer
             info.Grid.SelectionChanged += (s, e) => OnViewSelectionChanged(layer.Handle);
+            info.Grid.KeyDown += OnGridKeyDown;
+        }
+
+        private void OnGridKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                RunCommand(TableEditorCommand.RemoveSelected);
+            }
         }
 
         private void GridCellValueEdited(object sender, EventArgs e)

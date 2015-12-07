@@ -198,6 +198,8 @@
     <Compile Include="Services\IFileDialogService.cs" />
     <Compile Include="Services\IGeoDatabaseService.cs" />
     <Compile Include="Services\IGeoLocationService.cs" />
+    <Compile Include="Services\IGeoprocessingService.cs" />
+    <Compile Include="Services\ILayerEditingService.cs" />
     <Compile Include="Services\ILayerService.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IPluginManager.cs" />

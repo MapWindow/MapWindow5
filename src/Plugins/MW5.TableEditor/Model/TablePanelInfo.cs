@@ -28,8 +28,6 @@ namespace MW5.Plugins.TableEditor.Model
 
         public ITablePanel Panel { get; private set; }
 
-        //public SearchInfo SearchInfo { get; private set; }
-
         public FindReplacePresenter FindReplace { get; set;}
     }
 }

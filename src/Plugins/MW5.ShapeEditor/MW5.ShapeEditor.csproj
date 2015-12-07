@@ -100,8 +100,6 @@
     <Compile Include="Controls\ShapeEditorConfigPage.Designer.cs">
       <DependentUpon>ShapeEditorConfigPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\IGeoprocessingService.cs" />
-    <Compile Include="Services\ILayerEditingService.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\FeatureSetHelper.cs" />

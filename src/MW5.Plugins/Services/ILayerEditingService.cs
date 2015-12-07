@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.ShapeEditor.Services
+﻿namespace MW5.Plugins.Services
 {
     public interface ILayerEditingService
     {

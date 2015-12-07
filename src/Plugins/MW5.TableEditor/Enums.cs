@@ -40,6 +40,7 @@
         RecalculateFields = 36,
         DiscardChanges = 37,
         FormatValues = 38,
+        RemoveSelected = 39,
     }
 
     /// <summary>

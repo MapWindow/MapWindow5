@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Context;
 using MW5.Plugins.ShapeEditor.Helpers;
 using MW5.Plugins.ShapeEditor.Menu;

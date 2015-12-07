@@ -9,6 +9,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Properties;
 using MW5.Plugins.ShapeEditor.Services;
 using MW5.UI.Menu;
