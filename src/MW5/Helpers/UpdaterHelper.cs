@@ -82,7 +82,7 @@ namespace MW5.Helpers
 
             Logger.Current.Debug("Latest {0} version: {1}", type, latestVersion);
             if (latestVersion.Major >= fileVersionInfo.ProductMajorPart && latestVersion.Minor >= fileVersionInfo.ProductMinorPart
-                && latestVersion.Build >= fileVersionInfo.ProductBuildPart && latestVersion.Revision >= fileVersionInfo.ProductPrivatePart)
+                && latestVersion.Build >= fileVersionInfo.ProductBuildPart && latestVersion.Revision > fileVersionInfo.ProductPrivatePart)
             {
                 Logger.Current.Debug("New {0} version [{1}] available at {2}", type, latestVersion, downloadUrl);
                 return true;

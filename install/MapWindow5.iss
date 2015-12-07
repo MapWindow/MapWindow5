@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define ExeBinPath "..\bin\x86\Release"
-#define SamplePath "D:\dev\GIS-Data\"
+#define SamplePath "D:\dev\MapWindow-v5\GIT\install\testdata"
 #define CPU "Win32"
 #define vcredist "vcredist_x86-2013.exe"
 #define SystemFlag "32bit"
@@ -55,7 +55,7 @@ ChangesEnvironment=no
 AlwaysShowDirOnReadyPage=True
 AlwaysShowGroupOnReadyPage=true
 EnableDirDoesntExistWarning=True
-UninstallDisplayName=MapWindow5 GIS uninstall
+;; UninstallDisplayName=MapWindow5 GIS uninstall
 CompressionThreads=2
 LZMANumBlockThreads=2
 AppComments=This package will install {#MyAppName} {#MyAppVersion}
@@ -104,7 +104,7 @@ Source: "D:\dev\MapwinGIS\GIT\support\GDAL_SDK\licenses\*.rtf"; DestDir: "{app}\
 Source: "{#ExeBinPath}\..\..\..\licenses\*"; DestDir: "{app}\Licenses"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 
 ;; Sample data
-Source: "{#SamplePath}\MapWindow-Projects\UnitedStates\Shapefiles\*"; DestDir: "{code:GetDataDir}\USA"; Flags: recursesubdirs uninsneveruninstall; Components: USASampleData
+Source: "{#SamplePath}\USA\*"; DestDir: "{code:GetDataDir}\USA"; Flags: recursesubdirs uninsneveruninstall; Components: USASampleData
 
 ;; VC++ files
 Source: "{#vcredist}"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion {#SystemFlag}

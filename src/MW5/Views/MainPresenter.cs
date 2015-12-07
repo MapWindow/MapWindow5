@@ -176,11 +176,16 @@ namespace MW5.Views
             // Check if a new installer is downloaded and can be installed:
             if (AppConfig.Instance.UpdaterHasNewInstaller)
             {
-                if (MessageService.Current.Ask("A new installer is downloaded do you want to install it now?"))
+                var filename = AppConfig.Instance.UpdaterInstallername;
+                if (File.Exists(filename))
                 {
-                    AppConfig.Instance.UpdaterHasNewInstaller = false;
-                    var myProcess = new Process { StartInfo = { UseShellExecute = false, FileName = AppConfig.Instance.UpdaterInstallername, CreateNoWindow = true } };
-                    myProcess.Start();
+                    if (MessageService.Current.Ask("A new installer is downloaded do you want to install it now?"))
+                    {
+                        AppConfig.Instance.UpdaterHasNewInstaller = false;
+                        _configService.SaveAll();
+                        var myProcess = new Process { StartInfo = { UseShellExecute = false, FileName = filename, CreateNoWindow = true } };
+                        myProcess.Start();
+                    }
                 }
             }
 
