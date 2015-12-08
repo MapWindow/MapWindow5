@@ -37,7 +37,7 @@
             this.cboField = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label3 = new System.Windows.Forms.Label();
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkZoomTo = new System.Windows.Forms.CheckBox();
             this.txtSearch = new MW5.UI.Controls.WatermarkTextbox();
             this.recordNavigationBar1 = new Syncfusion.Windows.Forms.RecordNavigationBar();
             ((System.ComponentModel.ISupportInitialize)(this.valueCountGrid1)).BeginInit();
@@ -68,7 +68,7 @@
             this.valueCountGrid1.FreezeCaption = false;
             this.valueCountGrid1.Location = new System.Drawing.Point(11, 128);
             this.valueCountGrid1.Name = "valueCountGrid1";
-            this.valueCountGrid1.Size = new System.Drawing.Size(342, 203);
+            this.valueCountGrid1.Size = new System.Drawing.Size(396, 203);
             this.valueCountGrid1.TabIndex = 3;
             this.valueCountGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
             this.valueCountGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
@@ -95,12 +95,12 @@
             // 
             this.cboField.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboField.BeforeTouchSize = new System.Drawing.Size(341, 21);
+            this.cboField.BeforeTouchSize = new System.Drawing.Size(395, 21);
             this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboField.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboField.Location = new System.Drawing.Point(12, 29);
             this.cboField.Name = "cboField";
-            this.cboField.Size = new System.Drawing.Size(341, 21);
+            this.cboField.Size = new System.Drawing.Size(395, 21);
             this.cboField.TabIndex = 68;
             // 
             // label3
@@ -118,30 +118,31 @@
             this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.IsBackStageButton = false;
-            this.btnClose.Location = new System.Drawing.Point(268, 337);
+            this.btnClose.Location = new System.Drawing.Point(322, 337);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(85, 26);
             this.btnClose.TabIndex = 70;
             this.btnClose.Text = "Close";
             // 
-            // checkBox1
+            // chkZoomTo
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(15, 341);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(100, 17);
-            this.checkBox1.TabIndex = 71;
-            this.checkBox1.Text = "Zoom to Values";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkZoomTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkZoomTo.AutoSize = true;
+            this.chkZoomTo.Checked = true;
+            this.chkZoomTo.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkZoomTo.Location = new System.Drawing.Point(15, 341);
+            this.chkZoomTo.Name = "chkZoomTo";
+            this.chkZoomTo.Size = new System.Drawing.Size(100, 17);
+            this.chkZoomTo.TabIndex = 71;
+            this.chkZoomTo.Text = "Zoom to Values";
+            this.chkZoomTo.UseVisualStyleBackColor = true;
+            this.chkZoomTo.CheckedChanged += new System.EventHandler(this.OnZoomToChanged);
             // 
             // txtSearch
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.BeforeTouchSize = new System.Drawing.Size(341, 20);
+            this.txtSearch.BeforeTouchSize = new System.Drawing.Size(395, 20);
             this.txtSearch.Cue = "Enter the value";
             this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtSearch.FarImage = ((System.Drawing.Image)(resources.GetObject("txtSearch.FarImage")));
@@ -149,7 +150,7 @@
             this.txtSearch.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.ShowClearButton = true;
-            this.txtSearch.Size = new System.Drawing.Size(341, 20);
+            this.txtSearch.Size = new System.Drawing.Size(395, 20);
             this.txtSearch.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtSearch.TabIndex = 2;
             this.txtSearch.TextChanged += new System.EventHandler(this.OnSearchTextChanged);
@@ -167,7 +168,7 @@
             this.recordNavigationBar1.MaxLabel = "of 20";
             this.recordNavigationBar1.MaxRecord = 20;
             this.recordNavigationBar1.Name = "recordNavigationBar1";
-            this.recordNavigationBar1.Size = new System.Drawing.Size(248, 16);
+            this.recordNavigationBar1.Size = new System.Drawing.Size(302, 16);
             this.recordNavigationBar1.SizeToFit = false;
             this.recordNavigationBar1.TabIndex = 75;
             this.recordNavigationBar1.Text = "recordNavigationBar1";
@@ -179,9 +180,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(362, 373);
+            this.ClientSize = new System.Drawing.Size(416, 373);
             this.Controls.Add(this.recordNavigationBar1);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.chkZoomTo);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cboField);
@@ -209,7 +210,7 @@
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboField;
         private System.Windows.Forms.Label label3;
         private Syncfusion.Windows.Forms.ButtonAdv btnClose;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkZoomTo;
         private Syncfusion.Windows.Forms.RecordNavigationBar recordNavigationBar1;
     }
 }

@@ -144,6 +144,8 @@ namespace MW5.Attributes.Views
             var list = _table.GetUniqueValues(FieldIndex).ToList();
 
             valueCountGrid1.DataSource = list;
+
+            valueCountGrid1.ShowColumnHeaders = true;
         }
 
         private void UpdateNavigation()
@@ -172,7 +174,7 @@ namespace MW5.Attributes.Views
 
             UpdateNavigation();
 
-            Invoke(ZoomTo);
+            FireZoomTo();
         }
 
         public event Action ZoomTo;
@@ -183,6 +185,19 @@ namespace MW5.Attributes.Views
         {
             valueCountGrid1.Adapter.ClearFilter();
             valueCountGrid1.Adapter.AddFilterLike(item => item.Value, txtSearch.Text);
+        }
+
+        private void OnZoomToChanged(object sender, EventArgs e)
+        {
+            FireZoomTo();
+        }
+
+        private void FireZoomTo()
+        {
+            if (chkZoomTo.Checked)
+            {
+                Invoke(ZoomTo);
+            }
         }
     }
 
