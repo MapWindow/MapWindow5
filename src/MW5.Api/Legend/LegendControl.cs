@@ -341,7 +341,7 @@ namespace MW5.Api.Legend
 
             txt.Left = el.Left;
             txt.Top = el.Top;
-            txt.Width = el.Width + Constants.TextRightPad;
+            txt.Width = el.Width;
             txt.Height = el.Height;
 
             if (txt.Height > el.Height)
@@ -460,8 +460,10 @@ namespace MW5.Api.Legend
                 // first try to find handler for particular element
                 if (!OnLayerElementClicked(lyr, element))
                 {
-                    // call general handler if it failed
-                    OnLayerCaptionClicked(pnt, lyr, GetGroup(element.GroupIndex));
+                    if (element.Type == LayerElementType.Name)
+                    {
+                        OnLayerCaptionClicked(pnt, lyr, GetGroup(element.GroupIndex));
+                    }
                 }
 
                 return;

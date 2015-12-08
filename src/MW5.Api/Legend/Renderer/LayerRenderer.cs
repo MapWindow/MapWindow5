@@ -173,6 +173,30 @@ namespace MW5.Api.Legend.Renderer
             }
         }
 
+        private int GetIconRightOffset(LegendThumbnailType type)
+        {
+            switch (type)
+            {
+                case LegendThumbnailType.Labels:
+                    return 56;
+                case LegendThumbnailType.Editing:
+                    return 76;
+                case LegendThumbnailType.Symbology:
+                default:
+                    return 36;
+            }
+        }
+
+        private int GetTextRightOffset(LegendLayer layer)
+        {
+            if (layer.IsVector && layer.FeatureSet.InteractiveEditing)
+            {
+                return GetIconRightOffset(LegendThumbnailType.Editing);
+            }
+
+            return GetIconRightOffset(LegendThumbnailType.Labels);
+        }
+
         /// <summary>
         /// Draws layer icon to the right of the name.
         /// </summary>
@@ -187,9 +211,8 @@ namespace MW5.Api.Legend.Renderer
 
             // -5 (offset)
             var top = bounds.Top + Constants.IconTopPad;
-            var left = bounds.Right - 36;
+            var left = bounds.Right - GetIconRightOffset(LegendThumbnailType.Symbology);
             Image icon;
-
 
             if (lyr.LayerType == LayerType.VectorLayer)
             {
@@ -229,7 +252,7 @@ namespace MW5.Api.Legend.Renderer
                 if (sf != null)
                 {
                     var top2 = bounds.Top + Constants.IconTopPad;
-                    var left2 = bounds.Right - 56;
+                    var left2 = bounds.Right - GetIconRightOffset(LegendThumbnailType.Labels);
 
                     var scale = map.CurrentScale;
                     var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible
@@ -252,7 +275,7 @@ namespace MW5.Api.Legend.Renderer
                 if (sf != null && sf.InteractiveEditing)
                 {
                     var top2 = bounds.Top + Constants.IconTopPad;
-                    var left2 = bounds.Right - 76;
+                    var left2 = bounds.Right - GetIconRightOffset(LegendThumbnailType.Editing);
                     DrawPicture(g, left2, top2, Constants.IconSize, Constants.IconSize, GetIcon(LegendIcon.Editing));
                 }
             }
@@ -342,7 +365,7 @@ namespace MW5.Api.Legend.Renderer
 
             var point = GetTextLocation(bounds, isSnapshot);
 
-            var curWidth = bounds.Width - Constants.TextLeftPad - Constants.TextRightPad;
+            var curWidth = bounds.Width - GetTextRightOffset(lyr) - Constants.TextLeftPad - Constants.TextEditingRightPad;
 
             var rect = new Rectangle(point.X, point.Y, curWidth, Constants.TextHeight);
             DrawText(g, text, rect, Legend.Font, Legend.ForeColor);

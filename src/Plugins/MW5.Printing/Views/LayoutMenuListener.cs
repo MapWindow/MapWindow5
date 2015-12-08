@@ -330,6 +330,7 @@ namespace MW5.Plugins.Printing.Views
 
             map.Initialize(_map, _layoutControl);
             map.Envelope = _view.Model.Extents;
+            map.TileProvider = _context.Map.TileProvider;
 
             _layoutControl.AddElementWithMouse(map);
         }

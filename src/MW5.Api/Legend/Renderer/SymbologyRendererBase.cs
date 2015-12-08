@@ -164,30 +164,23 @@ namespace MW5.Api.Legend.Renderer
         /// </summary>
         protected void DrawExpansionBox(Graphics g, int itemTop, int itemLeft, bool expanded)
         {
-            var pen = new Pen(_boxLineColor, 1);
-
             var rect = GetExpansionBoxBounds(itemTop, itemLeft);
 
-            // draw the border
-            DrawRectangle(g, rect, _boxLineColor, Color.White);
-
-            var midX = (int)(rect.Left + (.5 * rect.Width));
-            var midY = (int)(rect.Top + (.5 * rect.Height));
-
+            var points = new Point[3];
             if (!expanded)
             {
-                // draw a + sign, indicating that there is more to be seen
-                // draw the vertical part
-                g.DrawLine(pen, midX, itemTop + 2, midX, itemTop + Constants.ExpandBoxSize - 2);
-
-                // draw the horizontal part
-                g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
+                points[0] = new Point(Convert.ToInt32(rect.Left + (.5 * rect.Width)), rect.Bottom);
+                points[1] = new Point(Convert.ToInt32(rect.Left + (.5 * rect.Width)), rect.Top);
+                points[2] = new Point(rect.Right, Convert.ToInt32(rect.Top + (.5 * rect.Height)));
             }
             else
             {
-                // draw a - sign
-                g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
+                points[0] = new Point(rect.Left, rect.Bottom);
+                points[1] = new Point(rect.Right - 1, rect.Bottom);
+                points[2] = new Point(rect.Right - 1, rect.Top + 1);
             }
+
+            g.FillPolygon(Brushes.Black, points);
         }
 
         protected Rectangle GetCheckBoxBounds(int top, int left)

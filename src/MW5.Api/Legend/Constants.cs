@@ -11,6 +11,7 @@
         public const int TextLeftPad = 30;
         public const int TextRightPad = 25;
         public const int TextRightPadNoIcon = 8;
+        public const int TextEditingRightPad = 10;
         // CHECK BOX
         public const int CheckTopPad = 4;
         public const int CheckBoxSize = 12;

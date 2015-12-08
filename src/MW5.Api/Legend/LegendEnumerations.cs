@@ -80,6 +80,13 @@
         WmsLayer = 12,
     }
 
+    internal enum LegendThumbnailType
+    {
+        Symbology = 0,
+        Labels = 1,
+        Editing = 2,
+    }
+
     /// <summary>
     /// Elements of the layer representation in the legend
     /// </summary>
