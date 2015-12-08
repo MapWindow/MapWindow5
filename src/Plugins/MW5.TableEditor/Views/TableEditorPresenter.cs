@@ -503,10 +503,10 @@ namespace MW5.Plugins.TableEditor.Views
                     StartEditing();
                     break;
                 case TableEditorCommand.DiscardChanges:
-                    StopEditing(table, false);
+                    StopEditing(FeatureSet, false);
                     break;
                 case TableEditorCommand.SaveChanges:
-                    StopEditing(table, true);
+                    StopEditing(FeatureSet, true);
                     break;
                 case TableEditorCommand.CalculateField:
                     {
@@ -579,10 +579,21 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
-        private void StopEditing(IAttributeTable table, bool saveChanges)
+        private void StopEditing(IFeatureSet fs, bool saveChanges)
         {
+            if (fs == null) return;
+
+            var table = fs.Table;
+
             if (!table.EditMode)
             {
+                return;
+            }
+
+            if (fs.InteractiveEditing)
+            {
+                MessageService.Current.Info("Can not stop editing of the table when editing of the shapes takes place. " +
+                                            "Please use Shape editor plugin's toolbar to do it.");
                 return;
             }
 
