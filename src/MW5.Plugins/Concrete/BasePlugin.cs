@@ -98,6 +98,7 @@ namespace MW5.Plugins.Concrete
         #region Plugin events
 
         // backing fields
+        internal EventHandler<LayerEventArgs> LayerFeatureCountChanged_;
         internal EventHandler<LogEventArgs> LogEntryAdded_;
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
@@ -134,6 +135,12 @@ namespace MW5.Plugins.Concrete
         {
             add { LayerEditingChanged_ += value; }
             remove { LayerEditingChanged_ -= value; }
+        }
+
+        public event EventHandler<LayerEventArgs> LayerFeatureCountChanged
+        {
+            add { LayerFeatureCountChanged_ += value; }
+            remove { LayerFeatureCountChanged_ -= value; }
         }
 
         public event EventHandler<LayerCancelEventArgs> BeforeRemoveLayer

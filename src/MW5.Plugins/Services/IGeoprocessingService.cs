@@ -15,13 +15,13 @@
         /// <summary>
         /// Removes selected shapes
         /// </summary>
-        void RemoveShapes();
+        void RemoveSelectedShapes(bool prompt);
+
+        void RemoveSelectedShapes(int layerHandle, bool prompt);
 
         bool BufferIsEmpty { get; }
         void CopyShapes();
         void PasteShapes();
         void CutShapes();
-
-        void RemoveSelectedShapes(int layerHandle);
     }
 }

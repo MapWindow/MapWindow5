@@ -194,7 +194,7 @@ namespace MW5.Plugins.ShapeEditor.Context
                     _geoService.MergeShapes();
                     return true;
                 case EditorCommand.RemoveShapes:
-                    _geoService.RemoveShapes();
+                    _geoService.RemoveSelectedShapes(true);
                     return true;
             }
             return false;

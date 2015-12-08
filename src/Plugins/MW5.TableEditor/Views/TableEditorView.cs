@@ -253,6 +253,8 @@ namespace MW5.Plugins.TableEditor.Views
         public void OnActivateDockingPanel()
         {
             UpdateEditingIcon();
+
+            UpdateView();
         }
 
         /// <summary>
@@ -449,7 +451,15 @@ namespace MW5.Plugins.TableEditor.Views
             var grid = ActiveGrid;
             if (grid != null)
             {
-                mnuShowSelected.Text = grid.RowManager.Filtered ? "Show All Shapes" : "Show Selected Shapes";
+                if (grid.RowManager.Filtered)
+                {
+                    mnuShowSelected.Enabled = true;
+                    mnuShowSelected.Text = "Show All Shapes";
+                }
+                else
+                {
+                    mnuShowSelected.Text = "Show Selected Shapes";
+                }
             }
 
             var layout = AppConfig.Instance.TableEditorLayout;

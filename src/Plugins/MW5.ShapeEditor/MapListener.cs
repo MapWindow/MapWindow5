@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -15,15 +16,19 @@ namespace MW5.Plugins.ShapeEditor
     {
         private readonly IAppContext _context;
         private readonly ContextMenuPresenter _contextMenuPresenter;
+        private readonly IBroadcasterService _broadcaster;
 
-        public MapListener(IAppContext context, ShapeEditor plugin, ContextMenuPresenter contextMenuPresenter)
+        public MapListener(IAppContext context, ShapeEditor plugin, ContextMenuPresenter contextMenuPresenter,
+                           IBroadcasterService broadcaster)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (contextMenuPresenter == null) throw new ArgumentNullException("contextMenuPresenter");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
 
             _context = context;
 
             _contextMenuPresenter = contextMenuPresenter;
+            _broadcaster = broadcaster;
 
             plugin.ChooseLayer += OnChooseLayer;
             plugin.MouseUp += OnMapMouseUp;
@@ -117,6 +122,12 @@ namespace MW5.Plugins.ShapeEditor
                         
                     }
                 }
+            }
+
+            if (e.Operation == UndoOperation.AddShape)
+            {
+                var fs = _context.Map.GetFeatureSet(e.LayerHandle);
+                _broadcaster.BroadcastEvent(p => p.LayerFeatureCountChanged_, fs, new LayerEventArgs(e.LayerHandle));
             }
 
             // to show the number of modified features

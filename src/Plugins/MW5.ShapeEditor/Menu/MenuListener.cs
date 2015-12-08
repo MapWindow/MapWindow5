@@ -51,7 +51,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.DeleteSelected:
-                    _geoprocessingService.RemoveShapes();
+                    _geoprocessingService.RemoveSelectedShapes(true);
                     break;
                 case MenuKeys.CreateLayer:
                     _layerService.CreateLayer();
@@ -123,7 +123,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
                     _geoprocessingService.ExplodeShapes();
                     return true;
                 case MenuKeys.RemoveShapes:
-                    _geoprocessingService.RemoveShapes();
+                    _geoprocessingService.RemoveSelectedShapes(true);
                     return true;
             }
             return false;

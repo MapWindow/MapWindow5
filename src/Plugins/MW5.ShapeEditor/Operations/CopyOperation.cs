@@ -16,15 +16,16 @@ namespace MW5.Plugins.ShapeEditor.Operations
     internal class CopyOperation
     {
         private readonly IMuteMap _map;
+        private readonly IGeoprocessingService _geoService;
         private const double SCREEN_OFFSET = 50.0;
-
         private IFeatureSet _buffer;
 
-        public CopyOperation(IMuteMap map)
+        public CopyOperation(IMuteMap map, IGeoprocessingService geoService)
         {
             if (map == null) throw new ArgumentNullException("map");
-
+            if (geoService == null) throw new ArgumentNullException("geoService");
             _map = map;
+            _geoService = geoService;
         }
 
         public bool IsEmpty
@@ -61,7 +62,8 @@ namespace MW5.Plugins.ShapeEditor.Operations
             }
 
             PopulateBuffer(fs);
-            RemoveOperation.Remove(_map, fs, layerHandle);
+            
+            _geoService.RemoveSelectedShapes(layerHandle, false);
             return true;
         }
 

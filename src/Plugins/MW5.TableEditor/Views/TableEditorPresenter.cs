@@ -305,7 +305,8 @@ namespace MW5.Plugins.TableEditor.Views
                     var gp = GeoProcessingService;
                     if (gp != null)
                     {
-                        gp.RemoveSelectedShapes(View.ActiveLayerHandle);
+                        gp.RemoveSelectedShapes(View.ActiveLayerHandle, true);
+                        View.UpdateView();
                     }
                     break;
                 case TableEditorCommand.FormatValues:
@@ -586,7 +587,7 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             string msg = "Stop editing and ";
-            msg += saveChanges ? "SAVE changes?" : "DISCARD changes?";
+            msg += saveChanges ? "Save changes?" : "Discard changes?";
 
             if (!MessageService.Current.Ask(msg))
             {
@@ -627,6 +628,41 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             return true;
+        }
+
+        public void RebuildTableIndex(int layerHandle)
+        {
+            var info = GetTableInfo(layerHandle);
+            if (info == null) return;
+
+            var fs = _context.Layers.GetFeatureSet(layerHandle);
+            if (fs == null) return;
+
+            View.ClearCurrentCell();
+
+            var manager = info.Grid.RowManager;
+
+            int cmnIndex = manager.SortColumnIndex;
+            bool ascending = manager.SortAscending;
+            bool filtered = manager.Filtered;
+
+            manager.Reset(fs);
+
+            if (cmnIndex != -1)
+            {
+                info.Grid.SortByColumn(cmnIndex, ascending);
+            }
+
+            if (filtered)
+            {
+                manager.FilterSelected(fs);
+            }
+
+            info.Grid.RowCount = 0;
+            info.Grid.RowCount = manager.Count;
+            info.Grid.Invalidate();
+
+            View.UpdateView();
         }
 
         public void UpdateSelection(int layerHandle)

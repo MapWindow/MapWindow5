@@ -317,10 +317,19 @@ namespace MW5.Plugins.TableEditor.Editor
             for (int i = 0; i < _table.NumRows; i++)
             {
                 var val = _table.CellValue(cmnIndex, i);
-                if (isString && val == null)
+                
+                if (val == null)
                 {
-                    val = defValue;
+                    if (isString)
+                    {
+                        val = defValue;
+                    }
+                    else
+                    {
+                        val = default(T);
+                    }
                 }
+                
                 var item = new SortItem<T>((T) val, i);
                 list.Add(item);
             }

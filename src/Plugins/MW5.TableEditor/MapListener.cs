@@ -17,6 +17,13 @@ namespace MW5.Plugins.TableEditor
             _presenter = presenter;
 
             plugin.SelectionChanged += SelectionChanged;
+
+            plugin.LayerFeatureCountChanged += OnLayerFeatureCountChanged;
+        }
+
+        private void OnLayerFeatureCountChanged(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            _presenter.RebuildTableIndex(e.LayerHandle);
         }
 
         private void SelectionChanged(IMuteMap map, SelectionChangedEventArgs e)
