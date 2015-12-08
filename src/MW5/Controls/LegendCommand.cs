@@ -19,5 +19,7 @@ namespace MW5.Controls
         ZoomToGroup = 8,
         AddGroup = 9,
         AddLayer = 10,
+        Labels = 11,
+        TableEditor = 12,
     }
 }

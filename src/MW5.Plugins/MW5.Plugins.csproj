@@ -103,6 +103,7 @@
     <Compile Include="Events\MenuItemEventArgs.cs" />
     <Compile Include="Events\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
+    <Compile Include="Events\PluginMessageEventArgs.cs" />
     <Compile Include="Events\ProgressEventArgs.cs" />
     <Compile Include="Events\RenderedEventArgs.cs" />
     <Compile Include="Events\RepositoryListEventArgs.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Mef\IPluginMetadata.cs" />
     <Compile Include="Mef\MapWindowPluginAttribute.cs" />
     <Compile Include="PluginManager.cs" />
+    <Compile Include="PluginMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IBroadcasterService.cs" />

@@ -10,7 +10,9 @@ using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Api.Static;
+using MW5.Plugins;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -110,6 +112,25 @@ namespace MW5.Controls
                         }
                         break;
                     }
+                case LegendCommand.Labels:
+                    {
+                        var layer = _context.Legend.Layers.Current;
+                        if (layer != null && layer.IsVector)
+                        {
+                            _broadcaster.BroadcastEvent(p => p.LayerLabelsClicked_, _context.Legend, new LayerEventArgs(layer.Handle));
+                        }
+                    }
+                    break;
+                case LegendCommand.TableEditor:
+                    {
+                        var layer = _context.Legend.Layers.Current;
+                        if (layer != null && layer.IsVector)
+                        {
+                            var args = new PluginMessageEventArgs(PluginMessages.ShowAttributeTable);
+                            _broadcaster.BroadcastEvent(t => t.MessageBroadcasted_, _context.Legend, args);
+                        }
+                    }
+                    break;
                 case LegendCommand.ZoomToLayer:
                     _context.Map.ZoomToLayer(_context.Legend.SelectedLayerHandle);
                     break;

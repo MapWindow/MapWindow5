@@ -108,7 +108,8 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<EventArgs> ViewUpdating_;
         internal EventHandler<ToolboxToolEventArgs> ToolboxToolClicked_;
         internal EventHandler<UpdateJoinEventArgs> UpdateTableJoin_;
-        
+        internal EventHandler<PluginMessageEventArgs> MessageBroadcasted_;
+
         // public events
         public event EventHandler<UpdateJoinEventArgs> UpdateTableJoin
         {
@@ -153,6 +154,12 @@ namespace MW5.Plugins.Concrete
         {
             add { ViewUpdating_ += value; }
             remove { ViewUpdating_ -= value; }
+        }
+
+        public event EventHandler<PluginMessageEventArgs> MessageBroadcasted
+        {
+            add { MessageBroadcasted_ += value; }
+            remove { MessageBroadcasted_ -= value; }
         }
 
         public event EventHandler<MenuItemEventArgs> ItemClicked

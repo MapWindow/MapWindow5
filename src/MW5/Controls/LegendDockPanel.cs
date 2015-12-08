@@ -17,8 +17,12 @@ namespace MW5.Controls
 {
     public partial class LegendDockPanel : DockPanelControlBase, IMenuProvider
     {
-        public LegendDockPanel()
+        private readonly IAppContext _context;
+
+        public LegendDockPanel(IAppContext context)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
             InitializeComponent();
 
             legendControl1.LayerMouseUp += LegendLayerMouseUp;
@@ -87,6 +91,16 @@ namespace MW5.Controls
         public IEnumerable<Control> Buttons
         {
             get { yield break; }
+        }
+
+        private void OnContextMenuLayerOpening(object sender, CancelEventArgs e)
+        {
+            var layer = _context.Layers.Current;
+            if (layer != null)
+            {
+                toolLabels.Enabled = layer.IsVector;
+                toolTableEditor.Enabled = layer.IsVector;
+            }
         }
     }
 }

@@ -27,6 +27,15 @@ namespace MW5.Plugins.TableEditor.Menu
 
             plugin.ItemClicked += PluginItemClicked;
             plugin.ViewUpdating += ViewUpdating;
+            plugin.MessageBroadcasted += OnPluginMessageBroadcasted;
+        }
+
+        private void OnPluginMessageBroadcasted(object sender, PluginMessageEventArgs e)
+        {
+            if (e.Message == PluginMessages.ShowAttributeTable)
+            {
+                ShowTableEditor();
+            }
         }
 
         private void ViewUpdating(object sender, EventArgs e)
@@ -41,18 +50,23 @@ namespace MW5.Plugins.TableEditor.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.ShowTable:
-                    var layer = _context.Legend.SelectedLayer;
-                    if (layer.IsVector)
-                    {
-                        _presenter.OpenTable(layer);
-                    }
-
-                    var panel = _context.DockPanels.Find(DockPanelKeys.TableEditor);
-                    if (panel != null && !panel.Visible)
-                    {
-                        panel.Visible = true;
-                    }
+                    ShowTableEditor();
                     break;
+            }
+        }
+
+        private void ShowTableEditor()
+        {
+            var layer = _context.Legend.SelectedLayer;
+            if (layer.IsVector)
+            {
+                _presenter.OpenTable(layer);
+            }
+
+            var panel = _context.DockPanels.Find(DockPanelKeys.TableEditor);
+            if (panel != null && !panel.Visible)
+            {
+                panel.Visible = true;
             }
         }
     }
