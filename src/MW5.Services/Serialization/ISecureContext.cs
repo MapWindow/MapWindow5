@@ -11,8 +11,7 @@ using MW5.Plugins.Services;
 
 namespace MW5.Services.Serialization
 {
-    // TODO: is it really necessary?
-    public interface ISerializableContext: IAppContext
+    public interface ISecureContext: IAppContext
     {
         IPluginManager PluginManager { get; }
         Control GetDockPanelObject(DefaultDockPanel panel);

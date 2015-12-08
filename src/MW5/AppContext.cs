@@ -33,7 +33,7 @@ namespace MW5
     /// <summary>
     /// Central class storing all the resource avaialable for plugins.
     /// </summary>
-    public class AppContext: ISerializableContext
+    public class AppContext: ISecureContext
     {
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;

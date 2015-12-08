@@ -19,7 +19,7 @@ namespace MW5.Services.Serialization
     [DataContract(Name="MapWindow5")]
     public class XmlProject
     {
-        public XmlProject(ISerializableContext context, string filename)
+        public XmlProject(ISecureContext context, string filename)
         {
             int selectedHandle = context.Legend.SelectedLayerHandle;
 

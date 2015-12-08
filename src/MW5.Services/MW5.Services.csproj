@@ -129,7 +129,7 @@
     <Compile Include="Views\CreateLayerModel.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\ISerializableContext.cs" />
+    <Compile Include="Serialization\ISecureContext.cs" />
     <Compile Include="Serialization\Legacy\MapWindow4Config.cs" />
     <Compile Include="Serialization\Legacy\MapWin4XsdProject.cs" />
     <Compile Include="Serialization\XmlConfig.cs" />

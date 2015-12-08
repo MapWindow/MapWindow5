@@ -27,7 +27,7 @@ namespace MW5.Helpers
     {
         private const int PanelSize = 300;
 
-        public static void InitDocking(this ISerializableContext context)
+        public static void InitDocking(this ISecureContext context)
         {
             var panels = context.DockPanels;
             panels.Lock();
@@ -43,7 +43,7 @@ namespace MW5.Helpers
             context.DockPanels.Legend.TabPosition = 0;
         }
 
-        private static void InitTasks(ISerializableContext context)
+        private static void InitTasks(ISecureContext context)
         {
             var presenter = context.Container.Resolve<TasksPresenter>();
             var tasks = context.DockPanels.Add(presenter.View, DockPanelKeys.Tasks, PluginIdentity.Default);
@@ -54,7 +54,7 @@ namespace MW5.Helpers
             tasks.TabPosition = toolbox.TabPosition;
         }
 
-        private static void InitLegend(ISerializableContext context)
+        private static void InitLegend(ISecureContext context)
         {
             var legendControl = context.GetDockPanelObject(DefaultDockPanel.Legend);
             var legend = context.DockPanels.Add(legendControl, DockPanelKeys.Legend, PluginIdentity.Default);
@@ -63,7 +63,7 @@ namespace MW5.Helpers
             legend.SetIcon(Resources.ico_legend);
         }
 
-        private static void InitToolbox(ISerializableContext context)
+        private static void InitToolbox(ISecureContext context)
         {
             var toolboxControl = context.GetDockPanelObject(DefaultDockPanel.Toolbox);
 
@@ -73,7 +73,7 @@ namespace MW5.Helpers
             toolbox.SetIcon(Resources.ico_toolbox24);
         }
 
-        private static void InitLocator(ISerializableContext context)
+        private static void InitLocator(ISecureContext context)
         {
             var locatorControl = context.GetDockPanelObject(DefaultDockPanel.Locator);
             if (locatorControl == null)

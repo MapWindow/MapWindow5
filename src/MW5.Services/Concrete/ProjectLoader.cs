@@ -23,7 +23,7 @@ namespace MW5.Services.Concrete
         private readonly ImageSerializationService _imageSerializationService;
         private readonly ILayerService _layerService;
         private readonly IBroadcasterService _broadcaster;
-        private readonly ISerializableContext _context;
+        private readonly ISecureContext _context;
 
         public ProjectLoader(IAppContext context, ImageSerializationService imageSerializationService, ILayerService layerService,
             IBroadcasterService broadcaster)
@@ -34,7 +34,7 @@ namespace MW5.Services.Concrete
             _layerService = layerService;
             _broadcaster = broadcaster;
 
-            _context = context as ISerializableContext;
+            _context = context as ISecureContext;
             if (_context == null)
             {
                 throw new InvalidCastException("Application context must support ISerializable_context interface.");

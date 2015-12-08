@@ -96,7 +96,7 @@ namespace MW5.Services.Concrete
         {
             var args = new CancelEventArgs();
 
-            if (!(_context is ISerializableContext))
+            if (!(_context is ISecureContext))
             {
                 throw new ApplicationException("Invalid application context");
             }
@@ -430,7 +430,7 @@ namespace MW5.Services.Concrete
 
         private string SerializeMapState(string filename)
         {
-            var project = new XmlProject(_context as ISerializableContext, filename);
+            var project = new XmlProject(_context as ISecureContext, filename);
             return project.Serialize(false);
         }
 
