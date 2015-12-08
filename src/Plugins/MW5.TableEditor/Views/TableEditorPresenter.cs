@@ -675,6 +675,8 @@ namespace MW5.Plugins.TableEditor.Views
             View.UpdatePanelCaption(layerHandle);
 
             View.OnSelectionChanged();
+
+            _context.View.Update();
         }
 
         #endregion
