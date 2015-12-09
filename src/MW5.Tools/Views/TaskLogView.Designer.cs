@@ -127,6 +127,7 @@ namespace MW5.Tools.Views
             // 
             // lblElapsed
             // 
+            this.lblElapsed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblElapsed.AutoSize = true;
             this.lblElapsed.Location = new System.Drawing.Point(382, 18);
             this.lblElapsed.Name = "lblElapsed";

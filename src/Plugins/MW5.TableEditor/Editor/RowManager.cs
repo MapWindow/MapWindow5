@@ -79,7 +79,7 @@ namespace MW5.Plugins.TableEditor.Editor
 
         public void FilterSelected(IFeatureSet sf)
         {
-            int numShapes = sf.Features.Count;
+            int numShapes = sf.Table.NumRows;
             _filterMap = new int[sf.NumSelected];
             _filterMask = new bool[numShapes];
             int count = 0;
