@@ -32,10 +32,33 @@ namespace MW5.Views
             cboAssemblyFilter.SelectedIndexChanged += (s, e) => Invoke(AssemblyFilterChanged);
         }
 
+        private string GetArchitectureName(ProcessorArchitecture type)
+        {
+            switch (type)
+            {
+                case ProcessorArchitecture.MSIL:
+                    return "Any CPU";
+                case ProcessorArchitecture.X86:
+                    return "x86";
+                case ProcessorArchitecture.Amd64:
+                    return "x64";
+                case ProcessorArchitecture.IA64:
+                case ProcessorArchitecture.Arm:
+                case ProcessorArchitecture.None:
+                default:
+                    return string.Empty;
+            }
+        }
+
         private void ShowVersions()
         {
             var asm = Assembly.GetExecutingAssembly();
-            lblVersion.Text = "MapWindow version: " + asm.GetName().Version;
+
+            var name = asm.GetName();
+
+            var cpu = GetArchitectureName(name.ProcessorArchitecture);
+
+            lblVersion.Text = string.Format("MapWindow version: {0} {1}", name.Version, cpu);
             lblGdalVersion.Text = "GDAL version: " + MapConfig.GdalVersion;
         }
 
