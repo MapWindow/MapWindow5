@@ -132,8 +132,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             if (InputHelper.InputsAreEqual(InputLayer, InputLayer2))
             {
-                string msg = "The same datasource is used for both input parameters.";
-                msg += "The operation is pointless.";
+                string msg = "The same datasource is used for both input parameters. ";
+                msg += "The operation is meaningless.";
                 MessageService.Current.Info(msg);
                 return false;
             }

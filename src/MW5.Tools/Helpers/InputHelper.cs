@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
@@ -52,7 +53,8 @@ namespace MW5.Tools.Helpers
         /// </summary>
         public static bool InputsAreEqual(IVectorInput input1, IVectorInput input2)
         {
-            return input1.Datasource == input2.Datasource || input1.Filename == input2.Filename;
+            return input1.Datasource == input2.Datasource || 
+                   (input1.Filename.EqualsIgnoreCase(input2.Filename) && !string.IsNullOrWhiteSpace(input1.Filename));
         }
     }
 }
