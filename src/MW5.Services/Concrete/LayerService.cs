@@ -220,14 +220,14 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None)
+        public bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None, ZValueType zValue = ZValueType.None)
         {
             var layer = new VectorLayer();
             if (layer.Open(connection, layerName))
             {
                 if (multiGeometryType != GeometryType.None)
                 {
-                    layer.ActiveGeometryType = multiGeometryType;
+                    layer.SetActiveGeometryType(multiGeometryType, zValue);
                 }
 
                 int layerHandle = _context.Map.Layers.Add(layer);
@@ -410,6 +410,7 @@ namespace MW5.Services.Concrete
                 {
                     msg += Environment.NewLine + "Last GDAL error message: " + layer.GdalLastErrorMsg;
                 }
+
                 MessageService.Current.Info(msg);
             }
         }

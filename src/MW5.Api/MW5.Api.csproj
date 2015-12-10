@@ -66,6 +66,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Concrete\ComplexGeometryType.cs" />
     <Compile Include="Concrete\DatasourceDriver.cs" />
     <Compile Include="Concrete\DriverManager.cs" />
     <Compile Include="Concrete\DriverMetadata.cs" />

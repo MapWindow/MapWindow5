@@ -27,7 +27,7 @@ namespace MW5.Api.Concrete
             GeometryType = GeometryType.None;
         }
 
-        public LayerIdentity(string connection, string query, GeometryType geometryType)
+        public LayerIdentity(string connection, string query, GeometryType geometryType, ZValueType zValue = ZValueType.None)
         {
             Connection = connection;
             Query = query;
@@ -41,6 +41,9 @@ namespace MW5.Api.Concrete
             Connection = wms.BaseUrl;
             Query = wms.Layers;
         }
+
+        [DataMember]
+        public ZValueType ZValueType { get; set; }
 
         [DataMember]
         public GeometryType GeometryType { get; set; }
@@ -74,8 +77,10 @@ namespace MW5.Api.Concrete
                 case LayerIdentityType.File:
                     return Filename.EqualsIgnoreCase(other.Filename);
                 case LayerIdentityType.OgrDatasource:
-                    return Connection.EqualsIgnoreCase(other.Connection) && Query.EqualsIgnoreCase(other.Query) && 
-                            GeometryType == other.GeometryType;
+                    return Connection.EqualsIgnoreCase(other.Connection) && 
+                            Query.EqualsIgnoreCase(other.Query) && 
+                            GeometryType == other.GeometryType && 
+                            ZValueType == other.ZValueType;
             }
 
             return false;

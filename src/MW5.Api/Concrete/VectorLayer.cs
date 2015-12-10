@@ -214,7 +214,7 @@ namespace MW5.Api.Concrete
             get { return _layer.DriverName; }
         }
 
-        public IEnumerable<GeometryType> AvailableGeometryTypes
+        public IEnumerable<ComplexGeometryType> AvailableGeometryTypes
         {
             get
             {
@@ -226,15 +226,24 @@ namespace MW5.Api.Concrete
 
                 foreach (var item in list)
                 {
-                    yield return GeometryHelper.ShapeType2GeometryType((ShpfileType)item);
+                    yield return new ComplexGeometryType((ShpfileType)item);
                 }
             }
+        }
+
+        public void SetActiveGeometryType(GeometryType type, ZValueType zValue)
+        {
+            _layer.ActiveShapeType = GeometryHelper.GeometryType2ShpType(type, zValue);
         }
 
         public GeometryType ActiveGeometryType
         {
             get { return GeometryHelper.ShapeType2GeometryType(_layer.ActiveShapeType); }
-            set { _layer.ActiveShapeType = GeometryHelper.GeometryType2ShpType(value); }
+        }
+
+        public ZValueType ActiveZValueType
+        {
+            get { return GeometryHelper.ShapeType2ZValueType(_layer.ActiveShapeType); }
         }
 
         public IEnvelope Envelope

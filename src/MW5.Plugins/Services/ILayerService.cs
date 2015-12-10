@@ -15,7 +15,7 @@ namespace MW5.Plugins.Services
     {
         int LastLayerHandle { get; }
 
-        bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None);
+        bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None, ZValueType zValue = ZValueType.None);
 
         bool AddDatasource(IDatasource ds, string layerName = "");
 

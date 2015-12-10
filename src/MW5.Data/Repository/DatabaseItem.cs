@@ -52,7 +52,7 @@ namespace MW5.Data.Repository
                             {
                                 // layer reference doesn't stay opened,
                                 // so spare adding another parameter to AddDatabaseLayer when it can be read from property
-                                layer.ActiveGeometryType = type;        
+                                layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);        
                                 SubItems.AddDatabaseLayer(layer, multipleGeometries);   
                             }
 
