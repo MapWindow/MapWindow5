@@ -63,6 +63,16 @@ namespace MW5.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap anim_loading {
+            get {
+                object obj = ResourceManager.GetObject("anim_loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_database_16 {
             get {
                 object obj = ResourceManager.GetObject("img_database_16", resourceCulture);

@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Data.Properties;
 using MW5.Plugins.Concrete;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
@@ -33,16 +36,47 @@ namespace MW5.Data.Repository
 
             var data = Metadata;
 
+            var pct = new PictureBox { Image = Resources.anim_loading, SizeMode = PictureBoxSizeMode.AutoSize };
+            _node.CustomControl = pct;
+
+            Application.DoEvents();
+
+            Task<IEnumerable<VectorLayerWrapper>>.Factory.StartNew((d) => LoadLayers(d as DatabaseItemMetadata), data).ContinueWith(t =>
+            {
+                try
+                {
+                    foreach (var layer in t.Result)
+                    {
+                        SubItems.AddDatabaseLayer(layer.Layer, layer.MultipleGeometries);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Info("Failed to to load OGR layers.", ex);
+                }
+
+                _node.CustomControl = null;
+
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            _node.ExpandedOnce = true;
+        }
+
+        private IEnumerable<VectorLayerWrapper> LoadLayers(DatabaseItemMetadata data)
+        {
+            var layers = new List<VectorLayerWrapper>();
+
             using (var ds = new VectorDatasource())
             {
                 if (ds.Open(data.Connection.ConnectionString))
                 {
                     foreach (var layer in ds)
                     {
-                        if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql && 
+                        if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql &&
                             string.IsNullOrWhiteSpace(layer.GeometryColumnName))
                         {
-                            continue;   // MySQL driver lists all tables as layers even if they don't have geometry column
+                            continue;
+                            // MySQL driver lists all tables as layers even if they don't have geometry column
                         }
 
                         if (layer.GeometryType == GeometryType.None)
@@ -52,19 +86,19 @@ namespace MW5.Data.Repository
                             {
                                 // layer reference doesn't stay opened,
                                 // so spare adding another parameter to AddDatabaseLayer when it can be read from property
-                                layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);        
-                                SubItems.AddDatabaseLayer(layer, multipleGeometries);   
+                                layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);
+                                layers.Add(new VectorLayerWrapper(layer, multipleGeometries));
                             }
 
                             continue;
                         }
 
-                        SubItems.AddDatabaseLayer(layer);
+                        layers.Add(new VectorLayerWrapper(layer, false));
                     }
                 }
             }
 
-            _node.ExpandedOnce = true;
+            return layers;
         }
 
         public bool ExpandedOnce
@@ -82,6 +116,19 @@ namespace MW5.Data.Repository
             // it may be trickier than that since items in connection string
             // aren't necessarily in the same order
             return Connection.ConnectionString.EqualsIgnoreCase(identity.Connection);
+        }
+
+        private class VectorLayerWrapper
+        {
+            public VectorLayerWrapper(VectorLayer layer, bool multipleGeometries)
+            {
+                Layer = layer;
+                MultipleGeometries = multipleGeometries;
+            }
+
+            public VectorLayer Layer { get; private set; }
+
+            public bool MultipleGeometries { get; private set; }
         }
     }
 }
