@@ -160,7 +160,7 @@ namespace MW5.Data.Views
                         PortString = txtMySqlPort.Text,
                         Database = txtMySqlDatabase.Text,
                         UserName = txtMySqlUser.Text,
-                        Password = txtPostGisPassword.Text,
+                        Password = txtMySqlPassword.Text,
                         RawConnection = ""
                     };
                 default:
