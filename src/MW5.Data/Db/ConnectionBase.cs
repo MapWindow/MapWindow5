@@ -9,17 +9,20 @@ namespace MW5.Data.Db
 {
     public abstract class ConnectionBase: IConnectionParams
     {
-        public string GetConnection()
+        public const string UnknownPassword = "xxxxxx";
+
+        public string GetConnection(bool noPassword = false)
         {
             if (IgnoreParams)
             {
+                // TODO: how to hide the password here?
                 return RawConnection;
             }
 
-            return BuildConnection();
+            return BuildConnection(noPassword);
         }
 
-        public abstract string BuildConnection();
+        public abstract string BuildConnection(bool noPassword = false);
 
         public abstract GeoDatabaseType DatabaseType { get; }
 

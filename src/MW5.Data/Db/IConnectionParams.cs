@@ -9,8 +9,8 @@ namespace MW5.Data.Db
 {
     public interface IConnectionParams
     {
-        string GetConnection();
-        string BuildConnection();        // from parameters
+        string GetConnection(bool noPassword = false);
+        string BuildConnection(bool noPassword = false);        // from parameters
         GeoDatabaseType DatabaseType { get; }
         string RawConnection { get; set; }
         bool IgnoreParams { get; set; }  // use raw connection instead

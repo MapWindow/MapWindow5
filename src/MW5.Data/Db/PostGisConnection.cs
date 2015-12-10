@@ -43,10 +43,10 @@ namespace MW5.Data.Db
             return false;
         }
 
-        public override string BuildConnection()
+        public override string BuildConnection(bool noPassword = false)
         {
             const string cs = "PG:host={0} port={1} dbname={2} user={3} password={4}";
-            return string.Format(cs, Host, Port, Database, UserName, Password);
+            return string.Format(cs, Host, Port, Database, UserName, noPassword ? UnknownPassword : Password);
         }
 
         public override GeoDatabaseType DatabaseType

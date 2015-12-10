@@ -41,9 +41,20 @@ namespace MW5.Data.Helpers
                 case RepositoryItemType.DatabaseLayer:
                     var layerItem = item as IDatabaseLayerItem;
                     return GetDescription(layerItem);
+                case RepositoryItemType.Database:
+                    var dbItem = item as IDatabaseItem;
+                    return GetDescription(dbItem);
             }
 
             return string.Empty;
+        }
+
+        private static string GetDescription(IDatabaseItem dbItem)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Type: " + dbItem.Connection.DatabaseType);
+            sb.AppendLine("Connection: " + dbItem.Connection.GetUIConnection());
+            return sb.ToString();
         }
 
         private static string GetDescription(ITmsItem tms)

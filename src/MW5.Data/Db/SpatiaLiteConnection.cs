@@ -14,7 +14,7 @@ namespace MW5.Data.Db
     {
         public string Filename { get; set; }
 
-        public override string BuildConnection()
+        public override string BuildConnection(bool noPassword = false)
         {
             return Filename;
         }

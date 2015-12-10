@@ -27,11 +27,11 @@ namespace MW5.Data.Db
             return -1;
         }
 
-        public override string BuildConnection()
+        public override string BuildConnection(bool noPassword = false)
         {
             int port = ParsePort();
             const string cs = "MYSQL:{0},host={1},port={2},user={3},password={4}";
-            return string.Format(cs, Database, Host, port, UserName, Password);
+            return string.Format(cs, Database, Host, port, UserName, noPassword ? UnknownPassword : Password);
         }
 
         public override GeoDatabaseType DatabaseType

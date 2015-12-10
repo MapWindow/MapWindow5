@@ -48,7 +48,10 @@ namespace MW5.Data.Views
                 return false;
             }
 
-            Model.Connection = new DatabaseConnection(View.DatabaseType, connection.Name, connection.GetConnection());
+            Model.Connection = new DatabaseConnection(View.DatabaseType, 
+                                                     connection.Name, 
+                                                     connection.GetConnection(),
+                                                     connection.GetConnection(true));
 
             return true;
         }

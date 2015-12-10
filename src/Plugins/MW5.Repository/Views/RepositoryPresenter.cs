@@ -398,7 +398,7 @@ namespace MW5.Plugins.Repository.Views
         private void RemoveConnection()
         {
             var item = GetSelectedItem<IDatabaseItem>();
-            if (item != null && MessageService.Current.Ask("Do you want to remove connection?"))
+            if (item != null)
             {
                 _repository.RemoveConnection(item.Connection, false);
             }

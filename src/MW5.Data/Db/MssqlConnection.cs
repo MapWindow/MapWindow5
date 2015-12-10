@@ -15,12 +15,16 @@ namespace MW5.Data.Db
         }
 
         public string Server { get; set; }
+
         public string Database { get; set; }
+
         public bool WindowsAuthentication { get; set; }
+
         public string UserName { get; set; }
+
         public string Password { get; set; }
 
-        public override string BuildConnection()
+        public override string BuildConnection(bool noPassword = false)
         {
             string s = string.Format("MSSQL:server={0};database={1}", Server, Database);
 
@@ -30,7 +34,7 @@ namespace MW5.Data.Db
             }
             else
             {
-                s += string.Format(";user={0};password={1}", UserName, Password);
+                s += string.Format(";user={0};password={1}", UserName, noPassword ? UnknownPassword : Password);
             }
 
             return s;
