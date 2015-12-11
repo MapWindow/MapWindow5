@@ -276,11 +276,14 @@ namespace MW5.Plugins.Symbology.Forms
 
             var wrappers = fields.Select(f => new FieldAdapter(f)).ToList();
             wrappers.Insert(0, new FieldAdapter("<none>"));
-            cboField.DataSource = wrappers.ToList();
 
-            wrappers.Add(new FieldAdapter("<expression>"));
-            wrappers = fields.Where(f => f.Type != AttributeType.String).Select(f => new FieldAdapter(f)).ToList();
+            // label field
+            var fieldList = wrappers.ToList();
+            fieldList.Add(new FieldAdapter("<expression>"));
+            cboField.DataSource = fieldList;
             
+            // sort field
+            wrappers = wrappers.Where(f => f.Field == null || f.Field != null && f.Field.Type != AttributeType.String).ToList();
             cboSortField.DataSource = wrappers.ToList();
         }
 

@@ -56,19 +56,27 @@ namespace MW5.Plugins.Symbology.Forms
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.panelPieChart = new System.Windows.Forms.Panel();
+            this.udPieRadius2 = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udPieRadius = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panelBarChart = new System.Windows.Forms.Panel();
+            this.udBarHeight = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udBarWidth = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.udThickness = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udTilt = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label7 = new System.Windows.Forms.Label();
             this.chk3DMode = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.icbColors = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkValuesFrame = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.clpFrame = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.cboValuesStyle = new System.Windows.Forms.ComboBox();
             this.chkValuesVisible = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -79,15 +87,22 @@ namespace MW5.Plugins.Symbology.Forms
             this.cboFontName = new System.Windows.Forms.ComboBox();
             this.chkFontItalic = new System.Windows.Forms.CheckBox();
             this.chkFontBold = new System.Windows.Forms.CheckBox();
+            this.udFontSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.clpFont = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.tabPosition = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.cboChartVerticalPosition = new System.Windows.Forms.ComboBox();
             this.groupboxChartsOffset = new System.Windows.Forms.GroupBox();
+            this.udChartsOffsetY = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udChartsOffsetX = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udChartsBuffer = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label17 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.tabVisibility = new System.Windows.Forms.TabPage();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.btnSetMinScale = new System.Windows.Forms.Button();
+            this.btnSetMaxScale = new System.Windows.Forms.Button();
             this.cboMaxScale = new System.Windows.Forms.ComboBox();
             this.cboMinScale = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -105,23 +120,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.transparencyControl1 = new MW5.UI.Controls.TransparencyControl();
             this.btnApply = new System.Windows.Forms.Button();
-            this.btnSetMinScale = new System.Windows.Forms.Button();
-            this.btnSetMaxScale = new System.Windows.Forms.Button();
-            this.transparencyControl1 = new TransparencyControl();
-            this.icbColors = new ColorSchemeCombo();
-            this.udPieRadius2 = new NumericUpDownEx(this.components);
-            this.udPieRadius = new NumericUpDownEx(this.components);
-            this.udBarHeight = new NumericUpDownEx(this.components);
-            this.udBarWidth = new NumericUpDownEx(this.components);
-            this.udThickness = new NumericUpDownEx(this.components);
-            this.udTilt = new NumericUpDownEx(this.components);
-            this.clpFrame = new Office2007ColorPicker(this.components);
-            this.udFontSize = new NumericUpDownEx(this.components);
-            this.clpFont = new Office2007ColorPicker(this.components);
-            this.udChartsOffsetY = new NumericUpDownEx(this.components);
-            this.udChartsOffsetX = new NumericUpDownEx(this.components);
-            this.udChartsBuffer = new NumericUpDownEx(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -130,30 +130,30 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabPage1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.panelPieChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius)).BeginInit();
             this.panelBarChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udThickness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udTilt)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udFontSize)).BeginInit();
             this.tabPosition.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupboxChartsOffset.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udChartsBuffer)).BeginInit();
             this.tabVisibility.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udBarHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udThickness)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udTilt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udChartsBuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -389,6 +389,42 @@ namespace MW5.Plugins.Symbology.Forms
             this.panelPieChart.TabIndex = 4;
             this.panelPieChart.Visible = false;
             // 
+            // udPieRadius2
+            // 
+            this.udPieRadius2.Location = new System.Drawing.Point(89, 46);
+            this.udPieRadius2.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udPieRadius2.Name = "udPieRadius2";
+            this.udPieRadius2.Size = new System.Drawing.Size(49, 20);
+            this.udPieRadius2.TabIndex = 9;
+            this.udPieRadius2.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udPieRadius2.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // udPieRadius
+            // 
+            this.udPieRadius.Location = new System.Drawing.Point(89, 14);
+            this.udPieRadius.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udPieRadius.Name = "udPieRadius";
+            this.udPieRadius.Size = new System.Drawing.Size(49, 20);
+            this.udPieRadius.TabIndex = 5;
+            this.udPieRadius.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udPieRadius.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -417,6 +453,47 @@ namespace MW5.Plugins.Symbology.Forms
             this.panelBarChart.Name = "panelBarChart";
             this.panelBarChart.Size = new System.Drawing.Size(181, 72);
             this.panelBarChart.TabIndex = 9;
+            // 
+            // udBarHeight
+            // 
+            this.udBarHeight.Location = new System.Drawing.Point(89, 46);
+            this.udBarHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udBarHeight.Name = "udBarHeight";
+            this.udBarHeight.Size = new System.Drawing.Size(51, 20);
+            this.udBarHeight.TabIndex = 16;
+            this.udBarHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udBarHeight.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // udBarWidth
+            // 
+            this.udBarWidth.Location = new System.Drawing.Point(89, 14);
+            this.udBarWidth.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udBarWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udBarWidth.Name = "udBarWidth";
+            this.udBarWidth.Size = new System.Drawing.Size(51, 20);
+            this.udBarWidth.TabIndex = 15;
+            this.udBarWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udBarWidth.ValueChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // label3
             // 
@@ -450,6 +527,32 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "3D Mode";
             // 
+            // udThickness
+            // 
+            this.udThickness.Location = new System.Drawing.Point(104, 62);
+            this.udThickness.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.udThickness.Name = "udThickness";
+            this.udThickness.Size = new System.Drawing.Size(51, 20);
+            this.udThickness.TabIndex = 14;
+            this.udThickness.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // udTilt
+            // 
+            this.udTilt.Location = new System.Drawing.Point(105, 25);
+            this.udTilt.Maximum = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
+            this.udTilt.Name = "udTilt";
+            this.udTilt.Size = new System.Drawing.Size(51, 20);
+            this.udTilt.TabIndex = 13;
+            this.udTilt.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -478,6 +581,20 @@ namespace MW5.Plugins.Symbology.Forms
             this.label6.Size = new System.Drawing.Size(21, 13);
             this.label6.TabIndex = 7;
             this.label6.Text = "Tilt";
+            // 
+            // icbColors
+            // 
+            this.icbColors.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
+            this.icbColors.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.icbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.icbColors.FormattingEnabled = true;
+            this.icbColors.Location = new System.Drawing.Point(178, 43);
+            this.icbColors.Name = "icbColors";
+            this.icbColors.OutlineColor = System.Drawing.Color.Black;
+            this.icbColors.Size = new System.Drawing.Size(176, 21);
+            this.icbColors.TabIndex = 2;
+            this.icbColors.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbColors.SelectedIndexChanged += new System.EventHandler(this.icbColors_SelectedIndexChanged);
             // 
             // tabPage2
             // 
@@ -525,6 +642,22 @@ namespace MW5.Plugins.Symbology.Forms
             this.label11.TabIndex = 119;
             this.label11.Text = "Frame color";
             // 
+            // clpFrame
+            // 
+            this.clpFrame.Color = System.Drawing.Color.Black;
+            this.clpFrame.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpFrame.DropDownHeight = 1;
+            this.clpFrame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpFrame.FormattingEnabled = true;
+            this.clpFrame.IntegralHeight = false;
+            this.clpFrame.Items.AddRange(new object[] {
+            "Color"});
+            this.clpFrame.Location = new System.Drawing.Point(190, 34);
+            this.clpFrame.Name = "clpFrame";
+            this.clpFrame.Size = new System.Drawing.Size(74, 21);
+            this.clpFrame.TabIndex = 120;
+            this.clpFrame.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
+            // 
             // cboValuesStyle
             // 
             this.cboValuesStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -538,7 +671,7 @@ namespace MW5.Plugins.Symbology.Forms
             // chkValuesVisible
             // 
             this.chkValuesVisible.AutoSize = true;
-            this.chkValuesVisible.Location = new System.Drawing.Point(40, 37);
+            this.chkValuesVisible.Location = new System.Drawing.Point(26, 37);
             this.chkValuesVisible.Name = "chkValuesVisible";
             this.chkValuesVisible.Size = new System.Drawing.Size(56, 17);
             this.chkValuesVisible.TabIndex = 121;
@@ -633,6 +766,45 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkFontBold.UseVisualStyleBackColor = true;
             this.chkFontBold.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
+            // udFontSize
+            // 
+            this.udFontSize.Location = new System.Drawing.Point(303, 32);
+            this.udFontSize.Maximum = new decimal(new int[] {
+            36,
+            0,
+            0,
+            0});
+            this.udFontSize.Minimum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.udFontSize.Name = "udFontSize";
+            this.udFontSize.Size = new System.Drawing.Size(50, 20);
+            this.udFontSize.TabIndex = 116;
+            this.udFontSize.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.udFontSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // clpFont
+            // 
+            this.clpFont.Color = System.Drawing.Color.Black;
+            this.clpFont.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpFont.DropDownHeight = 1;
+            this.clpFont.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpFont.FormattingEnabled = true;
+            this.clpFont.IntegralHeight = false;
+            this.clpFont.Items.AddRange(new object[] {
+            "Color"});
+            this.clpFont.Location = new System.Drawing.Point(71, 89);
+            this.clpFont.Name = "clpFont";
+            this.clpFont.Size = new System.Drawing.Size(74, 21);
+            this.clpFont.TabIndex = 115;
+            this.clpFont.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
+            // 
             // tabPosition
             // 
             this.tabPosition.Controls.Add(this.groupBox10);
@@ -678,6 +850,60 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupboxChartsOffset.TabIndex = 164;
             this.groupboxChartsOffset.TabStop = false;
             this.groupboxChartsOffset.Text = "Position";
+            // 
+            // udChartsOffsetY
+            // 
+            this.udChartsOffsetY.Location = new System.Drawing.Point(29, 67);
+            this.udChartsOffsetY.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udChartsOffsetY.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.udChartsOffsetY.Name = "udChartsOffsetY";
+            this.udChartsOffsetY.Size = new System.Drawing.Size(54, 20);
+            this.udChartsOffsetY.TabIndex = 163;
+            this.udChartsOffsetY.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // udChartsOffsetX
+            // 
+            this.udChartsOffsetX.Location = new System.Drawing.Point(29, 32);
+            this.udChartsOffsetX.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udChartsOffsetX.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.udChartsOffsetX.Name = "udChartsOffsetX";
+            this.udChartsOffsetX.Size = new System.Drawing.Size(54, 20);
+            this.udChartsOffsetX.TabIndex = 162;
+            this.udChartsOffsetX.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // udChartsBuffer
+            // 
+            this.udChartsBuffer.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udChartsBuffer.Location = new System.Drawing.Point(29, 102);
+            this.udChartsBuffer.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.udChartsBuffer.Name = "udChartsBuffer";
+            this.udChartsBuffer.Size = new System.Drawing.Size(54, 20);
+            this.udChartsBuffer.TabIndex = 161;
+            this.udChartsBuffer.ValueChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // label17
             // 
@@ -732,6 +958,26 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox11.TabIndex = 175;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Dynamic visibility";
+            // 
+            // btnSetMinScale
+            // 
+            this.btnSetMinScale.Location = new System.Drawing.Point(272, 64);
+            this.btnSetMinScale.Name = "btnSetMinScale";
+            this.btnSetMinScale.Size = new System.Drawing.Size(87, 24);
+            this.btnSetMinScale.TabIndex = 8;
+            this.btnSetMinScale.Text = "Set current";
+            this.btnSetMinScale.UseVisualStyleBackColor = true;
+            this.btnSetMinScale.Click += new System.EventHandler(this.btnSetMinScale_Click);
+            // 
+            // btnSetMaxScale
+            // 
+            this.btnSetMaxScale.Location = new System.Drawing.Point(272, 98);
+            this.btnSetMaxScale.Name = "btnSetMaxScale";
+            this.btnSetMaxScale.Size = new System.Drawing.Size(87, 24);
+            this.btnSetMaxScale.TabIndex = 7;
+            this.btnSetMaxScale.Text = "Set current";
+            this.btnSetMaxScale.UseVisualStyleBackColor = true;
+            this.btnSetMaxScale.Click += new System.EventHandler(this.btnSetMaxScale_Click);
             // 
             // cboMaxScale
             // 
@@ -825,11 +1071,11 @@ namespace MW5.Plugins.Symbology.Forms
             // chkVisible
             // 
             this.chkVisible.AutoSize = true;
-            this.chkVisible.Location = new System.Drawing.Point(23, 21);
+            this.chkVisible.Location = new System.Drawing.Point(23, 19);
             this.chkVisible.Name = "chkVisible";
-            this.chkVisible.Size = new System.Drawing.Size(88, 17);
+            this.chkVisible.Size = new System.Drawing.Size(56, 17);
             this.chkVisible.TabIndex = 13;
-            this.chkVisible.Text = "Charts visible";
+            this.chkVisible.Text = "Visible";
             this.chkVisible.UseVisualStyleBackColor = true;
             this.chkVisible.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
@@ -847,24 +1093,24 @@ namespace MW5.Plugins.Symbology.Forms
             // optBarCharts
             // 
             this.optBarCharts.AutoSize = true;
-            this.optBarCharts.Location = new System.Drawing.Point(23, 22);
+            this.optBarCharts.Location = new System.Drawing.Point(25, 22);
             this.optBarCharts.Name = "optBarCharts";
-            this.optBarCharts.Size = new System.Drawing.Size(73, 17);
+            this.optBarCharts.Size = new System.Drawing.Size(41, 17);
             this.optBarCharts.TabIndex = 1;
             this.optBarCharts.TabStop = true;
-            this.optBarCharts.Text = "Bar charts";
+            this.optBarCharts.Text = "Bar";
             this.optBarCharts.UseVisualStyleBackColor = true;
             this.optBarCharts.CheckedChanged += new System.EventHandler(this.optBarCharts_CheckedChanged);
             // 
             // optPieCharts
             // 
             this.optPieCharts.AutoSize = true;
-            this.optPieCharts.Location = new System.Drawing.Point(102, 22);
+            this.optPieCharts.Location = new System.Drawing.Point(86, 22);
             this.optPieCharts.Name = "optPieCharts";
-            this.optPieCharts.Size = new System.Drawing.Size(72, 17);
+            this.optPieCharts.Size = new System.Drawing.Size(40, 17);
             this.optPieCharts.TabIndex = 0;
             this.optPieCharts.TabStop = true;
-            this.optPieCharts.Text = "Pie charts";
+            this.optPieCharts.Text = "Pie";
             this.optPieCharts.UseVisualStyleBackColor = true;
             this.optPieCharts.CheckedChanged += new System.EventHandler(this.optPieCharts_CheckedChanged);
             // 
@@ -907,37 +1153,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Transparency";
             // 
-            // btnApply
-            // 
-            this.btnApply.Enabled = false;
-            this.btnApply.Location = new System.Drawing.Point(341, 353);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(87, 26);
-            this.btnApply.TabIndex = 19;
-            this.btnApply.Text = "Apply";
-            this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-            // 
-            // btnSetMinScale
-            // 
-            this.btnSetMinScale.Location = new System.Drawing.Point(272, 64);
-            this.btnSetMinScale.Name = "btnSetMinScale";
-            this.btnSetMinScale.Size = new System.Drawing.Size(87, 24);
-            this.btnSetMinScale.TabIndex = 8;
-            this.btnSetMinScale.Text = "Set current";
-            this.btnSetMinScale.UseVisualStyleBackColor = true;
-            this.btnSetMinScale.Click += new System.EventHandler(this.btnSetMinScale_Click);
-            // 
-            // btnSetMaxScale
-            // 
-            this.btnSetMaxScale.Location = new System.Drawing.Point(272, 98);
-            this.btnSetMaxScale.Name = "btnSetMaxScale";
-            this.btnSetMaxScale.Size = new System.Drawing.Size(87, 24);
-            this.btnSetMaxScale.TabIndex = 7;
-            this.btnSetMaxScale.Text = "Set current";
-            this.btnSetMaxScale.UseVisualStyleBackColor = true;
-            this.btnSetMaxScale.Click += new System.EventHandler(this.btnSetMaxScale_Click);
-            // 
             // transparencyControl1
             // 
             this.transparencyControl1.BandColor = System.Drawing.Color.Empty;
@@ -948,231 +1163,18 @@ namespace MW5.Plugins.Symbology.Forms
             this.transparencyControl1.Size = new System.Drawing.Size(156, 32);
             this.transparencyControl1.TabIndex = 17;
             this.transparencyControl1.Value = ((byte)(255));
-            this.transparencyControl1.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
+            this.transparencyControl1.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
             // 
-            // icbColors
+            // btnApply
             // 
-            this.icbColors.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.icbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.icbColors.FormattingEnabled = true;
-            this.icbColors.Location = new System.Drawing.Point(178, 43);
-            this.icbColors.Name = "icbColors";
-            this.icbColors.OutlineColor = System.Drawing.Color.Black;
-            this.icbColors.Size = new System.Drawing.Size(176, 21);
-            this.icbColors.TabIndex = 2;
-            this.icbColors.SelectedIndexChanged += new System.EventHandler(this.icbColors_SelectedIndexChanged);
-            // 
-            // udPieRadius2
-            // 
-            this.udPieRadius2.Location = new System.Drawing.Point(89, 46);
-            this.udPieRadius2.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udPieRadius2.Name = "udPieRadius2";
-            this.udPieRadius2.Size = new System.Drawing.Size(49, 20);
-            this.udPieRadius2.TabIndex = 9;
-            this.udPieRadius2.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udPieRadius2.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udPieRadius
-            // 
-            this.udPieRadius.Location = new System.Drawing.Point(89, 14);
-            this.udPieRadius.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udPieRadius.Name = "udPieRadius";
-            this.udPieRadius.Size = new System.Drawing.Size(49, 20);
-            this.udPieRadius.TabIndex = 5;
-            this.udPieRadius.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udPieRadius.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udBarHeight
-            // 
-            this.udBarHeight.Location = new System.Drawing.Point(89, 46);
-            this.udBarHeight.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udBarHeight.Name = "udBarHeight";
-            this.udBarHeight.Size = new System.Drawing.Size(51, 20);
-            this.udBarHeight.TabIndex = 16;
-            this.udBarHeight.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udBarHeight.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udBarWidth
-            // 
-            this.udBarWidth.Location = new System.Drawing.Point(89, 14);
-            this.udBarWidth.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.udBarWidth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udBarWidth.Name = "udBarWidth";
-            this.udBarWidth.Size = new System.Drawing.Size(51, 20);
-            this.udBarWidth.TabIndex = 15;
-            this.udBarWidth.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udBarWidth.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udThickness
-            // 
-            this.udThickness.Location = new System.Drawing.Point(104, 62);
-            this.udThickness.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            this.udThickness.Name = "udThickness";
-            this.udThickness.Size = new System.Drawing.Size(51, 20);
-            this.udThickness.TabIndex = 14;
-            this.udThickness.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udTilt
-            // 
-            this.udTilt.Location = new System.Drawing.Point(105, 25);
-            this.udTilt.Maximum = new decimal(new int[] {
-            90,
-            0,
-            0,
-            0});
-            this.udTilt.Name = "udTilt";
-            this.udTilt.Size = new System.Drawing.Size(51, 20);
-            this.udTilt.TabIndex = 13;
-            this.udTilt.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // clpFrame
-            // 
-            this.clpFrame.Color = System.Drawing.Color.Black;
-            this.clpFrame.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpFrame.DropDownHeight = 1;
-            this.clpFrame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpFrame.FormattingEnabled = true;
-            this.clpFrame.IntegralHeight = false;
-            this.clpFrame.Items.AddRange(new object[] {
-            "Color"});
-            this.clpFrame.Location = new System.Drawing.Point(190, 34);
-            this.clpFrame.Name = "clpFrame";
-            this.clpFrame.Size = new System.Drawing.Size(74, 21);
-            this.clpFrame.TabIndex = 120;
-            this.clpFrame.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udFontSize
-            // 
-            this.udFontSize.Location = new System.Drawing.Point(303, 32);
-            this.udFontSize.Maximum = new decimal(new int[] {
-            36,
-            0,
-            0,
-            0});
-            this.udFontSize.Minimum = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            this.udFontSize.Name = "udFontSize";
-            this.udFontSize.Size = new System.Drawing.Size(50, 20);
-            this.udFontSize.TabIndex = 116;
-            this.udFontSize.Value = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            this.udFontSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // clpFont
-            // 
-            this.clpFont.Color = System.Drawing.Color.Black;
-            this.clpFont.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpFont.DropDownHeight = 1;
-            this.clpFont.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpFont.FormattingEnabled = true;
-            this.clpFont.IntegralHeight = false;
-            this.clpFont.Items.AddRange(new object[] {
-            "Color"});
-            this.clpFont.Location = new System.Drawing.Point(71, 89);
-            this.clpFont.Name = "clpFont";
-            this.clpFont.Size = new System.Drawing.Size(74, 21);
-            this.clpFont.TabIndex = 115;
-            this.clpFont.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udChartsOffsetY
-            // 
-            this.udChartsOffsetY.Location = new System.Drawing.Point(29, 67);
-            this.udChartsOffsetY.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.udChartsOffsetY.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.udChartsOffsetY.Name = "udChartsOffsetY";
-            this.udChartsOffsetY.Size = new System.Drawing.Size(54, 20);
-            this.udChartsOffsetY.TabIndex = 163;
-            this.udChartsOffsetY.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udChartsOffsetX
-            // 
-            this.udChartsOffsetX.Location = new System.Drawing.Point(29, 32);
-            this.udChartsOffsetX.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.udChartsOffsetX.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.udChartsOffsetX.Name = "udChartsOffsetX";
-            this.udChartsOffsetX.Size = new System.Drawing.Size(54, 20);
-            this.udChartsOffsetX.TabIndex = 162;
-            this.udChartsOffsetX.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // udChartsBuffer
-            // 
-            this.udChartsBuffer.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udChartsBuffer.Location = new System.Drawing.Point(29, 102);
-            this.udChartsBuffer.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.udChartsBuffer.Name = "udChartsBuffer";
-            this.udChartsBuffer.Size = new System.Drawing.Size(54, 20);
-            this.udChartsBuffer.TabIndex = 161;
-            this.udChartsBuffer.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            this.btnApply.Enabled = false;
+            this.btnApply.Location = new System.Drawing.Point(341, 353);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(87, 26);
+            this.btnApply.TabIndex = 19;
+            this.btnApply.Text = "Apply";
+            this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
             // ChartStyleForm
             // 
@@ -1208,20 +1210,30 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox6.ResumeLayout(false);
             this.panelPieChart.ResumeLayout(false);
             this.panelPieChart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius)).EndInit();
             this.panelBarChart.ResumeLayout(false);
             this.panelBarChart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udThickness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udTilt)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udFontSize)).EndInit();
             this.tabPosition.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupboxChartsOffset.ResumeLayout(false);
             this.groupboxChartsOffset.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udChartsBuffer)).EndInit();
             this.tabVisibility.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
@@ -1232,16 +1244,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udPieRadius)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udBarHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udThickness)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udTilt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udFontSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udChartsOffsetX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udChartsBuffer)).EndInit();
             this.ResumeLayout(false);
 
         }
