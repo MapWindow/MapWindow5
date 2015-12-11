@@ -325,6 +325,13 @@ namespace MW5.Plugins.Printing.Model.Elements
                 if (fs != null)
                 {
                     fs.Style.Marker.Size *= dpiRatio;
+
+                    fs.Diagrams.ValuesFontSize = Convert.ToInt32(fs.Diagrams.ValuesFontSize * dpiRatio);
+                    fs.Diagrams.BarHeight = Convert.ToInt32(fs.Diagrams.BarHeight * dpiRatio);
+                    fs.Diagrams.BarWidth = Convert.ToInt32(fs.Diagrams.BarWidth * dpiRatio);
+                    fs.Diagrams.PieRadius = Convert.ToInt32(fs.Diagrams.PieRadius * dpiRatio);
+                    fs.Diagrams.PieRadius2 = Convert.ToInt32(fs.Diagrams.PieRadius2 * dpiRatio);
+                    fs.Diagrams.Thickness = Convert.ToInt32(fs.Diagrams.Thickness * dpiRatio);
                 }
             }
         }
