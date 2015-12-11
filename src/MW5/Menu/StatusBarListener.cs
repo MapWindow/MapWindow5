@@ -63,8 +63,8 @@ namespace MW5.Menu
             dropDown.Icon = new MenuIcon(Resources.icon_crs_change);
 
             var items = dropDown.SubItems;
-            items.AddButton("Choose projection", StatusBarKeys.ChooseProjection, Identity);
-            items.AddButton("Projection properties", StatusBarKeys.ProjectionProperties, Identity);
+            items.AddButton("Choose Projection", StatusBarKeys.ChooseProjection, Identity);
+            items.AddButton("Projection Properties", StatusBarKeys.ProjectionProperties, Identity);
             items.AddButton("Settings", StatusBarKeys.ProjectionConfig, Identity).BeginGroup = true; ;
 
             dropDown.Update();

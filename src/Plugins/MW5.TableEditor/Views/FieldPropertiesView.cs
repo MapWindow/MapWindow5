@@ -88,8 +88,8 @@ namespace MW5.Plugins.TableEditor.Views
                 switch (value)
                 {
                     case AttributeType.String:
-                        udWidth.Value = 50;
                         udWidth.Maximum = 255;
+                        udWidth.Value = 50;
                         udPrecision.Value = 0;
                         break;
                     case AttributeType.Integer:
@@ -100,8 +100,8 @@ namespace MW5.Plugins.TableEditor.Views
                         udPrecision.Value = 0;
                         break;
                     case AttributeType.Double:
-                        udWidth.Value = 20;
                         udWidth.Maximum = 40;
+                        udWidth.Value = 20;
                         udPrecision.Value = 10;
                         break;
                 }

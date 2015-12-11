@@ -627,23 +627,21 @@ namespace MW5.Plugins.Symbology.Forms
                 return;
             }
 
-            DataGridView dgv = dgvCategories;
-            if (dgv != null)
-            {
-                bool exists = (dgv.CurrentCell != null);
+            bool exists = (dgvCategories.CurrentCell != null);
 
-                btnCategoryRemove.Enabled = exists;
-                btnCategoryMoveUp.Enabled = exists;
-                btnCategoryMoveDown.Enabled = exists;
-                btnCategoryStyle.Enabled = exists;
-                btnEditExpression.Enabled = exists;
-                   
-                if (dgv.CurrentCell != null)
-                {
-                    int index = dgv.CurrentCell.RowIndex;
-                    btnCategoryMoveUp.Enabled = index > 0;
-                    btnCategoryMoveDown.Enabled = index < _shapefile.Categories.Count - 1;
-                }
+            btnCategoryRemove.Enabled = exists;
+            btnCategoryMoveUp.Enabled = exists;
+            btnCategoryMoveDown.Enabled = exists;
+            btnCategoryStyle.Enabled = exists;
+            btnEditExpression.Enabled = exists;
+            btnClear.Enabled = exists;
+            toolSaveCategories.Enabled = exists;
+
+            if (dgvCategories.CurrentCell != null)
+            {
+                int index = dgvCategories.CurrentCell.RowIndex;
+                btnCategoryMoveUp.Enabled = index > 0;
+                btnCategoryMoveDown.Enabled = index < _shapefile.Categories.Count - 1;
             }
         }
 
@@ -656,10 +654,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void OnOkButtonClicked(object sender, EventArgs e)
         {
-            if (_shapefile.Categories.Serialize() != _initState)
-            {
-                _context.Project.SetModified();
-            }
+            ApplyChanges();
         }
 
         /// <summary>
@@ -670,15 +665,20 @@ namespace MW5.Plugins.Symbology.Forms
             // cancel will be run in form_closing handler
         }
 
-        /// <summary>
-        /// Saves changes and updates map without closing the form
-        /// </summary>
-        private void OnApplyButtonClicked(object sender, EventArgs e)
+        private void ApplyChanges()
         {
             _shapefile.Categories.ApplyExpressions();
             RefreshCategoriesCount();
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             _context.Project.SetModified();
+        }
+
+        /// <summary>
+        /// Saves changes and updates map without closing the form
+        /// </summary>
+        private void OnApplyButtonClicked(object sender, EventArgs e)
+        {
+            ApplyChanges();
             _initState = _shapefile.Categories.Serialize();
             btnApply.Enabled = false;
         }
@@ -706,29 +706,6 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 _shapefile.Categories.Deserialize(_initState);
             }
-        }
-
-        /// <summary>
-        ///  Shows context menu with additional options
-        /// </summary>
-        private void btnMore_Click(object sender, EventArgs e)
-        {
-            contextMenuStrip1.Show(Cursor.Position);
-        }
-
-        #endregion
-
-        #region Context menu
-        
-        /// <summary>
-        /// Before opening context menu
-        /// </summary>
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-            btnSaveCategories.Enabled = _shapefile.Categories.Count > 0;
-            btnClear.Enabled = _shapefile.Categories.Count > 0;
-            btnSaveCategories.Visible = true;
-            btnLoadCategories.Visible = true;
         }
 
         #endregion

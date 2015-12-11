@@ -33,7 +33,7 @@ namespace MW5.Plugins.Symbology.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCategories = new System.Windows.Forms.DataGridView();
             this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
@@ -50,25 +50,16 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCategoryMoveUp = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnApply = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnAddRange = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSaveCategories = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnLoadCategories = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnClear = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolAddRange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolSaveCategories = new System.Windows.Forms.ToolStripMenuItem();
             this.toolRemoveStyle = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.lblEmpty = new System.Windows.Forms.Label();
             this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
+            this.btnClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.toolStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
             this.gradientPanel1.SuspendLayout();
@@ -88,14 +79,14 @@ namespace MW5.Plugins.Symbology.Forms
             this.cmnName,
             this.cmnExpression,
             this.Count});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCategories.GridColor = System.Drawing.SystemColors.ButtonFace;
             this.dgvCategories.Location = new System.Drawing.Point(0, 0);
@@ -180,7 +171,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnCategoryStyle
             // 
             this.btnCategoryStyle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCategoryStyle.Location = new System.Drawing.Point(518, 45);
+            this.btnCategoryStyle.Location = new System.Drawing.Point(518, 46);
             this.btnCategoryStyle.Name = "btnCategoryStyle";
             this.btnCategoryStyle.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryStyle.TabIndex = 8;
@@ -191,7 +182,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnCategoryRemove
             // 
             this.btnCategoryRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCategoryRemove.Location = new System.Drawing.Point(518, 177);
+            this.btnCategoryRemove.Location = new System.Drawing.Point(518, 182);
             this.btnCategoryRemove.Name = "btnCategoryRemove";
             this.btnCategoryRemove.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryRemove.TabIndex = 103;
@@ -202,7 +193,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnEditExpression
             // 
             this.btnEditExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEditExpression.Location = new System.Drawing.Point(518, 78);
+            this.btnEditExpression.Location = new System.Drawing.Point(518, 80);
             this.btnEditExpression.Name = "btnEditExpression";
             this.btnEditExpression.Size = new System.Drawing.Size(91, 26);
             this.btnEditExpression.TabIndex = 108;
@@ -213,7 +204,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnCategoryMoveDown
             // 
             this.btnCategoryMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCategoryMoveDown.Location = new System.Drawing.Point(518, 144);
+            this.btnCategoryMoveDown.Location = new System.Drawing.Point(518, 148);
             this.btnCategoryMoveDown.Name = "btnCategoryMoveDown";
             this.btnCategoryMoveDown.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryMoveDown.TabIndex = 105;
@@ -235,7 +226,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnCategoryMoveUp
             // 
             this.btnCategoryMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCategoryMoveUp.Location = new System.Drawing.Point(518, 111);
+            this.btnCategoryMoveUp.Location = new System.Drawing.Point(518, 114);
             this.btnCategoryMoveUp.Name = "btnCategoryMoveUp";
             this.btnCategoryMoveUp.Size = new System.Drawing.Size(91, 26);
             this.btnCategoryMoveUp.TabIndex = 104;
@@ -255,53 +246,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.OnApplyButtonClicked);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAddRange,
-            this.toolStripSeparator3,
-            this.btnSaveCategories,
-            this.btnLoadCategories,
-            this.toolStripSeparator2,
-            this.btnClear});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 104);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            // 
-            // btnAddRange
-            // 
-            this.btnAddRange.Name = "btnAddRange";
-            this.btnAddRange.Size = new System.Drawing.Size(168, 22);
-            this.btnAddRange.Text = "Add Range...";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
-            // 
-            // btnSaveCategories
-            // 
-            this.btnSaveCategories.Name = "btnSaveCategories";
-            this.btnSaveCategories.Size = new System.Drawing.Size(168, 22);
-            this.btnSaveCategories.Text = "Save Categories...";
-            // 
-            // btnLoadCategories
-            // 
-            this.btnLoadCategories.Name = "btnLoadCategories";
-            this.btnLoadCategories.Size = new System.Drawing.Size(168, 22);
-            this.btnLoadCategories.Text = "Load Categories...";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(165, 6);
-            // 
-            // btnClear
-            // 
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(168, 22);
-            this.btnClear.Text = "Clear";
-            // 
             // toolStripEx1
             // 
             this.toolStripEx1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -315,7 +259,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(67, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(98, 25);
             this.toolStripEx1.TabIndex = 168;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
@@ -326,9 +270,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolAddRange,
             this.toolStripSeparator5,
             this.toolSaveCategories,
-            this.toolRemoveStyle,
-            this.toolStripSeparator4,
-            this.toolOpenLocation});
+            this.toolRemoveStyle});
             this.toolStyle.ForeColor = System.Drawing.Color.Black;
             this.toolStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_settings;
             this.toolStyle.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -340,7 +282,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.toolAddRange.Name = "toolAddRange";
             this.toolAddRange.Size = new System.Drawing.Size(157, 22);
-            this.toolAddRange.Text = "Add range...";
+            this.toolAddRange.Text = "Add Range...";
             this.toolAddRange.Click += new System.EventHandler(this.btnAddCategory_Click);
             // 
             // toolStripSeparator5
@@ -363,18 +305,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolRemoveStyle.Size = new System.Drawing.Size(157, 22);
             this.toolRemoveStyle.Text = "Load categories";
             this.toolRemoveStyle.Click += new System.EventHandler(this.toolRemoveStyle_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(154, 6);
-            // 
-            // toolOpenLocation
-            // 
-            this.toolOpenLocation.Name = "toolOpenLocation";
-            this.toolOpenLocation.Size = new System.Drawing.Size(157, 22);
-            this.toolOpenLocation.Text = "Clear";
-            this.toolOpenLocation.Click += new System.EventHandler(this.OnCategoriesClearClick);
             // 
             // lblEmpty
             // 
@@ -400,12 +330,24 @@ namespace MW5.Plugins.Symbology.Forms
             this.gradientPanel1.Size = new System.Drawing.Size(500, 326);
             this.gradientPanel1.TabIndex = 171;
             // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(518, 216);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(91, 26);
+            this.btnClear.TabIndex = 172;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.OnCategoriesClearClick);
+            // 
             // CategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(615, 379);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.gradientPanel1);
             this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.btnApply);
@@ -424,7 +366,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.Text = "Layer Categories";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnCategoriesFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.toolStripEx1.ResumeLayout(false);
             this.toolStripEx1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
@@ -447,13 +388,6 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.Button btnCategoryStyle;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnApply;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem btnSaveCategories;
-        private System.Windows.Forms.ToolStripMenuItem btnLoadCategories;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem btnClear;
-        private System.Windows.Forms.ToolStripMenuItem btnAddRange;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cmnVisible;
         private System.Windows.Forms.DataGridViewImageColumn cmnStyle;
         private System.Windows.Forms.DataGridViewTextBoxColumn cmnName;
@@ -463,11 +397,10 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.ToolStripDropDownButton toolStyle;
         private System.Windows.Forms.ToolStripMenuItem toolSaveCategories;
         private System.Windows.Forms.ToolStripMenuItem toolRemoveStyle;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem toolOpenLocation;
         private System.Windows.Forms.ToolStripMenuItem toolAddRange;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.Label lblEmpty;
         private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel1;
+        private System.Windows.Forms.Button btnClear;
     }
 }
