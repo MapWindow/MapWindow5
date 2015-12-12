@@ -172,48 +172,67 @@ namespace MW5.Plugins.TableEditor.Editor
         private void GridCellValuePushed(object sender, DataGridViewCellValueEventArgs e)
         {
             var s = e.Value as string;
-            if (s == null) return;
 
             int realIndex = RowManager.RealIndex(e.RowIndex);
 
             var fld = _table.Fields[e.ColumnIndex];
 
-            switch (fld.Type)
+            if (s == null)
             {
-                case AttributeType.String:
-                    if (fld.Width < s.Length)
-                    {
-                        MessageService.Current.Info("The string is too long and will be truncated.");
-                        s = s.Substring(0, fld.Width);
-                    }
-                    _table.EditCellValue(e.ColumnIndex, realIndex, s);
-                    break;
-                case AttributeType.Integer:
-                    {
-                        int val;
-                        if (Int32.TryParse(s, out val))
+                switch (fld.Type)
+                {
+                    case AttributeType.String:
+                        _table.EditCellValue(e.ColumnIndex, realIndex, string.Empty);
+                        break;
+                    case AttributeType.Integer:
+                        _table.EditCellValue(e.ColumnIndex, realIndex, 0);
+                        break;
+                    case AttributeType.Double:
+                        _table.EditCellValue(e.ColumnIndex, realIndex, 0.0);
+                        break;
+                }
+            }
+            else
+            {
+
+                switch (fld.Type)
+                {
+                    case AttributeType.String:
+                        if (fld.Width < s.Length)
                         {
-                            _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                            MessageService.Current.Info("The string is too long and will be truncated.");
+                            s = s.Substring(0, fld.Width);
                         }
-                        else
+                        _table.EditCellValue(e.ColumnIndex, realIndex, s);
+                        break;
+                    case AttributeType.Integer:
                         {
-                            MessageService.Current.Info("The string is not recognized as an integer value.");
+                            int val;
+                            if (Int32.TryParse(s, out val))
+                            {
+                                _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                            }
+                            else
+                            {
+                                MessageService.Current.Info("The string is not recognized as an integer value.");
+                            }
                         }
-                    }
-                    break;
-                case AttributeType.Double:
-                    {
-                        double val;
-                        if (Double.TryParse(s, out val))
+                        break;
+                    case AttributeType.Double:
                         {
-                            _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                            double val;
+                            if (Double.TryParse(s, out val))
+                            {
+                                _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                            }
+                            else
+                            {
+                                MessageService.Current.Info(
+                                    "The string is not recognized as a floating point numeric value.");
+                            }
                         }
-                        else
-                        {
-                            MessageService.Current.Info("The string is not recognized as a floating point numeric value.");
-                        }
-                    }
-                    break;
+                        break;
+                }
             }
 
             DelegateHelper.FireEvent(this, CellValueEdited);
