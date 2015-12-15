@@ -1,5 +1,10 @@
-﻿using System;
-using System.IO;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="LayerService.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -8,14 +13,9 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Events;
 using MW5.Api.Static;
-using MW5.Plugins;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
-using MW5.Plugins.Events;
-using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Projections;
 using MW5.Projections.Enums;
 using MW5.Projections.Services.Abstract;
 using MW5.Shared;
@@ -23,17 +23,20 @@ using LayerCancelEventArgs = MW5.Plugins.Events.LayerCancelEventArgs;
 
 namespace MW5.Services.Concrete
 {
-    public class LayerService: ILayerService
+    public class LayerService : ILayerService
     {
+        private readonly IBroadcasterService _broadcaster;
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileDialogService;
-        private readonly IBroadcasterService _broadcaster;
         private readonly IProjectionMismatchService _mismatchTester;
         private int _lastLayerHandle;
         private bool _withinBatch;
 
-        public LayerService(IAppContext context, IFileDialogService fileDialogService, 
-            IBroadcasterService broadcaster, IProjectionMismatchService mismatchTester)
+        public LayerService(
+            IAppContext context,
+            IFileDialogService fileDialogService,
+            IBroadcasterService broadcaster,
+            IProjectionMismatchService mismatchTester)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (fileDialogService == null) throw new ArgumentNullException("fileDialogService");
@@ -55,35 +58,6 @@ namespace MW5.Services.Concrete
             }
 
             return RemoveLayerCore(layerHandle, false);
-        }
-
-        private bool RemoveLayerCore(int layerHandle, bool silent)
-        {
-            var layer = _context.Map.GetLayer(layerHandle);
-
-            if (layer == null)
-            {
-                Logger.Current.Warn("LayerService.RemoveLayer: attempting to remove layer with invalid handle.");
-                return false;
-            }
-
-            if (!silent)
-            {
-                if (!MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
-                {
-                    return false;
-                }
-            }
-
-            var args = new LayerCancelEventArgs(layerHandle);
-            _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
-            if (args.Cancel)
-            {
-                return false;
-            }
-                
-            _context.Map.Layers.Remove(layerHandle);
-            return true;
         }
 
         public bool RemoveLayer(int layerHandle)
@@ -126,7 +100,7 @@ namespace MW5.Services.Concrete
             }
 
             BeginBatch();
-            
+
             bool result = false;
 
             try
@@ -203,24 +177,11 @@ namespace MW5.Services.Concrete
             }
         }
 
-        private bool AddWmsLayer(LayerIdentity identity)
-        {
-            if (identity.IdentityType == LayerIdentityType.Wms)
-            {
-                var wms = new WmsSource("") { BaseUrl = identity.Connection, Layers = identity.Query };
-
-                int layerHandle = _context.Map.Layers.Add(wms);
-                if (layerHandle != -1)
-                {
-                    _lastLayerHandle = layerHandle;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None, ZValueType zValue = ZValueType.None)
+        public bool AddDatabaseLayer(
+            string connection,
+            string layerName,
+            GeometryType multiGeometryType = GeometryType.None,
+            ZValueType zValue = ZValueType.None)
         {
             var layer = new VectorLayer();
             if (layer.Open(connection, layerName))
@@ -230,39 +191,15 @@ namespace MW5.Services.Concrete
                     layer.SetActiveGeometryType(multiGeometryType, zValue);
                 }
 
-                int layerHandle = _context.Map.Layers.Add(layer);
-                if (layerHandle != -1)
-                {
-                    _lastLayerHandle = layerHandle;
-                }
-
-                return true;
+                return AddDatasource(layer);
             }
 
             return false;
         }
 
-        private bool AddLayersFromFilenameCore(string filename)
-        {
-            try
-            {
-                var ds = GeoSource.Open(filename);
-
-                if (ds == null)
-                {
-                    MessageService.Current.Warn(string.Format("Failed to open datasource: {0} \n {1}", filename, GeoSource.LastError));
-                    return false;
-                }
-
-                return AddDatasource(ds);
-            }
-            catch (Exception ex)
-            {
-                MessageService.Current.Warn(string.Format("There was a problem opening layer: {0}. \n Details: {1}", filename, ex.Message));
-                return false;
-            }
-        }
-
+        /// <summary>
+        /// Adds the datasource to the map and notifies plugins about it.
+        /// </summary>
         public bool AddDatasource(IDatasource ds, string layerName = "")
         {
             int addedCount = 0;
@@ -304,37 +241,7 @@ namespace MW5.Services.Concrete
                 }
             }
 
-            return addedCount > 0;  // currently at least one should be success to return success
-        }
-
-        /// <summary>
-        /// Tests if datasources projection matches map projection. Performs reprojection is needed or
-        /// substitues original datasources with reprojected version created earlier.
-        /// </summary>
-        private ILayerSource TestProjectionMismatch(ILayerSource layer, out bool abort)
-        {
-            abort = false;
-
-            ILayerSource newLayer;
-            var result = _mismatchTester.TestLayer(layer, out newLayer);
-
-            switch (result)
-            {
-                case TestingResult.Ok:
-                    newLayer = layer;
-                    break;
-                case TestingResult.Substituted:
-                    // do nothing; user new layer
-                    break;
-                case TestingResult.SkipFile:
-                case TestingResult.Error:
-                    return null;
-                case TestingResult.CancelOperation:
-                    abort = true;
-                    return null;
-            }
-
-            return newLayer;
+            return addedCount > 0; // currently at least one should be success to return success
         }
 
         public void ZoomToSelected()
@@ -394,7 +301,7 @@ namespace MW5.Services.Concrete
             {
                 MessageService.Current.Info("No layer is selected");
             }
-            
+
             string description = "";
             bool result = _context.Map.Layers.Current.LoadOptions("", ref description);
             if (result)
@@ -413,6 +320,106 @@ namespace MW5.Services.Concrete
 
                 MessageService.Current.Info(msg);
             }
+        }
+
+        private bool AddLayersFromFilenameCore(string filename)
+        {
+            try
+            {
+                var ds = GeoSource.Open(filename);
+
+                if (ds == null)
+                {
+                    MessageService.Current.Warn(string.Format("Failed to open datasource: {0} \n {1}", filename,
+                        GeoSource.LastError));
+                    return false;
+                }
+
+                return AddDatasource(ds);
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Warn(string.Format("There was a problem opening layer: {0}. \n Details: {1}",
+                    filename, ex.Message));
+                return false;
+            }
+        }
+
+        private bool AddWmsLayer(LayerIdentity identity)
+        {
+            if (identity.IdentityType == LayerIdentityType.Wms)
+            {
+                var wms = new WmsSource("") { BaseUrl = identity.Connection, Layers = identity.Query };
+
+                // TODO: we don't notify plugin about it, perhaps we should
+                int layerHandle = _context.Map.Layers.Add(wms);
+                if (layerHandle != -1)
+                {
+                    _lastLayerHandle = layerHandle;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool RemoveLayerCore(int layerHandle, bool silent)
+        {
+            var layer = _context.Map.GetLayer(layerHandle);
+
+            if (layer == null)
+            {
+                Logger.Current.Warn("LayerService.RemoveLayer: attempting to remove layer with invalid handle.");
+                return false;
+            }
+
+            if (!silent)
+            {
+                if (!MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
+                {
+                    return false;
+                }
+            }
+
+            var args = new LayerCancelEventArgs(layerHandle);
+            _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
+            if (args.Cancel)
+            {
+                return false;
+            }
+
+            _context.Map.Layers.Remove(layerHandle);
+            return true;
+        }
+
+        /// <summary>
+        /// Tests if datasources projection matches map projection. Performs reprojection is needed or
+        /// substitues original datasources with reprojected version created earlier.
+        /// </summary>
+        private ILayerSource TestProjectionMismatch(ILayerSource layer, out bool abort)
+        {
+            abort = false;
+
+            ILayerSource newLayer;
+            var result = _mismatchTester.TestLayer(layer, out newLayer);
+
+            switch (result)
+            {
+                case TestingResult.Ok:
+                    newLayer = layer;
+                    break;
+                case TestingResult.Substituted:
+                    // do nothing; user new layer
+                    break;
+                case TestingResult.SkipFile:
+                case TestingResult.Error:
+                    return null;
+                case TestingResult.CancelOperation:
+                    abort = true;
+                    return null;
+            }
+
+            return newLayer;
         }
     }
 }

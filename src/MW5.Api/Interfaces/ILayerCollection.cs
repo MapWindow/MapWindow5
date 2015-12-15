@@ -20,8 +20,6 @@ namespace MW5.Api.Interfaces
         bool MoveDown(int initialPosition);
         bool MoveTop(int initialPosition);
         bool MoveUp(int initialPosition);
-        int AddFromDatabase(string connectionString, string layerNameOrQuery, bool visible = true);
-        int AddFromFilename(string filename, FileOpenStrategy openStrategy = FileOpenStrategy.AutoDetect, bool visible = true);
         void Clear();
         bool Remove(int layerHandle);
         void RemoveWithoutClosing(int layerHandle);

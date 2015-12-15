@@ -182,6 +182,13 @@ namespace MW5.Projections.Helpers
         public static bool SeekSubstituteFile(this ILayerSource layer, ISpatialReference targetProjection, out ILayerSource newLayer)
         {
             newLayer = null;
+
+            if (layer.LayerType == LayerType.VectorLayer)
+            {
+                // no substibutes for OGR layers    
+                return false;
+            }
+            
             string testName = FilenameWithProjectionSuffix(layer.Filename, layer.Projection, targetProjection);
 
             if (!File.Exists(testName))
@@ -194,11 +201,6 @@ namespace MW5.Projections.Helpers
             {
                 return false;
             }
-
-            //if (layerTest.Type != layer.Type)
-            //{
-            //    return false;
-            //}
 
             var f1 = new FileInfo(layer.Filename);
             var f2 = new FileInfo(testName);
