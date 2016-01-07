@@ -72,22 +72,40 @@ namespace MW5.Data.Views
             }
 
             string cs = info.GetConnection();
+            string errorMessage = string.Empty;
 
-            bool result;
+            View.StartWait();
+
+            Task<bool>.Factory.StartNew(() => TestConnectionCore(cs, ref errorMessage)).ContinueWith(t =>
+                {
+                    View.StopWait();
+
+                    if (!t.Result)
+                    {
+                        MessageService.Current.Warn("Failed to open connection.");
+                    }
+                    else
+                    {
+                        MessageService.Current.Info("Connected successfully");
+                    }
+
+                    Logger.Current.Info("Testing connection: {0}\n{1}", cs, t.Result ? "Success" : "Failure");
+
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private bool TestConnectionCore(string cs, ref string errorMessage)
+        {
             using (var ds = new VectorDatasource())
             {
-                result = ds.Open(cs);
+                bool result = ds.Open(cs);
                 if (!result)
                 {
-                    MessageService.Current.Warn("Failed to open connection: " + ds.GdalLastErrorMsg);
+                    errorMessage = ds.GdalLastErrorMsg;
                 }
-                else
-                {
-                    MessageService.Current.Info("Connected successfully");
-                }
-            }
 
-            Logger.Current.Info("Testing connection: {0}\n{1}", cs, result ? "Success": "Failure");
+                return result;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
-    public class VectorDatasource: IVectorDatasource, IEnumerable<VectorLayer>
+    public class VectorDatasource: IVectorDatasource
     {
         private readonly OgrDatasource _datasource;
 
@@ -81,11 +81,13 @@ namespace MW5.Api.Concrete
         public VectorLayer GetLayer(int index, bool forUpdate = false)
         {
             var layer = _datasource.GetLayer(index, forUpdate);
-            if (layer != null)
-            {
-                return new VectorLayer(layer);
-            }
-            return null;
+            return layer != null ? new VectorLayer(layer) : null;
+        }
+
+        public VectorLayer GetLayer2(int index, bool forUpdate = false, bool newConnection = true)
+        {
+            var layer = _datasource.GetLayer2(index, forUpdate, newConnection);
+            return layer != null ? new VectorLayer(layer) : null;
         }
 
         public string GetLayerName(int layerIndex)
@@ -248,6 +250,15 @@ namespace MW5.Api.Concrete
             for (int i = 0; i < _datasource.LayerCount; i++)
             {
                 var layer = _datasource.GetLayer(i);
+                yield return new VectorLayer(layer);
+            }
+        }
+
+        public IEnumerator<VectorLayer> GetFastEnumerator()
+        {
+            for (int i = 0; i < _datasource.LayerCount; i++)
+            {
+                var layer = _datasource.GetLayer2(i, false, false);
                 yield return new VectorLayer(layer);
             }
         }

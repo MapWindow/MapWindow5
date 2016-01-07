@@ -684,7 +684,7 @@ namespace MW5.Data.Views
             this.Controls.Add(this.tabControlAdv1);
             this.Name = "AddConnectionView";
             this.Padding = new System.Windows.Forms.Padding(7);
-            this.Text = "Add database connection";
+            this.Text = "Add Database Connection";
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
             this.tabPostGis.ResumeLayout(false);

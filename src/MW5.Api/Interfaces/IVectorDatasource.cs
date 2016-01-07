@@ -4,7 +4,7 @@ using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IVectorDatasource: IDatasource
+    public interface IVectorDatasource: IDatasource, IEnumerable<VectorLayer>
     {
         bool Open(string connectionString);
 
@@ -29,6 +29,6 @@ namespace MW5.Api.Interfaces
         bool ExecuteSql(string sql, out string errorMessage);
         string get_DriverMetadata(GdalDriverMetadata metadata);
         string get_DriverMetadataItem(int metadataIndex);
-        IEnumerator<VectorLayer> GetEnumerator();
+        IEnumerator<VectorLayer> GetFastEnumerator();
     }
 }

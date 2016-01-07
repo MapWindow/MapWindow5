@@ -271,11 +271,8 @@ namespace MW5.Menu
                     {
                         using (var ds = new VectorDatasource())
                         {
-                            if (ds.Open(connection.ConnectionString))
-                            {
-                                var model = new DatabaseLayersModel(ds, connection);
-                                _context.Container.Run<DatabaseLayersPresenter, DatabaseLayersModel>(model);
-                            }
+                            var model = new DatabaseLayersModel(ds, connection);
+                            _context.Container.Run<DatabaseLayersPresenter, DatabaseLayersModel>(model);
                         }
                     }
                     return true;
