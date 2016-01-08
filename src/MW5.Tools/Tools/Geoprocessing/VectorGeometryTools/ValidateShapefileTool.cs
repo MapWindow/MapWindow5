@@ -148,7 +148,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             var fs = ValidationHelper.CreateErrorFeatureSet(Input.Datasource);
 
-            foreach (var err in errors)
+            foreach (var err in errors.Where(e => e.Location != null))
             {
                 var gm = new Geometry(GeometryType.Point);
                 gm.Points.Add(err.Location);
