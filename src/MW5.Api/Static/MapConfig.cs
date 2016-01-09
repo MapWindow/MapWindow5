@@ -336,6 +336,12 @@ namespace MW5.Api.Static
             set { _settings.OgrLayerMaxFeatureCount = value; }
         }
 
+        public static bool OgrShareDatasources
+        {
+            get { return _settings.OgrShareConnection; }
+            set { _settings.OgrShareConnection = value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

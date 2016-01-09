@@ -90,6 +90,7 @@ namespace MW5.Data.Views
             this.imageList1.Images.SetKeyName(0, "img_point.png");
             this.imageList1.Images.SetKeyName(1, "img_line.png");
             this.imageList1.Images.SetKeyName(2, "img_polygon.png");
+            this.imageList1.Images.SetKeyName(3, "img_geometry.png");
             // 
             // lblConnection
             // 

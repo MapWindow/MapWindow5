@@ -43,6 +43,7 @@ namespace MW5.Configuration
             this.chkCreateSpatialIndex = new System.Windows.Forms.CheckBox();
             this.chkSpatialIndexDialog = new System.Windows.Forms.CheckBox();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkShareConnection = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtMaxOgrCount = new Syncfusion.Windows.Forms.Tools.IntegerTextBox();
@@ -88,21 +89,22 @@ namespace MW5.Configuration
             this.configPanelControl1.HeaderText = "Performance and caching";
             this.configPanelControl1.Location = new System.Drawing.Point(0, 143);
             this.configPanelControl1.Name = "configPanelControl1";
-            this.configPanelControl1.Size = new System.Drawing.Size(394, 122);
+            this.configPanelControl1.Size = new System.Drawing.Size(394, 90);
             this.configPanelControl1.TabIndex = 14;
             // 
             // chkFastMode
             // 
             this.chkFastMode.Enabled = false;
-            this.chkFastMode.Location = new System.Drawing.Point(21, 34);
+            this.chkFastMode.Location = new System.Drawing.Point(313, 34);
             this.chkFastMode.Name = "chkFastMode";
-            this.chkFastMode.Size = new System.Drawing.Size(292, 21);
+            this.chkFastMode.Size = new System.Drawing.Size(207, 21);
             this.chkFastMode.TabIndex = 12;
             this.chkFastMode.Text = "Fast mode (don\'t use COM points)";
+            this.chkFastMode.Visible = false;
             // 
             // chkCacheDbfRecords
             // 
-            this.chkCacheDbfRecords.Location = new System.Drawing.Point(21, 88);
+            this.chkCacheDbfRecords.Location = new System.Drawing.Point(21, 61);
             this.chkCacheDbfRecords.Name = "chkCacheDbfRecords";
             this.chkCacheDbfRecords.Size = new System.Drawing.Size(292, 21);
             this.chkCacheDbfRecords.TabIndex = 11;
@@ -110,7 +112,7 @@ namespace MW5.Configuration
             // 
             // chkCacheRenderingData
             // 
-            this.chkCacheRenderingData.Location = new System.Drawing.Point(21, 61);
+            this.chkCacheRenderingData.Location = new System.Drawing.Point(21, 34);
             this.chkCacheRenderingData.Name = "chkCacheRenderingData";
             this.chkCacheRenderingData.Size = new System.Drawing.Size(292, 21);
             this.chkCacheRenderingData.TabIndex = 10;
@@ -180,21 +182,32 @@ namespace MW5.Configuration
             // configPanelControl2
             // 
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl2.Controls.Add(this.chkShareConnection);
             this.configPanelControl2.Controls.Add(this.label3);
             this.configPanelControl2.Controls.Add(this.label1);
             this.configPanelControl2.Controls.Add(this.txtMaxOgrCount);
             this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl2.HeaderText = "OGR datasources";
-            this.configPanelControl2.Location = new System.Drawing.Point(0, 265);
+            this.configPanelControl2.Location = new System.Drawing.Point(0, 233);
             this.configPanelControl2.Name = "configPanelControl2";
-            this.configPanelControl2.Size = new System.Drawing.Size(394, 155);
+            this.configPanelControl2.Size = new System.Drawing.Size(394, 174);
             this.configPanelControl2.TabIndex = 15;
+            // 
+            // chkShareConnection
+            // 
+            this.chkShareConnection.AutoSize = true;
+            this.chkShareConnection.Location = new System.Drawing.Point(21, 147);
+            this.chkShareConnection.Name = "chkShareConnection";
+            this.chkShareConnection.Size = new System.Drawing.Size(270, 17);
+            this.chkShareConnection.TabIndex = 4;
+            this.chkShareConnection.Text = "Share connection between layers (may be unstable)";
+            this.chkShareConnection.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(18, 88);
+            this.label3.Location = new System.Drawing.Point(18, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(358, 57);
             this.label3.TabIndex = 3;
@@ -204,7 +217,7 @@ namespace MW5.Configuration
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(18, 41);
+            this.label1.Location = new System.Drawing.Point(18, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(329, 18);
             this.label1.TabIndex = 2;
@@ -217,7 +230,7 @@ namespace MW5.Configuration
             this.txtMaxOgrCount.BorderColor = System.Drawing.Color.LightGray;
             this.txtMaxOgrCount.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMaxOgrCount.IntegerValue = ((long)(1));
-            this.txtMaxOgrCount.Location = new System.Drawing.Point(21, 62);
+            this.txtMaxOgrCount.Location = new System.Drawing.Point(21, 61);
             this.txtMaxOgrCount.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMaxOgrCount.MinValue = ((long)(0));
             this.txtMaxOgrCount.Name = "txtMaxOgrCount";
@@ -236,7 +249,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl3);
             this.Name = "VectorConfigPage";
-            this.Size = new System.Drawing.Size(394, 427);
+            this.Size = new System.Drawing.Size(394, 419);
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionAbsence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionMismatch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
@@ -270,5 +283,6 @@ namespace MW5.Configuration
         private Label label3;
         private Label label1;
         private Syncfusion.Windows.Forms.Tools.IntegerTextBox txtMaxOgrCount;
+        private CheckBox chkShareConnection;
     }
 }

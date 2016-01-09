@@ -52,6 +52,7 @@ namespace MW5.Configuration
             chkFastMode.Checked = MapConfig.ShapefileFastMode;
             chkCacheDbfRecords.Checked = config.CacheDbfRecords;
             chkCacheRenderingData.Checked = config.CacheRenderingData;
+            chkShareConnection.Checked = config.OgrShareConnection;
 
             txtMaxOgrCount.IntegerValue = config.OgrMaxFeatureCount;
 
@@ -74,6 +75,7 @@ namespace MW5.Configuration
             config.CacheRenderingData = chkCacheRenderingData.Checked;
 
             config.OgrMaxFeatureCount = (int)txtMaxOgrCount.IntegerValue;
+            config.OgrShareConnection = chkShareConnection.Checked;
 
             config.SpatialIndexFeatureCount = (int)udSpatialIndexCount.Value;
         }

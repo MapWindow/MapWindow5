@@ -13,6 +13,8 @@ namespace MW5.Plugins.Services
 {
     public interface ILayerService
     {
+        bool Aborted { get; }
+
         int LastLayerHandle { get; }
 
         bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None, ZValueType zValue = ZValueType.None);

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Data.Db;
 using MW5.Data.Views.Abstract;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Shared;
@@ -31,13 +32,55 @@ namespace MW5.Data.Views
 
             btnTestConnection.Click += (s, e) => Invoke(TestConnection);
 
-            tabControlAdv1.SelectedIndex = _lastTabPage;
+            RestoreSettings();
 
-            FormClosed += (s, e) => _lastTabPage = tabControlAdv1.SelectedIndex;
+            FormClosed += (s, e) => SaveSettings();
 
             UpdateView();
 
             Shown += (s, e) => tabControlAdv1.Focus(); ;
+        }
+
+        private void RestoreSettings()
+        {
+            tabControlAdv1.SelectedIndex = _lastTabPage;
+
+            switch (DatabaseType)
+            {
+                case GeoDatabaseType.PostGis:
+                    break;
+                case GeoDatabaseType.SpatiaLite:
+                    break;
+                case GeoDatabaseType.MsSql:
+                    txtMssqlDatabase.Text = AppConfig.Instance.MsSqlDatabase;
+                    txtMssqlServer.Text = AppConfig.Instance.MsSqlServer;
+                    txtMssqlUserName.Text = AppConfig.Instance.MsSqlUser;
+                    optSqlAuthentication.Checked = AppConfig.Instance.MsSqlUseNativeAuthentication;
+                    break;
+                case GeoDatabaseType.MySql:
+                    break;
+            }
+        }
+
+        private void SaveSettings()
+        {
+            _lastTabPage = tabControlAdv1.SelectedIndex;
+
+            switch (DatabaseType)
+            {
+                case GeoDatabaseType.PostGis:
+                    break;
+                case GeoDatabaseType.SpatiaLite:
+                    break;
+                case GeoDatabaseType.MsSql:
+                    AppConfig.Instance.MsSqlDatabase = txtMssqlDatabase.Text;
+                    AppConfig.Instance.MsSqlServer = txtMssqlServer.Text;
+                    AppConfig.Instance.MsSqlUser = txtMssqlUserName.Text;
+                    AppConfig.Instance.MsSqlUseNativeAuthentication = optSqlAuthentication.Checked;
+                    break;
+                case GeoDatabaseType.MySql:
+                    break;
+            }
         }
 
         private void InitIgnoreList()

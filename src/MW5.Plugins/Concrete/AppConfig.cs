@@ -239,7 +239,22 @@ namespace MW5.Plugins.Concrete
         public int MouseTolerance { get; set; }
 
         [DataMember]
+        public string MsSqlServer { get; set; }
+
+        [DataMember]
+        public string MsSqlDatabase { get; set; }
+
+        [DataMember]
+        public string MsSqlUser { get; set; }
+
+        [DataMember]
+        public bool MsSqlUseNativeAuthentication { get; set; }
+
+        [DataMember]
         public int OgrMaxFeatureCount { get; set; }
+
+        [DataMember]
+        public bool OgrShareConnection { get; set; }
 
         [DataMember]
         public bool OverviewBackgroundVisible { get; set; }
@@ -532,6 +547,7 @@ namespace MW5.Plugins.Concrete
             MouseTolerance = 10;
             MouseWheelDirection = MouseWheelDirection.Forward;
             OgrMaxFeatureCount = 50000;
+            OgrShareConnection = false;
             OverviewBackgroundVisible = true;
             PrintingUnits = 0;
             PrintingMargins = new Margins(25, 25, 50, 50);

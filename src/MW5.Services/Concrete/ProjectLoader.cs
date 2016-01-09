@@ -145,7 +145,7 @@ namespace MW5.Services.Concrete
                     Logger.Current.Info("Layer loading was skipped: " + xmlLayer.Identity);
                     continue;
                 }
-                
+
                 if (_layerService.AddLayerIdentity(xmlLayer.Identity))
                 {
                     int handle = _layerService.LastLayerHandle;
@@ -156,6 +156,10 @@ namespace MW5.Services.Concrete
                     {
                         selectedLayerHandle = handle;
                     }
+                }
+                else if (_layerService.Aborted)
+                {
+                    return false;
                 }
             }
 

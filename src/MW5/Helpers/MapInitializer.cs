@@ -80,6 +80,7 @@ namespace MW5.Helpers
             MapConfig.WmsDiskCaching = config.WmsDiskCaching;
             MapConfig.MouseTolerance = config.MouseTolerance;
             MapConfig.OgrLayerMaxFeatureCount = config.OgrMaxFeatureCount;
+            MapConfig.OgrShareDatasources = config.OgrShareConnection;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;

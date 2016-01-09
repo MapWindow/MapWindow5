@@ -186,6 +186,10 @@ namespace MW5.Services.Concrete
                     string state = xmlLayer.SerializeToXml();
                     layer.Deserialize(state);
                 }
+                else if (_layerService.Aborted)
+                {
+                    return;
+                }
             }
         }
 

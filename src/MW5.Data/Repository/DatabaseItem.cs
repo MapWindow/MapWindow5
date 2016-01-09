@@ -73,10 +73,11 @@ namespace MW5.Data.Repository
         {
             if (_datasource.Open(data.Connection.ConnectionString))
             {
-                var en = _datasource.GetFastEnumerator();
-                while (en.MoveNext())
+                var it = _datasource.GetFastEnumerator();
+
+                while (it.MoveNext())
                 {
-                    var layer = en.Current;
+                    var layer = it.Current;
 
                     if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql &&
                         string.IsNullOrWhiteSpace(layer.GeometryColumnName))
@@ -104,9 +105,11 @@ namespace MW5.Data.Repository
                         AddLayerNode(new VectorLayerWrapper(layer, false));
                     }
                 }
+
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         private void AddLayerNode(VectorLayerWrapper layer)

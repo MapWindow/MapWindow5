@@ -31,6 +31,7 @@ namespace MW5.Services.Concrete
         private readonly IProjectionMismatchService _mismatchTester;
         private int _lastLayerHandle;
         private bool _withinBatch;
+        private bool _aborted;
 
         public LayerService(
             IAppContext context,
@@ -46,6 +47,7 @@ namespace MW5.Services.Concrete
             _fileDialogService = fileDialogService;
             _broadcaster = broadcaster;
             _mismatchTester = mismatchTester;
+            _aborted = false;
         }
 
         public bool RemoveSelectedLayer()
@@ -197,9 +199,6 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        /// <summary>
-        /// Adds the datasource to the map and notifies plugins about it.
-        /// </summary>
         public bool AddDatasource(IDatasource ds, string layerName = "")
         {
             int addedCount = 0;
@@ -208,17 +207,16 @@ namespace MW5.Services.Concrete
             foreach (var layer in ds.GetLayers())
             {
                 // projection mistmatch testing
-                bool abort;
-                var newLayer = TestProjectionMismatch(layer, out abort);
+                var newLayer = TestProjectionMismatch(layer, out _aborted);
+
+                if (_aborted)
+                {
+                    return false;
+                }
 
                 if (newLayer == null)
                 {
                     continue;
-                }
-
-                if (abort)
-                {
-                    return false;
                 }
 
                 // ask plugins if they don't object
@@ -258,6 +256,16 @@ namespace MW5.Services.Concrete
             }
 
             _context.Map.Redraw();
+        }
+
+        public bool Aborted
+        {
+            get
+            {
+                bool value = _aborted;
+                _aborted = false;
+                return value;
+            }
         }
 
         public int LastLayerHandle

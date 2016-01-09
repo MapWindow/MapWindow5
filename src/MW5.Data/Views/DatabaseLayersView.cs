@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -21,52 +22,62 @@ namespace MW5.Data.Views
 {
     public partial class DatabaseLayersView : DatabaseLayersViewBase, IDatabaseLayersView
     {
-        private List<VectorLayerGridAdapter> _layers;
+        private BindingList<VectorLayerGridAdapter> _layers = new BindingList<VectorLayerGridAdapter>();
+        private SynchronizationContext _syncContext;
 
         public DatabaseLayersView()
         {
             InitializeComponent();
-
-            Shown += DatabaseLayersView_Shown;
         }
 
-        void DatabaseLayersView_Shown(object sender, EventArgs e)
+        public void Initialize()
         {
+            Text = @"Database Layers: " + Model.Connection.Name;
+
+            _syncContext = SynchronizationContext.Current;
+
             StartWait();
 
-            try
+            InitGrid();
+
+            LoadLayersAsync();
+        }
+
+        private void InitGrid()
+        {
+            databaseLayersGrid1.DataSource = _layers;
+
+            var style = databaseLayersGrid1.Adapter.GetColumnStyle(r => r.Name);
+            style.ImageList = imageList1;
+            style.ImageIndex = 0;
+
+            databaseLayersGrid1.Adapter.SetColumnIcon(r => r, GetIcon);
+            databaseLayersGrid1.Adapter.HotTracking = true;
+        }
+
+        private void LoadLayersAsync()
+        {
+            Task<bool>.Factory.StartNew(() =>
             {
                 if (Model.Datasource.Open(Model.Connection.ConnectionString))
                 {
-                    var layers = GetLayers().ToList();
 
-                    databaseLayersGrid1.DataSource = layers;
-                    _layers = layers;
+                    LoadLayers();
+                    return true;
                 }
                 else
                 {
                     const string msg = "Failed to open database connection.";
                     Logger.Current.Warn(msg + ": " + Model.Datasource.GdalLastErrorMsg);
                     MessageService.Current.Info(msg);
+                    return false;
                 }
-            }
-            finally
-            {
-                StopWait();
-            }
 
-            var style = databaseLayersGrid1.Adapter.GetColumnStyle(r => r.Name);
-            style.ImageList = imageList1;
-            style.ImageIndex = 0;
-            databaseLayersGrid1.Adapter.SetColumnIcon(r => r, GetIcon);
-
-            databaseLayersGrid1.AdjustColumnWidths();
-            databaseLayersGrid1.Adapter.HotTracking = true;
-        }
-
-        public void Initialize()
-        {
-            Text = @"Database Layers: " + Model.Connection.Name;
+            }).ContinueWith(t =>
+                {
+                    StopWait();
+                    databaseLayersGrid1.Enabled = true;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private int GetIcon(VectorLayerGridAdapter info)
@@ -80,6 +91,8 @@ namespace MW5.Data.Views
                     return 1;
                 case GeometryType.Polygon:
                     return 2;
+                case GeometryType.None:
+                    return 3;
             }
 
             return -1;
@@ -90,14 +103,19 @@ namespace MW5.Data.Views
             get { return new Plugins.Mvp.ViewStyle(true); }
         }
 
-        private IEnumerable<VectorLayerGridAdapter> GetLayers()
+        private void LoadLayers()
         {
-            var enumerator = Model.Datasource.GetFastEnumerator();
+            var enumerator = Model.Datasource.GetEnumerator();
 
             while (enumerator.MoveNext())
             {
                 // TODO: right now it will list only the geometry type of the layer
-                yield return new VectorLayerGridAdapter(enumerator.Current);
+                var layer = new VectorLayerGridAdapter(enumerator.Current);
+                _syncContext.Post(o =>
+                    {
+                        _layers.Add(o as VectorLayerGridAdapter);
+                        databaseLayersGrid1.AdjustColumnWidths();
+                    }, layer);
             }
         }
 
