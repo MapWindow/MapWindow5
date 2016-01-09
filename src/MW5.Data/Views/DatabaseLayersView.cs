@@ -51,7 +51,7 @@ namespace MW5.Data.Views
             style.ImageList = imageList1;
             style.ImageIndex = 0;
 
-            databaseLayersGrid1.Adapter.SetColumnIcon(r => r, GetIcon);
+            databaseLayersGrid1.Adapter.SetColumnIcon(r => r.Name, GetIcon);
             databaseLayersGrid1.Adapter.HotTracking = true;
         }
 
@@ -105,7 +105,7 @@ namespace MW5.Data.Views
 
         private void LoadLayers()
         {
-            var enumerator = Model.Datasource.GetEnumerator();
+            var enumerator = Model.Datasource.GetFastEnumerator();
 
             while (enumerator.MoveNext())
             {

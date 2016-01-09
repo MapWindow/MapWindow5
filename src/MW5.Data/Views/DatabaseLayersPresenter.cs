@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Data.Views.Abstract;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -13,6 +15,7 @@ namespace MW5.Data.Views
     public class DatabaseLayersPresenter: BasePresenter<IDatabaseLayersView, DatabaseLayersModel>
     {
         private readonly ILayerService _layerService;
+        private SynchronizationContext _syncContext;
 
         public DatabaseLayersPresenter(IDatabaseLayersView view, ILayerService layerService) : base(view)
         {
@@ -22,6 +25,8 @@ namespace MW5.Data.Views
 
         public override bool ViewOkClicked()
         {
+            View.StartWait();
+
             var layers = View.Layers.Where(l => l.Selected).ToList();
 
             if (layers.Count == 0)
@@ -30,22 +35,38 @@ namespace MW5.Data.Views
                 return false;
             }
 
-            int count = 0;
+            _syncContext = SynchronizationContext.Current;
+            
             _layerService.BeginBatch();
 
-            foreach (var info in layers)
+            Task.Factory.StartNew(() =>
             {
-                if (_layerService.AddDatabaseLayer(info.Layer.ConnectionString, info.Layer.Name))
+                foreach (var info in layers)
                 {
-                    count++;
+                    var layer = new VectorLayer();
+                    if (layer.Open(info.Layer.ConnectionString, info.Layer.Name))
+                    {
+                        var data = layer.Data;
+                        AddLayerToMap(layer);
+                    }
                 }
-            }
+            })
+            .ContinueWith(t =>
+            {
+                _layerService.EndBatch();
 
-            _layerService.EndBatch();
+                View.StopWait();
 
-            MessageService.Current.Info("Layers added: " + count);
+                ReturnValue = true;
+                View.Close();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            return count > 0;
+            return false;
+        }
+
+        private void AddLayerToMap(VectorLayer layer)
+        {
+            _syncContext.Post(o => _layerService.AddDatasource(layer), layer);
         }
     }
 }

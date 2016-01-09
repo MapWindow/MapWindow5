@@ -46,21 +46,7 @@ namespace MW5.Data.Model
         [Browsable(false)]
         public GeometryType GeometryType
         {
-            get
-            {
-                var type = _layer.GeometryType;
-                
-                if (type == GeometryType.None)
-                {
-                    var types = _layer.AvailableGeometryTypes.ToList();
-                    if (types.Any())
-                    {
-                        return types.FirstOrDefault().GeometryType;
-                    }
-                }
-
-                return type;
-            }
+            get { return _layer.GeometryType; }
         }
 
         [Browsable(false)]

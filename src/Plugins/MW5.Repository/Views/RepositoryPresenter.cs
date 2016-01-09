@@ -8,10 +8,12 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Data.Enums;
 using MW5.Data.Repository;
@@ -305,12 +307,59 @@ namespace MW5.Plugins.Repository.Views
             }
             else
             {
-                if (_layerService.AddLayerIdentity(layer.Identity))
+                if (layer is IDatabaseLayerItem)
                 {
-                    int handle = _layerService.LastLayerHandle;
-                    _context.Map.ZoomToLayer(handle);
+                    var item = layer as IDatabaseLayerItem;
+                    
+                    if (item.Loading)
+                    {
+                        MessageService.Current.Info("This layer is being added to the map.");
+                        return;
+                    }
+
+                    AddLayerToMapAsync(layer as IDatabaseLayerItem);
+                }
+                else
+                {
+                    if (_layerService.AddLayerIdentity(layer.Identity))
+                    {
+                        int handle = _layerService.LastLayerHandle;
+                        _context.Map.ZoomToLayer(handle);
+                    }
                 }
             }
+        }
+
+        private void AddLayerToMapAsync(IDatabaseLayerItem item)
+        {
+            item.ShowLoadingIndicator();
+
+            Task<IDatasource>.Factory.StartNew(() =>
+            {
+                var timer = new Stopwatch();
+                timer.Start();
+
+                var ds = GeoSource.OpenFromIdentity(item.Identity) as IVectorLayer;
+
+                if (ds != null)
+                {
+                    var data = ds.Data;
+                }
+
+                return ds;       
+            }).ContinueWith(t =>
+            {
+                if (t.Result != null)
+                {
+                    if (_layerService.AddDatasource(t.Result))
+                    {
+                        int handle = _layerService.LastLayerHandle;
+                        _context.Map.ZoomToLayer(handle);
+                    }
+                }
+
+                item.HideLoadingIndicator();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private T GetSelectedItem<T>() where T : class, IRepositoryItem

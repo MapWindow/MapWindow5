@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows.Forms;
 using MW5.Data.Enums;
+using MW5.Data.Properties;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository
@@ -42,6 +44,17 @@ namespace MW5.Data.Repository
         public virtual void Expand()
         {
             _node.Expanded = true;
+        }
+
+        public static void ShowLoadingIndicator(TreeNodeAdv node)
+        {
+            var pct = new PictureBox { Image = Resources.anim_loading, SizeMode = PictureBoxSizeMode.AutoSize };
+            node.CustomControl = pct;
+        }
+
+        public static void HideLoadingIndicator(TreeNodeAdv node)
+        {
+            node.CustomControl = null;
         }
 
         public static IRepositoryItem Get(TreeNodeAdv node)

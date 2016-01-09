@@ -276,7 +276,9 @@ namespace MW5.Data.Repository
                 if (folder.IsParentOf(layer))
                 {
                     var subs = folder.SubItems.OfType<ILayerItem>();
-                    if (!subs.Select(s => s.Identity).Contains(layer))
+                    var list = subs.Select(s => s.Identity).ToList();
+
+                    if (!list.Contains(layer))
                     {
                         folder.Refresh();
                         break;

@@ -79,7 +79,7 @@ namespace MW5.Api.Concrete
                 case LayerIdentityType.OgrDatasource:
                     return Connection.EqualsIgnoreCase(other.Connection) && 
                             Query.EqualsIgnoreCase(other.Query) && 
-                            GeometryType == other.GeometryType && 
+                            (GeometryType == other.GeometryType || GeometryType == GeometryType.None || other.GeometryType == GeometryType.None) && 
                             ZValueType == other.ZValueType;
             }
 

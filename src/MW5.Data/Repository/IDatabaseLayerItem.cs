@@ -16,5 +16,8 @@ namespace MW5.Data.Repository
         GeometryType GeometryType { get; }
         int NumFeatures { get; }
         ISpatialReference Projection { get; }
+        void ShowLoadingIndicator();
+        void HideLoadingIndicator();
+        bool Loading { get; }
     }
 }

@@ -45,21 +45,10 @@ namespace MW5.Data.Views
         {
             tabControlAdv1.SelectedIndex = _lastTabPage;
 
-            switch (DatabaseType)
-            {
-                case GeoDatabaseType.PostGis:
-                    break;
-                case GeoDatabaseType.SpatiaLite:
-                    break;
-                case GeoDatabaseType.MsSql:
-                    txtMssqlDatabase.Text = AppConfig.Instance.MsSqlDatabase;
-                    txtMssqlServer.Text = AppConfig.Instance.MsSqlServer;
-                    txtMssqlUserName.Text = AppConfig.Instance.MsSqlUser;
-                    optSqlAuthentication.Checked = AppConfig.Instance.MsSqlUseNativeAuthentication;
-                    break;
-                case GeoDatabaseType.MySql:
-                    break;
-            }
+            txtMssqlDatabase.Text = AppConfig.Instance.MsSqlDatabase;
+            txtMssqlServer.Text = AppConfig.Instance.MsSqlServer;
+            txtMssqlUserName.Text = AppConfig.Instance.MsSqlUser;
+            optSqlAuthentication.Checked = AppConfig.Instance.MsSqlUseNativeAuthentication;
         }
 
         private void SaveSettings()

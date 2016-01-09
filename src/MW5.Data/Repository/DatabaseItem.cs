@@ -40,16 +40,14 @@ namespace MW5.Data.Repository
             if (_node.ExpandedOnce) return;
 
             var data = Metadata;
-
-            var pct = new PictureBox { Image = Resources.anim_loading, SizeMode = PictureBoxSizeMode.AutoSize };
-            _node.CustomControl = pct;
+            
+            ShowLoadingIndicator(_node);
 
             Application.DoEvents();
 
             _syncContext = SynchronizationContext.Current;
 
-            Task.Factory.StartNew(
-                (d) => LoadLayers(d as DatabaseItemMetadata), data).ContinueWith(t =>
+            Task.Factory.StartNew(d => LoadLayers(d as DatabaseItemMetadata), data).ContinueWith(t =>
                 {
                     try
                     {
@@ -60,7 +58,7 @@ namespace MW5.Data.Repository
                         Logger.Current.Info("Failed to to load OGR layers.", ex);
                     }
 
-                    _node.CustomControl = null;
+                    HideLoadingIndicator(_node);
 
                     _datasource.Close();
 

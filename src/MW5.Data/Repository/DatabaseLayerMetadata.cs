@@ -28,5 +28,6 @@ namespace MW5.Data.Repository
         public ISpatialReference Projection { get; set; }
         public string Connection { get; set; }
         public bool AddedToMap { get; set; }
+        public bool Loading { get; set; }
     }
 }

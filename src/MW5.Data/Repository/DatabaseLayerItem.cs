@@ -13,6 +13,8 @@ namespace MW5.Data.Repository
 {
     internal class DatabaseLayerItem : MetadataItem<DatabaseLayerMetadata>, IDatabaseLayerItem
     {
+        private bool _loading = false;
+
         internal DatabaseLayerItem(TreeNodeAdv node) : base(node)
         {
         }
@@ -42,9 +44,29 @@ namespace MW5.Data.Repository
             get { return Metadata.Projection; }
         }
 
+        public void ShowLoadingIndicator()
+        {
+            ShowLoadingIndicator(_node);
+            Metadata.Loading = true;
+        }
+
+        public void HideLoadingIndicator()
+        {
+            HideLoadingIndicator(_node);
+            Metadata.Loading = false;
+        }
+
+        public bool Loading
+        {
+            get { return Metadata.Loading; }
+        }
+
         public LayerIdentity Identity
         {
-            get { return new LayerIdentity(Metadata.Connection, Metadata.Name, Metadata.GeometryType); }
+            get
+            {
+                return new LayerIdentity(Metadata.Connection, Metadata.Name, Metadata.GeometryType);
+            }
         }
 
         public bool AddedToMap
