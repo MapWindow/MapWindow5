@@ -161,4 +161,9 @@ src/packages/
 !src/packages/repositories.config
 src/MW5.Prototype
 install/*
-docs/
+src/Newsletter/
+src/cov-analysis-win64-7.7.0/
+src/Plugins/MW5.NtkPlugin/
+src/Plugins/MW5.TemplateNtk/ClassDiagram1.cd
+src/Plugins/MW5.TemplateNtk/
+src/Plugins/MW5.TopoGISPlugin/
