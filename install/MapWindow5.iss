@@ -11,7 +11,7 @@
 #define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
 
-;;#define x64BitVersion true
+#define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"
@@ -70,6 +70,8 @@ AlwaysShowComponentsList=false
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 #endif
+ChangesAssociations=True
+UsePreviousAppDir=False
 
 [Components]
 Name: "MapWindow"; Description: "MapWindow5 files"; Types: full custom compact; Flags: fixed
@@ -88,7 +90,7 @@ Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: igno
 ;; Manuals sub folder
 Source: "{#ExeBinPath}\Manuals\*"; DestDir: "{app}\Manuals"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; Plugins subfolder
-Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
+Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll"
 ;; Styles subfolder
 Source: "{#ExeBinPath}\Styles\*"; DestDir: "{app}\Styles"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; SQLite interop:
@@ -137,9 +139,22 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\MapWindow.exe"; WorkingDi
 [Dirs]
 Name: {code:GetDataDir}; Check: not DataDirExists; Flags: uninsneveruninstall; Permissions: users-modify
 Name: "{app}\Logs"; Flags: uninsalwaysuninstall; Components: MapWindow; Permissions: users-modify
+Name: "{app}\Styles"; Components: MapWindow; Permissions: users-modify
+Name: "{app}\Projections"; Components: MapWindow; Permissions: users-modify
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}\Logs"; Components: MapWindow
+
+[Registry]
+;; http://www.jrsoftware.org/isfaq.php#assoc
+Root: HKCR; Subkey: ".mwproj"; ValueType: string; ValueName: ""; ValueData: "MW5Project"; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "MW5Project"; ValueType: string; ValueName: ""; ValueData: "MW5 Project"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "MW5Project\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\MAPWINDOW.EXE,0"
+Root: HKCR; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\MAPWINDOW.EXE"" ""%1"""
+
+[InstallDelete]
+Type: files; Name: "{app}\Plugins\MW5.TemplatePlugin.dll"; Components: MapWindow
+Type: files; Name: "{app}\Plugins\Interop.MapWinGIS.dll"; Components: MapWindow
 
 [Code]
 #IFDEF UNICODE
@@ -305,7 +320,7 @@ Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 ;Name: "luxemburgish"; MessagesFile: "compiler:Languages\Luxemburgish.isl"
 ;Name: "macedonian"; MessagesFile: "compiler:Languages\Macedonian.isl"
 ;Name: "malaysian"; MessagesFile: "compiler:Languages\Malaysian.isl"
-Name: "nepali"; MessagesFile: "compiler:Languages\Nepali.islu"
+;Name: "nepali"; MessagesFile: "compiler:Languages\Nepali.islu"
 Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
 Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
