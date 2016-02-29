@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ConfigService.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Services.Helpers;
 using MW5.Services.Serialization;
 using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
-    internal class ConfigService: IConfigService
+    internal class ConfigService : IConfigService
     {
         private readonly IPluginManager _manager;
         private readonly IRepository _repository;
@@ -76,9 +79,11 @@ namespace MW5.Services.Concrete
 
         public bool LoadConfig()
         {
-            string path = ConfigPathHelper.GetConfigFilePath();
+            var path = ConfigPathHelper.GetConfigFilePath();
+            Logger.Current.Debug("Start LoadConfig. Config file: " + path);
             if (!File.Exists(path))
             {
+                Logger.Current.Debug("Config file {0} does not exist", path);
                 return false;
             }
 
@@ -93,6 +98,7 @@ namespace MW5.Services.Concrete
                 }
 
                 ApplyXmlConfig(xmlConfig);
+                Logger.Current.Debug("End LoadConfig");
                 return true;
             }
             catch (Exception ex)
@@ -100,78 +106,6 @@ namespace MW5.Services.Concrete
                 MessageService.Current.Info("Failed to load app settings: " + ex.Message);
             }
             return false;
-        }
-
-
-        private bool SaveRepository()
-        {
-            _repository.PrepareToSave();
-
-            try
-            {
-                using (var stream = new StreamWriter(ConfigPathHelper.GetRepositoryConfigPath(), false))
-                {
-                    var state = new XmlRepository(_repository).Serialize(false);
-                    stream.Write(state);
-                    stream.Flush();
-                    stream.Close();
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                const string msg = "Failed to save the state of the repository.";
-                Logger.Current.Error(msg, ex);
-                MessageService.Current.Info(msg);
-            }
-            return false;
-        }
-
-        private bool LoadRepository()
-        {
-            string path = ConfigPathHelper.GetRepositoryConfigPath();
-            
-            if (!File.Exists(path))
-            {
-                return false;
-            }
-
-            try
-            {
-                XmlRepository xmlRepository;
-                using (var stream = new StreamReader(path, Encoding.UTF8))
-                {
-                    string state = stream.ReadToEnd();
-                    xmlRepository = state.Deserialize<XmlRepository>();
-                    stream.Close();
-                }
-
-                ApplyRepositoryConfig(xmlRepository);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageService.Current.Info("Failed to load the state of the repository: " + ex.Message);
-            }
-            return false;
-        }
-
-        private XmlConfig GetXmlConfig()
-        {
-            var xmlConfig = new XmlConfig
-            {
-                Settings = AppConfig.Instance
-            };
-
-            var plugins = _manager.ApplicationPlugins.Select(p => new XmlPlugin()
-            {
-                Guid = p.Identity.Guid,
-                Name = p.Identity.Name
-            });
-
-            xmlConfig.ApplicationPlugins = plugins.ToList();
-
-            return xmlConfig;
         }
 
         private void ApplyRepositoryConfig(XmlRepository xmlRepository)
@@ -229,6 +163,74 @@ namespace MW5.Services.Concrete
         {
             AppConfig.Instance = xmlConfig.Settings;
             AppConfig.Instance.ApplicationPlugins = xmlConfig.ApplicationPlugins.Select(p => p.Guid).ToList();
+        }
+
+        private XmlConfig GetXmlConfig()
+        {
+            var xmlConfig = new XmlConfig { Settings = AppConfig.Instance };
+
+            var plugins =
+                _manager.ApplicationPlugins.Select(p => new XmlPlugin { Guid = p.Identity.Guid, Name = p.Identity.Name });
+
+            xmlConfig.ApplicationPlugins = plugins.ToList();
+
+            return xmlConfig;
+        }
+
+        private bool LoadRepository()
+        {
+            var path = ConfigPathHelper.GetRepositoryConfigPath();
+            Logger.Current.Debug("Start LoadRepository. Config file: " + path);
+
+            if (!File.Exists(path))
+            {
+                Logger.Current.Debug("Repository config file {0} does not exist", path);
+                return false;
+            }
+
+            try
+            {
+                XmlRepository xmlRepository;
+                using (var stream = new StreamReader(path, Encoding.UTF8))
+                {
+                    string state = stream.ReadToEnd();
+                    xmlRepository = state.Deserialize<XmlRepository>();
+                    stream.Close();
+                }
+
+                ApplyRepositoryConfig(xmlRepository);
+                Logger.Current.Debug("End LoadRepository");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Info("Failed to load the state of the repository: " + ex.Message);
+            }
+            return false;
+        }
+
+        private bool SaveRepository()
+        {
+            _repository.PrepareToSave();
+
+            try
+            {
+                using (var stream = new StreamWriter(ConfigPathHelper.GetRepositoryConfigPath(), false))
+                {
+                    var state = new XmlRepository(_repository).Serialize(false);
+                    stream.Write(state);
+                    stream.Flush();
+                    stream.Close();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                const string msg = "Failed to save the state of the repository.";
+                Logger.Current.Error(msg, ex);
+                MessageService.Current.Info(msg);
+            }
+            return false;
         }
     }
 }

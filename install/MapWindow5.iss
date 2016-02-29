@@ -11,7 +11,7 @@
 #define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
 
-#define x64BitVersion true
+;#define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"
@@ -100,7 +100,7 @@ Source: "{#ExeBinPath}\x64\*"; DestDir: "{app}\x64"; Flags: ignoreversion {#Syst
 Source: "{#ExeBinPath}\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 #endif
 ;; Config files:
-Source: "{#ExeBinPath}\MapWindow.exe.config"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
+Source: "{#ExeBinPath}\MapWindow.exe.config"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Permissions: users-modify
 ;; Licenses
 Source: "D:\dev\MapwinGIS\GIT\support\GDAL_SDK\licenses\*.rtf"; DestDir: "{app}\Licenses"; Flags: ignoreversion; Components: MapWindow
 Source: "{#ExeBinPath}\..\..\..\licenses\*"; DestDir: "{app}\Licenses"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
