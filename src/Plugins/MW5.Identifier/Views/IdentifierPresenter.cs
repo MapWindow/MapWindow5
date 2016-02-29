@@ -1,8 +1,12 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="IdentifierPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Windows.Forms;
 using MW5.Api.Enums;
-using MW5.Api.Events;
-using MW5.Plugins.Enums;
 using MW5.Plugins.Identifier.Controls;
 using MW5.Plugins.Identifier.Enums;
 using MW5.Plugins.Interfaces;
@@ -11,17 +15,63 @@ using MW5.UI.Docking;
 
 namespace MW5.Plugins.Identifier.Views
 {
-    public class IdentifierPresenter: CommandDispatcher<IIdentifierView, IdentifierCommand>, IDockPanelPresenter
+    public class IdentifierPresenter : CommandDispatcher<IIdentifierView, IdentifierCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;
 
-        public IdentifierPresenter(IAppContext context, IIdentifierView view): base(view)
+        public IdentifierPresenter(IAppContext context, IIdentifierView view)
+            : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
 
             view.ModeChanged += OnIdentifierModeChanged;
             view.ItemSelected += OnItemSelected;
+        }
+
+        public Control GetInternalObject()
+        {
+            return View as Control;
+        }
+
+        public void RemoveLayer(int layerHandle)
+        {
+            _context.Map.IdentifiedShapes.RemoveByLayerHandle(layerHandle);
+            View.UpdateView();
+        }
+
+        public override void RunCommand(IdentifierCommand command)
+        {
+            switch (command)
+            {
+                case IdentifierCommand.Clear:
+                    _context.Map.IdentifiedShapes.Clear();
+                    View.Clear();
+                    _context.Map.Redraw(RedrawType.SkipDataLayers);
+                    break;
+            }
+        }
+
+        public void ShapeIdentified()
+        {
+            View.UpdateView();
+
+            ActivatePanel();
+        }
+
+        private void ActivatePanel()
+        {
+            var panel = _context.DockPanels.Find(DockPanelKeys.Identifier);
+            if (panel != null)
+            {
+                panel.Visible = true;
+                panel.Activate();
+            }
+        }
+
+        private void OnIdentifierModeChanged()
+        {
+            _context.Map.Identifier.Mode = View.Mode;
         }
 
         private void OnItemSelected()
@@ -52,7 +102,7 @@ namespace MW5.Plugins.Identifier.Views
             shapes.Clear();
 
             var items = View.GetLayerItems(layer.LayerHandle);
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 switch (item.NodeType)
                 {
@@ -80,7 +130,7 @@ namespace MW5.Plugins.Identifier.Views
                 if (img != null)
                 {
                     var bounds = img.GetPixelBounds(pixel.RasterX, pixel.RasterY);
-                    bounds = bounds.Inflate(bounds.Width*10, bounds.Height*10);
+                    bounds = bounds.Inflate(bounds.Width * 10, bounds.Height * 10);
                     _context.Map.ZoomToExtents(bounds);
                 }
             }
@@ -102,53 +152,8 @@ namespace MW5.Plugins.Identifier.Views
             }
             else
             {
-                _context.Map.Redraw(RedrawType.SkipDataLayers);    
+                _context.Map.Redraw(RedrawType.SkipDataLayers);
             }
-        }
-
-        private void OnIdentifierModeChanged()
-        {
-            _context.Map.Identifier.Mode = View.Mode;
-        }
-
-        public void RemoveLayer(int layerHandle)
-        {
-            _context.Map.IdentifiedShapes.RemoveByLayerHandle(layerHandle);
-            View.UpdateView();
-        }
-
-        public void ShapeIdentified()
-        {
-            View.UpdateView();
-
-            ActivatePanel();
-        }
-
-        private void ActivatePanel()
-        {
-            var panel = _context.DockPanels.Find(DockPanelKeys.Identifier);
-            if (panel != null)
-            {
-                panel.Visible = true;
-                panel.Activate();
-            }
-        }
-
-        public override void RunCommand(IdentifierCommand command)
-        {
-            switch (command)
-            {
-                case IdentifierCommand.Clear:
-                    _context.Map.IdentifiedShapes.Clear();
-                    View.Clear();
-                    _context.Map.Redraw(RedrawType.SkipDataLayers);
-                    break;
-            }
-        }
-
-        public Control GetInternalObject()
-        {
-            return View as Control;
         }
     }
 }

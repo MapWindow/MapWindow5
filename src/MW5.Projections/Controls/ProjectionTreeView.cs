@@ -1,8 +1,8 @@
-﻿// ----------------------------------------------------------------------------
-// MapWindow.Controls.Projections: store controls to work with EPSG projections
-// database
-// Author: Sergei Leschinski
-// ----------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ProjectionTreeView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections;
@@ -36,9 +36,138 @@ namespace MW5.Projections.Controls
     [ToolboxBitmap(typeof(TreeView))]
     public sealed class ProjectionTreeView : TreeViewBase
     {
-        #region Declarations
+        public void Filter(string text, bool force = false)
+        {
+            BeginUpdate();
 
-        IProjectionDatabase _database;
+            try
+            {
+                bool empty = string.IsNullOrWhiteSpace(text) || (!force && text.Length <= 2);
+
+                var nodeRegion = Nodes.Find(TreeViewConstants.NodeByRegion);
+                ExapandWorldNode(empty);
+                nodeRegion.Height = empty ? TreeViewConstants.NodeHeight : 0;
+                    // removing and adding the node works much slower
+
+                var nodeSearch = Nodes.Find(TreeViewConstants.SearchResults);
+
+                if (empty && nodeSearch != null)
+                {
+                    Nodes.Remove(nodeSearch);
+                }
+
+                if (!empty)
+                {
+                    if (nodeSearch == null)
+                    {
+                        nodeSearch = Nodes.Add(TreeViewConstants.SearchResults, TreeViewConstants.SearchResults,
+                            TreeViewConstants.IconFolder);
+                    }
+                    else
+                    {
+                        nodeSearch.Nodes.Clear();
+                    }
+                }
+
+                if (!empty)
+                {
+                    FillSearchResults(nodeSearch, text);
+                    nodeSearch.Expanded = true;
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        #region Initialization
+
+        /// <summary>
+        /// Initilizes tree view with the existing in-memory version of database
+        /// </summary>
+        public bool Initialize(IProjectionDatabase database, IAppContext context)
+        {
+            _context = context; // null is acceptable as well
+
+            if (database.Name == "")
+            {
+                return false;
+            }
+
+            Database = database;
+
+            _geographicList = Database.GeographicCs;
+            _geographicList.Sort((cs1, cs2) => string.Compare(cs1.Name, cs2.Name, StringComparison.Ordinal));
+
+            return true;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Shows properties for projection with given code
+        /// </summary>
+        public void ShowProjectionProperties(int code)
+        {
+            foreach (var geographicCs in Database.GeographicCs)
+            {
+                var gcs = (GeographicCs)geographicCs;
+                if (gcs.Code == code)
+                {
+                    FireCoordinateSystemPropertiesRequested(gcs);
+                    return;
+                }
+            }
+
+            foreach (var projectedCs in Database.ProjectedCs)
+            {
+                var pcs = (ProjectedCs)projectedCs;
+                if (pcs.Code == code)
+                {
+                    FireCoordinateSystemPropertiesRequested(pcs);
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Suppresses standard double click behavior - expanding/collapsing
+        /// </summary>
+        protected override void DefWndProc(ref Message m)
+        {
+            _doubleClickWasDone = (m.Msg == 515); /* WM_LBUTTONDBLCLK */
+            base.DefWndProc(ref m);
+        }
+
+        private bool IsProjectionNode(TreeNodeAdv node)
+        {
+            return node.GetImageIndex() == TreeViewConstants.IconGlobe ||
+                   node.GetImageIndex() == TreeViewConstants.IconMap;
+        }
+
+        private void ProjectionTreeView_PrepareToolTip(object sender, ToolTipEventArgs e)
+        {
+            var cs = SelectedCoordinateSystem;
+            if (cs == null)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            var info = e.ToolTip;
+            info.Header.Text = cs.Name;
+            info.Body.Text = cs.Scope + Environment.NewLine + cs.Proj4;
+            info.Footer.Text = @"EPSG: " + cs.Code;
+        }
+
+        private void ShowProjectionProperties()
+        {
+            HideToolTip();
+            FireCoordinateSystemPropertiesRequested(SelectedCoordinateSystem);
+        }
+
+        #region Declarations
 
         // GCS that should be classified by type (by default the option is off, to ensure performance)
         private readonly Hashtable _dctLocalWithClassification;
@@ -46,7 +175,7 @@ namespace MW5.Projections.Controls
         // USA GCS that should be classified by state (NAD)
         private readonly Hashtable _dctUsaStates;
 
-        private ProjectionSelectionMode _selectionMode = ProjectionSelectionMode.Intersection;
+        private readonly ProjectionSelectionMode _selectionMode = ProjectionSelectionMode.Intersection;
 
         private bool _doubleClickWasDone;
 
@@ -54,7 +183,7 @@ namespace MW5.Projections.Controls
 
         private IAppContext _context;
 
-        private TreeNodeAdv _selectedNode;  // preserving selected node when context menu is showing
+        private TreeNodeAdv _selectedNode; // preserving selected node when context menu is showing
 
         private List<IGeographicCs> _geographicList;
 
@@ -126,75 +255,47 @@ namespace MW5.Projections.Controls
         protected override IEnumerable<Bitmap> OnCreateImageList()
         {
             return new[]
-            {
-                Resources.img_folder_open,
-                Resources.img_folder_open,
-                Resources.img_globe,
-                Resources.img_map,
-                Resources.img_map_add,
-                Resources.img_map_delete
-            };
-        }
-
-        #endregion
-
-        #region Initialization
-
-        /// <summary>
-        /// Initilizes tree view with the existing in-memory version of database
-        /// </summary>
-        public bool Initialize(IProjectionDatabase database, IAppContext context)
-        {
-            _context = context;  // null is acceptable as well
-
-            if (database.Name == "")
-            {
-                return false;
-            }
-
-            _database = database;
-
-            _geographicList = _database.GeographicCs;
-            _geographicList.Sort((cs1, cs2) => cs1.Name.CompareTo(cs2.Name));
-
-            return true;
+                       {
+                           Resources.img_folder_open, Resources.img_folder_open, Resources.img_globe, Resources.img_map,
+                           Resources.img_map_add, Resources.img_map_delete
+                       };
         }
 
         #endregion
 
         #region Double buffering
-        
+
         //http ://stackoverflow.com/questions/10362988/treeview-flickering
 
         protected override void OnHandleCreated(EventArgs e)
         {
-            SendMessage(this.Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
+            SendMessage(Handle, TVM_SETEXTENDEDSTYLE, (IntPtr)TVS_EX_DOUBLEBUFFER, (IntPtr)TVS_EX_DOUBLEBUFFER);
             base.OnHandleCreated(e);
         }
-        
+
         // Pinvoke:
         private const int TVM_SETEXTENDEDSTYLE = 0x1100 + 44;
-        private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
+        // private const int TVM_GETEXTENDEDSTYLE = 0x1100 + 45;
         private const int TVS_EX_DOUBLEBUFFER = 0x0004;
-        
+
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
         #endregion
 
         #region Context Menu
-        
+
         /// <summary>
         /// Creates a context menu associated with nodes
         /// </summary>
         private void CreateContextMenu()
         {
             _contextMenu = new ContextMenuStripEx
-            {
-                ImageList = LeftImageList,
-                Style = ContextMenuStripEx.ContextMenuStyle.Metro,
-                RenderMode = ToolStripRenderMode.Professional
-            };
+                               {
+                                   ImageList = LeftImageList,
+                                   Style = ContextMenuStripEx.ContextMenuStyle.Metro,
+                                   RenderMode = ToolStripRenderMode.Professional
+                               };
             _contextMenu.Items.Add(TreeViewConstants.ContextAddToFavorite).ImageIndex = TreeViewConstants.IconPlus;
             _contextMenu.Items.Add(TreeViewConstants.ContextRemoveFromFavorite).ImageIndex = TreeViewConstants.IconMinus;
             _contextMenu.Items.Add(new ToolStripSeparator());
@@ -205,7 +306,7 @@ namespace MW5.Projections.Controls
                 item.Name = item.Text;
             }
 
-            _contextMenu.ItemClicked +=ContextMenuItemClicked;
+            _contextMenu.ItemClicked += ContextMenuItemClicked;
         }
 
         void ProjectionTreeView_MouseUp(object sender, MouseEventArgs e)
@@ -259,9 +360,11 @@ namespace MW5.Projections.Controls
                     break;
             }
         }
+
         #endregion
 
         #region Favorite
+
         /// <summary>
         /// Removes coordinate system from favorite list
         /// </summary>
@@ -320,40 +423,43 @@ namespace MW5.Projections.Controls
                 Nodes.Remove(nodeFavorite);
             }
 
-            nodeFavorite = Nodes.CreateNode(TreeViewConstants.NodeFavorite, TreeViewConstants.NodeFavorite, TreeViewConstants.IconFolder);
+            nodeFavorite = Nodes.CreateNode(TreeViewConstants.NodeFavorite, TreeViewConstants.NodeFavorite,
+                TreeViewConstants.IconFolder);
             Nodes.Insert(0, nodeFavorite);
 
             if (_context != null)
             {
-                var list  = _context.Config.FavoriteProjections;
+                var list = _context.Config.FavoriteProjections;
                 if (list != null)
                 {
-                    int count = 0;
+                    // int count = 0;
                     // geographical
-                    IEnumerable<IGeographicCs> results = from gcs in _database.GeographicCs
-                                                        from code in list
-                                                        orderby gcs.Name
-                                                        where gcs.Code == code
-                                                        select(gcs);
-                    
-                    foreach (GeographicCs gcs in results)
+                    var results = from gcs in Database.GeographicCs
+                                                         from code in list
+                                                         orderby gcs.Name
+                                                         where gcs.Code == code
+                                                         select (gcs);
+
+                    foreach (var geographicCs in results)
                     {
+                        var gcs = (GeographicCs)geographicCs;
                         var nodeGcs = nodeFavorite.Nodes.Add(gcs.Code.ToString(), gcs.Name, TreeViewConstants.IconGlobe);
                         nodeGcs.Tag = gcs;
-                        count++;
+                        // count++;
                     }
 
                     // projected
-                    IEnumerable<IProjectedCs> results2 = from pcs in _database.ProjectedCs
-                                                        from code in list
-                                                        orderby pcs.Name
-                                                        where pcs.Code == code
-                                                        select(pcs);
-                    foreach (ProjectedCs pcs in results2)
+                    var results2 = from pcs in Database.ProjectedCs
+                                                         from code in list
+                                                         orderby pcs.Name
+                                                         where pcs.Code == code
+                                                         select (pcs);
+                    foreach (var projectedCs in results2)
                     {
+                        var pcs = (ProjectedCs)projectedCs;
                         var nodePcs = nodeFavorite.Nodes.Add(pcs.Code.ToString(), pcs.Name, TreeViewConstants.IconMap);
                         nodePcs.Tag = pcs;
-                        count++;
+                        // count++;
                     }
 
                     nodeFavorite.ExpandAll();
@@ -365,17 +471,16 @@ namespace MW5.Projections.Controls
                 EndUpdate();
             }
         }
+
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets the underlying projection database 
         /// </summary>
-        public IProjectionDatabase Database
-        {
-            get { return _database; }
-        }
-        
+        public IProjectionDatabase Database { get; private set; }
+
         /// <summary>
         /// Gets the selected item in tree view, only coordinate systems will be returned
         /// </summary>
@@ -409,13 +514,13 @@ namespace MW5.Projections.Controls
                 {
                     return null;
                 }
-                
+
                 ISpatialReference proj = new SpatialReference();
                 if (proj.ImportFromEpsg(cs.Code))
                 {
                     return proj;
                 }
-                
+
                 return null;
             }
         }
@@ -425,7 +530,7 @@ namespace MW5.Projections.Controls
         /// </summary>
         public List<IGeographicCs> CoordinateSystems
         {
-            get { return _database.GeographicCs; }
+            get { return Database.GeographicCs; }
         }
 
         /// <summary>
@@ -433,11 +538,13 @@ namespace MW5.Projections.Controls
         /// </summary>
         public List<IProjectedCs> Projections
         {
-            get { return _database.ProjectedCs; }
+            get { return Database.ProjectedCs; }
         }
+
         #endregion
 
         #region Tree view filling
+
         /// <summary>
         /// Fills treeview with all CS from list
         /// </summary>
@@ -446,7 +553,7 @@ namespace MW5.Projections.Controls
             int gcsCount, pcsCount;
             return RefreshList(new BoundingBox(-180.0, 180.0, -90.0, 90.0), out gcsCount, out pcsCount);
         }
-        
+
         /// <summary>
         /// Fills treeview with all CS from list
         /// </summary>
@@ -465,7 +572,7 @@ namespace MW5.Projections.Controls
             gcsCount = 0;
             projCount = 0;
 
-            if (_database == null)
+            if (Database == null)
             {
                 throw new Exception("No database was specified to populate tree view");
             }
@@ -474,18 +581,21 @@ namespace MW5.Projections.Controls
             Nodes.Clear();
 
             // limits coordinate systems to those which fall into extents
-            bool showFullExtents = extents.xMin == -180.0 && extents.xMax == 180.0 && extents.yMin == -90.0 && extents.yMax == 90.0;
+            var showFullExtents = Math.Abs(extents.xMin - (-180.0)) < 0 && Math.Abs(extents.xMax - 180.0) < 0 && Math.Abs(extents.yMin - (-90.0)) < 0 &&
+                                   Math.Abs(extents.yMax - 90.0) < 0;
 
             ApplyExtents(extents, out gcsCount, out projCount);
 
             // adding top-most nodes
-            _nodeByRegion = Nodes.Add(TreeViewConstants.NodeByRegion, TreeViewConstants.NodeByRegion, TreeViewConstants.IconFolder);
-            
+            _nodeByRegion = Nodes.Add(TreeViewConstants.NodeByRegion, TreeViewConstants.NodeByRegion,
+                TreeViewConstants.IconFolder);
 
             FillRegions(_nodeByRegion, showFullExtents);
 
             // global GCS
-            var list2 = _database.GeographicCs.Where(cs => cs.Type == GeographicalCsType.Global && cs.IsActive).OrderBy(cs => cs.Name);
+            var list2 =
+                Database.GeographicCs.Where(cs => cs.Type == GeographicalCsType.Global && cs.IsActive)
+                    .OrderBy(cs => cs.Name);
             foreach (var gcs in list2)
             {
                 if (gcs.Scope == TreeViewConstants.ScopeNotRecommended || gcs.Name.ToLower().StartsWith("unspecified"))
@@ -546,7 +656,7 @@ namespace MW5.Projections.Controls
         {
             // adding regions
             Hashtable dctRegions = new Hashtable();
-            var listRegions = _database.Regions.Where(r => r.ParentCode == 1);
+            var listRegions = Database.Regions.Where(r => r.ParentCode == 1);
             foreach (var region in listRegions)
             {
                 var nodeRegion = nodeWorld.Nodes.Add(region.Code.ToString(), region.Name, TreeViewConstants.IconFolder);
@@ -554,20 +664,26 @@ namespace MW5.Projections.Controls
             }
 
             // local GCS
-            var listRegions2 = _database.Regions.Where(r => r.ParentCode > 1 && dctRegions.ContainsKey(r.ParentCode));
+            var listRegions2 = Database.Regions.Where(r => r.ParentCode > 1 && dctRegions.ContainsKey(r.ParentCode));
             foreach (var region in listRegions2)
             {
                 var nodeRegion = dctRegions[region.ParentCode] as TreeNodeAdv;
-                var nodeSubregion = nodeRegion.Nodes.Add(region.Code.ToString(), region.Name, TreeViewConstants.IconFolder);
+                if (nodeRegion == null) continue;
+
+                var nodeSubregion = nodeRegion.Nodes.Add(region.Code.ToString(), region.Name,
+                    TreeViewConstants.IconFolder);
                 dctRegions.Add(region.Code, nodeSubregion);
 
-                var listCountries = region.Countries.Where(cn => cn.IsActive).Where(c => c.GeographicCs.Any(cs => cs.IsActive));
+                var listCountries =
+                    region.Countries.Where(cn => cn.IsActive).Where(c => c.GeographicCs.Any(cs => cs.IsActive));
                 foreach (var country in listCountries)
                 {
-                    TreeNodeAdv nodeCountry = null;   // it's to difficult to determine whether the country should be shown
+                    TreeNodeAdv nodeCountry = null;
+                    // it's to difficult to determine whether the country should be shown
 
-                    foreach (GeographicCs gcs in country.GeographicCs.Where(cs => cs.IsActive).OrderBy(gcs => gcs.Name))
+                    foreach (var geographicCs in country.GeographicCs.Where(cs => cs.IsActive).OrderBy(gcs => gcs.Name))
                     {
+                        var gcs = (GeographicCs)geographicCs;
                         // when extents are limited, no need to show global systems for each country
                         if (!showFullExtents && gcs.Type != GeographicalCsType.Local)
                         {
@@ -591,10 +707,12 @@ namespace MW5.Projections.Controls
                                 // country node will be added only here
                                 if (nodeCountry == null)
                                 {
-                                    nodeCountry = nodeSubregion.Nodes.Add(country.Code.ToString(), country.Name, TreeViewConstants.IconFolder);
+                                    nodeCountry = nodeSubregion.Nodes.Add(country.Code.ToString(), country.Name,
+                                        TreeViewConstants.IconFolder);
                                 }
 
-                                var nodeGcs = nodeCountry.Nodes.Add(gcs.Code.ToString(), gcs.Name, TreeViewConstants.IconGlobe);
+                                var nodeGcs = nodeCountry.Nodes.Add(gcs.Code.ToString(), gcs.Name,
+                                    TreeViewConstants.IconGlobe);
                                 nodeGcs.Tag = gcs;
                                 AddProjections(nodeGcs, gcs, projections);
                             }
@@ -603,11 +721,13 @@ namespace MW5.Projections.Controls
                         {
                             if (nodeCountry == null)
                             {
-                                nodeCountry = nodeSubregion.Nodes.Add(country.Code.ToString(), country.Name, TreeViewConstants.IconFolder);
+                                nodeCountry = nodeSubregion.Nodes.Add(country.Code.ToString(), country.Name,
+                                    TreeViewConstants.IconFolder);
                             }
 
                             // local GCS should be added to country even if there is no projection specified
-                            var nodeGcs = nodeCountry.Nodes.Add(gcs.Code.ToString(), gcs.Name, TreeViewConstants.IconGlobe);
+                            var nodeGcs = nodeCountry.Nodes.Add(gcs.Code.ToString(), gcs.Name,
+                                TreeViewConstants.IconGlobe);
                             nodeGcs.Tag = gcs;
 
                             foreach (var pcs in gcs.Projections.OrderBy(cs => cs.Name))
@@ -621,10 +741,14 @@ namespace MW5.Projections.Controls
             }
 
             // regional GCS
-            var list1 = _database.GeographicCs.Where(cs => cs.Type == GeographicalCsType.Regional && cs.IsActive).OrderBy(cs => cs.Name);
+            var list1 =
+                Database.GeographicCs.Where(cs => cs.Type == GeographicalCsType.Regional && cs.IsActive)
+                    .OrderBy(cs => cs.Name);
             foreach (var gcs in list1)
             {
                 var nodeRegion = dctRegions[gcs.RegionCode] as TreeNodeAdv;
+                if (nodeRegion == null) continue;
+
                 var nodeGcs = nodeRegion.Nodes.Add(gcs.Code.ToString(), gcs.Name, TreeViewConstants.IconGlobe);
                 nodeGcs.Tag = gcs;
                 AddProjections(nodeGcs, gcs, gcs.Projections.Where(cs => !cs.Local));
@@ -640,35 +764,39 @@ namespace MW5.Projections.Controls
 
             if (_dctUsaStates.Contains(gcs.Code))
             {
-                string[] states = { "Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", "Connecticut", "District Columbia",
-                                    "Delaware", "Florida", "Georgia", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky",
-                                    "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi",
-                                    "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico",
-                                    "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina",
-                                    "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "Vermont", "Washington", "Wisconsin", 
-                                    "West Virginia", "Wyoming"};
+                string[] states =
+                    {
+                        "Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", "Connecticut",
+                        "District Columbia", "Delaware", "Florida", "Georgia", "Hawaii", "Iowa", "Idaho",
+                        "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts",
+                        "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi", "Montana",
+                        "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey",
+                        "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+                        "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah",
+                        "Virginia", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"
+                    };
 
-                Hashtable dctStatePcs = new Hashtable();
+                var dctStatePcs = new Hashtable();
                 TreeNodeAdv nodeStates = null;
 
-                foreach (string state in states)
+                foreach (var state in states)
                 {
-                    var list = projections.Where(p => p.Name.Contains(state));
-                    if (list.Any())
-                    {
-                        if (nodeStates == null)
-                        {
-                            nodeStates = parentNode.Nodes.Add("States", "States", TreeViewConstants.IconFolder);
-                        }
+                    var state1 = state;
+                    var list = projections.Where(p => p.Name.Contains(state1)).ToList();
+                    if (!list.Any()) continue;
 
-                        var nodeState = nodeStates.Nodes.Add(state, state, TreeViewConstants.IconFolder);
-                        foreach (ProjectedCs pcs in list)
-                        {
-                            var node = nodeState.Nodes.Add(pcs.Code.ToString(), pcs.Name, TreeViewConstants.IconMap);
-                            node.Tag = pcs;
-                            if (!dctStatePcs.ContainsKey(pcs.Code))
-                                dctStatePcs.Add(pcs.Code, null);
-                        }
+                    if (nodeStates == null)
+                    {
+                        nodeStates = parentNode.Nodes.Add("States", "States", TreeViewConstants.IconFolder);
+                    }
+
+                    var nodeState = nodeStates.Nodes.Add(state, state, TreeViewConstants.IconFolder);
+                    foreach (var projectedCs in list)
+                    {
+                        var pcs = (ProjectedCs)projectedCs;
+                        var node = nodeState.Nodes.Add(pcs.Code.ToString(), pcs.Name, TreeViewConstants.IconMap);
+                        node.Tag = pcs;
+                        if (!dctStatePcs.ContainsKey(pcs.Code)) dctStatePcs.Add(pcs.Code, null);
                     }
                 }
 
@@ -681,28 +809,32 @@ namespace MW5.Projections.Controls
                 IEnumerable<string> uniqueTypes = projections.Select(cs => cs.ProjectionType).Distinct().OrderBy(t => t);
                 if (uniqueTypes.Count() > 1)
                 {
-                    foreach (string type in uniqueTypes)
+                    foreach (var type in uniqueTypes)
                     {
-                        if (type != "")
+                        if (type == "") continue;
+
+                        var nodeType = parentNode.Nodes.Add(type, type, TreeViewConstants.IconFolder);
+                        var type1 = type;
+                        var projList = projections.Select(cs => cs).Where(c => c.ProjectionType == type1);
+                        foreach (var val in projList)
                         {
-                            var nodeType = parentNode.Nodes.Add(type, type, TreeViewConstants.IconFolder);
-                            var projList = projections.Select(cs => cs).Where(c => c.ProjectionType == type);
-                            foreach (var val in projList)
-                            {
-                                var nodePcs = nodeType.Nodes.Add(val.Code.ToString(), val.Name, TreeViewConstants.IconMap);
-                                nodePcs.Tag = val;
-                            }
+                            var nodePcs = nodeType.Nodes.Add(val.Code.ToString(), val.Name,
+                                TreeViewConstants.IconMap);
+                            nodePcs.Tag = val;
                         }
                     }
                 }
 
                 // adding projections with undefined type
-                IEnumerable<IProjectedCs> list = uniqueTypes.Count() > 1 ?
-                                                projections.Where(c => c.ProjectionType == "").OrderBy(c => c.Name) : projections.OrderBy(c => c.Name);
+                IEnumerable<IProjectedCs> list = uniqueTypes.Count() > 1
+                                                     ? projections.Where(c => c.ProjectionType == "")
+                                                           .OrderBy(c => c.Name)
+                                                     : projections.OrderBy(c => c.Name);
                 if (list.Any())
                 {
-                    foreach (ProjectedCs pcs in list)
+                    foreach (var projectedCs in list)
                     {
+                        var pcs = (ProjectedCs)projectedCs;
                         var nodePcs = parentNode.Nodes.Add(pcs.Code.ToString(), pcs.Name, TreeViewConstants.IconMap);
                         nodePcs.Tag = pcs;
                     }
@@ -710,13 +842,15 @@ namespace MW5.Projections.Controls
             }
             else
             {
-                foreach (ProjectedCs pcs in projections)
+                foreach (var projectedCs in projections)
                 {
+                    var pcs = (ProjectedCs)projectedCs;
                     var nodePcs = parentNode.Nodes.Add(pcs.Code.ToString(), pcs.Name, TreeViewConstants.IconMap);
                     nodePcs.Tag = pcs;
                 }
             }
         }
+
         #endregion
 
         #region Tree view events
@@ -733,7 +867,7 @@ namespace MW5.Projections.Controls
             var handler = CoordinateSystemPropertiesRequested;
             if (handler != null)
             {
-                handler(this, new CoordinateSystemEventArgs() { CoordinateSystem = cs });
+                handler(this, new CoordinateSystemEventArgs { CoordinateSystem = cs });
             }
         }
 
@@ -742,10 +876,10 @@ namespace MW5.Projections.Controls
             var handler = CoordinateSystemSelected;
             if (handler != null)
             {
-                handler(this, new CoordinateSystemEventArgs() { CoordinateSystem = cs });
+                handler(this, new CoordinateSystemEventArgs { CoordinateSystem = cs });
             }
         }
-        
+
         /// <summary>
         /// Fires selection event for coordinate systems
         /// </summary>
@@ -756,17 +890,17 @@ namespace MW5.Projections.Controls
             switch (node.GetImageIndex())
             {
                 case TreeViewConstants.IconGlobe:
-                {
-                    var gcs = node.Tag as GeographicCs;
-                    FireCoordinateSystemSelected(gcs);
-                    break;
-                }
+                    {
+                        var gcs = node.Tag as GeographicCs;
+                        FireCoordinateSystemSelected(gcs);
+                        break;
+                    }
                 case TreeViewConstants.IconMap:
-                {
-                    var pcs = node.Tag as ProjectedCs;
-                    FireCoordinateSystemSelected(pcs);
-                    break;
-                }
+                    {
+                        var pcs = node.Tag as ProjectedCs;
+                        FireCoordinateSystemSelected(pcs);
+                        break;
+                    }
             }
         }
 
@@ -786,7 +920,7 @@ namespace MW5.Projections.Controls
             {
                 if (e.Node.GetImageIndex() == TreeViewConstants.IconFolder)
                 {
-                    e.Node.LeftImageIndices = new[] {TreeViewConstants.IconFolderOpen };
+                    e.Node.LeftImageIndices = new[] { TreeViewConstants.IconFolderOpen };
                 }
             }
         }
@@ -807,7 +941,7 @@ namespace MW5.Projections.Controls
             {
                 if (e.Node.GetImageIndex() == TreeViewConstants.IconFolderOpen)
                 {
-                    e.Node.LeftImageIndices = new[] {TreeViewConstants.IconFolder};
+                    e.Node.LeftImageIndices = new[] { TreeViewConstants.IconFolder };
                 }
             }
         }
@@ -819,17 +953,17 @@ namespace MW5.Projections.Controls
         /// <summary>
         /// Opens all nodes to show GCS
         /// </summary>
-        private void ShowGcs(TreeNode node)
-        {
-            if (node.ImageIndex == TreeViewConstants.IconFolder || node.ImageIndex == TreeViewConstants.IconFolderOpen)
-            {
-                foreach (TreeNode child in node.Nodes)
-                {
-                    ShowGcs(child);
-                }
-                node.Expand();
-            }
-        }
+        //private void ShowGcs(TreeNode node)
+        //{
+        //    if (node.ImageIndex == TreeViewConstants.IconFolder || node.ImageIndex == TreeViewConstants.IconFolderOpen)
+        //    {
+        //        foreach (TreeNode child in node.Nodes)
+        //        {
+        //            ShowGcs(child);
+        //        }
+        //        node.Expand();
+        //    }
+        //}
 
         /// <summary>
         /// Browses through list of CS and marks them as active or not active depending on their bounds
@@ -839,20 +973,23 @@ namespace MW5.Projections.Controls
             gcsCount = 0;
             projCount = 0;
 
-            foreach (Territory cs in _database.GeographicCs)
+            foreach (var geographicCs in Database.GeographicCs)
             {
+                var cs = (Territory)geographicCs;
                 cs.IsActive = WithinExtents(extents, cs);
                 if (cs.IsActive) gcsCount++;
             }
 
-            foreach (Territory cs in _database.ProjectedCs)
+            foreach (var projectedCs in Database.ProjectedCs)
             {
+                var cs = (Territory)projectedCs;
                 cs.IsActive = WithinExtents(extents, cs);
                 if (cs.IsActive) projCount++;
             }
 
-            foreach (Country country in _database.Countries)
+            foreach (var country1 in Database.Countries)
             {
+                var country = (Country)country1;
                 country.IsActive = WithinExtents(extents, country);
             }
         }
@@ -866,15 +1003,19 @@ namespace MW5.Projections.Controls
             {
                 case ProjectionSelectionMode.Include:
                     // extents should cover coordinate system
-                    return extents.xMin <= cs.Left && extents.xMax >= cs.Right && extents.yMin <= cs.Bottom && extents.yMax >= cs.Top;
+                    return extents.xMin <= cs.Left && extents.xMax >= cs.Right && extents.yMin <= cs.Bottom &&
+                           extents.yMax >= cs.Top;
 
                 case ProjectionSelectionMode.IsIncluded:
                     // coordinate system should cover extents
-                    return cs.Left <= extents.xMin && cs.Right >= extents.xMax && cs.Bottom <= extents.yMin && cs.Top >= extents.yMax;
+                    return cs.Left <= extents.xMin && cs.Right >= extents.xMax && cs.Bottom <= extents.yMin &&
+                           cs.Top >= extents.yMax;
 
                 case ProjectionSelectionMode.Intersection:
                     // the case of intersection ( the non-intersection hypothesis is checked )
-                    return !(cs.Left > extents.xMax || cs.Right < extents.xMin || cs.Bottom > extents.yMax || cs.Top < extents.yMin);
+                    return
+                        !(cs.Left > extents.xMax || cs.Right < extents.xMin || cs.Bottom > extents.yMax ||
+                          cs.Top < extents.yMin);
 
                 default:
                     return true;
@@ -887,18 +1028,19 @@ namespace MW5.Projections.Controls
         private void RemoveEmptyChildren(TreeNodeAdv node)
         {
             if (node == null)
-            { 
+            {
                 return;
             }
 
             for (int i = node.Nodes.Count - 1; i >= 0; i--)
             {
                 var child = node.Nodes[i];
-                
+
                 // the end of branch; delete it if it is a folder
                 if (child.Nodes.Count == 0)
                 {
-                    if (child.GetImageIndex() == TreeViewConstants.IconFolder || child.GetImageIndex() == TreeViewConstants.IconFolderOpen)
+                    if (child.GetImageIndex() == TreeViewConstants.IconFolder ||
+                        child.GetImageIndex() == TreeViewConstants.IconFolderOpen)
                     {
                         child.Remove();
                     }
@@ -906,120 +1048,18 @@ namespace MW5.Projections.Controls
                 else
                 {
                     RemoveEmptyChildren(child);
+                    if (child.Nodes.Count != 0) continue;
 
                     // if all the branch was removed, delete the node as well
-                    if (child.Nodes.Count == 0)
+                    if (child.GetImageIndex() == TreeViewConstants.IconFolder ||
+                        child.GetImageIndex() == TreeViewConstants.IconFolderOpen)
                     {
-                        if (child.GetImageIndex() == TreeViewConstants.IconFolder || child.GetImageIndex() == TreeViewConstants.IconFolderOpen)
-                        {
-                            child.Remove();
-                        }
+                        child.Remove();
                     }
                 }
             }
         }
+
         #endregion
-
-        /// <summary>
-        /// Suppresses standard double click behavior - expanding/collapsing
-        /// </summary>
-        protected override void DefWndProc(ref Message m)
-        {
-            _doubleClickWasDone = (m.Msg == 515);  /* WM_LBUTTONDBLCLK */
-            base.DefWndProc(ref m);
-        }
-
-        private void ShowProjectionProperties()
-        {
-            HideToolTip();
-            FireCoordinateSystemPropertiesRequested(SelectedCoordinateSystem);
-        }
-
-        /// <summary>
-        /// Shows properties for projection with given code
-        /// </summary>
-        public void ShowProjectionProperties(int code)
-        {
-            foreach (GeographicCs gcs in _database.GeographicCs)
-            {
-                if (gcs.Code == code)
-                {
-                    FireCoordinateSystemPropertiesRequested(gcs);
-                    return;
-                }
-            }
-
-            foreach (ProjectedCs pcs in _database.ProjectedCs)
-            {
-                if (pcs.Code == code)
-                {
-                    FireCoordinateSystemPropertiesRequested(pcs);
-                    return;
-                }
-            }
-        }
-
-        public void Filter(string text, bool force = false)
-        {
-            BeginUpdate();
-
-            try
-            {
-                bool empty = string.IsNullOrWhiteSpace(text) || (!force && text.Length <= 2);
-
-                var nodeRegion = Nodes.Find(TreeViewConstants.NodeByRegion);
-                ExapandWorldNode(empty);
-                nodeRegion.Height = empty ? TreeViewConstants.NodeHeight : 0;    // removing and adding the node works much slower
-
-                var nodeSearch = Nodes.Find(TreeViewConstants.SearchResults);
-                
-                if (empty && nodeSearch != null)
-                {
-                    Nodes.Remove(nodeSearch);
-                }
-
-                if (!empty)
-                {
-                    if (nodeSearch == null)
-                    {
-                        nodeSearch = Nodes.Add(TreeViewConstants.SearchResults, TreeViewConstants.SearchResults, TreeViewConstants.IconFolder);
-                    }
-                    else
-                    {
-                        nodeSearch.Nodes.Clear();        
-                    }
-                }
-
-                if (!empty)
-                {
-                    FillSearchResults(nodeSearch, text);
-                    nodeSearch.Expanded = true;
-                }
-            }
-            finally
-            {
-                EndUpdate();
-            }
-        }
-
-        private bool IsProjectionNode(TreeNodeAdv node)
-        {
-            return node.GetImageIndex() == TreeViewConstants.IconGlobe || node.GetImageIndex() == TreeViewConstants.IconMap;
-        }
-
-        private void ProjectionTreeView_PrepareToolTip(object sender, ToolTipEventArgs e)
-        {
-            var cs = SelectedCoordinateSystem;
-            if (cs == null)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            var info = e.ToolTip;
-            info.Header.Text = cs.Name;
-            info.Body.Text = cs.Scope + Environment.NewLine + cs.Proj4;
-            info.Footer.Text = "EPSG: " + cs.Code;
-        }
     }
 }

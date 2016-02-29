@@ -1,37 +1,68 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
-using System.Windows.Threading;
 using MW5.Api.Concrete;
-using MW5.Api.Static;
 using MW5.DI.Castle;
-// using MW5.DI.LightInject;
-// using MW5.DI.Ninject;
-// using MW5.DI.Unity;
 using MW5.Helpers;
-using MW5.Menu;
-using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Concrete;
-using MW5.Services.Helpers;
 using MW5.Shared;
-using MW5.Shared.Log;
-using MW5.UI.Helpers;
 using MW5.Views;
+// using MW5.DI.LightInject;
+// using MW5.DI.Ninject;
+// using MW5.DI.Unity;
 
 namespace MW5
 {
-    static class Program
+    internal static class Program
     {
         public static Stopwatch Timer = new Stopwatch();
+
+        private static IApplicationContainer CreateContainer()
+        {
+            // Switch the class here and change the using directive above to use another one
+            // Also switch references.
+
+            // LightInjectContainer
+            // NinjectContainer
+            // UnityApplicationContainer
+            // return  new NinjectContainer();
+            return new WindsorCastleContainer();
+        }
+
+        private static void DumpFormats()
+        {
+            var manager = new DriverManager();
+            manager.DumpExtensions(true);
+
+            manager.DumpExtensions(false);
+        }
+
+        private static void LoadConfig(IApplicationContainer container)
+        {
+            Logger.Current.Debug("Start LoadConfig");
+            MapInitializer.InitMapConfig();
+
+            Logger.Current.Debug("Before container.GetSingleton");
+            var configService = container.GetSingleton<IConfigService>();
+            Logger.Current.Debug("After container.GetSingleton");
+
+            configService.LoadAll();
+            Logger.Current.Debug("End LoadConfig");
+        }
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
 
@@ -58,40 +89,12 @@ namespace MW5
             container.Run<MainPresenter>();
         }
 
-        private static void DumpFormats()
-        {
-            var manager = new DriverManager();
-            manager.DumpExtensions(true);
-
-            manager.DumpExtensions(false);
-        }
-
         private static void ShowSplashScreen()
         {
             var splashScreen = SplashView.Instance;
             splashScreen.ShowStatus("Composing DI container");
             splashScreen.Show();
             Application.DoEvents();
-        }
-
-        private static void LoadConfig(IApplicationContainer container)
-        {
-            MapInitializer.InitMapConfig();
-
-            var configService = container.GetSingleton<IConfigService>();
-            configService.LoadAll();
-        }
-
-        private static IApplicationContainer CreateContainer()
-        {
-            // Switch the class here and change the using directive above to use another one
-            // Also switch references.
-
-            // LightInjectContainer
-            // NinjectContainer
-            // UnityApplicationContainer
-            // return  new NinjectContainer();
-            return new WindsorCastleContainer();
         }
     }
 }

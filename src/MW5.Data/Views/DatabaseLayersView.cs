@@ -1,18 +1,19 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="DatabaseLayersView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Data.Model;
-using MW5.Data.Properties;
 using MW5.Data.Views.Abstract;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.UI.Forms;
@@ -22,7 +23,7 @@ namespace MW5.Data.Views
 {
     public partial class DatabaseLayersView : DatabaseLayersViewBase, IDatabaseLayersView
     {
-        private BindingList<VectorLayerGridAdapter> _layers = new BindingList<VectorLayerGridAdapter>();
+        private readonly BindingList<VectorLayerGridAdapter> _layers = new BindingList<VectorLayerGridAdapter>();
         private SynchronizationContext _syncContext;
 
         public DatabaseLayersView()
@@ -43,41 +44,19 @@ namespace MW5.Data.Views
             LoadLayersAsync();
         }
 
-        private void InitGrid()
+        public override ViewStyle Style
         {
-            databaseLayersGrid1.DataSource = _layers;
-
-            var style = databaseLayersGrid1.Adapter.GetColumnStyle(r => r.Name);
-            style.ImageList = imageList1;
-            style.ImageIndex = 0;
-
-            databaseLayersGrid1.Adapter.SetColumnIcon(r => r.Name, GetIcon);
-            databaseLayersGrid1.Adapter.HotTracking = true;
+            get { return new ViewStyle(true); }
         }
 
-        private void LoadLayersAsync()
+        public ButtonBase OkButton
         {
-            Task<bool>.Factory.StartNew(() =>
-            {
-                if (Model.Datasource.Open(Model.Connection.ConnectionString))
-                {
+            get { return btnOk; }
+        }
 
-                    LoadLayers();
-                    return true;
-                }
-                else
-                {
-                    const string msg = "Failed to open database connection.";
-                    Logger.Current.Warn(msg + ": " + Model.Datasource.GdalLastErrorMsg);
-                    MessageService.Current.Info(msg);
-                    return false;
-                }
-
-            }).ContinueWith(t =>
-                {
-                    StopWait();
-                    databaseLayersGrid1.Enabled = true;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+        public IEnumerable<VectorLayerGridAdapter> Layers
+        {
+            get { return _layers; }
         }
 
         private int GetIcon(VectorLayerGridAdapter info)
@@ -98,9 +77,16 @@ namespace MW5.Data.Views
             return -1;
         }
 
-        public override Plugins.Mvp.ViewStyle Style
+        private void InitGrid()
         {
-            get { return new Plugins.Mvp.ViewStyle(true); }
+            databaseLayersGrid1.DataSource = _layers;
+
+            var style = databaseLayersGrid1.Adapter.GetColumnStyle(r => r.Name);
+            style.ImageList = imageList1;
+            style.ImageIndex = 0;
+
+            databaseLayersGrid1.Adapter.SetColumnIcon(r => r.Name, GetIcon);
+            databaseLayersGrid1.Adapter.HotTracking = true;
         }
 
         private void LoadLayers()
@@ -119,14 +105,24 @@ namespace MW5.Data.Views
             }
         }
 
-        public ButtonBase OkButton
+        private void LoadLayersAsync()
         {
-            get { return btnOk; }
-        }
-
-        public IEnumerable<VectorLayerGridAdapter> Layers
-        {
-            get { return _layers; }
+            Task<bool>.Factory.StartNew(() =>
+                {
+                    if (Model.Datasource.Open(Model.Connection.ConnectionString))
+                    {
+                        LoadLayers();
+                        return true;
+                    }
+                    const string msg = "Failed to open database connection.";
+                    Logger.Current.Warn(msg + ": " + Model.Datasource.GdalLastErrorMsg);
+                    MessageService.Current.Info(msg);
+                    return false;
+                }).ContinueWith(t =>
+                    {
+                        StopWait();
+                        databaseLayersGrid1.Enabled = true;
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnSelectAllChecked(object sender, EventArgs e)
@@ -135,5 +131,7 @@ namespace MW5.Data.Views
         }
     }
 
-    public class DatabaseLayersViewBase: MapWindowView<DatabaseLayersModel> {}
+    public class DatabaseLayersViewBase : MapWindowView<DatabaseLayersModel>
+    {
+    }
 }

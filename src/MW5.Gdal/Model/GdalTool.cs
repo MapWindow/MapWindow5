@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GdalTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2016
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -10,7 +10,6 @@ using System.Text;
 using MW5.Api.Concrete;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
-using MW5.Tools.Model.Parameters;
 
 namespace MW5.Gdal.Model
 {
@@ -18,10 +17,13 @@ namespace MW5.Gdal.Model
     {
         protected readonly CommandLineMapping _commandLine = new CommandLineMapping();
 
-        public GdalTool()
+        protected GdalTool()
         {
             InitCommandLine(_commandLine);
         }
+
+        // The UI for them will be generated dynamically depending on driver
+        public string DriverOptions { get; set; }
 
         public virtual OutputLayerInfo Output { get; set; }
 
@@ -33,13 +35,37 @@ namespace MW5.Gdal.Model
         public bool OverrideOptions { get; set; }
 
         [Input("Effective options", -1)]
-        public string EffectiveOptions 
+        public string EffectiveOptions
         {
-            get { return GetOptions(); } 
+            get { return GetOptions(); }
         }
 
-        // The UI for them will be generated dynamically depending on driver
-        public string DriverOptions { get; set; }
+        public string GetOptions(bool mainOnly = false)
+        {
+            if (OverrideOptions)
+            {
+                return AdditionalOptions;
+            }
+
+            return CompileOptions();
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether current tool can specify driver creation options.
+        /// </summary>
+        public virtual bool SupportDriverCreationOptions
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Can be used to save results of the processing or display messages.
+        /// Default implementation automatically handles values assigned to OutputLayerInfo.Result.
+        /// </summary>
+        public override bool AfterRun()
+        {
+            return OutputManager.HandleGdalOutput(Output);
+        }
 
         /// <summary>
         /// Gets command line options.
@@ -65,29 +91,6 @@ namespace MW5.Gdal.Model
         }
 
         /// <summary>
-        /// Initializes the command line options.
-        /// </summary>
-        protected abstract void InitCommandLine(CommandLineMapping mapping);
-
-        public string GetOptions(bool mainOnly = false)
-        {
-            if (OverrideOptions)
-            {
-                return AdditionalOptions;
-            }
-            
-            return CompileOptions();
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether current tool can specify driver creation options.
-        /// </summary>
-        public virtual bool SupportDriverCreationOptions
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         /// Gets the list of drivers that support the creation of new datasources.
         /// </summary>
         protected abstract bool DriverFilter(DatasourceDriver driver);
@@ -102,12 +105,8 @@ namespace MW5.Gdal.Model
         }
 
         /// <summary>
-        /// Can be used to save results of the processing or display messages.
-        /// Default implementation automatically handles values assigned to OutputLayerInfo.Result.
+        /// Initializes the command line options.
         /// </summary>
-        public override bool AfterRun()
-        {
-            return OutputManager.HandleGdalOutput(Output);
-        }
+        protected abstract void InitCommandLine(CommandLineMapping mapping);
     }
 }

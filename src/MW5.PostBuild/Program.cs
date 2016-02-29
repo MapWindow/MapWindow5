@@ -1,13 +1,18 @@
-﻿using System;
-using System.Diagnostics;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="Program.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace MW5.PostBuild
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             UpdateManifest();
 

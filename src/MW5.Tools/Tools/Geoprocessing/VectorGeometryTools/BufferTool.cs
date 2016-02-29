@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="BufferTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2016
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -9,7 +9,6 @@ using MW5.Api.Helpers;
 using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
-using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.Tools.Enums;
@@ -23,36 +22,22 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
     public class BufferTool : AppendModeGisTool
     {
-        [Input("Input layer", 0)]
-        public IVectorInput Input { get; set; }
-
         [Input("Buffer distance", 1)]
         public Distance BufferDistance { get; set; }
 
+        /// <summary>
+        /// Gets description of the tool.
+        /// </summary>
+        public override string Description
+        {
+            get { return "Builds a buffer around features of input vector layer."; }
+        }
+
+        [Input("Input layer", 0)]
+        public IVectorInput Input { get; set; }
+
         [Input("Merge results", 2)]
         public bool MergeResults { get; set; }
-
-        [Input("Number of segments", 0, true)]
-        public int NumSegments { get; set; }
-
-        [Output("Save results as")]
-        [OutputLayer("{input}_buffer.shp", LayerType.Shapefile)]
-        public OutputLayerInfo Output { get; set; }
-
-        protected override void Configure(IAppContext context, ToolConfiguration configuration)
-        {
-            base.Configure(context, configuration);
-
-            configuration.Get<BufferTool>().SetDefault(t => t.BufferDistance, 50).SetDefault(t => t.NumSegments, 30);
-        }
-
-        /// <summary>
-        /// Gets the identity of plugin that created this tool.
-        /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
 
         /// <summary>
         /// Gets name of the tool.
@@ -62,12 +47,19 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Buffer by distance"; }
         }
 
+        [Input("Number of segments", 0, true)]
+        public int NumSegments { get; set; }
+
+        [Output("Save results as")]
+        [OutputLayer("{input}_buffer.shp", LayerType.Shapefile)]
+        public OutputLayerInfo Output { get; set; }
+
         /// <summary>
-        /// Gets description of the tool.
+        /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override string Description
+        public override PluginIdentity PluginIdentity
         {
-            get { return "Builds a buffer around features of input vector layer."; }
+            get { return PluginIdentity.Default; }
         }
 
         /// <summary>
@@ -83,15 +75,23 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             if (Output.MemoryLayer)
             {
-                Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
+                Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly,
+                    MergeResults);
             }
             else
             {
-                success = GisUtils.Instance.BufferByDistance(Input.Datasource, Input.SelectedOnly, bufferDistance, 
-                                                            NumSegments, MergeResults, Output.Filename, Output.Overwrite);
+                success = GisUtils.Instance.BufferByDistance(Input.Datasource, Input.SelectedOnly, bufferDistance,
+                    NumSegments, MergeResults, Output.Filename, Output.Overwrite);
             }
 
             return Output.Result != null || success;
+        }
+
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
+        {
+            base.Configure(context, configuration);
+
+            configuration.Get<BufferTool>().SetDefault(t => t.BufferDistance, 50).SetDefault(t => t.NumSegments, 30);
         }
     }
 }

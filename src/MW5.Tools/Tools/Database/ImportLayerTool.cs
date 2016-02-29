@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ImportLayerTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
@@ -18,30 +22,9 @@ namespace MW5.Tools.Tools.Database
     [GisTool(GroupKeys.GeoDatabases, ToolIcon.Database)]
     public class ImportLayerTool : GisTool
     {
-        [Input("Input layer", 0)]
-        public IVectorInput InputLayer { get; set; }
-
-        [Output("Database", 0)]
+        [Output("Database")]
         [ControlHint(ControlHint.Combo)]
         public DatabaseConnection Database { get; set; }
-
-        [Output("Schema", 1)]
-        public string Schema { get; set; }
-
-        [Output("New layer name", 2)]
-        [ControlHint(ControlHint.OutputName)]
-        public string NewLayerName { get; set; }
-
-        [Output("Overwrite", 3)]
-        public bool Overwrite { get; set; }
-
-        /// <summary>
-        /// Gets name of the tool.
-        /// </summary>
-        public override string Name
-        {
-            get { return "Import layer"; }
-        }
 
         /// <summary>
         /// Gets description of the tool.
@@ -51,16 +34,42 @@ namespace MW5.Tools.Tools.Database
             get { return "Imports layer in the geodatabase."; }
         }
 
-        /// <summary>
-        /// Adds tool configuration which can be used for generation of the UI for tool.
-        /// </summary>
-        protected override void Configure(IAppContext context, ToolConfiguration configuration)
-        {
-            base.Configure(context, configuration);
+        [Input("Input layer", 0)]
+        public IVectorInput InputLayer { get; set; }
 
-            configuration.Get<ImportLayerTool>()
-                .AddComboList(t => t.Database, context.Repository.Connections)
-                .SetDefault(t => t.NewLayerName, "{input}_imported");
+        /// <summary>
+        /// Gets name of the tool.
+        /// </summary>
+        public override string Name
+        {
+            get { return "Import layer"; }
+        }
+
+        [Output("New layer name", 2)]
+        [ControlHint(ControlHint.OutputName)]
+        public string NewLayerName { get; set; }
+
+        [Output("Overwrite", 3)]
+        public bool Overwrite { get; set; }
+
+        /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public override PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
+        }
+
+        [Output("Schema", 1)]
+        public string Schema { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether tasks should be executed
+        /// in sequence rather than in parallel when running in batch mode.
+        /// </summary>
+        public override bool SequentialBatchExecution
+        {
+            get { return true; }
         }
 
         /// <summary>
@@ -94,20 +103,15 @@ namespace MW5.Tools.Tools.Database
         }
 
         /// <summary>
-        /// Gets the identity of plugin that created this tool.
+        /// Adds tool configuration which can be used for generation of the UI for tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
-            get { return PluginIdentity.Default; }
-        }
+            base.Configure(context, configuration);
 
-        /// <summary>
-        /// Gets a value indicating whether tasks should be executed
-        /// in sequence rather than in parallel when running in batch mode.
-        /// </summary>
-        public override bool SequentialBatchExecution
-        {
-            get { return true; }
+            configuration.Get<ImportLayerTool>()
+                .AddComboList(t => t.Database, context.Repository.Connections)
+                .SetDefault(t => t.NewLayerName, "{input}_imported");
         }
 
         /// <summary>
@@ -124,7 +128,8 @@ namespace MW5.Tools.Tools.Database
 
             if (Database != null && Database.DatabaseType == GeoDatabaseType.MySql)
             {
-                list.Add("ENGINE=MyISAM ");    // Spatial indexes aren't supported otherwise http ://stackoverflow.com/questions/18379808/the-used-table-type-doesnt-support-spatial-indexes
+                list.Add("ENGINE=MyISAM ");
+                    // Spatial indexes aren't supported otherwise http ://stackoverflow.com/questions/18379808/the-used-table-type-doesnt-support-spatial-indexes
             }
 
             if (Overwrite)

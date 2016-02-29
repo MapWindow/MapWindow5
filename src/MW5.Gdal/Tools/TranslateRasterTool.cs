@@ -1,18 +1,13 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="TranslateRasterTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2016
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using MW5.Api.Concrete;
-using MW5.Api.Enums;
 using MW5.Api.Static;
-using MW5.Gdal.Helpers;
 using MW5.Gdal.Model;
 using MW5.Gdal.Views;
 using MW5.Plugins.Concrete;
@@ -20,65 +15,12 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
-using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
     [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalConvertPresenter))]
     public class TranslateRasterTool : GdalRasterTool
     {
-        [Input("Output type", 1, true)]
-        [ControlHint(ControlHint.Combo)]
-        public override string OutputType { get; set; }
-
-        [Input("No data value", 3, true)]
-        public string NoData { get; set; }
-
-        [Input("Subdatasets", 4, true)]
-        public bool SubDatasets { get; set; }
-
-        [Input("Statistics", 5, true)]
-        public bool Stats { get; set; }
-
-        [Input("Strict", 6, true)]
-        public bool Strict { get; set; }
-
-        [Input("Unscale", 7, true)]
-        public bool Unscale { get; set; }
-
-        [Input("Spatial reference", 8, true)]
-        public bool SpatialReference { get; set; }
-
-        /// <summary>
-        /// Gets the list of drivers that support the creation of new datasources.
-        /// </summary>
-        protected override bool DriverFilter(DatasourceDriver driver)
-        {
-            return driver.IsRaster && driver.MatchesFilter(Api.Enums.DriverFilter.Create) ||
-                                      driver.MatchesFilter(Api.Enums.DriverFilter.CreateCopy);
-        }
-
-        protected override void InitCommandLine(CommandLineMapping mapping)
-        {
-            _commandLine.Get<TranslateRasterTool>()
-                .SetKey(t => t.OutputType, "-ot")
-                .SetKey(t => t.NoData, "-a_nodata")
-                .SetKey(t => t.SubDatasets, "-sds")
-                .SetKey(t => t.Stats, "-stats")
-                .SetKey(t => t.Strict, "-strict")
-                .SetKey(t => t.SpatialReference, "-a-srs")
-                .SetKey(t => t.Unscale, "-unscale");
-        }
-
-
-        /// <summary>
-        /// The name of the tool.
-        /// </summary>
-        public override string Name
-        {
-            get { return "Translate raster"; }
-        }
-
         /// <summary>
         /// Description of the tool.
         /// </summary>
@@ -88,6 +30,21 @@ namespace MW5.Gdal.Tools
         }
 
         /// <summary>
+        /// The name of the tool.
+        /// </summary>
+        public override string Name
+        {
+            get { return "Translate raster"; }
+        }
+
+        [Input("No data value", 3, true)]
+        public string NoData { get; set; }
+
+        [Input("Output type", 1, true)]
+        [ControlHint(ControlHint.Combo)]
+        public override string OutputType { get; set; }
+
+        /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
         public override PluginIdentity PluginIdentity
@@ -95,10 +52,17 @@ namespace MW5.Gdal.Tools
             get { return PluginIdentity.Default; }
         }
 
-        public override string TaskName
-        {
-            get { return "Translate: " + Path.GetFileName(Output.Filename); }
-        }
+        [Input("Spatial reference", 8, true)]
+        public bool SpatialReference { get; set; }
+
+        [Input("Statistics", 5, true)]
+        public bool Stats { get; set; }
+
+        [Input("Strict", 6, true)]
+        public bool Strict { get; set; }
+
+        [Input("Subdatasets", 4, true)]
+        public bool SubDatasets { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether current tool can specify driver creation options.
@@ -107,6 +71,14 @@ namespace MW5.Gdal.Tools
         {
             get { return true; }
         }
+
+        public override string TaskName
+        {
+            get { return "Translate: " + Path.GetFileName(Output.Filename); }
+        }
+
+        [Input("Unscale", 7, true)]
+        public bool Unscale { get; set; }
 
         /// <summary>
         /// Gets command line options.
@@ -144,6 +116,27 @@ namespace MW5.Gdal.Tools
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Gets the list of drivers that support the creation of new datasources.
+        /// </summary>
+        protected override bool DriverFilter(DatasourceDriver driver)
+        {
+            return driver.IsRaster && driver.MatchesFilter(Api.Enums.DriverFilter.Create) ||
+                   driver.MatchesFilter(Api.Enums.DriverFilter.CreateCopy);
+        }
+
+        protected override void InitCommandLine(CommandLineMapping mapping)
+        {
+            _commandLine.Get<TranslateRasterTool>()
+                .SetKey(t => t.OutputType, "-ot")
+                .SetKey(t => t.NoData, "-a_nodata")
+                .SetKey(t => t.SubDatasets, "-sds")
+                .SetKey(t => t.Stats, "-stats")
+                .SetKey(t => t.Strict, "-strict")
+                .SetKey(t => t.SpatialReference, "-a-srs")
+                .SetKey(t => t.Unscale, "-unscale");
         }
     }
 }

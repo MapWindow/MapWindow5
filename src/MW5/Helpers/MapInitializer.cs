@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="MapInitializer.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend.Abstract;
 using MW5.Api.Map;
 using MW5.Api.Static;
 using MW5.Data.Helpers;
@@ -19,42 +18,6 @@ namespace MW5.Helpers
 {
     public static class MapInitializer
     {
-        public static void Initialize(this IMap map)
-        {
-            map.GrabProjectionFromData = true;
-            map.MapCursor = MapCursor.ZoomIn;
-            map.InertiaOnPanning = AutoToggle.Auto;
-            map.ShowRedrawTime = false;
-            map.Identifier.Mode = IdentifierMode.CurrentLayer;
-            map.Identifier.HotTracking = true;
-            map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
-            map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
-            map.Identifier.HotTracking = false;
-            map.ResizeBehavior = ResizeBehavior.KeepScale;
-            map.Measuring.UndoButton = UndoShortcut.CtrlZ;
-            map.ShowCoordinatesFormat = AngleFormat.Seconds;
-            map.ExtentHistory = 200;
-        }
-
-        public static void InitMapConfig()
-        {
-            MapConfig.ZoomToFirstLayer = true;
-            MapConfig.AllowLayersWithoutProjections = true;
-            MapConfig.OverrideLocalCallback = true;
-
-            // mismatch test logic is on the client side, so ocx must not interfere with it
-            MapConfig.AllowProjectionMismatch = true;        
-            MapConfig.ReprojectLayersOnAdding = false;
-            MapConfig.OgrLayerForceUpdateMode = true;
-            MapConfig.LoadSymbologyOnAddLayer = true;
-            MapConfig.CacheDbfRecords = false;
-            MapConfig.CallbackVerbosity = CallbackVerbosity.Limited;
-            
-            // It can be overridden in Grid.OpenAsImage,
-            // but not proxy tricks by default
-            MapConfig.GridProxyMode = GridProxyMode.NoProxy;    
-        }
-
         public static void ApplyConfig(this IMuteMap map, IConfigService configService)
         {
             ApplyConfig(map, configService.Config);
@@ -117,54 +80,58 @@ namespace MW5.Helpers
             ApplyTilesProxy(tiles, config);
         }
 
-        private static void UpdateShapeEditorSettings(IGeometryEditor editor, AppConfig config)
+        public static void Initialize(this IMap map)
         {
-            var settings = editor.Settings;
-
-            editor.ShowArea = config.ShapeEditorShowArea;
-
-            settings.PointLabelsVisible = config.ShapeEditorShowLabels;
-            settings.ShowBearing = config.ShapeEditorShowBearing;
-            settings.BearingType = config.ShapeEditorBearingType;
-            settings.AnglePrecision = config.ShapeEditorBearingPrecision;
-            settings.AngleFormat = config.ShapeEditorAngleFormat;
-            settings.ShowLength = config.ShapeEditorShowLength;
-            settings.AreaUnits = config.ShapeEditorUnits == LengthDisplay.Metric ? AreaDisplay.Metric : AreaDisplay.American;
-            settings.LengthUnits = config.ShapeEditorUnits == LengthDisplay.Metric ? LengthDisplay.Metric : LengthDisplay.American;
-            settings.LengthPrecision = config.ShapeEditorUnitPrecision;
-            settings.AreaPrecision = config.ShapeEditorUnitPrecision;
+            map.GrabProjectionFromData = true;
+            map.MapCursor = MapCursor.ZoomIn;
+            map.InertiaOnPanning = AutoToggle.Auto;
+            map.ShowRedrawTime = false;
+            map.Identifier.Mode = IdentifierMode.CurrentLayer;
+            map.Identifier.HotTracking = true;
+            map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
+            map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            map.Identifier.HotTracking = false;
+            map.ResizeBehavior = ResizeBehavior.KeepScale;
+            map.Measuring.UndoButton = UndoShortcut.CtrlZ;
+            map.ShowCoordinatesFormat = AngleFormat.Seconds;
+            map.ExtentHistory = 200;
         }
 
-        private static void UpdateMeasuringSettings(IMeasuringSettings measuring, AppConfig config)
+        public static void InitMapConfig()
         {
-            measuring.AngleFormat = config.MeasuringAngleFormat;
-            measuring.AnglePrecision = config.MeasuringAnglePrecision;
-            measuring.AreaPrecision = config.MeasuringAreaPrecision;
-            measuring.AreaUnits = config.MeasuringAreaUnits;
-            measuring.BearingType = config.MeasuringBearingType;
-            measuring.FillColor = config.MeasuringFillColor;
-            measuring.FillTransparency = config.MeasuringFillTransparency;
-            measuring.LengthPrecision = config.MeasuringLengthPrecision;
-            measuring.LengthUnits = config.MeasuringLengthUnits;
-            measuring.LineColor = config.MeasuringLineColor;
-            measuring.LineStyle = config.MeasuringLineStyle;
-            measuring.LineWidth = config.MeasuringLineWidth;
-            measuring.PointLabelsVisible = config.MeasuringPointLabelsVisible;
-            measuring.PointsVisible = config.MeasuringPointsVisible;
-            measuring.ShowBearing = config.MeasuringShowBearing;
-            measuring.ShowLength = config.MeasuringShowLength;
-            measuring.ShowTotalLength = config.MeasuringShowTotalLength;
+            Logger.Current.Debug("Start InitMapConfig");
+            MapConfig.ZoomToFirstLayer = true;
+            MapConfig.AllowLayersWithoutProjections = true;
+            MapConfig.OverrideLocalCallback = true;
+
+            // mismatch test logic is on the client side, so ocx must not interfere with it
+            MapConfig.AllowProjectionMismatch = true;
+            MapConfig.ReprojectLayersOnAdding = false;
+            MapConfig.OgrLayerForceUpdateMode = true;
+            MapConfig.LoadSymbologyOnAddLayer = true;
+            MapConfig.CacheDbfRecords = false;
+            MapConfig.CallbackVerbosity = CallbackVerbosity.Limited;
+
+            // It can be overridden in Grid.OpenAsImage,
+            // but not proxy tricks by default
+            MapConfig.GridProxyMode = GridProxyMode.NoProxy;
+            Logger.Current.Debug("End InitMapConfig");
         }
 
-        private static void ApplyTilesSettings(this TileManager tiles, AppConfig config)
+        private static void ApplyMouseWheelDirection(this IMuteMap map, MouseWheelDirection direction)
         {
-            tiles.set_MaxCacheSize(CacheType.Disk, config.TilesMaxDiskSize);
-            tiles.set_MaxCacheSize(CacheType.Ram, config.TilesMaxRamSize);
-            tiles.DiskCacheFilename = config.TilesDatabase;
-            tiles.set_IsCaching(CacheType.Disk, config.TilesUseDiskCache);
-            tiles.set_IsCaching(CacheType.Ram, config.TilesUseRamCache);
-
-            TileCacheHelper.InitDatabase(config.TilesDatabase, config.TilesMaxDiskAge);
+            switch (direction)
+            {
+                case MouseWheelDirection.Forward:
+                    map.MouseWheelSpeed = 0.5;
+                    break;
+                case MouseWheelDirection.Reverse:
+                    map.MouseWheelSpeed = 2.0;
+                    break;
+                case MouseWheelDirection.None:
+                    map.MouseWheelSpeed = 1.0;
+                    break;
+            }
         }
 
         private static void ApplyTilesProxy(this TileManager tiles, AppConfig config)
@@ -197,20 +164,58 @@ namespace MW5.Helpers
             }
         }
 
-        private static void ApplyMouseWheelDirection(this IMuteMap map, MouseWheelDirection direction)
+        private static void ApplyTilesSettings(this TileManager tiles, AppConfig config)
         {
-            switch (direction)
-            {
-                case MouseWheelDirection.Forward:
-                    map.MouseWheelSpeed = 0.5;
-                    break;
-                case MouseWheelDirection.Reverse:
-                    map.MouseWheelSpeed = 2.0;
-                    break;
-                case MouseWheelDirection.None:
-                    map.MouseWheelSpeed = 1.0;
-                    break;
-            }
+            tiles.set_MaxCacheSize(CacheType.Disk, config.TilesMaxDiskSize);
+            tiles.set_MaxCacheSize(CacheType.Ram, config.TilesMaxRamSize);
+            tiles.DiskCacheFilename = config.TilesDatabase;
+            tiles.set_IsCaching(CacheType.Disk, config.TilesUseDiskCache);
+            tiles.set_IsCaching(CacheType.Ram, config.TilesUseRamCache);
+
+            TileCacheHelper.InitDatabase(config.TilesDatabase, config.TilesMaxDiskAge);
+        }
+
+        private static void UpdateMeasuringSettings(IMeasuringSettings measuring, AppConfig config)
+        {
+            measuring.AngleFormat = config.MeasuringAngleFormat;
+            measuring.AnglePrecision = config.MeasuringAnglePrecision;
+            measuring.AreaPrecision = config.MeasuringAreaPrecision;
+            measuring.AreaUnits = config.MeasuringAreaUnits;
+            measuring.BearingType = config.MeasuringBearingType;
+            measuring.FillColor = config.MeasuringFillColor;
+            measuring.FillTransparency = config.MeasuringFillTransparency;
+            measuring.LengthPrecision = config.MeasuringLengthPrecision;
+            measuring.LengthUnits = config.MeasuringLengthUnits;
+            measuring.LineColor = config.MeasuringLineColor;
+            measuring.LineStyle = config.MeasuringLineStyle;
+            measuring.LineWidth = config.MeasuringLineWidth;
+            measuring.PointLabelsVisible = config.MeasuringPointLabelsVisible;
+            measuring.PointsVisible = config.MeasuringPointsVisible;
+            measuring.ShowBearing = config.MeasuringShowBearing;
+            measuring.ShowLength = config.MeasuringShowLength;
+            measuring.ShowTotalLength = config.MeasuringShowTotalLength;
+        }
+
+        private static void UpdateShapeEditorSettings(IGeometryEditor editor, AppConfig config)
+        {
+            var settings = editor.Settings;
+
+            editor.ShowArea = config.ShapeEditorShowArea;
+
+            settings.PointLabelsVisible = config.ShapeEditorShowLabels;
+            settings.ShowBearing = config.ShapeEditorShowBearing;
+            settings.BearingType = config.ShapeEditorBearingType;
+            settings.AnglePrecision = config.ShapeEditorBearingPrecision;
+            settings.AngleFormat = config.ShapeEditorAngleFormat;
+            settings.ShowLength = config.ShapeEditorShowLength;
+            settings.AreaUnits = config.ShapeEditorUnits == LengthDisplay.Metric
+                                     ? AreaDisplay.Metric
+                                     : AreaDisplay.American;
+            settings.LengthUnits = config.ShapeEditorUnits == LengthDisplay.Metric
+                                       ? LengthDisplay.Metric
+                                       : LengthDisplay.American;
+            settings.LengthPrecision = config.ShapeEditorUnitPrecision;
+            settings.AreaPrecision = config.ShapeEditorUnitPrecision;
         }
     }
 }
