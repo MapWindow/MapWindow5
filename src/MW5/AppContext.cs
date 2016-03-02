@@ -62,6 +62,7 @@ namespace MW5
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, 
             IStyleService styleService, ITaskCollection tasks)
         {
+            Logger.Current.Debug("In AppContext");
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
             if (tasks == null) throw new ArgumentNullException("tasks");

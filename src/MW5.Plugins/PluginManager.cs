@@ -1,14 +1,16 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="PluginManager.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
@@ -24,32 +26,33 @@ namespace MW5.Plugins
     {
         private const string PluginDirectory = "Plugins";
 
-        private MainPlugin _mainPlugin;
+        private readonly HashSet<PluginIdentity> _active = new HashSet<PluginIdentity>();
 
         private readonly IApplicationContainer _container;
 
-        [ImportMany] 
-        #pragma warning disable 649
-        private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _mefPlugins;     // found by MEF
-        #pragma warning restore 649
+        private readonly List<BasePlugin> _plugins = new List<BasePlugin>(); // all valid plugins
 
-        private readonly List<BasePlugin> _plugins = new List<BasePlugin>();      // all valid plugins
+        private readonly MainPlugin _mainPlugin;
 
-        private readonly HashSet<PluginIdentity> _active = new HashSet<PluginIdentity>();
-
-        public event EventHandler<PluginEventArgs> PluginUnloaded;
+        [ImportMany]
+#pragma warning disable 649
+            private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _mefPlugins; // found by MEF
+#pragma warning restore 649
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
         public PluginManager(IApplicationContainer container, MainPlugin mainPlugin)
         {
+            Logger.Current.Debug("In PluginManager");
             if (container == null) throw new ArgumentNullException("container");
             if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");
 
             _container = container;
             _mainPlugin = mainPlugin;
         }
+
+        public event EventHandler<PluginEventArgs> PluginUnloaded;
 
         /// <summary>
         /// Gets list of all plugins both active and not.
@@ -83,10 +86,7 @@ namespace MW5.Plugins
 
         public IEnumerable<BasePlugin> ListeningPlugins
         {
-            get
-            {
-                return (new[] { _mainPlugin }).Concat(_plugins.Where(p => _active.Contains(p.Identity)));
-            }
+            get { return (new[] { _mainPlugin }).Concat(_plugins.Where(p => _active.Contains(p.Identity))); }
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace MW5.Plugins
                 {
                     p.Identity = PluginIdentityHelper.GetIdentity(p.GetType(), item.Metadata);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new ApplicationException("Failed to load plugin identity from assembly.", ex);
                 }
@@ -128,7 +128,7 @@ namespace MW5.Plugins
                     string msg = string.Format("Plugins have duplicate GUIDs: {0} {1}", p, p2);
                     throw new ApplicationException(msg);
                 }
-                
+
                 dict.Add(p.Identity.Guid, p);
 
                 _container.RegisterInstance(p.GetType(), p);
@@ -136,32 +136,12 @@ namespace MW5.Plugins
                 _plugins.Add(p);
             }
 
-            #if DEBUG
-                // I didn't caught anything by this check so far;
-                // Perhaps better just to check for particular assemblies in Plugins folder
-                // and display warning if they are present
-                CheckDuplicatedAssemblies();
-            #endif
-        }
-
-        /// <summary>
-        /// Checks if the same assembly was loaded from different locations in the app domain.
-        /// Most likely from Plugins folder if "Copy local" flag wasn't turned off.
-        /// </summary>
-        private void CheckDuplicatedAssemblies()
-        {
-            var list = LoadedAssemblyChecker.GetConflictingAssemblies();
-            foreach (var info in list)
-            {
-                string s = string.Format("Detected multiple load of assembly {0} from ", info.Key);
-                
-                foreach(string location in info.Value)
-                {
-                    s += string.Format("\t{0}", location);
-                }
-
-                Logger.Current.Warn(s);
-            }
+#if DEBUG
+            // I didn't caught anything by this check so far;
+            // Perhaps better just to check for particular assemblies in Plugins folder
+            // and display warning if they are present
+            CheckDuplicatedAssemblies();
+#endif
         }
 
         /// <summary>
@@ -188,18 +168,6 @@ namespace MW5.Plugins
         }
 
         /// <summary>
-        /// Gets the plugin catalog, i.e. directory to look for plugins and filename mask.
-        /// </summary>
-        private DirectoryCatalog GetPluginCatalog()
-        {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
-
-            path = Path.Combine(path, PluginDirectory);
-
-            return new DirectoryCatalog(path, "*.dll");
-        }
-
-        /// <summary>
         /// Loads a single plugin.
         /// </summary>
         /// <param name="identity">Plugin identity.</param>
@@ -213,7 +181,7 @@ namespace MW5.Plugins
         {
             if (_active.Select(p => p.Guid).Contains(pluginGuid))
             {
-                return;     // it's already loaded
+                return; // it's already loaded
             }
 
             var plugin = _plugins.FirstOrDefault(p => p.Identity.Guid == pluginGuid);
@@ -228,7 +196,8 @@ namespace MW5.Plugins
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to register services for plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
+                MessageService.Current.Warn("Failed to register services for plugin: " + plugin.Identity +
+                                            Environment.NewLine + ex.Message);
                 return;
             }
 
@@ -238,7 +207,8 @@ namespace MW5.Plugins
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
+                MessageService.Current.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine +
+                                            ex.Message);
                 return;
             }
 
@@ -265,7 +235,7 @@ namespace MW5.Plugins
             FirePluginUnloaded(identity);
         }
 
-        public void RestoreApplicationPlugins(IEnumerable<Guid> plugins,  IAppContext context)
+        public void RestoreApplicationPlugins(IEnumerable<Guid> plugins, IAppContext context)
         {
             var dict = new HashSet<Guid>(plugins);
 
@@ -286,6 +256,26 @@ namespace MW5.Plugins
             return _active.Contains(identity);
         }
 
+        /// <summary>
+        /// Checks if the same assembly was loaded from different locations in the app domain.
+        /// Most likely from Plugins folder if "Copy local" flag wasn't turned off.
+        /// </summary>
+        private void CheckDuplicatedAssemblies()
+        {
+            var list = LoadedAssemblyChecker.GetConflictingAssemblies();
+            foreach (var info in list)
+            {
+                string s = string.Format("Detected multiple load of assembly {0} from ", info.Key);
+
+                foreach (string location in info.Value)
+                {
+                    s += string.Format("\t{0}", location);
+                }
+
+                Logger.Current.Warn(s);
+            }
+        }
+
         private void FirePluginUnloaded(PluginIdentity identity)
         {
             var handler = PluginUnloaded;
@@ -293,6 +283,18 @@ namespace MW5.Plugins
             {
                 handler.Invoke(this, new PluginEventArgs(identity));
             }
+        }
+
+        /// <summary>
+        /// Gets the plugin catalog, i.e. directory to look for plugins and filename mask.
+        /// </summary>
+        private DirectoryCatalog GetPluginCatalog()
+        {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
+
+            path = Path.Combine(path, PluginDirectory);
+
+            return new DirectoryCatalog(path, "*.dll");
         }
     }
 }

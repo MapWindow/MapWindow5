@@ -24,6 +24,7 @@ namespace MW5.Services.Concrete
 
         public ConfigService(IPluginManager manager, IRepository repository)
         {
+            Logger.Current.Debug("In ConfigService");
             if (manager == null) throw new ArgumentNullException("manager");
             if (repository == null) throw new ArgumentNullException("repository");
 

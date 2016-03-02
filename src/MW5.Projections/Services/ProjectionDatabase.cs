@@ -1,5 +1,8 @@
-﻿// EPSG Reference: a tool for visualization of EPSG coordinate system database
-// Author: Sergei Leschinski
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ProjectionDatabase.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
 
 #define SQLITE_DATABASE
 
@@ -8,15 +11,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
-using MW5.Plugins;
 using MW5.Plugins.Enums;
-using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
 using MW5.Projections.BL;
@@ -28,38 +27,150 @@ namespace MW5.Projections.Services
     /// <summary>
     /// Encapsulates all the interaction with modified EPSG projections database
     /// </summary>
-    public class ProjectionDatabase: IProjectionDatabase
+    public class ProjectionDatabase : IProjectionDatabase
     {
-        // The filename of the database 
-        private string _dbname = "";
+        private readonly Hashtable _dctCountries = new Hashtable();
+        private readonly Hashtable _dctGcs = new Hashtable();
 
         // return GCS structure by its code
         private readonly Hashtable _dctRegions = new Hashtable();
-        private readonly Hashtable _dctCountries = new Hashtable();
-        private readonly Hashtable _dctGcs = new Hashtable();
-        private readonly Dictionary<string, int> _dialects = new Dictionary<string,int>();
+        private readonly Dictionary<string, int> _dialects = new Dictionary<string, int>();
 
-        // list of geographic CS
-        private List<IRegion> _listRegions = new List<IRegion>();
+        private readonly IDataProvider _provider;
+        // The filename of the database 
+        private string _dbname = "";
+        private bool _initialized;
         private List<ICountry> _listCountries = new List<ICountry>();
         private List<IGeographicCs> _listGcs = new List<IGeographicCs>();
         private List<IProjectedCs> _listPcs = new List<IProjectedCs>();
 
-        private readonly IDataProvider _provider;
-        private bool _initialized = false;
+        // list of geographic CS
+        private List<IRegion> _listRegions = new List<IRegion>();
 
         /// <summary>
         /// Constructor. Sets SqLite provider
         /// </summary>
         public ProjectionDatabase()
         {
-            #if SQLITE_DATABASE
+            Logger.Current.Debug("In ProjectionDatabase");
+#if SQLITE_DATABASE
             _provider = new SqliteProvider();
-            #else
+#else
             m_provider = new OleDbProvider();
             #endif
         }
-        
+
+        #region Fill country by area
+
+        /// <summary>
+        /// Utility function to fill one of the tables fo modified EPSG database
+        /// </summary>
+        /// <param name="dbName">The filename of database to work with</param>
+        public void FillCountryByArea(string dbName)
+        {
+            DataSet ds = new DataSet();
+            DbDataAdapter adapter = _provider.CreateDataAdapter();
+            DbConnection conn = _provider.CreateConnection(_dbname);
+
+            try
+            {
+                DataTable dtArea = new DataTable();
+                DbCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM [Area]";
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtArea);
+
+                DataTable dtCoutries = new DataTable();
+                cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM [Countries] WHERE [Level] = 3";
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtCoutries);
+
+                DataTable dtResults = new DataTable();
+                cmd.CommandType = CommandType.TableDirect;
+                cmd.CommandText = "Country By Area";
+                adapter.SelectCommand = cmd;
+                adapter.Fill(dtResults);
+
+                // CommandBuilder seems to be not clever enough to put brackets around the name of the table
+                DbCommand cmdInsert = _provider.CreateCommand();
+                cmdInsert.CommandText =
+                    "INSERT INTO [Country By Area] (AREA_CODE, COUNTRY_CODE) VALUES (@AREA_CODE, @COUNTRY_CODE)";
+                cmdInsert.Connection = conn;
+
+                // Add the parameters for the InsertCommand.
+                DbParameter param = _provider.CreateParameter();
+                param.ParameterName = "@AREA_CODE";
+                param.DbType = DbType.Int32;
+                param.Size = 10;
+                param.SourceColumn = "AREA_CODE";
+                cmdInsert.Parameters.Add(param);
+
+                param = _provider.CreateParameter();
+                param.ParameterName = "@COUNTRY_CODE";
+                param.DbType = DbType.Int32;
+                param.Size = 10;
+                param.SourceColumn = "COUNTRY_CODE";
+                cmdInsert.Parameters.Add(param);
+
+                adapter.InsertCommand = cmdInsert;
+
+                string[] list = new string[dtCoutries.Rows.Count];
+
+                for (int i = 0; i < dtCoutries.Rows.Count; i++)
+                {
+                    string s = dtCoutries.Rows[i]["Alias"].ToString().ToLower();
+                    list[i] = s;
+                }
+
+                int count = 0;
+
+                for (int j = 0; j < list.Length; j++)
+                {
+                    string exclude = "";
+                    if (list[j] == "niger") exclude = "nigeria";
+                    if (list[j] == "oman") exclude = "romania";
+                    if (list[j] == "mexico") exclude = "new mexico";
+                    if (list[j] == "georgia") exclude = "usa";
+                    if (list[j] == "georgia") exclude = "south georgia";
+                    if (list[j] == "jersey") exclude = "new jersey";
+                    if (list[j] == "india") exclude = "indiana";
+                    if (list[j] == "antarctic") exclude = "australian";
+                    if (list[j] == "canada") exclude = "canada plantation";
+                    if (list[j] == "netherlands") exclude = "netherlands antilles";
+                    if (list[j] == "china") exclude = "hong kong";
+                    if (list[j] == "india") exclude = "bassas da india";
+                    if (list[j] == "guinea") exclude = "papua new guinea";
+
+                    for (int i = 0; i < dtArea.Rows.Count; i++)
+                    {
+                        string s = dtArea.Rows[i][2].ToString().ToLower();
+                        if (s.Contains(list[j]))
+                        {
+                            if (exclude != "" && s.Contains(exclude)) // excluding unwanted coutries
+                                continue;
+
+                            DataRow row = dtResults.NewRow();
+                            row[0] = dtArea.Rows[i][0];
+                            row[1] = dtCoutries.Rows[j][0];
+                            dtResults.Rows.Add(row);
+
+                            count++;
+                        }
+                    }
+                }
+
+                adapter.Update(dtResults);
+                MessageService.Current.Info(string.Format("Matches found: {0}", count));
+            }
+            finally
+            {
+                ds.Clear();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Creates a new instance of the EpsgDatabase class
         /// </summary>
@@ -72,7 +183,7 @@ namespace MW5.Projections.Services
 
             if (!File.Exists(databaseName))
             {
-                throw new FileNotFoundException("EPSG database wan't found: " + databaseName);
+                throw new FileNotFoundException("EPSG database wasn't found: " + databaseName);
             }
 
             Read(databaseName);
@@ -82,6 +193,7 @@ namespace MW5.Projections.Services
         }
 
         #region Coordinate system searching
+
         /// <summary>
         /// Gets coordinate system by EPSG code
         /// </summary>
@@ -103,7 +215,7 @@ namespace MW5.Projections.Services
         {
             ICoordinateSystem cs = null;
             var proj = new SpatialReference();
-            
+
             if (proj.ImportFromAutoDetect(str))
             {
                 cs = GetCoordinateSystem(proj, searchType);
@@ -116,7 +228,7 @@ namespace MW5.Projections.Services
 
             return cs;
         }
-        
+
         /// <summary>
         /// Returns coordinate system object associated with given GeoProjection.
         /// This property is computationally expensive.
@@ -198,25 +310,25 @@ namespace MW5.Projections.Services
             return null;
         }
 
-        private ICoordinateSystem GetCoordinateSystemCore(IEnumerable<ICoordinateSystem> list, string name, string esriName)
+        private ICoordinateSystem GetCoordinateSystemCore(
+            IEnumerable<ICoordinateSystem> list,
+            string name,
+            string esriName)
         {
-            var cs = list.FirstOrDefault(item => item.Name.ToLower() == name);
+            var coordinateSystems = list as IList<ICoordinateSystem> ?? list.ToList();
+            var cs = coordinateSystems.FirstOrDefault(item => item.Name.ToLower() == name);
             if (cs != null)
             {
                 return cs;
             }
 
-            if (!string.IsNullOrWhiteSpace(esriName))
-            {
-                return list.FirstOrDefault(item => item.EsriName.ToLower() == esriName);
-            }
-
-            return null;
+            return !string.IsNullOrWhiteSpace(esriName) ? coordinateSystems.FirstOrDefault(item => item.EsriName.ToLower() == esriName) : null;
         }
+
         #endregion
 
         #region Properties
-        
+
         /// <summary>
         /// Gets databass name
         /// </summary>
@@ -224,7 +336,7 @@ namespace MW5.Projections.Services
         {
             get { return _dbname; }
         }
-        
+
         /// <summary>
         /// Returns list of regions
         /// </summary>
@@ -262,21 +374,19 @@ namespace MW5.Projections.Services
         /// </summary>
         public IEnumerable<ICoordinateSystem> CoordinateSystems
         {
-            get
-            {
-                return _listGcs.Union(_listPcs.Cast<ICoordinateSystem>());
-            }
+            get { return _listGcs.Union(_listPcs.Cast<ICoordinateSystem>()); }
         }
 
         #endregion
 
         #region Dialects
+
         /// <summary>
         /// Save dialects to the database
         /// </summary>
         public void SaveDialects(ICoordinateSystem cs)
         {
-            using (DbConnection conn = _provider.CreateConnection()) 
+            using (DbConnection conn = _provider.CreateConnection())
             {
                 conn.ConnectionString = _provider.CreateConnectionString(_dbname);
                 conn.Open();
@@ -408,7 +518,7 @@ namespace MW5.Projections.Services
         public int EpsgCodeByDialectString(ISpatialReference proj)
         {
             var code = EpsgCodeByDialectString(proj.ExportToProj4());
-            
+
             if (code == -1)
             {
                 code = EpsgCodeByDialectString(proj.ExportToWkt());
@@ -421,6 +531,7 @@ namespace MW5.Projections.Services
 
             return code;
         }
+
         #endregion
 
         #region Reading
@@ -441,22 +552,20 @@ namespace MW5.Projections.Services
                     return false;
                 }
 
-                string extension = "";
-
 #if SQLITE_DATABASE
-                extension = "*.db3";
+                var extension = "*.db3";
 #else
-                extension = "*.mdb";
-            #endif
+                var extension = "*.mdb";
+#endif
 
-                string[] files = Directory.GetFiles(path, extension);
+                var files = Directory.GetFiles(path, extension);
                 if (files.Length != 1)
                 {
-                    string msg = "Failed to load projection database. A single database is expected. Databases found: " + files.Length + "." + Environment.NewLine + 
-                                 "Path: " + path + Environment.NewLine;
+                    var msg = "Failed to load projection database. A single database is expected. Databases found: " +
+                              files.Length + "." + Environment.NewLine + "Path: " + path + Environment.NewLine;
 
                     Logger.Current.Warn(msg);
-                    
+
                     return false;
                 }
 
@@ -470,7 +579,7 @@ namespace MW5.Projections.Services
 
             return true;
         }
-        
+
         /// <summary>
         /// Queries database and fill the list of GCS
         /// There are 4 levels in hierarchy: Regions->Countries->GCS->PCS
@@ -483,7 +592,7 @@ namespace MW5.Projections.Services
         public bool Read(string dbName)
         {
             _dbname = dbName;
-            
+
             // regions
             _listRegions = new List<IRegion>(30);
             ReadRegions();
@@ -543,12 +652,11 @@ namespace MW5.Projections.Services
                             break;
                     }
                 }
-            
             }
 
             // reading dialects
             RefreshDialects();
-            
+
             return true;
         }
 
@@ -557,24 +665,22 @@ namespace MW5.Projections.Services
         /// </summary>
         private void LinkGcsToRegion()
         {
-            DbConnection conn = _provider.CreateConnection(_dbname);
-            DbCommand cmd = conn.CreateCommand();
+            var conn = _provider.CreateConnection(_dbname);
+            var cmd = conn.CreateCommand();
             cmd.CommandText = Constants.SqlGcsByRegion;
             conn.Open();
-            DbDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            var reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
-            if (reader.HasRows)
+            if (!reader.HasRows) return;
+
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    int codeGcs = reader.GetInt32(1);
-                    if (_dctGcs.ContainsKey(codeGcs))
-                    {
-                        var gcs = (GeographicCs)_dctGcs[codeGcs];
-                        gcs.Type = GeographicalCsType.Regional;
-                        gcs.RegionCode = reader.GetInt32(0); ;
-                    }
-                }
+                var codeGcs = reader.GetInt32(1);
+                if (!_dctGcs.ContainsKey(codeGcs)) continue;
+
+                var gcs = (GeographicCs)_dctGcs[codeGcs];
+                gcs.Type = GeographicalCsType.Regional;
+                gcs.RegionCode = reader.GetInt32(0);
             }
         }
 
@@ -583,37 +689,36 @@ namespace MW5.Projections.Services
         /// </summary>
         private void LinkGcsToCountry()
         {
-            DbConnection conn = _provider.CreateConnection(_dbname);
-            DbCommand cmd = conn.CreateCommand();
+            var conn = _provider.CreateConnection(_dbname);
+            var cmd = conn.CreateCommand();
             cmd.CommandText = Constants.SqlCsByCountry;
 
             conn.Open();
-            DbDataReader reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            var reader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
             if (reader.HasRows)
             {
                 while (reader.Read())
                 {
-                    int codeCountry = reader.GetInt32(0);
-                    if (_dctCountries.ContainsKey(codeCountry))
-                    {
-                        Country country = (Country)_dctCountries[codeCountry];
+                    var codeCountry = reader.GetInt32(0);
+                    if (!_dctCountries.ContainsKey(codeCountry)) continue;
 
-                        string projType = reader.GetString(2);
-                        if (projType == Constants.CsTypeGeographic_2D)
+                    var country = (Country)_dctCountries[codeCountry];
+
+                    var projType = reader.GetString(2);
+                    if (projType == Constants.CsTypeGeographic_2D)
+                    {
+                        int codeGcs = reader.GetInt32(1);
+                        if (_dctGcs.ContainsKey(codeGcs))
                         {
-                            int codeGcs = reader.GetInt32(1);
-                            if (_dctGcs.ContainsKey(codeGcs))
-                            {
-                                GeographicCs gcs = (GeographicCs)_dctGcs[codeGcs];
-                                country.GeographicCs.Add(gcs);
-                            }
+                            var gcs = (GeographicCs)_dctGcs[codeGcs];
+                            country.GeographicCs.Add(gcs);
                         }
-                        else if (projType == Constants.CsTypeProjected)
-                        {
-                            int codePcs = reader.GetInt32(1);
-                            country.ProjectedCs.Add(codePcs);
-                        }
+                    }
+                    else if (projType == Constants.CsTypeProjected)
+                    {
+                        int codePcs = reader.GetInt32(1);
+                        country.ProjectedCs.Add(codePcs);
                     }
                 }
             }
@@ -621,10 +726,12 @@ namespace MW5.Projections.Services
             // global CS which should be added for each country
             var listGlobalCs = _listGcs.Where(gcs => gcs.AreaCode == Constants.CodeAreaWorld).ToList();
 
-            foreach (Country country in _listCountries)
+            foreach (var country in _listCountries)
             {
                 foreach (var gcs in listGlobalCs)
+                {
                     country.GeographicCs.Add(gcs);
+                }
             }
         }
 
@@ -658,11 +765,11 @@ namespace MW5.Projections.Services
                 while (reader.Read())
                 {
                     Region region = new Region
-                    {
-                        Code = reader.GetInt32(codeColumn),
-                        Name = reader.GetString(nameColumn),
-                        ParentCode = reader.GetInt32(parentColumn)
-                    };
+                                        {
+                                            Code = reader.GetInt32(codeColumn),
+                                            Name = reader.GetString(nameColumn),
+                                            ParentCode = reader.GetInt32(parentColumn)
+                                        };
                     _listRegions.Add(region);
                     _dctRegions.Add(region.Code, region);
                 }
@@ -678,8 +785,7 @@ namespace MW5.Projections.Services
         {
             for (int i = 0; i < reader.FieldCount; i++)
             {
-                if (String.Equals(name, reader.GetName(i), StringComparison.CurrentCultureIgnoreCase))
-                    return i;
+                if (String.Equals(name, reader.GetName(i), StringComparison.CurrentCultureIgnoreCase)) return i;
             }
             return -1;
         }
@@ -697,15 +803,15 @@ namespace MW5.Projections.Services
                 foreach (DataRow row in dtCountries.Rows)
                 {
                     Country country = new Country
-                    {
-                        Code = (int) row[Constants.CmnCountryCode],
-                        Name = (string) row[Constants.CmnCountryName],
-                        RegionCode = (int) row[Constants.CmnCountryParent],
-                        Left = ParseDouble(row[Constants.CmnCountryXmin]),
-                        Right = ParseDouble(row[Constants.CmnCountryXmax]),
-                        Bottom = ParseDouble(row[Constants.CmnCountryYmin]),
-                        Top = ParseDouble(row[Constants.CmnCountryYmax])
-                    };
+                                          {
+                                              Code = (int)row[Constants.CmnCountryCode],
+                                              Name = (string)row[Constants.CmnCountryName],
+                                              RegionCode = (int)row[Constants.CmnCountryParent],
+                                              Left = ParseDouble(row[Constants.CmnCountryXmin]),
+                                              Right = ParseDouble(row[Constants.CmnCountryXmax]),
+                                              Bottom = ParseDouble(row[Constants.CmnCountryYmin]),
+                                              Top = ParseDouble(row[Constants.CmnCountryYmax])
+                                          };
                     _listCountries.Add(country);
                     _dctCountries.Add(country.Code, country);
                 }
@@ -729,24 +835,25 @@ namespace MW5.Projections.Services
             foreach (DataRow row in dt.Rows)
             {
                 GeographicCs gcs = new GeographicCs
-                {
-                    Code = int.Parse(row[Constants.CmnCsCode].ToString()),
-                    Name = row[Constants.CmnCsName].ToString(),
-                    Left = ParseDouble(row[Constants.CmnCsLeft]),
-                    Right = ParseDouble(row[Constants.CmnCsRight]),
-                    Top = ParseDouble(row[Constants.CmnCsNorth]),
-                    Bottom = ParseDouble(row[Constants.CmnCsSouth]),
-                    AreaCode = int.Parse(row[Constants.CmnCsAreaCode].ToString()),
-                    Scope = (row[Constants.CmnCsScope]).ToString(),
-                    AreaName = (row[Constants.CmnCsAreaName]).ToString(),
-                    Remarks = (row[Constants.CmnCsRemarks]).ToString(),
-                    Proj4 = (row[Constants.CmnCsProj4]).ToString(),
-                    EsriName = (row[Constants.EsriName]).ToString(),
-                };
+                                       {
+                                           Code = int.Parse(row[Constants.CmnCsCode].ToString()),
+                                           Name = row[Constants.CmnCsName].ToString(),
+                                           Left = ParseDouble(row[Constants.CmnCsLeft]),
+                                           Right = ParseDouble(row[Constants.CmnCsRight]),
+                                           Top = ParseDouble(row[Constants.CmnCsNorth]),
+                                           Bottom = ParseDouble(row[Constants.CmnCsSouth]),
+                                           AreaCode = int.Parse(row[Constants.CmnCsAreaCode].ToString()),
+                                           Scope = (row[Constants.CmnCsScope]).ToString(),
+                                           AreaName = (row[Constants.CmnCsAreaName]).ToString(),
+                                           Remarks = (row[Constants.CmnCsRemarks]).ToString(),
+                                           Proj4 = (row[Constants.CmnCsProj4]).ToString(),
+                                           EsriName = (row[Constants.EsriName]).ToString()
+                                       };
 
                 // setting type of GCS
-                gcs.Type = (gcs.Left != -180.0f || gcs.Bottom != -90.0f || gcs.Right != 180.0f || gcs.Top != 90.0f) ?
-                            GeographicalCsType.Local : GeographicalCsType.Global;
+                gcs.Type = (Math.Abs(gcs.Left - (-180.0f)) > 0 || Math.Abs(gcs.Bottom - (-90.0f)) > 0 || Math.Abs(gcs.Right - 180.0f) > 0 || Math.Abs(gcs.Top - 90.0f) > 0)
+                               ? GeographicalCsType.Local
+                               : GeographicalCsType.Global;
 
                 _listGcs.Add(gcs);
 
@@ -787,11 +894,9 @@ namespace MW5.Projections.Services
             int proj4Column = ColumnIndexByName(reader, Constants.CmnCsProj4);
             int esriNameColumn = ColumnIndexByName(reader, Constants.EsriName);
 
-            if (codeColumn == -1 || nameColumn == -1 || sourceColumn == -1 ||
-                leftColumn == -1 || rightColumn == -1 || bottomColumn == -1 ||
-                topColumn == -1 || areaNameColumn == -1 || remarksColumn == -1 ||
-                scopeColumn == -1 || typeColumn == -1 || localColumn == -1 || proj4Column == -1 ||
-                esriNameColumn == -1 )
+            if (codeColumn == -1 || nameColumn == -1 || sourceColumn == -1 || leftColumn == -1 || rightColumn == -1 ||
+                bottomColumn == -1 || topColumn == -1 || areaNameColumn == -1 || remarksColumn == -1 ||
+                scopeColumn == -1 || typeColumn == -1 || localColumn == -1 || proj4Column == -1 || esriNameColumn == -1)
             {
                 MessageService.Current.Warn("The expected field isn't found in the [Coordinate Systems] table");
                 return false;
@@ -802,22 +907,30 @@ namespace MW5.Projections.Services
                 while (reader.Read())
                 {
                     var pcs = new ProjectedCs
-                    {
-                        Code = reader.GetInt32(codeColumn),
-                        Name = reader.GetString(nameColumn),
-                        Left = reader.GetDouble(leftColumn),
-                        Right = reader.GetDouble(rightColumn),
-                        Top = reader.GetDouble(topColumn),
-                        Bottom = reader.GetDouble(bottomColumn),
-                        SourceCode = reader.GetInt32(sourceColumn),
-                        Scope = reader.GetString(scopeColumn),
-                        AreaName = reader.GetString(areaNameColumn),
-                        Proj4 = (!reader.IsDBNull(proj4Column)) ? reader.GetString(proj4Column) : "",
-                        ProjectionType = (!reader.IsDBNull(typeColumn)) ? reader.GetString(typeColumn) : "",
-                        Remarks = (!reader.IsDBNull(remarksColumn)) ? reader.GetString(remarksColumn) : "",
-                        Local = false,
-                        EsriName = (!reader.IsDBNull(esriNameColumn)) ? reader.GetString(esriNameColumn) : ""
-                    };
+                                  {
+                                      Code = reader.GetInt32(codeColumn),
+                                      Name = reader.GetString(nameColumn),
+                                      Left = reader.GetDouble(leftColumn),
+                                      Right = reader.GetDouble(rightColumn),
+                                      Top = reader.GetDouble(topColumn),
+                                      Bottom = reader.GetDouble(bottomColumn),
+                                      SourceCode = reader.GetInt32(sourceColumn),
+                                      Scope = reader.GetString(scopeColumn),
+                                      AreaName = reader.GetString(areaNameColumn),
+                                      Proj4 =
+                                          (!reader.IsDBNull(proj4Column)) ? reader.GetString(proj4Column) : "",
+                                      ProjectionType =
+                                          (!reader.IsDBNull(typeColumn)) ? reader.GetString(typeColumn) : "",
+                                      Remarks =
+                                          (!reader.IsDBNull(remarksColumn))
+                                              ? reader.GetString(remarksColumn)
+                                              : "",
+                                      Local = false,
+                                      EsriName =
+                                          (!reader.IsDBNull(esriNameColumn))
+                                              ? reader.GetString(esriNameColumn)
+                                              : ""
+                                  };
 
                     if (!reader.IsDBNull(localColumn))
                     {
@@ -833,6 +946,7 @@ namespace MW5.Projections.Services
         #endregion
 
         #region Utilities
+
         /// <summary>
         /// Parses double value.
         /// </summary>
@@ -878,118 +992,11 @@ namespace MW5.Projections.Services
                 return null;
             }
         }
-        #endregion
 
-        #region Fill country by area
-        /// <summary>
-        /// Utility function to fill one of the tables fo modified EPSG database
-        /// </summary>
-        /// <param name="dbName">The filename of database to work with</param>
-        public void FillCountryByArea(string dbName)
-        {
-            DataSet ds = new DataSet();
-            DbDataAdapter adapter = _provider.CreateDataAdapter();
-            DbConnection conn = _provider.CreateConnection(_dbname);
-
-            try
-            {
-                DataTable dtArea = new DataTable();
-                DbCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM [Area]";
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtArea);
-
-                DataTable dtCoutries = new DataTable();
-                cmd = conn.CreateCommand();
-                cmd.CommandText = "SELECT * FROM [Countries] WHERE [Level] = 3";
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtCoutries);
-
-                DataTable dtResults = new DataTable();
-                cmd.CommandType = CommandType.TableDirect;
-                cmd.CommandText = "Country By Area";
-                adapter.SelectCommand = cmd;
-                adapter.Fill(dtResults);
-
-                // CommandBuilder seems to be not clever enough to put brackets around the name of the table
-                DbCommand cmdInsert = _provider.CreateCommand();
-                cmdInsert.CommandText = "INSERT INTO [Country By Area] (AREA_CODE, COUNTRY_CODE) VALUES (@AREA_CODE, @COUNTRY_CODE)";
-                cmdInsert.Connection = conn;
-
-                // Add the parameters for the InsertCommand.
-                DbParameter param = _provider.CreateParameter();
-                param.ParameterName = "@AREA_CODE";
-                param.DbType = DbType.Int32;
-                param.Size = 10;
-                param.SourceColumn = "AREA_CODE";
-                cmdInsert.Parameters.Add(param);
-
-                param = _provider.CreateParameter();
-                param.ParameterName = "@COUNTRY_CODE";
-                param.DbType = DbType.Int32;
-                param.Size = 10;
-                param.SourceColumn = "COUNTRY_CODE";
-                cmdInsert.Parameters.Add(param);
-                
-                adapter.InsertCommand = cmdInsert;
-
-                string[] list = new string[dtCoutries.Rows.Count];
-
-                for (int i = 0; i < dtCoutries.Rows.Count; i++)
-                {
-                    string s = dtCoutries.Rows[i]["Alias"].ToString().ToLower();
-                    list[i] = s;
-                }
-
-                int count = 0;
-
-                for (int j = 0; j < list.Length; j++)
-                {
-                    string exclude = "";
-                    if (list[j] == "niger") exclude = "nigeria";
-                    if (list[j] == "oman") exclude = "romania";
-                    if (list[j] == "mexico") exclude = "new mexico";
-                    if (list[j] == "georgia") exclude = "usa";
-                    if (list[j] == "georgia") exclude = "south georgia";
-                    if (list[j] == "jersey") exclude = "new jersey";
-                    if (list[j] == "india") exclude = "indiana";
-                    if (list[j] == "antarctic") exclude = "australian";
-                    if (list[j] == "canada") exclude = "canada plantation";
-                    if (list[j] == "netherlands") exclude = "netherlands antilles";
-                    if (list[j] == "china") exclude = "hong kong";
-                    if (list[j] == "india") exclude = "bassas da india";
-                    if (list[j] == "guinea") exclude = "papua new guinea";
-
-                    for (int i = 0; i < dtArea.Rows.Count; i++)
-                    {
-                        string s = dtArea.Rows[i][2].ToString().ToLower();
-                        if (s.Contains(list[j]))
-                        {
-                            if (exclude != "" && s.Contains(exclude))  // excluding unwanted coutries
-                                continue;
-
-                            DataRow row = dtResults.NewRow();
-                            row[0] = dtArea.Rows[i][0];
-                            row[1] = dtCoutries.Rows[j][0];
-                            dtResults.Rows.Add(row);
-
-                            count++;
-                        }
-                    }
-                }
-
-                adapter.Update(dtResults);
-                MessageService.Current.Info(string.Format("Matches found: {0}", count));
-            }
-            finally
-            {
-                ds.Clear();
-            }
-        }
         #endregion
 
         #region UpdateProj4
-        
+
         /// <summary>
         /// Updates proj4 strings in the proj4 column of coordinate reference systems table
         /// Assumes that there is Coordinate Reference System table in the database (was removed from Sqlite).
@@ -1010,7 +1017,8 @@ namespace MW5.Projections.Services
                 adapter.Fill(dt);
 
                 DbCommand cmdUpdate = conn.CreateCommand();
-                cmdUpdate.CommandText = "UPDATE [Coordinate Reference System] SET proj4 = @proj4 WHERE COORD_REF_SYS_CODE = @cs";
+                cmdUpdate.CommandText =
+                    "UPDATE [Coordinate Reference System] SET proj4 = @proj4 WHERE COORD_REF_SYS_CODE = @cs";
 
                 DbParameter param = _provider.CreateParameter();
                 param.ParameterName = "@proj4";
@@ -1025,7 +1033,7 @@ namespace MW5.Projections.Services
                 param.Size = 10;
                 param.SourceColumn = "COORD_REF_SYS_CODE";
                 cmdUpdate.Parameters.Add(param);
-                
+
                 adapter.UpdateCommand = cmdUpdate;
 
                 int count = 0;

@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="WindsorCastleContainer.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Windows.Forms;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -11,7 +12,7 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.DI.Castle
 {
-    public class WindsorCastleContainer: IApplicationContainer
+    public class WindsorCastleContainer : IApplicationContainer
     {
         private readonly WindsorContainer _container;
 
@@ -21,8 +22,7 @@ namespace MW5.DI.Castle
             _container.Kernel.ReleasePolicy = new TransientReleasePolicy(_container.Kernel);
         }
 
-        public IApplicationContainer RegisterView<TView, TImplementation>() 
-            where TView : class, IView 
+        public IApplicationContainer RegisterView<TView, TImplementation>() where TView : class, IView
             where TImplementation : class, TView
         {
             _container.Register(Component.For<TView>().ImplementedBy<TImplementation>().LifestyleTransient());
@@ -35,8 +35,7 @@ namespace MW5.DI.Castle
             return this;
         }
 
-        public IApplicationContainer RegisterInstance<TService>(object instance) 
-            where TService : class 
+        public IApplicationContainer RegisterInstance<TService>(object instance) where TService : class
         {
             _container.Register(Component.For<TService>().Instance(instance as TService).LifestyleSingleton());
             return this;
@@ -48,8 +47,7 @@ namespace MW5.DI.Castle
             return this;
         }
 
-        public IApplicationContainer RegisterService<TService, TImplementation>() 
-            where TService: class
+        public IApplicationContainer RegisterService<TService, TImplementation>() where TService : class
             where TImplementation : class, TService
         {
             _container.Register(Component.For<TService>().ImplementedBy<TImplementation>().LifestyleTransient());
@@ -73,8 +71,7 @@ namespace MW5.DI.Castle
             return _container.Resolve(type);
         }
 
-        public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
-            where TService: class
+        public IApplicationContainer RegisterSingleton<TService, TImplementation>() where TService : class
             where TImplementation : class, TService
         {
             _container.Register(Component.For<TService>().ImplementedBy<TImplementation>().LifestyleSingleton());
@@ -87,28 +84,25 @@ namespace MW5.DI.Castle
             return this;
         }
 
-        public bool Run<TPresenter, TArgument>(TArgument arg, IWin32Window parent = null) 
+        public bool Run<TPresenter, TArgument>(TArgument arg, IWin32Window parent = null)
             where TPresenter : class, IPresenter<TArgument>
         {
             var presenter = GetInstance<TPresenter>();
             return presenter.Run(arg, parent);
         }
 
-        public bool Run<TPresenter>(IWin32Window parent = null) 
-            where TPresenter : class, IPresenter
+        public bool Run<TPresenter>(IWin32Window parent = null) where TPresenter : class, IPresenter
         {
             var presenter = GetInstance<TPresenter>();
             return presenter.Run(parent);
         }
 
-        public TService Resolve<TService>() 
-            where TService : class
+        public TService Resolve<TService>() where TService : class
         {
             return _container.Resolve<TService>();
         }
 
-        public TService GetSingleton<TService>() 
-            where TService : class
+        public TService GetSingleton<TService>() where TService : class
         {
             _container.Register(Component.For<TService>().OnlyNewServices());
             return _container.Resolve<TService>();

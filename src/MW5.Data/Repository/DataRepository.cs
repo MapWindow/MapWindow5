@@ -1,15 +1,19 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="DataRepository.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using MW5.Data.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Model;
-using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
 
@@ -18,21 +22,32 @@ namespace MW5.Data.Repository
     /// <summary>
     /// A model for repository dock panel
     /// </summary>
-    public class DataRepository: IRepository
+    public class DataRepository : IRepository
     {
         private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
-        private List<string> _folders;
-        private List<string> _expandedFolders;
-        private BindingList<WmsServer> _wmsServers;
         private List<DatabaseConnection> _connections;
         private List<TmsProvider> _defaultTmsProviders;
-        private TmsProviderList _tmsProviders;
-        private RepositoryGroupList _tmsGroups;
+        private List<string> _folders;
+        private BindingList<WmsServer> _wmsServers;
+
+        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService)
+        {
+            Logger.Current.Debug("In DataRepository");
+            if (databaseService == null) throw new ArgumentNullException("databaseService");
+
+            _databaseService = databaseService;
+            _fileDialogService = fileDialogService;
+
+            Init();
+        }
 
         public event EventHandler<FolderEventArgs> FolderAdded;
+
         public event EventHandler<FolderEventArgs> FolderRemoved;
+
         public event EventHandler<ConnectionEventArgs> ConnectionAdded;
+
         public event EventHandler<ConnectionEventArgs> ConnectionRemoved;
 
         public void PrepareToSave()
@@ -40,59 +55,7 @@ namespace MW5.Data.Repository
             DelegateHelper.FireEvent(this, BeforeSaved);
         }
 
-        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService)
-        {
-            if (databaseService == null) throw new ArgumentNullException("databaseService");
-        
-            _databaseService = databaseService;
-            _fileDialogService = fileDialogService;
-
-            Init();
-        }
-
-        private void Init()
-        {
-            _folders = new List<string>();
-
-            _expandedFolders = new List<string>();
-
-            _connections = new List<DatabaseConnection>();
-
-            _wmsServers = new BindingList<WmsServer>() 
-            { 
-                new WmsServer("Lizard Tech", "http://demo.lizardtech.com/lizardtech/iserv/ows") 
-            };
-
-            _tmsProviders = new TmsProviderList();
-
-            _defaultTmsProviders = new List<TmsProvider>();
-
-            _tmsGroups = new RepositoryGroupList
-                             {
-                                 new RepositoryGroup(TmsProvider.DefaultGroupId, "Default"),
-                                 new RepositoryGroup(TmsProvider.CustomGroupId, "Custom")
-                             };
-        }
-
-        private void AddRootFolders()
-        {
-            try
-            {
-                foreach (var d in DriveInfo.GetDrives())
-                {
-                    AddFolderLink(d.RootDirectory.FullName);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Current.Warn("Failed to enumerate virtual drives on the machine.", ex);
-            }
-        }
-
-        public List<string> ExpandedFolders
-        {
-            get { return _expandedFolders; }
-        }
+        public List<string> ExpandedFolders { get; private set; }
 
         public void Initialize(IAppContext context)
         {
@@ -104,34 +67,7 @@ namespace MW5.Data.Repository
             }
         }
 
-        private void AddDefautlTmsProviders(IAppContext context)
-        {
-            foreach (var p in context.Map.Tiles.Providers.Where(p => !p.Custom))
-            {
-                if (p.Name.StartsWithIgnoreCase("google"))
-                {
-                    continue;
-                }
-
-                var provider = new TmsProvider
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    MinZoom = p.MinZoom,
-                    MaxZoom = p.MaxZoom,
-                    Bounds = p.GeographicBounds,
-                    IsCustom = false,
-                    Url = p.Url
-                };
-
-                _defaultTmsProviders.Add(provider);
-            }
-        }
-
-        public RepositoryGroupList TmsGroups
-        {
-            get { return _tmsGroups; }
-        }
+        public RepositoryGroupList TmsGroups { get; private set; }
 
         public IEnumerable<string> Folders
         {
@@ -148,10 +84,7 @@ namespace MW5.Data.Repository
             get { return _wmsServers; }
         }
 
-        public TmsProviderList TmsProviders
-        {
-            get { return _tmsProviders; }
-        }
+        public TmsProviderList TmsProviders { get; private set; }
 
         public IEnumerable<TmsProvider> DefaultTmsProviders
         {
@@ -160,6 +93,7 @@ namespace MW5.Data.Repository
 
         public void AddFolderLink()
         {
+            Logger.Current.Debug("In AddFolderLink");
             string path;
             if (_fileDialogService.ChooseFolder(string.Empty, out path))
             {
@@ -169,21 +103,20 @@ namespace MW5.Data.Repository
 
         public void AddFolderLink(string path)
         {
-            if (Directory.Exists(path) && !HasFolder(path))
-            {
-                _folders.Add(path);
-                FireEvent(FolderAdded, path);
-            }
+            if (!Directory.Exists(path) || HasFolder(path)) return;
+
+            _folders.Add(path);
+            FireEvent(FolderAdded, path);
         }
 
         public void RemoveFolderLink(string path, bool silent)
         {
             if (!HasFolder(path)) return;
 
-            if (silent || MessageService.Current.Ask("Do you want to remove a link to this folder from the repository?" +
+            if (silent ||
+                MessageService.Current.Ask("Do you want to remove a link to this folder from the repository?" +
                                            Environment.NewLine + "(The folder will remain intact on the disk.)"))
             {
-
                 if (_folders.Remove(GetFolder(path)))
                 {
                     FireEvent(FolderRemoved, path);
@@ -193,6 +126,7 @@ namespace MW5.Data.Repository
 
         public void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null)
         {
+            Logger.Current.Debug("In AddConnectionWithPrompt");
             var connection = _databaseService.PromptUserForConnection(databaseType);
             if (connection != null)
             {
@@ -202,6 +136,7 @@ namespace MW5.Data.Repository
 
         public void AddConnection(DatabaseConnection connection)
         {
+            Logger.Current.Debug("In AddConnection");
             if (connection == null)
             {
                 throw new ArgumentNullException("connection");
@@ -258,16 +193,47 @@ namespace MW5.Data.Repository
 
         public event EventHandler BeforeSaved;
 
-        private bool HasFolder(string path)
+        private void AddDefautlTmsProviders(IAppContext context)
         {
-            return GetFolder(path) != null;
+            Logger.Current.Debug("Start AddDefautlTmsProviders");
+            foreach (var p in context.Map.Tiles.Providers.Where(p => !p.Custom))
+            {
+                if (p.Name.StartsWithIgnoreCase("google"))
+                {
+                    continue;
+                }
+
+                var provider = new TmsProvider
+                                   {
+                                       Id = p.Id,
+                                       Name = p.Name,
+                                       MinZoom = p.MinZoom,
+                                       MaxZoom = p.MaxZoom,
+                                       Bounds = p.GeographicBounds,
+                                       IsCustom = false,
+                                       Url = p.Url
+                                   };
+
+                _defaultTmsProviders.Add(provider);
+            }
+            Logger.Current.Debug("End AddDefautlTmsProviders");
         }
 
-        private string GetFolder(string path)
+        private void AddRootFolders()
         {
-            return _folders.FirstOrDefault(f => f.EqualsIgnoreCase(path));
+            try
+            {
+                foreach (var d in DriveInfo.GetDrives())
+                {
+                    AddFolderLink(d.RootDirectory.FullName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to enumerate virtual drives on the machine.", ex);
+            }
         }
-        
+
         private void FireEvent(EventHandler<ConnectionEventArgs> handler, DatabaseConnection connection)
         {
             if (handler != null)
@@ -276,12 +242,49 @@ namespace MW5.Data.Repository
             }
         }
 
-        private void FireEvent(EventHandler<FolderEventArgs> handler, string path) 
+        private void FireEvent(EventHandler<FolderEventArgs> handler, string path)
         {
             if (handler != null)
             {
                 handler(this, new FolderEventArgs(path));
             }
+        }
+
+        private string GetFolder(string path)
+        {
+            return _folders.FirstOrDefault(f => f.EqualsIgnoreCase(path));
+        }
+
+        private bool HasFolder(string path)
+        {
+            return GetFolder(path) != null;
+        }
+
+        private void Init()
+        {
+            Logger.Current.Debug("Start DatRepository.Init()");
+            _folders = new List<string>();
+
+            ExpandedFolders = new List<string>();
+
+            _connections = new List<DatabaseConnection>();
+
+            _wmsServers = new BindingList<WmsServer>
+                              {
+                                  new WmsServer("Lizard Tech",
+                                      "http://demo.lizardtech.com/lizardtech/iserv/ows")
+                              };
+
+            TmsProviders = new TmsProviderList();
+
+            _defaultTmsProviders = new List<TmsProvider>();
+
+            TmsGroups = new RepositoryGroupList
+                            {
+                                new RepositoryGroup(TmsProvider.DefaultGroupId, "Default"),
+                                new RepositoryGroup(TmsProvider.CustomGroupId, "Custom")
+                            };
+            Logger.Current.Debug("End DatRepository.Init()");
         }
     }
 }

@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Plugins.Enums;
+using MW5.Shared;
 
 namespace MW5.Plugins.Concrete
 {
@@ -495,6 +496,7 @@ namespace MW5.Plugins.Concrete
 
         public void SetDefaults()
         {
+            Logger.Current.Debug("Start AppConfig.SetDefaults()");
             AnimationOnZooming = AutoToggle.Auto;
             BingApiKey = string.Empty;
             CacheRenderingData = false;
@@ -618,6 +620,7 @@ namespace MW5.Plugins.Concrete
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
+            Logger.Current.Debug("End AppConfig.SetDefaults()");
         }
 
         [OnDeserializing]

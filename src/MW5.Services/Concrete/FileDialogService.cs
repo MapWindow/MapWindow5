@@ -2,10 +2,10 @@
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Static;
-using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
@@ -15,6 +15,7 @@ namespace MW5.Services.Concrete
 
         public FileDialogService(IMainView parent)
         {
+            Logger.Current.Debug("In FileDialogService");
             if (parent == null) throw new ArgumentNullException("parent");
             _parent = parent;
         }

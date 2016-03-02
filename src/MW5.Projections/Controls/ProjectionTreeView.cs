@@ -22,6 +22,7 @@ using MW5.Projections.BL;
 using MW5.Projections.Enums;
 using MW5.Projections.Helpers;
 using MW5.Projections.Properties;
+using MW5.Shared;
 using MW5.UI.Controls;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms;
@@ -92,6 +93,7 @@ namespace MW5.Projections.Controls
 
             if (database.Name == "")
             {
+                Logger.Current.Warn("Could not initialize projection database");
                 return false;
             }
 

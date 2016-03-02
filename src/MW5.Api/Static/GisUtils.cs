@@ -127,7 +127,7 @@ namespace MW5.Api.Static
             return _utils.ClipGridWithPolygon(inputGridfile, poly.GetInternal(), resultGridfile, keepExtents);
         }
 
-        public bool ClipGridWithPolygon2(IGridSource inputGrid, IGeometry poly, string resultGridfile, bool keepExtents)
+        public bool ClipGridWithPolygon(IGridSource inputGrid, IGeometry poly, string resultGridfile, bool keepExtents)
         {
             return _utils.ClipGridWithPolygon2(inputGrid.GetInternal(), poly.GetInternal(), resultGridfile, keepExtents);
         }

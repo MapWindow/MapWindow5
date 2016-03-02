@@ -4,6 +4,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Data.Services
 {
@@ -13,13 +14,13 @@ namespace MW5.Data.Services
 
         public GeoDatabaseService(IAppContext context)
         {
+            Logger.Current.Debug("In GeoDatabaseService");
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
         }
 
         public void ImportLayer()
         {
-            
             _context.Container.Run<ImportLayerPresenter>();
         }
 
@@ -29,12 +30,7 @@ namespace MW5.Data.Services
 
             var model = new AddConnectionModel(databaseType);
 
-            if (p.Run(model))
-            {
-                return model.Connection;
-            }
-
-            return null;
+            return p.Run(model) ? model.Connection : null;
         }
     }
 }

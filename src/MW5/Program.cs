@@ -7,7 +7,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using MW5.Api.Concrete;
+// using MW5.Api.Concrete;
 using MW5.DI.Castle;
 using MW5.Helpers;
 using MW5.Plugins.Mvp;
@@ -37,13 +37,13 @@ namespace MW5
             return new WindsorCastleContainer();
         }
 
-        private static void DumpFormats()
-        {
-            var manager = new DriverManager();
-            manager.DumpExtensions(true);
+        //private static void DumpFormats()
+        //{
+        //    var manager = new DriverManager();
+        //    manager.DumpExtensions(true);
 
-            manager.DumpExtensions(false);
-        }
+        //    manager.DumpExtensions(false);
+        //}
 
         private static void LoadConfig(IApplicationContainer container)
         {

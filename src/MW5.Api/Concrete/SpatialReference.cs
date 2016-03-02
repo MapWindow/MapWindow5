@@ -3,6 +3,7 @@ using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
@@ -12,6 +13,7 @@ namespace MW5.Api.Concrete
 
         public SpatialReference()
         {
+            Logger.Current.Debug("In SpatialReference");
             _projection = new GeoProjection();
         }
 

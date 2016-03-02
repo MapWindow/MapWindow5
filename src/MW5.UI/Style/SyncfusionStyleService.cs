@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using MW5.Shared;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms;
-using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
