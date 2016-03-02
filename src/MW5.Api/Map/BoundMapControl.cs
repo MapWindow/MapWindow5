@@ -7,6 +7,7 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Shared;
 
 namespace MW5.Api.Map
 {
@@ -17,6 +18,7 @@ namespace MW5.Api.Map
 
         public BoundMapControl()
         {
+            Logger.Current.Debug("In BoundMapControl");
             MapCursorChanged += BoundMapControl_MapCursorChanged;
         }
 

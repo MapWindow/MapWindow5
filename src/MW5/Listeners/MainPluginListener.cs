@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="MainPluginListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
-using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -21,14 +21,18 @@ namespace MW5.Listeners
 {
     public class MainPluginListener
     {
+        private readonly IBroadcasterService _broadcaster;
+        private readonly IConfigService _configService;
         private readonly IAppContext _context;
         private readonly MainPlugin _plugin;
-        private readonly IConfigService _configService;
-        private readonly IBroadcasterService _broadcaster;
 
-        public MainPluginListener(IAppContext context, MainPlugin plugin, IConfigService configService, 
-                                IBroadcasterService broadcaster)
+        public MainPluginListener(
+            IAppContext context,
+            MainPlugin plugin,
+            IConfigService configService,
+            IBroadcasterService broadcaster)
         {
+            Logger.Current.Debug("In MainPluginListener");
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
             if (configService == null) throw new ArgumentNullException("configService");
@@ -42,27 +46,6 @@ namespace MW5.Listeners
             plugin.BeforeLayerAdded += BeforeLayerAdded;
             plugin.LayerAdded += plugin_LayerAdded;
             plugin.GroupDoubleClick += plugin_GroupDoubleClick;
-        }
-
-        private void plugin_GroupDoubleClick(IMuteLegend legend, GroupEventArgs e)
-        {
-            var group = legend.Groups.ItemByHandle(e.GroupHandle);
-            if (group != null)
-            {
-                if (_context.Container.Run<LegendGroupPresenter, ILegendGroup>(group))
-                {
-                    legend.Redraw();
-                }
-            }
-        }
-
-        private void plugin_LayerAdded(IMuteLegend legend, LayerEventArgs e)
-        {
-            var layer = _context.Legend.Layers.ItemByHandle(e.LayerHandle);
-            if (layer != null)
-            {
-                LayerSerializationHelper.LoadSettings(layer, _broadcaster, true);
-            }
         }
 
         /// <summary>
@@ -87,6 +70,90 @@ namespace MW5.Listeners
                     e.Cancel = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates spatial index for shapefile.
+        /// </summary>
+        private void CreateSpatialIndex(IFeatureSet fs)
+        {
+            var result = fs.SpatialIndex.CreateDiskIndex();
+
+            if (result)
+            {
+                Logger.Current.Info("Spatial index is build for shapefile: " + fs.Filename);
+            }
+            else
+            {
+                Logger.Current.Warn("Failed to build spatial index for shapefile: " + fs.Filename);
+            }
+        }
+
+        /// <summary>
+        /// Checks if spatial index is needed for shapefile.
+        /// </summary>
+        private static bool NeedsSpatialIndex(IFeatureSet fs, int minFeatureCount)
+        {
+            return fs.SourceType == FeatureSourceType.DiskBased && fs.NumFeatures >= minFeatureCount &&
+                   !fs.SpatialIndex.DiskIndexExists;
+        }
+
+        private void plugin_GroupDoubleClick(IMuteLegend legend, GroupEventArgs e)
+        {
+            var group = legend.Groups.ItemByHandle(e.GroupHandle);
+            if (group != null)
+            {
+                if (_context.Container.Run<LegendGroupPresenter, ILegendGroup>(group))
+                {
+                    legend.Redraw();
+                }
+            }
+        }
+
+        private void plugin_LayerAdded(IMuteLegend legend, LayerEventArgs e)
+        {
+            var layer = _context.Legend.Layers.ItemByHandle(e.LayerHandle);
+            if (layer != null)
+            {
+                LayerSerializationHelper.LoadSettings(layer, _broadcaster, true);
+            }
+        }
+
+        /// <summary>
+        /// Prompts user or automatically creates raster overviews if needed.
+        /// </summary>
+        private bool UpdateOverviews(IRasterSource raster)
+        {
+            if (!raster.NeedsOverviews)
+            {
+                return true;
+            }
+
+            var config = _configService.Config;
+
+            if (!config.ShowPyramidDialog && config.CreatePyramidsOnOpening)
+            {
+                if (raster.ImageFormat == ImageFormat.Vrt)
+                {
+                    Logger.Current.Info("Automatic creation of pyramids for .vrt dataset is skipped.");
+                    return true;
+                }
+
+                raster.BuildDefaultOverviews(config.PyramidSampling, config.PyramidCompression);
+                return true;
+            }
+
+            var presenter = _context.Container.GetInstance<CreatePyramidsPresenter>();
+            if (!presenter.Run(raster))
+            {
+                return false;
+            }
+
+            config.ShowPyramidDialog = !presenter.DontShowAgain;
+            config.CreatePyramidsOnOpening = presenter.Result == DialogResult.Yes;
+            config.PyramidCompression = presenter.View.Compression;
+            config.PyramidSampling = presenter.View.Sampling;
+            return true;
         }
 
         /// <summary>
@@ -123,70 +190,6 @@ namespace MW5.Listeners
                 CreateSpatialIndex(fs);
             }
 
-            return true;
-        }
-
-        /// <summary>
-        /// Checks if spatial index is needed for shapefile.
-        /// </summary>
-        private static bool NeedsSpatialIndex(IFeatureSet fs, int minFeatureCount)
-        {
-            return fs.SourceType == FeatureSourceType.DiskBased &&
-                   fs.NumFeatures >= minFeatureCount &&
-                   !fs.SpatialIndex.DiskIndexExists;
-        }
-
-        /// <summary>
-        /// Creates spatial index for shapefile.
-        /// </summary>
-        private void CreateSpatialIndex(IFeatureSet fs)
-        {
-            bool result = fs.SpatialIndex.CreateDiskIndex();
-
-            if (result)
-            {
-                Logger.Current.Info("Spatial index is build for shapefile: " + fs.Filename);
-            }
-            else
-            {
-                Logger.Current.Warn("Failed to build spatial index for shapefile: " + fs.Filename);
-            }
-        }
-
-        /// <summary>
-        /// Prompts user or automatically creates raster overviews if needed.
-        /// </summary>
-        private bool UpdateOverviews(IRasterSource raster)
-        {
-            if (!raster.NeedsOverviews)
-            {
-                return true;
-            }
-
-            var config = _configService.Config;
-
-            if (!config.ShowPyramidDialog && config.CreatePyramidsOnOpening)
-            {
-                if (raster.ImageFormat == ImageFormat.Vrt)
-                {
-                    Logger.Current.Info("Automatic creation of pyramids for .vrt dataset is skipped." );
-                    return true;
-                }
-
-                raster.BuildDefaultOverviews(config.PyramidSampling, config.PyramidCompression);
-                return true;
-            }
-
-            var presenter = _context.Container.GetInstance<CreatePyramidsPresenter>();
-            if (!presenter.Run(raster))
-            {
-                return false;
-            }
-            
-            config.ShowPyramidDialog = !presenter.DontShowAgain;
-            config.CreatePyramidsOnOpening = presenter.Result == DialogResult.Yes;
-            config.PyramidCompression = presenter.View.Compression;
-            config.PyramidSampling = presenter.View.Sampling;
             return true;
         }
     }

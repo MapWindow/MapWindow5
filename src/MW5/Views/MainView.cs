@@ -1,12 +1,14 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="MainView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend.Abstract;
-using MW5.Forms;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Concrete;
@@ -14,9 +16,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
-using MW5.UI;
 using MW5.UI.Docking;
-using MW5.UI.Enums;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 using MW5.UI.Menu;
@@ -28,17 +28,20 @@ namespace MW5.Views
     /// </summary>
     public partial class MainView : MapWindowView, IMainView
     {
-        public const string SerializationKey = "";     // intentionally empty
+        public const string SerializationKey = ""; // intentionally empty
         private const string WindowTitle = "MapWindow 5";
         private readonly IAppContext _context;
-        private bool _rendered;
         private bool _locked;
+        private bool _rendered;
 
         public MainView(IAppContext context)
         {
+            Logger.Current.Debug("Start MainView");
             _context = context;
-            
+
+            Logger.Current.Debug("Start MainView.InitializeComponent");
             InitializeComponent();
+            Logger.Current.Debug("End MainView.InitializeComponent");
 
             statusStripEx1.Items.Clear();
             statusStripEx1.Refresh();
@@ -50,13 +53,65 @@ namespace MW5.Views
             // setting bar item text before form is shown results in creation of duplicated bar item;
             // it seems it's a bug in Syncfusion's XpMenus
             Shown += (s, e) =>
+                {
+                    _rendered = true;
+
+                    UpdateView();
+
+                    ForceTaskBarDisplay();
+                };
+            Logger.Current.Debug("End MainView");
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
             {
-               _rendered = true;
+                var cp = base.CreateParams;
+                cp.ExStyle |= 0x00040000; // Turn on WS_EX_APPWINDOW
+                return cp;
+            }
+        }
 
-                UpdateView();
+        public event EventHandler<CancelEventArgs> ViewClosing;
 
-                ForceTaskBarDisplay();
-            };
+        public event EventHandler<RenderedEventArgs> ViewUpdating;
+
+        public event Action BeforeShow;
+
+        public void Lock()
+        {
+            _locked = true;
+        }
+
+        public void Unlock()
+        {
+            _locked = false;
+            UpdateView();
+        }
+
+        private bool FireViewClosing()
+        {
+            var handler = ViewClosing;
+            if (handler != null)
+            {
+                var args = new CancelEventArgs();
+                handler(this, args);
+                if (args.Cancel)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void FireViewUpdating(bool rendered)
+        {
+            var handler = ViewUpdating;
+            if (handler != null)
+            {
+                handler(this, new RenderedEventArgs { Rendered = rendered });
+            }
         }
 
         private void ForceTaskBarDisplay()
@@ -69,7 +124,15 @@ namespace MW5.Views
             // In theory form should appear in task bar when WS_EX_APPWINDOW is set or it's top level unowned form plus ShowInTaskBar 
             // is not set to false manually. All these conditions are met in our case.
             // http ://stackoverflow.com/questions/8204397/what-does-ws-ex-appwindow-do
-            using (var form = new Form { Width = 0, Height = 0, Left = -500, Top = 0, StartPosition = FormStartPosition.Manual })
+            using (
+                var form = new Form
+                               {
+                                   Width = 0,
+                                   Height = 0,
+                                   Left = -500,
+                                   Top = 0,
+                                   StartPosition = FormStartPosition.Manual
+                               })
             {
                 form.Show(this);
                 form.Close();
@@ -98,55 +161,6 @@ namespace MW5.Views
                 _mainFrameBarManager1.SaveLayout(SerializationKey, false);
             }
         }
-
-        public event EventHandler<CancelEventArgs> ViewClosing;
-        public event EventHandler<RenderedEventArgs> ViewUpdating;
-        public event Action BeforeShow;
-
-        public void Lock()
-        {
-            _locked = true;
-        }
-
-        public void Unlock()
-        {
-            _locked = false;
-            UpdateView();
-        }
-
-        private void FireViewUpdating(bool rendered)
-        {
-            var handler = ViewUpdating;
-            if (handler != null)
-            {
-                handler(this, new RenderedEventArgs() { Rendered = rendered });
-            }
-        }
-
-        private bool FireViewClosing()
-        {
-            var handler = ViewClosing;
-            if (handler != null)
-            {
-                var args = new CancelEventArgs();
-                handler(this, args);
-                if (args.Cancel)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x00040000;  // Turn on WS_EX_APPWINDOW
-                return cp;
-            }
-        } 
 
         #region IView implementation
 
@@ -189,13 +203,12 @@ namespace MW5.Views
 
         private void UpdateStatusBarCustomizationMenu()
         {
-          
             var hash = new HashSet<string>
                            {
-                               StatusBarKeys.TileProvider, 
+                               StatusBarKeys.TileProvider,
                                StatusBarKeys.MapScale,
                                StatusBarKeys.MapUnits,
-                               StatusBarKeys.ProjectionDropDown,
+                               StatusBarKeys.ProjectionDropDown
                            };
             try
             {
@@ -301,6 +314,5 @@ namespace MW5.Views
         }
 
         #endregion
-
     }
 }

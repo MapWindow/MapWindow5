@@ -1,14 +1,11 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="MenuListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2016
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
 using System;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
@@ -41,6 +38,7 @@ namespace MW5.Menu
             IProjectService projectService,
             IGeoDatabaseService databaseService)
         {
+            Logger.Current.Debug("In MenuListener");
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (projectService == null) throw new ArgumentNullException("projectService");
@@ -74,10 +72,10 @@ namespace MW5.Menu
             {
                 case MenuKeys.ShowRepository:
                     DockPanelHelper.ShowPanel(_context, DockPanelKeys.Repository);
-                    return;  // make sure that no View.Update is called or we lose the focus
+                    return; // make sure that no View.Update is called or we lose the focus
                 case MenuKeys.ShowToolbox:
                     DockPanelHelper.ShowPanel(_context, DockPanelKeys.Toolbox);
-                    return;  // make sure that no View.Update is called or we lose the focus
+                    return; // make sure that no View.Update is called or we lose the focus
                 case MenuKeys.SetScale:
                     _context.Container.Run<SetScalePresenter>();
                     break;
@@ -147,7 +145,7 @@ namespace MW5.Menu
 
             switch (itemKey)
             {
-                 case MenuKeys.ShowZoombar:
+                case MenuKeys.ShowZoombar:
                     config.ShowZoombar = !AppConfig.Instance.ShowZoombar;
                     _context.Map.ApplyConfig(config);
                     _context.Map.Redraw(RedrawType.SkipAllLayers);
@@ -340,36 +338,6 @@ namespace MW5.Menu
             return false;
         }
 
-        private void ZoomToBaseLayer()
-        {
-            if (_context.Map.Projection.IsEmpty)
-            {
-                MessageService.Current.Info("Failed to zoom to layer. Map projection is not set.");
-            }
-            else
-            {
-                var tiles = _context.Map.Tiles;
-                var provider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == tiles.ProviderId);
-
-                if (!tiles.Visible || provider == null)
-                {
-                    MessageService.Current.Info("Failed to get extents of base layer.");
-                }
-                else
-                {
-                    if (!_context.Map.SetGeographicExtents(provider.GeographicBounds))
-                    {
-                        Logger.Current.Warn("Zoom to base layer: failed to set geographic extents.");
-                    }
-                }
-            }
-        }
-
-        private void ShowProjectSaved()
-        {
-            MessageService.Current.Info("Project was saved: " + _projectService.Filename);
-        }
-
         private void MenuItemClicked(object sender, MenuItemEventArgs e)
         {
             RunCommand(e.ItemKey);
@@ -397,7 +365,37 @@ namespace MW5.Menu
 
             _context.Map.SetTileProvider(e.ProviderId);
             _context.Map.Redraw(RedrawType.Minimal);
-            _context.View.Update();     //to update provider in status bar
+            _context.View.Update(); //to update provider in status bar
+        }
+
+        private void ShowProjectSaved()
+        {
+            MessageService.Current.Info("Project was saved: " + _projectService.Filename);
+        }
+
+        private void ZoomToBaseLayer()
+        {
+            if (_context.Map.Projection.IsEmpty)
+            {
+                MessageService.Current.Info("Failed to zoom to layer. Map projection is not set.");
+            }
+            else
+            {
+                var tiles = _context.Map.Tiles;
+                var provider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == tiles.ProviderId);
+
+                if (!tiles.Visible || provider == null)
+                {
+                    MessageService.Current.Info("Failed to get extents of base layer.");
+                }
+                else
+                {
+                    if (!_context.Map.SetGeographicExtents(provider.GeographicBounds))
+                    {
+                        Logger.Current.Warn("Zoom to base layer: failed to set geographic extents.");
+                    }
+                }
+            }
         }
     }
 }

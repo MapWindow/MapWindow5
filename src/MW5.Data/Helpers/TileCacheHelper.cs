@@ -1,12 +1,11 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="TileCacheHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2016
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
 using System;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.IO;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
@@ -19,13 +18,14 @@ namespace MW5.Data.Helpers
     /// </summary>
     public static class TileCacheHelper
     {
-        private static bool _initialized = false;
+        private static bool _initialized;
 
         /// <summary>
         /// Removes outdated tiles and vaccums database.
         /// </summary>
         public static void InitDatabase(string filename, TilesMaxAge maxAge)
         {
+            Logger.Current.Debug("In TileCacheHelper.InitDatabase()");
             if (_initialized)
             {
                 return;
@@ -56,7 +56,7 @@ namespace MW5.Data.Helpers
                     conn.Open();
                     using (var command = conn.CreateCommand())
                     {
-                        command.CommandText = string.Format("SELECT COUNT(*) from Tiles");
+                        command.CommandText = "SELECT COUNT(*) from Tiles";
                         command.ExecuteNonQuery();
                     }
                 }
@@ -66,6 +66,7 @@ namespace MW5.Data.Helpers
             catch (Exception ex)
             {
                 MessageService.Current.Warn("Invalid tile cache database file.");
+                Logger.Current.Debug("Exception in TileCacheHelper.ValidateDatabase: " + ex.Message);
             }
 
             return false;

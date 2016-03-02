@@ -1,30 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="AddConnectionPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
-using MW5.Api.Static;
 using MW5.Data.Db;
-using MW5.Data.Enums;
 using MW5.Data.Views.Abstract;
 using MW5.Plugins.Concrete;
-using MW5.Plugins.Enums;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
 
 namespace MW5.Data.Views
 {
-    public class AddConnectionPresenter: BasePresenter<IAddConnectionView, AddConnectionModel>
+    public class AddConnectionPresenter : BasePresenter<IAddConnectionView, AddConnectionModel>
     {
         private readonly IFileDialogService _fileDialog;
         private readonly PostGisConnection _postGis = new PostGisConnection();
 
-        public AddConnectionPresenter(IAddConnectionView view, IFileDialogService fileDialog) : base(view)
+        public AddConnectionPresenter(IAddConnectionView view, IFileDialogService fileDialog)
+            : base(view)
         {
+            Logger.Current.Debug("Start AddConnectionPresenter");
             if (fileDialog == null) throw new ArgumentNullException("fileDialog");
+            
+            // PM 20160302 Added:
+            if (view == null) throw new ArgumentNullException("view");
+            
             _fileDialog = fileDialog;
 
             view.Init(_postGis);
@@ -32,6 +37,7 @@ namespace MW5.Data.Views
             view.TestConnection += TestConnection;
 
             view.ConnectionChanged += OnConnectionChanged;
+            Logger.Current.Debug("End AddConnectionPresenter");
         }
 
         public override bool ViewOkClicked()
@@ -48,10 +54,8 @@ namespace MW5.Data.Views
                 return false;
             }
 
-            Model.Connection = new DatabaseConnection(View.DatabaseType, 
-                                                     connection.Name, 
-                                                     connection.GetConnection(),
-                                                     connection.GetConnection(true));
+            Model.Connection = new DatabaseConnection(View.DatabaseType, connection.Name, connection.GetConnection(),
+                connection.GetConnection(true));
 
             return true;
         }
@@ -90,7 +94,6 @@ namespace MW5.Data.Views
                     }
 
                     Logger.Current.Info("Testing connection: {0}\n{1}", cs, t.Result ? "Success" : "Failure");
-
                 }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 

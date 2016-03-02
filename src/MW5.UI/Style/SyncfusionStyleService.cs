@@ -16,6 +16,7 @@ namespace MW5.UI.Style
 
         public SyncfusionStyleService(ControlStyleSettings settings)
         {
+            Logger.Current.Debug("In SyncfusionStyleService");
             if (settings == null)
             {
                 throw new ArgumentNullException("settings");
@@ -40,6 +41,7 @@ namespace MW5.UI.Style
 
         public void ApplyStyle(Control control)
         {
+            Logger.Current.Debug("Start ApplyStyle");
             ApplyLabelStyle(control);
 
             ApplyButtonStyle(control);
@@ -80,6 +82,8 @@ namespace MW5.UI.Style
             {
                 ApplyStyle(control.Controls);
             }
+
+            Logger.Current.Debug("End ApplyStyle");
         }
 
         private void ApplyDoubleTextBoxStyle(Control control)

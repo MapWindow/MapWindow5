@@ -25,6 +25,7 @@ namespace MW5.Helpers
 
         public static void ApplyConfig(this IMuteMap map, AppConfig config)
         {
+            Logger.Current.Debug("Start MapInitializer.ApplyConfig()");
             var mapControl = map as MapControl;
             if (mapControl != null)
             {
@@ -78,6 +79,7 @@ namespace MW5.Helpers
             ApplyTilesSettings(tiles, config);
 
             ApplyTilesProxy(tiles, config);
+            Logger.Current.Debug("End MapInitializer.ApplyConfig()");
         }
 
         public static void Initialize(this IMap map)
@@ -128,7 +130,8 @@ namespace MW5.Helpers
                 case MouseWheelDirection.Reverse:
                     map.MouseWheelSpeed = 2.0;
                     break;
-                case MouseWheelDirection.None:
+                // case MouseWheelDirection.None:
+                default:
                     map.MouseWheelSpeed = 1.0;
                     break;
             }
@@ -198,6 +201,7 @@ namespace MW5.Helpers
 
         private static void UpdateShapeEditorSettings(IGeometryEditor editor, AppConfig config)
         {
+            Logger.Current.Debug("Start UpdateShapeEditorSettings");
             var settings = editor.Settings;
 
             editor.ShowArea = config.ShapeEditorShowArea;
@@ -216,6 +220,7 @@ namespace MW5.Helpers
                                        : LengthDisplay.American;
             settings.LengthPrecision = config.ShapeEditorUnitPrecision;
             settings.AreaPrecision = config.ShapeEditorUnitPrecision;
+            Logger.Current.Debug("End UpdateShapeEditorSettings");
         }
     }
 }

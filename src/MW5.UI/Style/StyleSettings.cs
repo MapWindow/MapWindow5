@@ -1,4 +1,5 @@
-﻿using Syncfusion.Windows.Forms;
+﻿using MW5.Shared;
+using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Style
@@ -7,6 +8,7 @@ namespace MW5.UI.Style
     {
         public ControlStyleSettings()
         {
+            Logger.Current.Debug("In ControlStyleSettings");
 #if STYLE2010                
             ButtonAppearance = ButtonAppearance.Office2010;
             VisualStyle = VisualStyle.Office2010;

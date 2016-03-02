@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Data.Db;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="AddConnectionModel.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 
@@ -16,11 +16,11 @@ namespace MW5.Data.Views
             DatabaseType = databaseType;
         }
 
-        public GeoDatabaseType? DatabaseType { get; set; }
-
         /// <summary>
         /// Gets or sets the resulting connection selected by user.
         /// </summary>
         public DatabaseConnection Connection { get; set; }
+
+        public GeoDatabaseType? DatabaseType { get; set; }
     }
 }

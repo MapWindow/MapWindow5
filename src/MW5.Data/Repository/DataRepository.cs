@@ -262,7 +262,7 @@ namespace MW5.Data.Repository
 
         private void Init()
         {
-            Logger.Current.Debug("Start DatRepository.Init()");
+            Logger.Current.Debug("Start DataRepository.Init()");
             _folders = new List<string>();
 
             ExpandedFolders = new List<string>();
@@ -284,7 +284,7 @@ namespace MW5.Data.Repository
                                 new RepositoryGroup(TmsProvider.DefaultGroupId, "Default"),
                                 new RepositoryGroup(TmsProvider.CustomGroupId, "Custom")
                             };
-            Logger.Current.Debug("End DatRepository.Init()");
+            Logger.Current.Debug("End DataRepository.Init()");
         }
     }
 }

@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="BasePlugin.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,25 +21,11 @@ using LayerCancelEventArgs = MW5.Plugins.Events.LayerCancelEventArgs;
 
 namespace MW5.Plugins.Concrete
 {
-    public abstract class BasePlugin: IPlugin
+    public abstract class BasePlugin : IPlugin
     {
-        private PluginIdentity _identity;
         private FileVersionInfo _fileVersionInfo;
-        private bool _applicationPlugin = false;
-        private bool _registered = false;
-
-        public bool IsApplicationPlugin
-        {
-            get { return _applicationPlugin; }
-        }
-
-        public virtual string Description
-        {
-            get
-            {
-                return ReferenceFile.Comments;
-            }
-        }
+        private PluginIdentity _identity;
+        private bool _registered;
 
         public virtual IEnumerable<IConfigPage> ConfigPages
         {
@@ -60,14 +52,25 @@ namespace MW5.Plugins.Concrete
             }
         }
 
-        private FileVersionInfo ReferenceFile
-        {
-            get { return _fileVersionInfo ?? (_fileVersionInfo = FileVersionInfo.GetVersionInfo(ReferenceAssembly.Location)); }
-        }
+        public bool IsApplicationPlugin { get; private set; }
 
         private Assembly ReferenceAssembly
         {
             get { return GetType().Assembly; }
+        }
+
+        private FileVersionInfo ReferenceFile
+        {
+            get
+            {
+                return _fileVersionInfo ??
+                       (_fileVersionInfo = FileVersionInfo.GetVersionInfo(ReferenceAssembly.Location));
+            }
+        }
+
+        public virtual string Description
+        {
+            get { return ReferenceFile.Comments; }
         }
 
         public abstract void Initialize(IAppContext context);
@@ -90,11 +93,11 @@ namespace MW5.Plugins.Concrete
 
         internal void SetApplicationPlugin(bool value)
         {
-            _applicationPlugin = value;
+            IsApplicationPlugin = value;
         }
 
 #pragma warning disable 67
-        
+
         #region Plugin events
 
         // backing fields
@@ -431,6 +434,11 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<DockPanelCancelEventArgs> DockPanelClosing_;
         internal EventHandler<DockPanelEventArgs> DockPanelOpened_;
         internal EventHandler<DockPanelEventArgs> DockPanelClosed_;
+
+        public BasePlugin()
+        {
+            IsApplicationPlugin = false;
+        }
 
         public event EventHandler<DockPanelCancelEventArgs> DockPanelOpening
         {

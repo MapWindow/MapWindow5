@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Shared;
 using MW5.UI.Properties;
 using Syncfusion.Windows.Forms;
 
@@ -17,12 +17,14 @@ namespace MW5.UI.Forms
 
         protected MapWindowView()
         {
+            Logger.Current.Debug("Start MapWindowView");
             InitializeComponent();
             Icon = Resources.MapWindow;
 #if STYLE2010
             ApplyAeroTheme = false;
             UseOffice2010SchemeBackColor = true;
 #endif
+            Logger.Current.Debug("End MapWindowView");
         }
 
         protected void Invoke(Action action)

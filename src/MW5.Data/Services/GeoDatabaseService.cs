@@ -21,11 +21,13 @@ namespace MW5.Data.Services
 
         public void ImportLayer()
         {
+            Logger.Current.Debug("In GeoDatabaseService.ImportLayer()");
             _context.Container.Run<ImportLayerPresenter>();
         }
 
         public DatabaseConnection PromptUserForConnection(GeoDatabaseType? databaseType = null)
         {
+            Logger.Current.Debug("In GeoDatabaseService.PromptUserForConnection()");
             var p = _context.Container.GetInstance<AddConnectionPresenter>();
 
             var model = new AddConnectionModel(databaseType);

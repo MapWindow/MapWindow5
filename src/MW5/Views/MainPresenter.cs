@@ -55,10 +55,15 @@ namespace MW5.Views
             IRepository repository)
             : base(view)
         {
+            Logger.Current.Debug("Start MainPresenter");
             if (view == null) throw new ArgumentNullException("view");
             if (projectService == null) throw new ArgumentNullException("projectService");
             if (configService == null) throw new ArgumentNullException("configService");
             if (repository == null) throw new ArgumentNullException("repository");
+
+            // PM 2016-03-02 Added:
+            if (legendPresenter == null) throw new ArgumentNullException("legendPresenter");
+            if (toolboxPresenter == null) throw new ArgumentNullException("toolboxPresenter");
 
             _context = context;
             _projectService = projectService;
@@ -108,6 +113,7 @@ namespace MW5.Views
             }
 
             View.AsForm.Shown += ViewShown;
+            Logger.Current.Debug("End MainPresenter");
         }
 
         private void ViewShown(object sender, EventArgs e)
