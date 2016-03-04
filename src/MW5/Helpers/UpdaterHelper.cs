@@ -110,9 +110,9 @@ namespace MW5.Helpers
             // Download json-file which will hold the version numbers and download url of the available versions.
             const string JsonLocation = @"http://www.mapwindow.org/mw5-update.json";
             var result = await DownloadHelper.DownloadSerializedJSONDataAsync<Dictionary<string, InstallerInfo>>(JsonLocation);
-            if (result.Count == 0)
+            if (result == null || result.Count == 0)
             {
-                Logger.Current.Debug("Couldn't get mw5-update.json");
+                Logger.Current.Warn("Couldn't get mw5-update.json. Do you have an Internet connection");
                 return;
             }
 
