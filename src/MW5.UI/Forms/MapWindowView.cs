@@ -18,7 +18,9 @@ namespace MW5.UI.Forms
         protected MapWindowView()
         {
             Logger.Current.Debug("Start MapWindowView");
+            Logger.Current.Debug("Start MapWindowView.InitializeComponent()");
             InitializeComponent();
+            Logger.Current.Debug("End MapWindowView.InitializeComponent()");
             Icon = Resources.MapWindow;
 #if STYLE2010
             ApplyAeroTheme = false;
