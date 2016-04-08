@@ -49,7 +49,7 @@ namespace MW5.Services.Concrete
             _context.Map.Lock();
             _context.Legend.Lock();
 
-            _context.Map.SetTileProvider(project.Map.TileProviderId);
+            RestoreTmsProvider(project.Map.TileProviderId);
 
             try
             {
@@ -85,6 +85,28 @@ namespace MW5.Services.Concrete
                 _context.Legend.Unlock();
                 _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             }
+        }
+
+        private void RestoreTmsProvider(int providerId)
+        {
+            if (_context.Map.Tiles.Providers.All(p => p.Id != providerId))
+            {
+                var provider = _context.Repository.TmsProviders.FirstOrDefault(p => p.Id == providerId);
+                if (provider != null)
+                {
+                    var providers = _context.Map.Tiles.Providers;
+                    providers.Clear(false);
+
+                    providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom,
+                        provider.MaxZoom);
+                }
+                else
+                {
+                    Logger.Current.Warn("Failed to find TMS provider in the repository: " + providerId);
+                }
+            }
+
+            _context.Map.SetTileProvider(providerId);
         }
 
         private void RestoreMapProjection(XmlProject project)

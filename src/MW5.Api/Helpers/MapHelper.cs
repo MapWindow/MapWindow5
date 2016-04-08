@@ -13,7 +13,7 @@ namespace MW5.Api.Helpers
 {
     public static class MapHelper
     {
-        public static void SetGoogleMeractorProjection(this IMuteMap map)
+        public static void SetGoogleMercatorProjection(this IMuteMap map)
         {
             var sr = new SpatialReference();
             sr.SetGoogleMercator();

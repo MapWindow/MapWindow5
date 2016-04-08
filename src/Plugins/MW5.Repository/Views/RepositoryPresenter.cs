@@ -284,7 +284,7 @@ namespace MW5.Plugins.Repository.Views
 
             if (projectionIsEmpty)
             {
-                _context.Map.SetGoogleMeractorProjection();
+                _context.Map.SetGoogleMercatorProjection();
             }
 
             var mapProvider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == provider.Id);
