@@ -33,6 +33,7 @@ namespace MW5.Projections.Forms
         {
             this.components = new System.ComponentModel.Container();
             Syncfusion.Windows.Forms.Tools.ToolTipInfo toolTipInfo1 = new Syncfusion.Windows.Forms.Tools.ToolTipInfo();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChooseProjectionForm));
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
@@ -123,7 +124,6 @@ namespace MW5.Projections.Forms
             this._projectionTreeView1.BeforeTouchSize = new System.Drawing.Size(450, 443);
             this._projectionTreeView1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this._projectionTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._projectionTreeView1.CanSelectDisabledNode = false;
             this._projectionTreeView1.DelayToolTip = true;
             // 
             // 
@@ -132,12 +132,12 @@ namespace MW5.Projections.Forms
             this._projectionTreeView1.HelpTextControl.Name = "helpText";
             this._projectionTreeView1.HelpTextControl.TabIndex = 0;
             this._projectionTreeView1.HideSelection = false;
+            this._projectionTreeView1.InactiveSelectedNodeForeColor = System.Drawing.SystemColors.ControlText;
             this._projectionTreeView1.Location = new System.Drawing.Point(12, 61);
             this._projectionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._projectionTreeView1.Name = "_projectionTreeView1";
             this._projectionTreeView1.RecalculateExpansion = false;
-            this._projectionTreeView1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
-            this._projectionTreeView1.ShowFocusRect = true;
+            this._projectionTreeView1.SelectedNodeForeColor = System.Drawing.SystemColors.HighlightText;
             this._projectionTreeView1.ShowSuperTooltip = true;
             this._projectionTreeView1.Size = new System.Drawing.Size(450, 443);
             this._projectionTreeView1.SuspendExpandRecalculate = true;
@@ -160,7 +160,7 @@ namespace MW5.Projections.Forms
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Cue = null;
             this.txtSearch.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.txtSearch.FarImage = global::MW5.Projections.Properties.Resources.img_clear_textbox;
+            this.txtSearch.FarImage = ((System.Drawing.Image)(resources.GetObject("txtSearch.FarImage")));
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtSearch.Location = new System.Drawing.Point(12, 12);
             this.txtSearch.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -193,6 +193,7 @@ namespace MW5.Projections.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(474, 548);
             this.Controls.Add(this.chkUpdate);
             this.Controls.Add(this._projectionTreeView1);
@@ -206,6 +207,7 @@ namespace MW5.Projections.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Select Coordinate System";
+            this.Load += new System.EventHandler(this.ChooseProjectionForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).EndInit();

@@ -112,7 +112,7 @@ namespace MW5.Helpers
             var result = await DownloadHelper.DownloadSerializedJSONDataAsync<Dictionary<string, InstallerInfo>>(JsonLocation);
             if (result == null || result.Count == 0)
             {
-                Logger.Current.Warn("Couldn't get mw5-update.json. Do you have an Internet connection");
+                Logger.Current.Warn("Couldn't get mw5-update.json. Do you have a working Internet connection?");
                 return;
             }
 

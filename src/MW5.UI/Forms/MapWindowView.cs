@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
@@ -17,16 +18,16 @@ namespace MW5.UI.Forms
 
         protected MapWindowView()
         {
-            Logger.Current.Debug("Start MapWindowView");
-            Logger.Current.Debug("Start MapWindowView.InitializeComponent()");
+            Logger.Current.Trace("Start MapWindowView");
+            Logger.Current.Trace("Start MapWindowView.InitializeComponent()");
             InitializeComponent();
-            Logger.Current.Debug("End MapWindowView.InitializeComponent()");
+            Logger.Current.Trace("End MapWindowView.InitializeComponent()");
             Icon = Resources.MapWindow;
 #if STYLE2010
             ApplyAeroTheme = false;
             UseOffice2010SchemeBackColor = true;
 #endif
-            Logger.Current.Debug("End MapWindowView");
+            Logger.Current.Trace("End MapWindowView");
         }
 
         protected void Invoke(Action action)
@@ -101,6 +102,12 @@ namespace MW5.UI.Forms
         public Form AsForm
         {
             get { return this; }
+        }
+
+        private void MapWindowView_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

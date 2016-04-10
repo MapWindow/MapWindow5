@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins.Services;
 using MW5.UI.Forms;
@@ -40,6 +41,12 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 DialogResult = DialogResult.OK;
             }
+        }
+
+        private void AddOptionsForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

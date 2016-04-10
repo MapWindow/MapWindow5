@@ -782,7 +782,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupPicture.TabIndex = 47;
             this.groupPicture.TabStop = false;
             // 
-            // iconControl1
+            // textureControl1
             // 
             this.textureControl1.BackColor = System.Drawing.Color.Transparent;
             this.textureControl1.CellHeight = 48;
@@ -797,6 +797,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.textureControl1.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.textureControl1.Name = "textureControl1";
             this.textureControl1.SelectedIndex = -1;
+            this.textureControl1.SelectedPath = "";
             this.textureControl1.Size = new System.Drawing.Size(391, 145);
             this.textureControl1.TabIndex = 73;
             this.textureControl1.Textures = false;
@@ -817,6 +818,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(621, 385);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.groupPicture);
@@ -834,6 +836,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Polygon Style";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPolygons_FormClosing);
+            this.Load += new System.EventHandler(this.PolygonForm_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pctPreview)).EndInit();
             this.tabControl1.ResumeLayout(false);

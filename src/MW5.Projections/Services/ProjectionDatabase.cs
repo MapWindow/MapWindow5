@@ -52,7 +52,7 @@ namespace MW5.Projections.Services
         /// </summary>
         public ProjectionDatabase()
         {
-            Logger.Current.Debug("In ProjectionDatabase");
+            Logger.Current.Trace("In ProjectionDatabase");
 #if SQLITE_DATABASE
             _provider = new SqliteProvider();
 #else

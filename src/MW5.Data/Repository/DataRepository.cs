@@ -33,7 +33,7 @@ namespace MW5.Data.Repository
 
         public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService)
         {
-            Logger.Current.Debug("In DataRepository");
+            Logger.Current.Trace("In DataRepository");
             if (databaseService == null) throw new ArgumentNullException("databaseService");
 
             _databaseService = databaseService;
@@ -93,7 +93,7 @@ namespace MW5.Data.Repository
 
         public void AddFolderLink()
         {
-            Logger.Current.Debug("In AddFolderLink");
+            Logger.Current.Trace("In AddFolderLink");
             string path;
             if (_fileDialogService.ChooseFolder(string.Empty, out path))
             {
@@ -126,7 +126,7 @@ namespace MW5.Data.Repository
 
         public void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null)
         {
-            Logger.Current.Debug("In AddConnectionWithPrompt");
+            Logger.Current.Trace("In AddConnectionWithPrompt");
             var connection = _databaseService.PromptUserForConnection(databaseType);
             if (connection != null)
             {
@@ -136,7 +136,7 @@ namespace MW5.Data.Repository
 
         public void AddConnection(DatabaseConnection connection)
         {
-            Logger.Current.Debug("In AddConnection");
+            Logger.Current.Trace("In AddConnection");
             if (connection == null)
             {
                 throw new ArgumentNullException("connection");
@@ -195,7 +195,7 @@ namespace MW5.Data.Repository
 
         private void AddDefautlTmsProviders(IAppContext context)
         {
-            Logger.Current.Debug("Start AddDefautlTmsProviders");
+            Logger.Current.Trace("Start AddDefautlTmsProviders");
             foreach (var p in context.Map.Tiles.Providers.Where(p => !p.Custom))
             {
                 if (p.Name.StartsWithIgnoreCase("google"))
@@ -216,7 +216,7 @@ namespace MW5.Data.Repository
 
                 _defaultTmsProviders.Add(provider);
             }
-            Logger.Current.Debug("End AddDefautlTmsProviders");
+            Logger.Current.Trace("End AddDefautlTmsProviders");
         }
 
         private void AddRootFolders()
@@ -262,7 +262,7 @@ namespace MW5.Data.Repository
 
         private void Init()
         {
-            Logger.Current.Debug("Start DataRepository.Init()");
+            Logger.Current.Trace("Start DataRepository.Init()");
             _folders = new List<string>();
 
             ExpandedFolders = new List<string>();
@@ -284,7 +284,7 @@ namespace MW5.Data.Repository
                                 new RepositoryGroup(TmsProvider.DefaultGroupId, "Default"),
                                 new RepositoryGroup(TmsProvider.CustomGroupId, "Custom")
                             };
-            Logger.Current.Debug("End DataRepository.Init()");
+            Logger.Current.Trace("End DataRepository.Init()");
         }
     }
 }

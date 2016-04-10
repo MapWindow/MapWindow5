@@ -17,6 +17,7 @@
 // ********************************************************************************************************
 
 using System;
+using System.Drawing;
 using MW5.Api.Enums;
 using MW5.UI.Forms;
 
@@ -49,6 +50,12 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 icbColors.SelectedIndex = index;
             }
+        }
+
+        private void AddCategoriesForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

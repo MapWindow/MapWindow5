@@ -1,4 +1,11 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="CompareProjectionForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Drawing;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -31,6 +38,12 @@ namespace MW5.Projections.Forms
 
             btnLayer.Click += (s, e) => ShowProjectionProperties(_layerProj);
             btnProject.Click += (s, e) => ShowProjectionProperties(_layerProj);
+        }
+
+        private void CompareProjectionForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
 
         /// <summary>

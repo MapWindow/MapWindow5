@@ -38,7 +38,7 @@ namespace MW5.Menu
             IProjectService projectService,
             IGeoDatabaseService databaseService)
         {
-            Logger.Current.Debug("In MenuListener");
+            Logger.Current.Trace("In MenuListener");
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (projectService == null) throw new ArgumentNullException("projectService");

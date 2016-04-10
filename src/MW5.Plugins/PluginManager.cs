@@ -44,7 +44,7 @@ namespace MW5.Plugins
         /// </summary>
         public PluginManager(IApplicationContainer container, MainPlugin mainPlugin)
         {
-            Logger.Current.Debug("In PluginManager");
+            Logger.Current.Trace("In PluginManager");
             if (container == null) throw new ArgumentNullException("container");
             if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");
 

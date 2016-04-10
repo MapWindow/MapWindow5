@@ -17,6 +17,7 @@
 // ********************************************************************************************************
 
 using System;
+using System.Drawing;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.UI.Enums;
@@ -143,6 +144,12 @@ namespace MW5.Plugins.Symbology.Forms
                _labels.FrameGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
             RefreshControls();
+        }
+
+        private void FontGradientForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

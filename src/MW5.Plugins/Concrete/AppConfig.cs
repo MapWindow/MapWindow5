@@ -496,7 +496,7 @@ namespace MW5.Plugins.Concrete
 
         public void SetDefaults()
         {
-            Logger.Current.Debug("Start AppConfig.SetDefaults()");
+            Logger.Current.Trace("Start AppConfig.SetDefaults()");
             AnimationOnZooming = AutoToggle.Auto;
             BingApiKey = string.Empty;
             CacheRenderingData = false;
@@ -620,7 +620,7 @@ namespace MW5.Plugins.Concrete
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
-            Logger.Current.Debug("End AppConfig.SetDefaults()");
+            Logger.Current.Trace("End AppConfig.SetDefaults()");
         }
 
         [OnDeserializing]

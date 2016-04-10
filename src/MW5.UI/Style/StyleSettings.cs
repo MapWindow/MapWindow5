@@ -8,7 +8,7 @@ namespace MW5.UI.Style
     {
         public ControlStyleSettings()
         {
-            Logger.Current.Debug("In ControlStyleSettings");
+            Logger.Current.Trace("In ControlStyleSettings");
 #if STYLE2010                
             ButtonAppearance = ButtonAppearance.Office2010;
             VisualStyle = VisualStyle.Office2010;

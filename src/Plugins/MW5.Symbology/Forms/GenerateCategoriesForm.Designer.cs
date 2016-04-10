@@ -42,15 +42,15 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.udMaxSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udMinSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.btnChangeColorScheme = new System.Windows.Forms.Button();
             this.chkSetGradient = new System.Windows.Forms.CheckBox();
             this.chkUseVariableSize = new System.Windows.Forms.CheckBox();
+            this.icbColorScheme = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.chkRandomColors = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.udMaxSize = new NumericUpDownEx(this.components);
-            this.udMinSize = new NumericUpDownEx(this.components);
-            this.icbColorScheme = new ColorSchemeCombo();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxSize)).BeginInit();
@@ -166,68 +166,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Visualization";
             // 
-            // btnChangeColorScheme
-            // 
-            this.btnChangeColorScheme.Location = new System.Drawing.Point(302, 38);
-            this.btnChangeColorScheme.Name = "btnChangeColorScheme";
-            this.btnChangeColorScheme.Size = new System.Drawing.Size(29, 21);
-            this.btnChangeColorScheme.TabIndex = 52;
-            this.btnChangeColorScheme.Text = "...";
-            this.btnChangeColorScheme.UseVisualStyleBackColor = true;
-            this.btnChangeColorScheme.Click += new System.EventHandler(this.btnChangeColorScheme_Click);
-            // 
-            // chkSetGradient
-            // 
-            this.chkSetGradient.AutoSize = true;
-            this.chkSetGradient.Checked = true;
-            this.chkSetGradient.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSetGradient.Location = new System.Drawing.Point(18, 155);
-            this.chkSetGradient.Name = "chkSetGradient";
-            this.chkSetGradient.Size = new System.Drawing.Size(278, 17);
-            this.chkSetGradient.TabIndex = 51;
-            this.chkSetGradient.Text = "Set gradient for each category (reduces performance)";
-            this.chkSetGradient.UseVisualStyleBackColor = true;
-            // 
-            // chkUseVariableSize
-            // 
-            this.chkUseVariableSize.AutoSize = true;
-            this.chkUseVariableSize.Location = new System.Drawing.Point(18, 91);
-            this.chkUseVariableSize.Name = "chkUseVariableSize";
-            this.chkUseVariableSize.Size = new System.Drawing.Size(141, 17);
-            this.chkUseVariableSize.TabIndex = 50;
-            this.chkUseVariableSize.Text = "Use variable symbol size";
-            this.chkUseVariableSize.UseVisualStyleBackColor = true;
-            this.chkUseVariableSize.CheckedChanged += new System.EventHandler(this.RefreshControlsState);
-            // 
-            // chkRandomColors
-            // 
-            this.chkRandomColors.AutoSize = true;
-            this.chkRandomColors.Location = new System.Drawing.Point(130, 65);
-            this.chkRandomColors.Name = "chkRandomColors";
-            this.chkRandomColors.Size = new System.Drawing.Size(133, 17);
-            this.chkRandomColors.TabIndex = 48;
-            this.chkRandomColors.Text = "Choose color randomly";
-            this.chkRandomColors.UseVisualStyleBackColor = true;
-            this.chkRandomColors.CheckedChanged += new System.EventHandler(this.chkRandomColors_CheckedChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 41);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 13);
-            this.label4.TabIndex = 47;
-            this.label4.Text = "Color scheme";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 120);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 44;
-            this.label3.Text = "Symbol size";
-            // 
             // udMaxSize
             // 
             this.udMaxSize.Location = new System.Drawing.Point(218, 118);
@@ -272,8 +210,42 @@ namespace MW5.Plugins.Symbology.Forms
             0,
             0});
             // 
+            // btnChangeColorScheme
+            // 
+            this.btnChangeColorScheme.Location = new System.Drawing.Point(302, 38);
+            this.btnChangeColorScheme.Name = "btnChangeColorScheme";
+            this.btnChangeColorScheme.Size = new System.Drawing.Size(29, 21);
+            this.btnChangeColorScheme.TabIndex = 52;
+            this.btnChangeColorScheme.Text = "...";
+            this.btnChangeColorScheme.UseVisualStyleBackColor = true;
+            this.btnChangeColorScheme.Click += new System.EventHandler(this.btnChangeColorScheme_Click);
+            // 
+            // chkSetGradient
+            // 
+            this.chkSetGradient.AutoSize = true;
+            this.chkSetGradient.Checked = true;
+            this.chkSetGradient.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkSetGradient.Location = new System.Drawing.Point(18, 155);
+            this.chkSetGradient.Name = "chkSetGradient";
+            this.chkSetGradient.Size = new System.Drawing.Size(278, 17);
+            this.chkSetGradient.TabIndex = 51;
+            this.chkSetGradient.Text = "Set gradient for each category (reduces performance)";
+            this.chkSetGradient.UseVisualStyleBackColor = true;
+            // 
+            // chkUseVariableSize
+            // 
+            this.chkUseVariableSize.AutoSize = true;
+            this.chkUseVariableSize.Location = new System.Drawing.Point(18, 91);
+            this.chkUseVariableSize.Name = "chkUseVariableSize";
+            this.chkUseVariableSize.Size = new System.Drawing.Size(141, 17);
+            this.chkUseVariableSize.TabIndex = 50;
+            this.chkUseVariableSize.Text = "Use variable symbol size";
+            this.chkUseVariableSize.UseVisualStyleBackColor = true;
+            this.chkUseVariableSize.CheckedChanged += new System.EventHandler(this.RefreshControlsState);
+            // 
             // icbColorScheme
             // 
+            this.icbColorScheme.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
             this.icbColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbColorScheme.FormattingEnabled = true;
@@ -282,12 +254,43 @@ namespace MW5.Plugins.Symbology.Forms
             this.icbColorScheme.OutlineColor = System.Drawing.Color.Black;
             this.icbColorScheme.Size = new System.Drawing.Size(166, 21);
             this.icbColorScheme.TabIndex = 49;
+            this.icbColorScheme.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            // 
+            // chkRandomColors
+            // 
+            this.chkRandomColors.AutoSize = true;
+            this.chkRandomColors.Location = new System.Drawing.Point(130, 65);
+            this.chkRandomColors.Name = "chkRandomColors";
+            this.chkRandomColors.Size = new System.Drawing.Size(133, 17);
+            this.chkRandomColors.TabIndex = 48;
+            this.chkRandomColors.Text = "Choose color randomly";
+            this.chkRandomColors.UseVisualStyleBackColor = true;
+            this.chkRandomColors.CheckedChanged += new System.EventHandler(this.chkRandomColors_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 13);
+            this.label4.TabIndex = 47;
+            this.label4.Text = "Color scheme";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 120);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "Symbol size";
             // 
             // GenerateCategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(372, 395);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCancel);
@@ -300,6 +303,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Category generation";
+            this.Load += new System.EventHandler(this.GenerateCategoriesForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

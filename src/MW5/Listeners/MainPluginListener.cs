@@ -32,7 +32,7 @@ namespace MW5.Listeners
             IConfigService configService,
             IBroadcasterService broadcaster)
         {
-            Logger.Current.Debug("In MainPluginListener");
+            Logger.Current.Trace("In MainPluginListener");
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
             if (configService == null) throw new ArgumentNullException("configService");

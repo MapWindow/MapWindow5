@@ -1,8 +1,16 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ChooseProjectionForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
+using MW5.Projections.BL;
 using MW5.UI.Forms;
 
 namespace MW5.Projections.Forms
@@ -16,11 +24,11 @@ namespace MW5.Projections.Forms
         /// Creates a new instance of frmProjectionChooser class. 
         /// It's assumed that database is read already.
         /// </summary>
-        public ChooseProjectionForm(IProjectionDatabase database, IAppContext context):
-            base(context)
+        public ChooseProjectionForm(IProjectionDatabase database, IAppContext context)
+            : base(context)
         {
             InitializeComponent();
-            
+
             if (_projectionTreeView1.Initialize(database, context))
             {
                 _projectionTreeView1.RefreshList();
@@ -35,7 +43,7 @@ namespace MW5.Projections.Forms
             ActiveControl = txtSearch;
         }
 
-        public BL.CoordinateSystem SelectedCoordinateSystem
+        public CoordinateSystem SelectedCoordinateSystem
         {
             get { return _projectionTreeView1.SelectedCoordinateSystem; }
         }
@@ -52,12 +60,10 @@ namespace MW5.Projections.Forms
             }
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        private void ChooseProjectionForm_Load(object sender, EventArgs e)
         {
-            if (chkUpdate.Checked || txtSearch.Text.Length == 0)
-            {
-                _projectionTreeView1.Filter(txtSearch.Text);
-            }
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
 
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
@@ -65,6 +71,14 @@ namespace MW5.Projections.Forms
             if (e.KeyCode == Keys.Enter)
             {
                 _projectionTreeView1.Filter(txtSearch.Text, true);
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (chkUpdate.Checked || txtSearch.Text.Length == 0)
+            {
+                _projectionTreeView1.Filter(txtSearch.Text);
             }
         }
     }

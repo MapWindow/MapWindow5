@@ -37,9 +37,9 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkUseGradient = new System.Windows.Forms.CheckBox();
-            this.clpFont1 = new Office2007ColorPicker(this.components);
-            this.clpFont2 = new Office2007ColorPicker(this.components);
-            this.icbFontGradient = new ImageCombo();
+            this.clpFont1 = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.clpFont2 = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.icbFontGradient = new MW5.UI.Controls.ImageCombo();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,7 +133,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbFontGradient.Color1 = System.Drawing.Color.Blue;
             this.icbFontGradient.Color2 = System.Drawing.Color.Honeydew;
-            this.icbFontGradient.ComboStyle = ImageComboStyle.Common;
+            this.icbFontGradient.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbFontGradient.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFontGradient.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbFontGradient.FormattingEnabled = true;
@@ -149,6 +149,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(312, 156);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
@@ -160,6 +161,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Font gradient";
+            this.Load += new System.EventHandler(this.FontGradientForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

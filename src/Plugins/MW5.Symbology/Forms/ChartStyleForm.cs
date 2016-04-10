@@ -1,23 +1,13 @@
-﻿// ********************************************************************************************************
-// <copyright file="MWLite.Symbology.cs" company="MapWindow.org">
-// Copyright (c) MapWindow.org. All rights reserved.
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ChartStyleForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
 // </copyright>
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// Www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version of the Original Code is Sergei Leschinski
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date            Changed By      Notes
-// ********************************************************************************************************
+// -------------------------------------------------------------------------------------------
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -26,7 +16,6 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.UI.Forms;
 
@@ -34,20 +23,20 @@ namespace MW5.Plugins.Symbology.Forms
 {
     public partial class ChartStyleForm : MapWindowForm
     {
-        private static int _selectedTab = 0;
-
-        private readonly IFeatureSet _shapefile;
+        private static int _selectedTab;
         private readonly DiagramsLayer _charts;
         private readonly ILayer _layer;
 
-        private bool _noEvents;
+        private readonly IFeatureSet _shapefile;
         private string _initState;
+
+        private bool _noEvents;
 
         /// <summary>
         /// Initializes a new instance of the ChartStyleForm class
         /// </summary>
-        public ChartStyleForm(IAppContext context, ILayer layer):
-            base(context)
+        public ChartStyleForm(IAppContext context, ILayer layer)
+            : base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layer == null || layer.FeatureSet == null)
@@ -71,7 +60,9 @@ namespace MW5.Plugins.Symbology.Forms
             panelPieChart.Left = panelBarChart.Left;
 
             foreach (FontFamily family in FontFamily.Families)
+            {
                 cboFontName.Items.Add(family.Name);
+            }
 
             cboValuesStyle.Items.Clear();
             cboValuesStyle.Items.Add("Horizontal");
@@ -92,8 +83,11 @@ namespace MW5.Plugins.Symbology.Forms
                 icbColors.SelectedIndex = 0;
             }
 
-            string[] scales = { "1", "10", "100", "1000", "5000", "10000", "25000", "50000", "100000", 
-                                "250000", "500000", "1000000", "10000000" };
+            string[] scales =
+                {
+                    "1", "10", "100", "1000", "5000", "10000", "25000", "50000", "100000", "250000",
+                    "500000", "1000000", "10000000"
+                };
             cboMinScale.Items.Clear();
             cboMaxScale.Items.Clear();
             for (int i = 0; i < scales.Length; i++)
@@ -118,7 +112,205 @@ namespace MW5.Plugins.Symbology.Forms
 
             tabControl1.SelectedIndex = _selectedTab;
         }
-            
+
+        /// <summary>
+        /// Applies options, generates charts if needed
+        /// </summary>
+        private bool ApplyOptions()
+        {
+            if (_charts.Fields.Count == 0)
+            {
+                if (_charts.Count == 0)
+                {
+                    MessageService.Current.Info("No fields were chosen. No charts will be displayed.");
+                    return false;
+                }
+
+                if (MessageService.Current.Ask("No fields were chosen. Do you want to remove all charts?"))
+                {
+                    _charts.Clear();
+                    return true;
+                }
+                return false;
+            }
+
+            bool empty = _charts.Count == 0;
+            if (empty)
+            {
+                if (_shapefile.PointOrMultiPoint)
+                {
+                    // start generation, no need to prompt the user for position
+                    Enabled = false;
+                    Cursor = Cursors.WaitCursor;
+                    try
+                    {
+                        _shapefile.Diagrams.Generate(LabelPosition.Centroid);
+                    }
+                    finally
+                    {
+                        Enabled = true;
+                        Cursor = Cursors.Default;
+                    }
+                }
+                else
+                {
+                    // prompting user for charts position
+                    using (var form = new AddChartsForm(_shapefile))
+                    {
+                        if (!_context.View.ShowChildView(form, this))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if (empty || _charts.Serialize() != _initState)
+            {
+                _context.Legend.Redraw(LegendRedraw.LegendAndMapForce);
+                _context.Project.SetModified();
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Applies options and redraws map without closing the form
+        /// </summary>
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            if (ApplyOptions())
+            {
+                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                _context.Project.SetModified();
+                _initState = _charts.Serialize();
+                btnApply.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Opens window to edit the list of color schemes for charts
+        /// </summary>
+        private void btnChangeScheme_Click(object sender, EventArgs e)
+        {
+            _noEvents = true;
+            FormHelper.EditColorSchemes(_context, SchemeTarget.Charts, this);
+            _noEvents = false;
+        }
+
+        /// <summary>
+        /// Building chart expression
+        /// </summary>
+        private void btnChartExpression_Click(object sender, EventArgs e)
+        {
+            string s = txtChartExpression.Text;
+
+            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
+            {
+                txtChartExpression.Text = s;
+                _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
+                btnApply.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Clears the charts expression
+        /// </summary>
+        private void btnClearChartsExpression_Click(object sender, EventArgs e)
+        {
+            txtChartExpression.Clear();
+            _shapefile.Diagrams.VisibilityExpression = "";
+            btnApply.Enabled = true;
+        }
+
+        /// <summary>
+        /// Saves the settings
+        /// </summary>
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            if (!ApplyOptions())
+            {
+                return;
+            }
+
+            _selectedTab = tabControl1.SelectedIndex;
+
+            DialogResult = DialogResult.OK;
+        }
+
+        /// <summary>
+        /// Sets max visible scale to current scale
+        /// </summary>
+        private void btnSetMaxScale_Click(object sender, EventArgs e)
+        {
+            var map = _context.Map;
+            if (map != null)
+            {
+                cboMaxScale.Text = map.CurrentScale.ToString(CultureInfo.InvariantCulture);
+                btnApply.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Sets min visible scale to current scale
+        /// </summary>
+        private void btnSetMinScale_Click(object sender, EventArgs e)
+        {
+            var map = _context.Map;
+            if (map != null)
+            {
+                cboMinScale.Text = map.CurrentScale.ToString(CultureInfo.InvariantCulture);
+                btnApply.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Performs drawing
+        /// </summary>
+        private void Draw()
+        {
+            var width = pictureBox1.ClientRectangle.Width;
+            var height = pictureBox1.ClientRectangle.Height;
+
+            var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+            var g = Graphics.FromImage(bmp);
+
+            if (_charts.Visible)
+            {
+                _charts.DrawChart(g, (width - _charts.IconWidth) / 2, (height - _charts.IconHeight) / 2, false,
+                    BackColor);
+            }
+
+            pictureBox1.Image = bmp;
+        }
+
+        /// <summary>
+        /// Reverts changes if cancel was chosen
+        /// </summary>
+        private void frmChartStyle_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult != DialogResult.Cancel) return;
+
+            var mode = _charts.SavingMode;
+            _charts.SavingMode = PersistenceType.None;
+            _charts.Deserialize(_initState);
+            _charts.SavingMode = mode;
+        }
+
+        /// <summary>
+        /// Updating colors of the charts
+        /// </summary>
+        private void icbColors_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_noEvents) return;
+
+            btnApply.Enabled = true;
+            UpdateFieldColors();
+
+            // updating preview
+            Draw();
+        }
+
         /// <summary>
         /// Fills the fields tab
         /// </summary>
@@ -165,10 +357,10 @@ namespace MW5.Plugins.Symbology.Forms
             cboChartSizeField.Items.Clear();
             cboChartNormalizationField.Items.Clear();
 
-            cboChartSizeField.Items.Add("<None>");          // default
+            cboChartSizeField.Items.Add("<None>"); // default
             cboChartNormalizationField.Items.Add("<None>");
 
-            foreach(var fld in _shapefile.Table.Fields)
+            foreach (var fld in _shapefile.Table.Fields)
             {
                 if (fld.Type != AttributeType.String)
                 {
@@ -177,20 +369,18 @@ namespace MW5.Plugins.Symbology.Forms
                 }
             }
 
-            if (cboChartSizeField.Items.Count >= 0)
-                cboChartSizeField.SelectedIndex = 0;
+            if (cboChartSizeField.Items.Count >= 0) cboChartSizeField.SelectedIndex = 0;
 
-            if (cboChartNormalizationField.Items.Count >= 0)
-                cboChartNormalizationField.SelectedIndex = 0;
+            if (cboChartNormalizationField.Items.Count >= 0) cboChartNormalizationField.SelectedIndex = 0;
 
             // size field
             var charts = _shapefile.Diagrams;
-            if (charts.SizeField >= 0 && charts.SizeField < cboChartSizeField.Items.Count - 1)  // first item is <none>
+            if (charts.SizeField >= 0 && charts.SizeField < cboChartSizeField.Items.Count - 1) // first item is <none>
             {
                 var fld = _shapefile.Table.Fields[charts.SizeField];
                 if (fld != null)
                 {
-                    for (int i = 2; i < cboChartSizeField.Items.Count; i++)     // 2 = <none> and <sum of fields>
+                    for (int i = 2; i < cboChartSizeField.Items.Count; i++) // 2 = <none> and <sum of fields>
                     {
                         if (fld.Name == cboChartSizeField.Items[i].ToString())
                         {
@@ -206,12 +396,13 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             // normalization field
-            if (charts.NormalizationField >= 0 && charts.NormalizationField < cboChartNormalizationField.Items.Count - 1)  // first item is <none>
+            if (charts.NormalizationField >= 0 && charts.NormalizationField < cboChartNormalizationField.Items.Count - 1)
+                // first item is <none>
             {
                 var fld = _shapefile.Table.Fields[charts.NormalizationField];
                 if (fld != null)
                 {
-                    for (int i = 2; i < cboChartNormalizationField.Items.Count; i++)     // 2 = <none> and <sum of fields>
+                    for (int i = 2; i < cboChartNormalizationField.Items.Count; i++) // 2 = <none> and <sum of fields>
                     {
                         if (fld.Name == cboChartNormalizationField.Items[i].ToString())
                         {
@@ -228,15 +419,6 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
-        /// Activating pie charts
-        /// </summary>
-        private void optPieCharts_CheckedChanged(object sender, EventArgs e)
-        {
-            _charts.DiagramType = DiagramType.Pie;
-            SetChartsType();
-        }
-
-        /// <summary>
         /// Activating bar charts
         /// </summary>
         private void optBarCharts_CheckedChanged(object sender, EventArgs e)
@@ -246,20 +428,71 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
+        /// Activating pie charts
+        /// </summary>
+        private void optPieCharts_CheckedChanged(object sender, EventArgs e)
+        {
+            _charts.DiagramType = DiagramType.Pie;
+            SetChartsType();
+        }
+
+        /// <summary>
+        /// Updates the enabled state of the controls
+        /// </summary>
+        private void RefreshControlsState()
+        {
+            cboValuesStyle.Enabled = chkValuesVisible.Checked && (_charts.Bars);
+            groupBox4.Enabled = chkValuesVisible.Checked;
+            groupBox5.Enabled = chkValuesVisible.Checked;
+
+            udThickness.Enabled = chk3DMode.Checked;
+            udTilt.Enabled = chk3DMode.Checked;
+
+            cboChartSizeField.Enabled = _shapefile.Diagrams.DiagramType == DiagramType.Pie;
+
+            cboMinScale.Enabled = chkDynamicVisibility.Checked;
+            cboMaxScale.Enabled = chkDynamicVisibility.Checked;
+
+            bool haveFields = _charts.Fields.Any();
+            groupBox4.Enabled = haveFields;
+            groupBox5.Enabled = haveFields;
+            groupBox6.Enabled = haveFields;
+            groupBox7.Enabled = haveFields;
+            groupBox10.Enabled = haveFields;
+            chkValuesVisible.Enabled = haveFields;
+            cboValuesStyle.Enabled = haveFields;
+            label10.Enabled = haveFields;
+            icbColors.Enabled = haveFields;
+            label1.Enabled = haveFields;
+            
+            groupboxChartsOffset.Enabled = haveFields;
+
+            groupBox9.Enabled = haveFields;
+            groupBox11.Enabled = haveFields;
+            groupBox2.Enabled = haveFields;
+            groupBox3.Enabled = haveFields;
+            groupBox8.Enabled = haveFields;
+            groupBox13.Enabled = haveFields;
+
+            btnChangeScheme.Enabled = haveFields;
+            
+        }
+
+        /// <summary>
         /// Chosing the type of charts
         /// </summary>
         private void SetChartsType()
         {
             if (_charts.Bars)
             {
-                tabControl1.TabPages[1].Text = "Bar charts";
+                tabControl1.TabPages[1].Text = @"Bar charts";
                 panelBarChart.Visible = true;
                 panelPieChart.Visible = false;
             }
-            
+
             if (!_charts.Bars)
             {
-                tabControl1.TabPages[1].Text = "Pie charts";
+                tabControl1.TabPages[1].Text = @"Pie charts";
                 panelPieChart.Visible = true;
                 panelBarChart.Visible = false;
             }
@@ -274,18 +507,86 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
+        /// Copies settings from the charts class to the controls
+        /// </summary>
+        private void Settings2Ui()
+        {
+            if (_charts == null)
+            {
+                return;
+            }
+
+            _noEvents = true;
+            udBarHeight.SetValue(_charts.BarHeight);
+            udBarWidth.SetValue(_charts.BarWidth);
+
+            cboChartVerticalPosition.SelectedIndex = (int)_charts.VerticalPosition;
+            udChartsOffsetX.SetValue(_charts.OffsetX);
+            udChartsOffsetY.SetValue(_charts.OffsetY);
+            udChartsBuffer.SetValue(_charts.CollisionBuffer);
+
+            udPieRadius.SetValue(_charts.PieRadius);
+            udPieRadius2.SetValue(_charts.PieRadius2);
+            udThickness.SetValue(_charts.Thickness);
+            udTilt.SetValue(_charts.Tilt);
+            chk3DMode.Checked = _charts.Use3DMode;
+            chkVisible.Checked = _charts.Visible;
+
+            chkFontBold.Checked = _charts.ValuesFontBold;
+            clpFont.Color = _charts.ValuesFontColor;
+            chkFontItalic.Checked = _charts.ValuesFontItalic;
+            udFontSize.SetValue(_charts.ValuesFontSize);
+
+            clpFrame.Color = _charts.ValuesFrameColor;
+            chkValuesFrame.Checked = _charts.ValuesFrameVisible;
+            chkValuesVisible.Checked = _charts.ValuesVisible;
+            cboValuesStyle.SelectedIndex = (int)_charts.ValuesStyle;
+
+            // looking for the font
+            var name = _charts.ValuesFontName.ToLower();
+            for (var i = 0; i < cboFontName.Items.Count; i++)
+            {
+                if (cboFontName.Items[i].ToString().ToLower() == name)
+                {
+                    cboFontName.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            if (cboFontName.SelectedIndex < 0)
+            {
+                cboFontName.Text = @"Arial";
+            }
+
+            // transparency
+            transparencyControl1.Value = _charts.AlphaTransparency;
+
+            cboMinScale.Text = _shapefile.Diagrams.MinVisibleScale.ToString(CultureInfo.InvariantCulture);
+            cboMaxScale.Text = _shapefile.Diagrams.MaxVisibleScale.ToString(CultureInfo.InvariantCulture);
+            chkDynamicVisibility.Checked = _shapefile.Diagrams.DynamicVisibility;
+
+            _noEvents = false;
+        }
+
+        /// <summary>
+        /// Applies trasnparency set by user
+        /// </summary>
+        private void transparencyControl1_ValueChanged(object sender, byte value)
+        {
+            Ui2Settings(null, null);
+        }
+
+        /// <summary>
         /// Copies chart settings from the controls to the charts class
         /// </summary>
         private void Ui2Settings(object sender, EventArgs e)
         {
-             if (_charts == null) 
-                 return;
+            if (_charts == null) return;
 
-             if (_noEvents)
-                 return;
+            if (_noEvents) return;
 
             _charts.BarHeight = (int)udBarHeight.Value;
-            _charts.BarWidth =  (int)udBarWidth.Value;
+            _charts.BarWidth = (int)udBarWidth.Value;
             _charts.PieRadius = (int)udPieRadius.Value;
             _charts.PieRadius2 = (int)udPieRadius2.Value;
             _charts.Thickness = (double)udThickness.Value;
@@ -300,7 +601,7 @@ namespace MW5.Plugins.Symbology.Forms
             _charts.ValuesFontItalic = chkFontItalic.Checked;
             _charts.ValuesFontName = cboFontName.Text;
             _charts.ValuesFontSize = (int)udFontSize.Value;
-            
+
             _charts.ValuesFrameColor = clpFrame.Color;
             _charts.ValuesFrameVisible = chkValuesFrame.Checked;
             _charts.ValuesVisible = chkValuesVisible.Checked;
@@ -379,177 +680,6 @@ namespace MW5.Plugins.Symbology.Forms
             Draw();
         }
 
-        /// <summary>
-        /// Performs drawing
-        /// </summary>
-        private void Draw()
-        {
-            int width = pictureBox1.ClientRectangle.Width;
-            int height = pictureBox1.ClientRectangle.Height;
-
-            Bitmap bmp = new Bitmap(width, height,  System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(bmp);
-
-            if (_charts.Visible)
-            {
-                _charts.DrawChart(g, (width - _charts.IconWidth) / 2, (height - _charts.IconHeight) / 2,  false, BackColor);
-            }
-
-            pictureBox1.Image = bmp;
-        }
-
-        /// <summary>
-        /// Copies settings from the charts class to the controls
-        /// </summary>
-        private void Settings2Ui()
-        {
-            if (_charts == null)
-            {
-                return;
-            }
-
-            _noEvents = true;
-            udBarHeight.SetValue(_charts.BarHeight);
-            udBarWidth.SetValue(_charts.BarWidth);
-            
-            cboChartVerticalPosition.SelectedIndex = (int)_charts.VerticalPosition;
-            udChartsOffsetX.SetValue(_charts.OffsetX);
-            udChartsOffsetY.SetValue(_charts.OffsetY);
-            udChartsBuffer.SetValue(_charts.CollisionBuffer);
-
-            udPieRadius.SetValue(_charts.PieRadius);
-            udPieRadius2.SetValue(_charts.PieRadius2);
-            udThickness.SetValue(_charts.Thickness);
-            udTilt.SetValue(_charts.Tilt);
-            chk3DMode.Checked = _charts.Use3DMode;
-            chkVisible.Checked = _charts.Visible;
-
-            chkFontBold.Checked = _charts.ValuesFontBold;
-            clpFont.Color = _charts.ValuesFontColor;
-            chkFontItalic.Checked = _charts.ValuesFontItalic;
-            udFontSize.SetValue(_charts.ValuesFontSize);
-
-            clpFrame.Color = _charts.ValuesFrameColor;
-            chkValuesFrame.Checked = _charts.ValuesFrameVisible;
-            chkValuesVisible.Checked = _charts.ValuesVisible;
-            cboValuesStyle.SelectedIndex = (int)_charts.ValuesStyle;
-
-            // looking for the font
-            string name = _charts.ValuesFontName.ToLower();
-            for (int i = 0; i < cboFontName.Items.Count; i++)
-            {
-                if (cboFontName.Items[i].ToString().ToLower() == name)
-                {
-                    cboFontName.SelectedIndex = i;
-                }
-            }
-            
-            if (cboFontName.SelectedIndex < 0)
-            {
-                cboFontName.Text = "Arial";
-            }
-
-            // transparency
-            transparencyControl1.Value = _charts.AlphaTransparency;
-
-            cboMinScale.Text = _shapefile.Diagrams.MinVisibleScale.ToString();
-            cboMaxScale.Text = _shapefile.Diagrams.MaxVisibleScale.ToString();
-            chkDynamicVisibility.Checked = _shapefile.Diagrams.DynamicVisibility;
-
-            _noEvents = false;
-       }
-        
-        /// <summary>
-        /// Applies options, generates charts if needed
-        /// </summary>
-        private bool ApplyOptions()
-        {
-            if (_charts.Fields.Count == 0 )
-            {
-                if (_charts.Count == 0)
-                {
-                    MessageService.Current.Info("No fields were chosen. No charts will be displayed.");
-                    return false;
-                }
-
-                if (MessageService.Current.Ask("No fields were chosen. Do you want to remove all charts?"))
-                {
-                    _charts.Clear();
-                    return true;
-                }
-                return false;
-            }
-
-            bool empty = _charts.Count == 0;
-            if (empty)
-            {
-                if (_shapefile.PointOrMultiPoint)
-                {
-                    // start generation, no need to prompt the user for position
-                    Enabled = false;
-                    Cursor = Cursors.WaitCursor;
-                    try
-                    {
-                        _shapefile.Diagrams.Generate(LabelPosition.Centroid);
-                    }
-                    finally
-                    {
-                        Enabled = true;
-                        Cursor = Cursors.Default;
-                    }
-                }
-                else
-                {
-                    // prompting user for charts position
-                    using (var form = new AddChartsForm(_shapefile))
-                    {
-                        if (!_context.View.ShowChildView(form, this))
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-            if (empty || _charts.Serialize() != _initState)
-            {
-                _context.Legend.Redraw(LegendRedraw.LegendAndMapForce);
-                _context.Project.SetModified();
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Saves the settings
-        /// </summary>
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            if (!ApplyOptions())
-            {
-                return;
-            }
-
-           _selectedTab = tabControl1.SelectedIndex;
-
-           DialogResult = DialogResult.OK;
-       }
-
-        /// <summary>
-        /// Updating colors of the charts
-        /// </summary>
-        private void icbColors_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_noEvents)
-                return;
-
-            btnApply.Enabled = true;
-            UpdateFieldColors();
-
-            // updating preview
-            Draw();
-        }
-
         private void UpdateFieldColors()
         {
             if (icbColors.ColorSchemes != null && icbColors.SelectedIndex >= 0)
@@ -566,48 +696,7 @@ namespace MW5.Plugins.Symbology.Forms
                         field.Color = scheme.GetGraduatedColor(value);
                     }
                 }
-                
             }
-        }
-        
-        /// <summary>
-        /// Updates the enabled state of the controls
-        /// </summary>
-        private void RefreshControlsState()
-        {
-            cboValuesStyle.Enabled = chkValuesVisible.Checked && (_charts.Bars);
-            groupBox4.Enabled = chkValuesVisible.Checked;
-            groupBox5.Enabled = chkValuesVisible.Checked;
-
-            udThickness.Enabled = chk3DMode.Checked;
-            udTilt.Enabled = chk3DMode.Checked;
-
-            cboChartSizeField.Enabled = _shapefile.Diagrams.DiagramType == DiagramType.Pie;
-
-            cboMinScale.Enabled = chkDynamicVisibility.Checked;
-            cboMaxScale.Enabled = chkDynamicVisibility.Checked;
-
-            bool haveFields = _charts.Fields.Any();
-            groupBox4.Enabled = haveFields;
-            groupBox5.Enabled = haveFields;
-            groupBox6.Enabled = haveFields;
-            groupBox7.Enabled = haveFields;
-            groupBox10.Enabled = haveFields;
-            chkValuesVisible.Enabled = haveFields;
-            cboValuesStyle.Enabled = haveFields;
-            label10.Enabled = haveFields;
-            icbColors.Enabled = haveFields;
-            label1.Enabled = haveFields;;
-            groupboxChartsOffset.Enabled = haveFields;
-            
-            groupBox9.Enabled = haveFields;
-            groupBox11.Enabled = haveFields;
-            groupBox2.Enabled = haveFields;
-            groupBox3.Enabled = haveFields;
-            groupBox8.Enabled = haveFields;
-            groupBox13.Enabled = haveFields;
-
-            btnChangeScheme.Enabled = haveFields; ;
         }
 
         #region "Fields"
@@ -660,9 +749,9 @@ namespace MW5.Plugins.Symbology.Forms
                 {
                     if (listRight.Items[i].ToString().ToLower() == fields[j].Name.ToLower())
                     {
-                        double val = i / (double)(listRight.Items.Count - 1);
+                        // double val = i / (double)(listRight.Items.Count - 1);
 
-                        var field = new DiagramField {Index = j, Name = fields[j].Name};
+                        var field = new DiagramField { Index = j, Name = fields[j].Name };
                         _shapefile.Diagrams.Fields.Add(field);
                     }
                 }
@@ -743,12 +832,12 @@ namespace MW5.Plugins.Symbology.Forms
                 listLeft.Items.Add(listRight.Items[i]);
             }
             listRight.Items.Clear();
-            
+
             if (listLeft.Items.Count > 0)
             {
                 listLeft.SelectedIndex = listLeft.Items.Count - 1;
             }
-            
+
             RefreshFields();
             RefreshControlsState();
             Draw();
@@ -756,101 +845,10 @@ namespace MW5.Plugins.Symbology.Forms
 
         #endregion
 
-        /// <summary>
-        /// Building chart expression
-        /// </summary>
-        private void btnChartExpression_Click(object sender, EventArgs e)
+        private void ChartStyleForm_Load(object sender, EventArgs e)
         {
-            string s = txtChartExpression.Text;
-
-            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
-            {
-                txtChartExpression.Text = s;
-                _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
-                btnApply.Enabled = true;
-            }
-        }
-
-        /// <summary>
-        /// Clears the charts expression
-        /// </summary>
-        private void btnClearChartsExpression_Click(object sender, EventArgs e)
-        {
-            txtChartExpression.Clear();
-            _shapefile.Diagrams.VisibilityExpression = "";
-            btnApply.Enabled = true;
-        }
-
-        /// <summary>
-        /// Applies options and redraws map without closing the form
-        /// </summary>
-        private void btnApply_Click(object sender, EventArgs e)
-        {
-            if (ApplyOptions())
-            {
-                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
-                _context.Project.SetModified();
-                _initState = _charts.Serialize();
-                btnApply.Enabled = false;
-            }
-        }
-        
-        /// <summary>
-        /// Applies trasnparency set by user
-        /// </summary>
-        private void transparencyControl1_ValueChanged(object sender, byte value)
-        {
-            Ui2Settings(null, null);
-        }
-        
-        /// <summary>
-        /// Reverts changes if cancel was chosen
-        /// </summary>
-        private void frmChartStyle_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (DialogResult == DialogResult.Cancel)
-            {
-                var mode = _charts.SavingMode;
-                _charts.SavingMode = PersistenceType.None;
-                _charts.Deserialize(_initState);
-                _charts.SavingMode = mode;
-            }
-        }
-
-        /// <summary>
-        /// Opens window to edit the list of color schemes for charts
-        /// </summary>
-        private void btnChangeScheme_Click(object sender, EventArgs e)
-        {
-            _noEvents = true;
-            FormHelper.EditColorSchemes(_context, SchemeTarget.Charts, this);
-            _noEvents = false;
-        }
-
-        /// <summary>
-        /// Sets max visible scale to current scale
-        /// </summary>
-        private void btnSetMaxScale_Click(object sender, EventArgs e)
-        {
-            var map = _context.Map;
-            if (map != null)
-            {
-                cboMaxScale.Text = map.CurrentScale.ToString();
-                btnApply.Enabled = true;
-            }
-        }
-
-        /// <summary>
-        /// Sets min visible scale to current scale
-        /// </summary>
-        private void btnSetMinScale_Click(object sender, EventArgs e)
-        {
-            var map = _context.Map;
-            if (map != null)
-            {
-                cboMinScale.Text = map.CurrentScale.ToString();
-                btnApply.Enabled = true;
-            }
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

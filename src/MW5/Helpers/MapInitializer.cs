@@ -25,7 +25,7 @@ namespace MW5.Helpers
 
         public static void ApplyConfig(this IMuteMap map, AppConfig config)
         {
-            Logger.Current.Debug("Start MapInitializer.ApplyConfig()");
+            Logger.Current.Trace("Start MapInitializer.ApplyConfig()");
             var mapControl = map as MapControl;
             if (mapControl != null)
             {
@@ -79,7 +79,7 @@ namespace MW5.Helpers
             ApplyTilesSettings(tiles, config);
 
             ApplyTilesProxy(tiles, config);
-            Logger.Current.Debug("End MapInitializer.ApplyConfig()");
+            Logger.Current.Trace("End MapInitializer.ApplyConfig()");
         }
 
         public static void Initialize(this IMap map)
@@ -101,7 +101,7 @@ namespace MW5.Helpers
 
         public static void InitMapConfig()
         {
-            Logger.Current.Debug("Start InitMapConfig");
+            Logger.Current.Trace("Start InitMapConfig");
             MapConfig.ZoomToFirstLayer = true;
             MapConfig.AllowLayersWithoutProjections = true;
             MapConfig.OverrideLocalCallback = true;
@@ -117,7 +117,7 @@ namespace MW5.Helpers
             // It can be overridden in Grid.OpenAsImage,
             // but not proxy tricks by default
             MapConfig.GridProxyMode = GridProxyMode.NoProxy;
-            Logger.Current.Debug("End InitMapConfig");
+            Logger.Current.Trace("End InitMapConfig");
         }
 
         private static void ApplyMouseWheelDirection(this IMuteMap map, MouseWheelDirection direction)
@@ -201,7 +201,7 @@ namespace MW5.Helpers
 
         private static void UpdateShapeEditorSettings(IGeometryEditor editor, AppConfig config)
         {
-            Logger.Current.Debug("Start UpdateShapeEditorSettings");
+            Logger.Current.Trace("Start UpdateShapeEditorSettings");
             var settings = editor.Settings;
 
             editor.ShowArea = config.ShapeEditorShowArea;
@@ -220,7 +220,7 @@ namespace MW5.Helpers
                                        : LengthDisplay.American;
             settings.LengthPrecision = config.ShapeEditorUnitPrecision;
             settings.AreaPrecision = config.ShapeEditorUnitPrecision;
-            Logger.Current.Debug("End UpdateShapeEditorSettings");
+            Logger.Current.Trace("End UpdateShapeEditorSettings");
         }
     }
 }

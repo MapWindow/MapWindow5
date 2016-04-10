@@ -26,7 +26,7 @@ namespace MW5.Shared
         /// <returns>The task</returns>
         public static async Task DownloadBinaryAsync(string url, string filename)
         {
-            Logger.Current.Debug("Start downloading new installer");
+            Logger.Current.Trace("Start downloading new installer");
             using (var client = new HttpClient())
             {
                 using (var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead))

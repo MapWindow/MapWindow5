@@ -1,25 +1,11 @@
-﻿// ********************************************************************************************************
-// <copyright file="MWLite.Symbology.cs" company="MapWindow.org">
-// Copyright (c) MapWindow.org. All rights reserved.
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="OptionsForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
 // </copyright>
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// Www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version of the Original Code is Sergei Leschinski
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date            Changed By      Notes
-// ********************************************************************************************************
+// -------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using MW5.Plugins.Interfaces;
+using System.Drawing;
 
 namespace MW5.UI.Forms
 {
@@ -29,6 +15,11 @@ namespace MW5.UI.Forms
         {
             InitializeComponent();
         }
+
+        private void OptionsForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
     }
 }
-

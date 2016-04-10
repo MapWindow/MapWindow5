@@ -164,6 +164,7 @@ namespace MW5.Projections.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(442, 336);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.lblStandard);
@@ -182,6 +183,7 @@ namespace MW5.Projections.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Identify projection";
+            this.Load += new System.EventHandler(this.IdentifyProjectionForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.textBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkBreak)).EndInit();
             this.ResumeLayout(false);

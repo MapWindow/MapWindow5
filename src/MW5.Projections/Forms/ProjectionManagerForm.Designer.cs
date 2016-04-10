@@ -32,15 +32,19 @@ namespace MW5.Projections.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectionManagerForm));
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblGcsCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblPcsCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblX = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblY = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this._projectionTreeView1 = new MW5.Projections.Controls.ProjectionTreeView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnZoomToProjection = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnProperties = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,12 +54,14 @@ namespace MW5.Projections.Forms
             this.txtName = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.txtCode = new System.Windows.Forms.TextBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this._projectionTreeView1 = new ProjectionTreeView();
-            this.projectionMap1 = new ProjectionMap();
+            this.projectionMap1 = new MW5.Projections.Controls.ProjectionMap();
+            this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -64,15 +70,16 @@ namespace MW5.Projections.Forms
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 450);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblGcsCount,
+            this.lblPcsCount,
+            this.lblX,
+            this.lblY});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 448);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(674, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(674, 24);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.Items.Add(lblGcsCount);
-            this.statusStrip1.Items.Add(lblPcsCount);
-            this.statusStrip1.Items.Add(lblX);
-            this.statusStrip1.Items.Add(lblY);
             // 
             // lblGcsCount
             // 
@@ -113,9 +120,37 @@ namespace MW5.Projections.Forms
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(674, 450);
+            this.splitContainer1.Size = new System.Drawing.Size(674, 448);
             this.splitContainer1.SplitterDistance = 326;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // _projectionTreeView1
+            // 
+            this._projectionTreeView1.ApplyStyle = true;
+            this._projectionTreeView1.BeforeTouchSize = new System.Drawing.Size(326, 448);
+            this._projectionTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            // 
+            // 
+            // 
+            this._projectionTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
+            this._projectionTreeView1.HelpTextControl.Name = "helpText";
+            this._projectionTreeView1.HelpTextControl.TabIndex = 0;
+            this._projectionTreeView1.HideSelection = false;
+            this._projectionTreeView1.InactiveSelectedNodeForeColor = System.Drawing.SystemColors.ControlText;
+            this._projectionTreeView1.Location = new System.Drawing.Point(0, 0);
+            this._projectionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this._projectionTreeView1.Name = "_projectionTreeView1";
+            this._projectionTreeView1.SelectedNodeForeColor = System.Drawing.SystemColors.HighlightText;
+            this._projectionTreeView1.ShowSuperTooltip = true;
+            this._projectionTreeView1.Size = new System.Drawing.Size(326, 448);
+            this._projectionTreeView1.TabIndex = 0;
+            // 
+            // 
+            // 
+            this._projectionTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
+            this._projectionTreeView1.ToolTipControl.Name = "toolTip";
+            this._projectionTreeView1.ToolTipControl.TabIndex = 1;
+            this._projectionTreeView1.ToolTipDuration = 0;
             // 
             // splitContainer2
             // 
@@ -135,7 +170,7 @@ namespace MW5.Projections.Forms
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.projectionMap1);
-            this.splitContainer2.Size = new System.Drawing.Size(344, 450);
+            this.splitContainer2.Size = new System.Drawing.Size(344, 448);
             this.splitContainer2.SplitterDistance = 191;
             this.splitContainer2.TabIndex = 13;
             // 
@@ -172,6 +207,14 @@ namespace MW5.Projections.Forms
             this.btnZoomToProjection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnZoomToProjection.UseVisualStyleBackColor = true;
             this.btnZoomToProjection.Click += new System.EventHandler(this.btnZoomToProjection_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "zoom-extentNew.png");
+            this.imageList1.Images.SetKeyName(1, "zoom-selectionNew.png");
+            this.imageList1.Images.SetKeyName(2, "page_white_magnify.png");
             // 
             // btnProperties
             // 
@@ -223,8 +266,8 @@ namespace MW5.Projections.Forms
             // 
             // txtRemarks
             // 
-            this.txtRemarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRemarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRemarks.Location = new System.Drawing.Point(13, 117);
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
@@ -234,8 +277,8 @@ namespace MW5.Projections.Forms
             // 
             // txtScope
             // 
-            this.txtScope.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtScope.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtScope.Location = new System.Drawing.Point(14, 81);
             this.txtScope.Multiline = true;
             this.txtScope.Name = "txtScope";
@@ -245,8 +288,8 @@ namespace MW5.Projections.Forms
             // 
             // txtName
             // 
-            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(49, 46);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
@@ -273,36 +316,56 @@ namespace MW5.Projections.Forms
             this.txtCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCode_KeyPress);
             this.txtCode.Validating += new System.ComponentModel.CancelEventHandler(this.txtCode_Validating);
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "zoom-extentNew.png");
-            this.imageList1.Images.SetKeyName(1, "zoom-selectionNew.png");
-            this.imageList1.Images.SetKeyName(2, "page_white_magnify.png");
-            // 
-            // projectionTreeView1
-            // 
-            this._projectionTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._projectionTreeView1.HideSelection = false;
-            this._projectionTreeView1.Location = new System.Drawing.Point(0, 0);
-            this._projectionTreeView1.Name = "_projectionTreeView1";
-            this._projectionTreeView1.Size = new System.Drawing.Size(326, 450);
-            this._projectionTreeView1.TabIndex = 0;
-            // 
             // projectionMap1
             // 
+            this.projectionMap1.AllowDrop = true;
+            this.projectionMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
+            this.projectionMap1.BackgroundColor = System.Drawing.Color.White;
+            this.projectionMap1.CurrentScale = 18.24950448370787D;
+            this.projectionMap1.CurrentZoom = -1;
             this.projectionMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectionMap1.Enabled = true;
+            this.projectionMap1.ExpandLayersOnAdding = true;
+            this.projectionMap1.ExtentHistory = 20;
+            this.projectionMap1.ExtentPad = 0.02D;
+            envelope1.Tag = "";
+            this.projectionMap1.Extents = envelope1;
+            this.projectionMap1.GrabProjectionFromData = true;
+            this.projectionMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
+            this.projectionMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
+            this.projectionMap1.Latitude = 0F;
             this.projectionMap1.Location = new System.Drawing.Point(0, 0);
+            this.projectionMap1.Longitude = 0F;
+            this.projectionMap1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
+            this.projectionMap1.MapProjection = MW5.Api.Enums.MapProjection.None;
+            this.projectionMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
+            this.projectionMap1.MouseWheelSpeed = 0.5D;
             this.projectionMap1.Name = "projectionMap1";
-            this.projectionMap1.Size = new System.Drawing.Size(342, 253);
+            spatialReference1.Tag = "";
+            this.projectionMap1.Projection = spatialReference1;
+            this.projectionMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
+            this.projectionMap1.ReuseTileBuffer = true;
+            this.projectionMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
+            this.projectionMap1.ScalebarVisible = true;
+            this.projectionMap1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
+            this.projectionMap1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
+            this.projectionMap1.ShowRedrawTime = false;
+            this.projectionMap1.ShowVersionNumber = false;
+            this.projectionMap1.Size = new System.Drawing.Size(342, 251);
+            this.projectionMap1.SystemCursor = MW5.Api.Enums.SystemCursor.MapDefault;
             this.projectionMap1.TabIndex = 12;
+            this.projectionMap1.Tag = "";
+            this.projectionMap1.TileProvider = MW5.Api.Enums.TileProvider.OpenStreetMap;
+            this.projectionMap1.UdCursorHandle = -572069904;
+            this.projectionMap1.UseSeamlessPan = false;
+            this.projectionMap1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this.projectionMap1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
+            this.projectionMap1.ZoomPercent = 0.3D;
             // 
-            // frmProjectionManager
+            // ProjectionManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(674, 472);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
@@ -311,11 +374,17 @@ namespace MW5.Projections.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Projection Viewer";
+            this.Load += new System.EventHandler(this.ProjectionManagerForm_Load);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

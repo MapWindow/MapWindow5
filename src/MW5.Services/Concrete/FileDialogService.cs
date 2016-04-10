@@ -15,7 +15,7 @@ namespace MW5.Services.Concrete
 
         public FileDialogService(IMainView parent)
         {
-            Logger.Current.Debug("In FileDialogService");
+            Logger.Current.Trace("In FileDialogService");
             if (parent == null) throw new ArgumentNullException("parent");
             _parent = parent;
         }

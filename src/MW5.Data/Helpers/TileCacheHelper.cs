@@ -25,7 +25,7 @@ namespace MW5.Data.Helpers
         /// </summary>
         public static void InitDatabase(string filename, TilesMaxAge maxAge)
         {
-            Logger.Current.Debug("In TileCacheHelper.InitDatabase()");
+            Logger.Current.Trace("In TileCacheHelper.InitDatabase()");
             if (_initialized)
             {
                 return;

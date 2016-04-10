@@ -1,5 +1,12 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ReprojectForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
@@ -21,13 +28,13 @@ namespace MW5.Projections.Forms
         /// <summary>
         /// Creates a new instance of the frmAssignProjection class
         /// </summary>
-        public ReprojectForm(IAppContext context, IReprojectingService reprojectingService):
-            base(context)
+        public ReprojectForm(IAppContext context, IReprojectingService reprojectingService)
+            : base(context)
         {
             _reprojectingService = reprojectingService;
 
             InitializeComponent();
-            
+
             if (context == null) throw new ArgumentException("No reference to MapWindow was passed");
             if (reprojectingService == null) throw new ArgumentNullException("reprojectingService");
 
@@ -38,7 +45,7 @@ namespace MW5.Projections.Forms
             }
 
             LayersControl1.Initialize(context);
-           
+
             if (ProjectionTreeView1.Initialize(database, context))
             {
                 ProjectionTreeView1.RefreshList();
@@ -72,7 +79,7 @@ namespace MW5.Projections.Forms
                 MessageService.Current.Warn("Failed to initialize the selected projection");
                 return;
             }
-            
+
             DoReprojection(filenames, proj, false);
         }
 
@@ -85,7 +92,7 @@ namespace MW5.Projections.Forms
             report.InitProgress(projection);
             var files = new List<string>();
 
-            int count = 0;  // number of successfully reprojected shapefiles
+            int count = 0; // number of successfully reprojected shapefiles
             foreach (string filename in filenames)
             {
                 var layer = GeoSource.Open(filename) as ILayerSource;
@@ -95,7 +102,7 @@ namespace MW5.Projections.Forms
                 }
 
                 ILayerSource layerNew = null;
-                
+
                 if (projection.IsSame(layer.Projection))
                 {
                     report.AddFile(layer.Filename, projection.Name, ProjectionOperaion.SameProjection, "");
@@ -106,7 +113,9 @@ namespace MW5.Projections.Forms
                     TestingResult result = _reprojectingService.Reproject(layer, out layerNew, projection, report);
                     if (result == TestingResult.Ok || result == TestingResult.Substituted)
                     {
-                        var oper = result == TestingResult.Ok ? ProjectionOperaion.Reprojected : ProjectionOperaion.Substituted;
+                        var oper = result == TestingResult.Ok
+                                       ? ProjectionOperaion.Reprojected
+                                       : ProjectionOperaion.Substituted;
                         string newName = layerNew == null ? "" : layerNew.Filename;
                         report.AddFile(layer.Filename, layer.Projection.Name, oper, newName);
                         files.Add(newName == "" ? layer.Filename : newName);
@@ -114,11 +123,13 @@ namespace MW5.Projections.Forms
                     }
                     else
                     {
-                        var operation = result == TestingResult.Error ? ProjectionOperaion.FailedToReproject : ProjectionOperaion.Skipped;
+                        var operation = result == TestingResult.Error
+                                            ? ProjectionOperaion.FailedToReproject
+                                            : ProjectionOperaion.Skipped;
                         report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
                     }
                 }
-                
+
                 layer.Close();
                 if (layerNew != null)
                 {
@@ -138,7 +149,8 @@ namespace MW5.Projections.Forms
 
             if (!projection.IsSame(_context.Map.Projection))
             {
-                MessageService.Current.Info("Chosen projection is different from the project one. The layers can't be added to map.");
+                MessageService.Current.Info(
+                    "Chosen projection is different from the project one. The layers can't be added to map.");
                 return;
             }
 
@@ -156,7 +168,7 @@ namespace MW5.Projections.Forms
                 {
                     var ds = GeoSource.Open(filename);
                     var layer = LayerSourceHelper.ConvertToLayer(ds);
-                    _context.Layers.Add(layer);    
+                    _context.Layers.Add(layer);
                 }
 
                 //_context.Layers.StopAddingSession();
@@ -170,6 +182,12 @@ namespace MW5.Projections.Forms
         {
             var cs = ProjectionTreeView1.SelectedCoordinateSystem;
             lblProjection.Text = cs == null ? "" : "Projection: " + cs.Name;
+        }
+
+        private void ReprojectForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

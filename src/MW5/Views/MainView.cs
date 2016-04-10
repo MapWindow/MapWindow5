@@ -36,12 +36,12 @@ namespace MW5.Views
 
         public MainView(IAppContext context)
         {
-            Logger.Current.Debug("Start MainView");
+            Logger.Current.Trace("Start MainView");
             _context = context;
 
-            Logger.Current.Debug("Start MainView.InitializeComponent");
+            Logger.Current.Trace("Start MainView.InitializeComponent");
             InitializeComponent();
-            Logger.Current.Debug("End MainView.InitializeComponent");
+            Logger.Current.Trace("End MainView.InitializeComponent");
 
             statusStripEx1.Items.Clear();
             statusStripEx1.Refresh();
@@ -60,7 +60,7 @@ namespace MW5.Views
 
                     ForceTaskBarDisplay();
                 };
-            Logger.Current.Debug("End MainView");
+            Logger.Current.Trace("End MainView");
         }
 
         protected override CreateParams CreateParams

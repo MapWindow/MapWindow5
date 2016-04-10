@@ -54,7 +54,7 @@ namespace MW5
             IStyleService styleService,
             ITaskCollection tasks)
         {
-            Logger.Current.Debug("In AppContext");
+            Logger.Current.Trace("In AppContext");
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
             if (tasks == null) throw new ArgumentNullException("tasks");
@@ -175,7 +175,7 @@ namespace MW5
             ToolboxPresenter toolboxPresenter,
             IRepository repository)
         {
-            Logger.Current.Debug("Start AppContext.Init()");
+            Logger.Current.Trace("Start AppContext.Init()");
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
             if (legendPresenter == null) throw new ArgumentNullException("legendPresenter");
@@ -220,7 +220,7 @@ namespace MW5
             this.InitDocking();
 
             Initialized = true;
-            Logger.Current.Debug("End AppContext.Init()");
+            Logger.Current.Trace("End AppContext.Init()");
         }
 
         internal void InitPlugins(IConfigService configService)

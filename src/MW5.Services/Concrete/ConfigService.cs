@@ -24,7 +24,7 @@ namespace MW5.Services.Concrete
 
         public ConfigService(IPluginManager manager, IRepository repository)
         {
-            Logger.Current.Debug("In ConfigService");
+            Logger.Current.Trace("In ConfigService");
             if (manager == null) throw new ArgumentNullException("manager");
             if (repository == null) throw new ArgumentNullException("repository");
 
@@ -81,7 +81,7 @@ namespace MW5.Services.Concrete
         public bool LoadConfig()
         {
             var path = ConfigPathHelper.GetConfigFilePath();
-            Logger.Current.Debug("Start LoadConfig. Config file: " + path);
+            Logger.Current.Trace("Start LoadConfig. Config file: " + path);
             if (!File.Exists(path))
             {
                 Logger.Current.Debug("Config file {0} does not exist", path);
@@ -99,7 +99,7 @@ namespace MW5.Services.Concrete
                 }
 
                 ApplyXmlConfig(xmlConfig);
-                Logger.Current.Debug("End LoadConfig");
+                Logger.Current.Trace("End LoadConfig");
                 return true;
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace MW5.Services.Concrete
         private bool LoadRepository()
         {
             var path = ConfigPathHelper.GetRepositoryConfigPath();
-            Logger.Current.Debug("Start LoadRepository. Config file: " + path);
+            Logger.Current.Trace("Start LoadRepository. Config file: " + path);
 
             if (!File.Exists(path))
             {
@@ -200,7 +200,7 @@ namespace MW5.Services.Concrete
                 }
 
                 ApplyRepositoryConfig(xmlRepository);
-                Logger.Current.Debug("End LoadRepository");
+                Logger.Current.Trace("End LoadRepository");
                 return true;
             }
             catch (Exception ex)

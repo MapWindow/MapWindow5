@@ -533,5 +533,11 @@ namespace MW5.Plugins.Symbology.Forms
         {
             Gui2Options(null, null);
         }
+
+        private void PointsForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
     }
 }

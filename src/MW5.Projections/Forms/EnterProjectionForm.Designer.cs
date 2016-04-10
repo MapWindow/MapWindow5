@@ -76,6 +76,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(494, 248);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -88,6 +89,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Enter projection:";
+            this.Load += new System.EventHandler(this.EnterProjectionForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,14 +1,20 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="TypedOptionsForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Shared;
 
 namespace MW5.UI.Forms
 {
-    public class TypedOptionsForm<T>: OptionsForm where T: struct, IConvertible
+    public class TypedOptionsForm<T> : OptionsForm
+        where T : struct, IConvertible
     {
         private readonly List<RadioButton> _list;
 
@@ -64,16 +70,23 @@ namespace MW5.UI.Forms
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // TypedOptionsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(378, 217);
-            this.Name = "TypedOptionsForm";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            CaptionFont = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ClientSize = new Size(378, 217);
+            Name = "TypedOptionsForm";
+            Load += TypedOptionsForm_Load;
+            ResumeLayout(false);
+            PerformLayout();
+        }
 
+        private void TypedOptionsForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

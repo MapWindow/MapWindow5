@@ -341,5 +341,11 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         }
 
         #endregion
+
+        private void ColorSchemesForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
     }
 }

@@ -1,4 +1,12 @@
-﻿using System.Windows.Forms;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="TesterReportForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Projections.Enums;
@@ -29,76 +37,7 @@ namespace MW5.Projections.Forms
         /// </summary>
         public int MismatchedCount
         {
-            get 
-            {
-                return listView1.Items.Count;
-            }
-        }
-
-        /// <summary>
-        /// Shows the report window as non-modal form
-        /// </summary>
-        /// <param name="proj">Project projection</param>
-        public void InitProgress(ISpatialReference proj)
-        {
-            this.Text = "Reprojecting";
-            this.label1.Text = "Reprojection of files is performed.";
-            this.SetProjectProjection(proj, ReportType.Loading);
-            this.lblProjection.Visible = false;
-            this.Show();
-        }
-
-        /// <summary>
-        /// Shows the report as modal dialog
-        /// </summary>
-        /// <param name="proj">Project projection</param>
-        public void ShowReport(ISpatialReference proj, string message, ReportType type)
-        {
-            this.Text = type == ReportType.Loading ? "Projection checking results" : "Projection assignment results";
-            this.SetProjectProjection(proj, type);
-            this.ShowReportCore(proj, message);
-            this.ShowDialog();
-        }
-
-        /// <summary>
-        /// Performs common actions for report showing which don't depend on the report type (layer loading or assignment of projection)
-        /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="message"></param>
-        private void ShowReportCore(ISpatialReference proj, string message)
-        {
-            if (message == "")
-            {
-                message = "The following files were affected because of the projection mismatch or absence:";
-            }
-            
-            this.label1.Text = message;
-            this.lblProjection.Visible = true;
-            this.lblFile.Visible = false;
-            this.progressBar1.Visible = false;
-            this.button1.Visible = true;
-            if (this.Visible)
-            {
-                this.Visible = false;
-            }
-        }
-
-        /// <summary>
-        /// Displays project projection
-        /// </summary>
-        /// <param name="proj"></param>
-        private void SetProjectProjection(ISpatialReference proj, ReportType reportType)
-        {
-            string suffix = "Target projection: ";
-            
-            if (proj == null || proj.IsEmpty)
-            {
-                lblProjection.Text = suffix + "not defined";
-            }
-            else
-            {
-                lblProjection.Text = suffix + proj.Name;
-            }
+            get { return listView1.Items.Count; }
         }
 
         /// <summary>
@@ -123,11 +62,11 @@ namespace MW5.Projections.Forms
                     s = "Failed to reproject";
                     break;
             }
-            
-            var item = listView1.Items.Add(System.IO.Path.GetFileName(filename));
+
+            var item = listView1.Items.Add(Path.GetFileName(filename));
             item.SubItems.Add(projection == "" ? "none" : projection);
             item.SubItems.Add(s);
-            item.SubItems.Add(System.IO.Path.GetFileName(newName));
+            item.SubItems.Add(Path.GetFileName(newName));
 
             if (operation == ProjectionOperaion.Skipped || operation == ProjectionOperaion.FailedToReproject)
             {
@@ -144,26 +83,95 @@ namespace MW5.Projections.Forms
             Application.DoEvents();
         }
 
+        /// <summary>
+        /// Shows the report window as non-modal form
+        /// </summary>
+        /// <param name="proj">Project projection</param>
+        public void InitProgress(ISpatialReference proj)
+        {
+            Text = @"Reprojecting";
+            label1.Text = @"Reprojection of files is performed.";
+            SetProjectProjection(proj, ReportType.Loading);
+            lblProjection.Visible = false;
+            Show();
+        }
+
+        /// <summary>
+        /// Shows the report as modal dialog
+        /// </summary>
+        /// <param name="proj">Project projection</param>
+        /// <param name="message">The message.</param>
+        /// <param name="type">The type.</param>
+        public void ShowReport(ISpatialReference proj, string message, ReportType type)
+        {
+            Text = type == ReportType.Loading ? "Projection checking results" : "Projection assignment results";
+            SetProjectProjection(proj, type);
+            ShowReportCore(proj, message);
+            ShowDialog();
+        }
+
+        /// <summary>
+        /// Displays project projection
+        /// </summary>
+        /// <param name="proj">The proj.</param>
+        /// <param name="reportType">Type of the report.</param>
+        private void SetProjectProjection(ISpatialReference proj, ReportType reportType)
+        {
+            string suffix = "Target projection: ";
+
+            if (proj == null || proj.IsEmpty)
+            {
+                lblProjection.Text = suffix + @"not defined";
+            }
+            else
+            {
+                lblProjection.Text = suffix + proj.Name;
+            }
+        }
+
+        /// <summary>
+        /// Performs common actions for report showing which don't depend on the report type (layer loading or assignment of projection)
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="message"></param>
+        private void ShowReportCore(ISpatialReference proj, string message)
+        {
+            if (message == "")
+            {
+                message = "The following files were affected because of the projection mismatch or absence:";
+            }
+
+            label1.Text = message;
+            lblProjection.Visible = true;
+            lblFile.Visible = false;
+            progressBar1.Visible = false;
+            button1.Visible = true;
+            if (Visible)
+            {
+                Visible = false;
+            }
+        }
+
         #region ICallback Members
 
         public void ShowFilename(string filename)
         {
-            lblFile.Text = "File: " + filename;
+            lblFile.Text = @"File: " + filename;
             lblFile.Visible = true;
-            this.progressBar1.Visible = true;
-            this.Refresh();
+            progressBar1.Visible = true;
+            Refresh();
             Application.DoEvents();
         }
 
         public void ClearFilename()
         {
             lblFile.Visible = false;
-            this.progressBar1.Visible = false;
+            progressBar1.Visible = false;
         }
 
         public void Progress(string KeyOfSender, int Percent, string Message)
         {
-            this.progressBar1.Value = Percent;
+            progressBar1.Value = Percent;
         }
 
         public void Error(string KeyOfSender, string ErrorMsg)
@@ -171,6 +179,13 @@ namespace MW5.Projections.Forms
             // do nothing
             //throw new NotImplementedException();
         }
+
         #endregion
+
+        private void TesterReportForm_Load(object sender, System.EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
     }
 }

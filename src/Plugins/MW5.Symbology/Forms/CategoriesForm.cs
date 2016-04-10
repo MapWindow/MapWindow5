@@ -1,24 +1,10 @@
-﻿// ********************************************************************************************************
-// <copyright file="MWLite.Symbology.cs" company="MapWindow.org">
-// Copyright (c) MapWindow.org. All rights reserved.
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="CategoriesForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
 // </copyright>
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// Www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version of the Original Code is Sergei Leschinski
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date            Changed By      Notes
-// ********************************************************************************************************
+// -------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -31,7 +17,6 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
-using MW5.UI.Enums;
 using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms
@@ -47,10 +32,47 @@ namespace MW5.Plugins.Symbology.Forms
         private const int CMN_COUNT = 4;
 
         private readonly ILayer _layer;
-        private readonly IFeatureSet _shapefile;
         private readonly int _layerHandle;
-        private bool _noEvents;
+        private readonly IFeatureSet _shapefile;
         private string _initState = "";
+        private bool _noEvents;
+
+        private void CategoriesForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
+
+        #region Categories count
+
+        /// <summary>
+        /// Calculates the number of shapes in each category
+        /// </summary>
+        private void RefreshCategoriesCount()
+        {
+            _shapefile.Categories.ApplyExpressions();
+
+            var values = _shapefile.GetCategoryCounts(); // id of category, count
+
+            int count = _shapefile.Categories.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                dgvCategories[CMN_COUNT, i].Value = values.ContainsKey(i) ? values[i] : 0;
+            }
+        }
+
+        #endregion
+
+        private void toolRemoveStyle_Click(object sender, EventArgs e)
+        {
+            LoadFromXml();
+        }
+
+        private void toolSaveCategories_Click(object sender, EventArgs e)
+        {
+            SaveToXml();
+        }
 
         #region Initialization
 
@@ -88,10 +110,11 @@ namespace MW5.Plugins.Symbology.Forms
 
             RefreshControlState();
         }
+
         #endregion
 
         #region Categories buttons
-        
+
         /// <summary>
         /// Generation of categories with the full set of options
         /// </summary>
@@ -131,18 +154,18 @@ namespace MW5.Plugins.Symbology.Forms
 
                 var blend = form.icbColors.ColorSchemes[form.icbColors.SelectedIndex];
                 var scheme = blend.ToColorScheme();
-                int count = (int) form.numericUpDownExt1.Value;
+                int count = (int)form.numericUpDownExt1.Value;
 
                 for (int i = 0; i < count; i++)
                 {
                     Color color;
                     if (form.chkRandom.Checked)
                     {
-                        color = scheme.GetRandomColor((i + 1)/(double) count);
+                        color = scheme.GetRandomColor((i + 1) / (double)count);
                     }
                     else
                     {
-                        color = scheme.GetGraduatedColor((i + 1)/(double) count);
+                        color = scheme.GetGraduatedColor((i + 1) / (double)count);
                     }
 
                     var cat = _shapefile.Categories.Add("Category " + _shapefile.Categories.Count);
@@ -218,7 +241,7 @@ namespace MW5.Plugins.Symbology.Forms
                 int colIndex = dgvCategories.CurrentCell.ColumnIndex;
 
                 bool result = _shapefile.Categories.MoveUp(index);
-                    
+
                 if (result)
                 {
                     UpdateGridCategory(index);
@@ -226,7 +249,7 @@ namespace MW5.Plugins.Symbology.Forms
                     _noEvents = true;
                     dgvCategories.CurrentCell = dgvCategories[colIndex, index - 1];
                     _noEvents = false;
-                        
+
                     RefreshControlState();
                 }
             }
@@ -241,7 +264,7 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 return;
             }
-            
+
             if (dgvCategories.CurrentCell.RowIndex < dgvCategories.Rows.Count - 1)
             {
                 int index = dgvCategories.CurrentCell.RowIndex;
@@ -252,7 +275,7 @@ namespace MW5.Plugins.Symbology.Forms
                 if (result)
                 {
                     UpdateGridCategory(index);
-                    UpdateGridCategory(index +1);
+                    UpdateGridCategory(index + 1);
                 }
 
                 _noEvents = true;
@@ -325,7 +348,7 @@ namespace MW5.Plugins.Symbology.Forms
 
             using (var form = _context.GetSymbologyForm(_layerHandle, cat.Style, true))
             {
-                form.Text = "Category drawing options";
+                form.Text = @"Category drawing options";
 
                 if (_context.View.ShowChildView(form, this))
                 {
@@ -335,10 +358,11 @@ namespace MW5.Plugins.Symbology.Forms
                 }
             }
         }
+
         #endregion
 
         #region Filling categories grid
-        
+
         /// <summary>
         /// Updats the representation of category in the grid, by rereading the values
         /// </summary>
@@ -354,13 +378,13 @@ namespace MW5.Plugins.Symbology.Forms
             dgvCategories[CMN_VISIBLE, index].Value = cat.Style.Visible;
             dgvCategories[CMN_NAME, index].Value = cat.Name;
             dgvCategories[CMN_EXPRESSION, index].Value = cat.Expression;
-            
+
             if (!_noEvents)
             {
                 btnApply.Enabled = true;
             }
         }
-        
+
         /// <summary>
         /// Fills the data grid view with information about label categories
         /// </summary>
@@ -408,29 +432,11 @@ namespace MW5.Plugins.Symbology.Forms
 
             dgvCategories.ResumeLayout();
         }
-        #endregion
 
-        #region Categories count
-        
-        /// <summary>
-        /// Calculates the number of shapes in each category
-        /// </summary>
-        private void RefreshCategoriesCount()
-        {
-            _shapefile.Categories.ApplyExpressions();
-            
-            var values = _shapefile.GetCategoryCounts(); // id of category, count
-
-            int count = _shapefile.Categories.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                dgvCategories[CMN_COUNT, i].Value = values.ContainsKey(i) ? values[i] : 0;
-            }
-        }
         #endregion
 
         #region Data grid view events
+
         /// <summary>
         /// Opening forms for editing the category
         /// </summary>
@@ -441,7 +447,7 @@ namespace MW5.Plugins.Symbology.Forms
                 return;
             }
 
-            if (e.ColumnIndex == CMN_STYLE )
+            if (e.ColumnIndex == CMN_STYLE)
             {
                 ChangeCategoryStyle(e.RowIndex);
             }
@@ -506,7 +512,8 @@ namespace MW5.Plugins.Symbology.Forms
                 return;
             }
 
-            if (e.ColumnIndex == dgvCategories.CurrentCell.ColumnIndex && e.RowIndex == dgvCategories.CurrentCell.RowIndex)
+            if (e.ColumnIndex == dgvCategories.CurrentCell.ColumnIndex &&
+                e.RowIndex == dgvCategories.CurrentCell.RowIndex)
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 
@@ -520,6 +527,7 @@ namespace MW5.Plugins.Symbology.Forms
                 e.Handled = true;
             }
         }
+
         #endregion
 
         #region Categories interaction
@@ -544,7 +552,7 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 return;
             }
-            
+
             if (e.ColumnIndex == CMN_NAME)
             {
                 _shapefile.Categories[e.RowIndex].Name = dgvCategories[CMN_NAME, e.RowIndex].Value.ToString();
@@ -560,7 +568,7 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 return;
             }
-            
+
             int index = e.RowIndex;
             if (e.ColumnIndex == CMN_VISIBLE)
             {
@@ -602,13 +610,15 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             int index = dgv.CurrentCell.RowIndex;
-            
+
             UpdateGridCategory(index);
             btnApply.Enabled = true;
         }
+
         #endregion
 
         #region Category properties
+
         /// <summary>
         /// Displays the values for the selected category
         /// </summary>
@@ -648,7 +658,7 @@ namespace MW5.Plugins.Symbology.Forms
         #endregion
 
         #region Buttons
-        
+
         /// <summary>
         /// Applies the options, saves the settings
         /// </summary>
@@ -711,13 +721,13 @@ namespace MW5.Plugins.Symbology.Forms
         #endregion
 
         #region Serialization
-        
+
         /// <summary>
         /// Saves list of styles to XML
         /// </summary>
         public void SaveToXml()
         {
-            using (var dlg = new SaveFileDialog {Filter = CATEGORIES_FILE_FILTER})
+            using (var dlg = new SaveFileDialog { Filter = CATEGORIES_FILE_FILTER })
             {
                 if (_shapefile.SourceType == FeatureSourceType.DiskBased)
                 {
@@ -767,17 +777,5 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         #endregion
-
-        private void toolSaveCategories_Click(object sender, EventArgs e)
-        {
-            SaveToXml();
-        }
-
-        private void toolRemoveStyle_Click(object sender, EventArgs e)
-        {
-            LoadFromXml();
-        }
     }
 }
-
-

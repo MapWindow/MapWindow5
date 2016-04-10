@@ -30,16 +30,18 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsChooserForm));
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this.label1 = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblDescription = new System.Windows.Forms.Label();
             this.chkDontShow = new System.Windows.Forms.CheckBox();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.axMap1 = new MapControl();
+            this.axMap1 = new MW5.Api.Map.MapControl();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -80,8 +82,8 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // lblDescription
             // 
-            this.lblDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDescription.Location = new System.Drawing.Point(12, 267);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(531, 30);
@@ -145,18 +147,55 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // axMap1
             // 
+            this.axMap1.AllowDrop = true;
+            this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
+            this.axMap1.BackgroundColor = System.Drawing.Color.White;
+            this.axMap1.CurrentScale = 17.442230851087803D;
+            this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axMap1.Enabled = true;
+            this.axMap1.ExpandLayersOnAdding = true;
+            this.axMap1.ExtentHistory = 20;
+            this.axMap1.ExtentPad = 0.02D;
+            envelope1.Tag = "";
+            this.axMap1.Extents = envelope1;
+            this.axMap1.GrabProjectionFromData = true;
+            this.axMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
+            this.axMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
+            this.axMap1.Latitude = 0F;
             this.axMap1.Location = new System.Drawing.Point(0, 0);
+            this.axMap1.Longitude = 0F;
+            this.axMap1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
+            this.axMap1.MapProjection = MW5.Api.Enums.MapProjection.None;
+            this.axMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
+            this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
+            spatialReference1.Tag = "";
+            this.axMap1.Projection = spatialReference1;
+            this.axMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
+            this.axMap1.ReuseTileBuffer = true;
+            this.axMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
+            this.axMap1.ScalebarVisible = true;
+            this.axMap1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
+            this.axMap1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
+            this.axMap1.ShowRedrawTime = false;
+            this.axMap1.ShowVersionNumber = false;
             this.axMap1.Size = new System.Drawing.Size(355, 229);
+            this.axMap1.SystemCursor = MW5.Api.Enums.SystemCursor.MapDefault;
             this.axMap1.TabIndex = 1;
+            this.axMap1.Tag = "";
+            this.axMap1.TileProvider = MW5.Api.Enums.TileProvider.OpenStreetMap;
+            this.axMap1.UdCursorHandle = 0;
+            this.axMap1.UseSeamlessPan = false;
+            this.axMap1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this.axMap1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
+            this.axMap1.ZoomPercent = 0.3D;
             // 
-            // frmOptionsChooser
+            // OptionsChooserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(551, 341);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.chkDontShow);
@@ -170,8 +209,10 @@ namespace MW5.Plugins.Symbology.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Symbology chooser";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOptionsChooser_FormClosing);
+            this.Load += new System.EventHandler(this.OptionsChooserForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

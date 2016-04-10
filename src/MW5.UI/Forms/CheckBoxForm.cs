@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MW5.UI.Forms
@@ -106,6 +107,12 @@ namespace MW5.UI.Forms
                     grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 }
             }
+        }
+
+        private void CheckBoxForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

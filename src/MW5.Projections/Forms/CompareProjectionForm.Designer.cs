@@ -123,6 +123,7 @@ namespace MW5.Projections.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnOk;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(462, 284);
             this.Controls.Add(this.chkWkt);
             this.Controls.Add(this.btnProject);
@@ -137,6 +138,7 @@ namespace MW5.Projections.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Projection mismatch";
+            this.Load += new System.EventHandler(this.CompareProjectionForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,11 +1,16 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ExceptionHandler.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using MW5.Forms;
 using MW5.Shared;
-using MW5.Views;
 
 namespace MW5
 {
@@ -13,18 +18,17 @@ namespace MW5
     {
         public static void Attach()
         {
-            if (!Debugger.IsAttached)
-            {
-                // main UI thread only
-                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                Application.ThreadException += Application_ThreadException;
+            if (Debugger.IsAttached) return;
 
-                // in delegates called by Invoke or BeginInvoke.
-                Dispatcher.CurrentDispatcher.UnhandledException += CurrentDispatcher_UnhandledException;
+            // main UI thread only
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.ThreadException += Application_ThreadException;
 
-                // last resort, the app will be terminated anyway
-                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            }
+            // in delegates called by Invoke or BeginInvoke.
+            Dispatcher.CurrentDispatcher.UnhandledException += CurrentDispatcher_UnhandledException;
+
+            // last resort, the app will be terminated anyway
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -56,6 +60,7 @@ namespace MW5
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var ex = e.ExceptionObject as Exception;
+            Logger.Current.Error("CurrentDomain_UnhandledException", ex);
 
             using (var form = new ErrorView(ex, true))
             {
@@ -63,8 +68,6 @@ namespace MW5
 
                 Application.Exit();
             }
-
-            Logger.Current.Error("CurrentDomain_UnhandledException", ex);
         }
     }
 }

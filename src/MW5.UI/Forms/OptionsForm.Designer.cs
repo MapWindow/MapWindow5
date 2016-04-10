@@ -81,6 +81,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
+            this.CaptionFont = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(378, 217);
             this.Controls.Add(this.chkDontShow);
             this.Controls.Add(this.button2);
@@ -93,6 +94,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MapWindow";
+            this.Load += new System.EventHandler(this.OptionsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

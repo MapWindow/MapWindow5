@@ -20,7 +20,7 @@ namespace MW5.UI.Helpers
 
         public static void Init(SuperToolTip toolTipManager)
         {
-            Logger.Current.Debug("In ToolTipHelper.Init()");
+            Logger.Current.Trace("In ToolTipHelper.Init()");
             if (toolTipManager == null) throw new ArgumentNullException("toolTipManager");
             _toolTipManager = toolTipManager;
         }

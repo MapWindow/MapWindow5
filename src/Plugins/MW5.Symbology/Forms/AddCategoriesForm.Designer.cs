@@ -37,8 +37,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkRandom = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.icbColors = new ColorSchemeCombo();
-            this.numericUpDownExt1 = new NumericUpDownEx(this.components);
+            this.icbColors = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
+            this.numericUpDownExt1 = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -89,7 +89,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // icbColors
             // 
-            this.icbColors.ComboStyle = SchemeType.Graduated;
+            this.icbColors.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
             this.icbColors.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbColors.FormattingEnabled = true;
@@ -98,6 +98,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.icbColors.OutlineColor = System.Drawing.Color.Black;
             this.icbColors.Size = new System.Drawing.Size(134, 21);
             this.icbColors.TabIndex = 2;
+            this.icbColors.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
             // 
             // numericUpDownExt1
             // 
@@ -146,6 +147,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button2;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(303, 179);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -155,6 +157,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add categories";
+            this.Load += new System.EventHandler(this.AddCategoriesForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExt1)).EndInit();

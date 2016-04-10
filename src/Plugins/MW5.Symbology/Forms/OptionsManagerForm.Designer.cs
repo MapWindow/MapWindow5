@@ -31,20 +31,22 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsManagerForm));
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this.btnClose = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.txtDescription = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.axMap1 = new MapControl();
+            this.axMap1 = new MW5.Api.Map.MapControl();
             this.btnMakDefault = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnRename = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -54,7 +56,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Image = Resources.door_open;
+            this.btnClose.Image = global::MW5.Plugins.Symbology.Properties.Resources.door_open;
             this.btnClose.Location = new System.Drawing.Point(543, 325);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(81, 41);
@@ -81,8 +83,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.listView1.TabIndex = 28;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.dgv_CurrentCellChanged);
+            this.listView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDoubleClick);
             // 
             // columnHeader1
             // 
@@ -108,9 +110,9 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer1.IsSplitterFixed = true;
@@ -130,17 +132,53 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // axMap1
             // 
+            this.axMap1.AllowDrop = true;
+            this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
+            this.axMap1.BackgroundColor = System.Drawing.Color.White;
+            this.axMap1.CurrentScale = 17.10495014402257D;
+            this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axMap1.Enabled = true;
+            this.axMap1.ExpandLayersOnAdding = true;
+            this.axMap1.ExtentHistory = 20;
+            this.axMap1.ExtentPad = 0.02D;
+            envelope1.Tag = "";
+            this.axMap1.Extents = envelope1;
+            this.axMap1.GrabProjectionFromData = true;
+            this.axMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
+            this.axMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
+            this.axMap1.Latitude = 0F;
             this.axMap1.Location = new System.Drawing.Point(0, 0);
+            this.axMap1.Longitude = 0F;
+            this.axMap1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
+            this.axMap1.MapProjection = MW5.Api.Enums.MapProjection.None;
+            this.axMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
+            this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
+            spatialReference1.Tag = "";
+            this.axMap1.Projection = spatialReference1;
+            this.axMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
+            this.axMap1.ReuseTileBuffer = true;
+            this.axMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
+            this.axMap1.ScalebarVisible = true;
+            this.axMap1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
+            this.axMap1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
+            this.axMap1.ShowRedrawTime = false;
+            this.axMap1.ShowVersionNumber = false;
             this.axMap1.Size = new System.Drawing.Size(362, 358);
+            this.axMap1.SystemCursor = MW5.Api.Enums.SystemCursor.MapDefault;
             this.axMap1.TabIndex = 1;
+            this.axMap1.Tag = "";
+            this.axMap1.TileProvider = MW5.Api.Enums.TileProvider.OpenStreetMap;
+            this.axMap1.UdCursorHandle = 474372008;
+            this.axMap1.UseSeamlessPan = false;
+            this.axMap1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this.axMap1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
+            this.axMap1.ZoomPercent = 0.3D;
             // 
             // btnMakDefault
             // 
             this.btnMakDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMakDefault.Image = Resources.application_link;
+            this.btnMakDefault.Image = global::MW5.Plugins.Symbology.Properties.Resources.application_link;
             this.btnMakDefault.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMakDefault.Location = new System.Drawing.Point(543, 146);
             this.btnMakDefault.Name = "btnMakDefault";
@@ -155,7 +193,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnApply
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApply.Image = Resources.ok2;
+            this.btnApply.Image = global::MW5.Plugins.Symbology.Properties.Resources.ok2;
             this.btnApply.Location = new System.Drawing.Point(543, 278);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(81, 41);
@@ -169,7 +207,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Image = Resources.application_add;
+            this.btnSave.Image = global::MW5.Plugins.Symbology.Properties.Resources.application_add;
             this.btnSave.Location = new System.Drawing.Point(543, 6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(81, 40);
@@ -182,7 +220,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnRename
             // 
             this.btnRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRename.Image = Resources.application_edit;
+            this.btnRename.Image = global::MW5.Plugins.Symbology.Properties.Resources.application_edit;
             this.btnRename.Location = new System.Drawing.Point(543, 99);
             this.btnRename.Name = "btnRename";
             this.btnRename.Size = new System.Drawing.Size(81, 41);
@@ -195,7 +233,7 @@ namespace MW5.Plugins.Symbology.Forms
             // btnRemove
             // 
             this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemove.Image = Resources.application_delete;
+            this.btnRemove.Image = global::MW5.Plugins.Symbology.Properties.Resources.application_delete;
             this.btnRemove.Location = new System.Drawing.Point(542, 52);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(82, 41);
@@ -205,11 +243,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
-            // frmOptionsManager
+            // OptionsManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(630, 393);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
@@ -225,10 +264,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Symbology manager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOptionsManager_FormClosed);
+            this.Load += new System.EventHandler(this.OptionsManagerForm_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

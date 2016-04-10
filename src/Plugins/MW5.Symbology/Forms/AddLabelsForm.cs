@@ -17,6 +17,7 @@
 // ********************************************************************************************************
 
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -181,6 +182,12 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             return LabelPosition.Centroid;
+        }
+
+        private void AddLabelsForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

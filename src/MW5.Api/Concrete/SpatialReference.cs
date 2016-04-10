@@ -13,7 +13,7 @@ namespace MW5.Api.Concrete
 
         public SpatialReference()
         {
-            Logger.Current.Debug("In SpatialReference");
+            Logger.Current.Trace("In SpatialReference");
             _projection = new GeoProjection();
         }
 

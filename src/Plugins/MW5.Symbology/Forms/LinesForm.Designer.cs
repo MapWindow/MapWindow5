@@ -42,12 +42,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabLine = new System.Windows.Forms.TabPage();
-            this.transparencyControl1 = new TransparencyControl();
+            this.transparencyControl1 = new MW5.UI.Controls.TransparencyControl();
             this.groupLine = new System.Windows.Forms.GroupBox();
-            this.icbLineWidth = new ImageCombo();
+            this.icbLineWidth = new MW5.UI.Controls.ImageCombo();
             this.label21 = new System.Windows.Forms.Label();
-            this.clpOutline = new Office2007ColorPicker(this.components);
-            this.icbLineType = new ImageCombo();
+            this.clpOutline = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.icbLineType = new MW5.UI.Controls.ImageCombo();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,7 +60,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.cboVerticesType = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.clpVerticesColor = new Office2007ColorPicker(this.components);
+            this.clpVerticesColor = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkVerticesVisible = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRemoveStyle = new System.Windows.Forms.Button();
@@ -75,12 +75,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.udMarkerOffset = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.clpMarkerOutline = new Office2007ColorPicker(this.components);
+            this.clpMarkerOutline = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.udMarkerSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.cboOrientation = new System.Windows.Forms.ComboBox();
             this.pointSymbolControl1 = new MW5.Plugins.Symbology.Controls.ListControls.SymbolControl();
-            this.clpMarkerFill = new Office2007ColorPicker(this.components);
+            this.clpMarkerFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.udMarkerInterval = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.chkMarkerFlipFirst = new System.Windows.Forms.CheckBox();
             this.btnApply = new System.Windows.Forms.Button();
@@ -210,7 +210,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.transparencyControl1.Size = new System.Drawing.Size(190, 32);
             this.transparencyControl1.TabIndex = 143;
             this.transparencyControl1.Value = ((byte)(255));
-            this.transparencyControl1.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
+            this.transparencyControl1.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
             // 
             // groupLine
             // 
@@ -230,7 +230,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Blue;
             this.icbLineWidth.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;
@@ -270,7 +270,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbLineType.Color1 = System.Drawing.Color.Blue;
             this.icbLineType.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineType.ComboStyle = ImageComboStyle.Common;
+            this.icbLineType.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineType.FormattingEnabled = true;
@@ -469,7 +469,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.linePatternControl1.SelectedIndex = -1;
             this.linePatternControl1.Size = new System.Drawing.Size(299, 279);
             this.linePatternControl1.TabIndex = 0;
-            this.linePatternControl1.SelectionChanged += linePatternControl1_SelectionChanged;
             // 
             // label2
             // 
@@ -625,7 +624,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.pointSymbolControl1.SelectedIndex = -1;
             this.pointSymbolControl1.Size = new System.Drawing.Size(364, 54);
             this.pointSymbolControl1.TabIndex = 13;
-            this.pointSymbolControl1.SelectionChanged += this.pointSymbolControl1_SelectionChanged;
             // 
             // clpMarkerFill
             // 
@@ -717,6 +715,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(615, 385);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.groupMarker);
@@ -736,6 +735,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Polyline Style";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLines_FormClosing);
+            this.Load += new System.EventHandler(this.LinesForm_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pctPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();

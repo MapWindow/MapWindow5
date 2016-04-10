@@ -47,15 +47,15 @@ namespace MW5
 
         private static void LoadConfig(IApplicationContainer container)
         {
-            Logger.Current.Debug("Start LoadConfig");
+            Logger.Current.Trace("Start LoadConfig");
             MapInitializer.InitMapConfig();
 
-            Logger.Current.Debug("Before container.GetSingleton");
+            Logger.Current.Trace("Before container.GetSingleton");
             var configService = container.GetSingleton<IConfigService>();
-            Logger.Current.Debug("After container.GetSingleton");
+            Logger.Current.Trace("After container.GetSingleton");
 
             configService.LoadAll();
-            Logger.Current.Debug("End LoadConfig");
+            Logger.Current.Trace("End LoadConfig");
         }
 
         /// <summary>

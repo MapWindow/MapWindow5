@@ -419,5 +419,11 @@ namespace MW5.Plugins.Symbology.Forms
         {
             Ui2Options(sender, null);
         }
+
+        private void PolygonForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
     }
 }

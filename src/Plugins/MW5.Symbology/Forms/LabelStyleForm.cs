@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="LabelStyleForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2016
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -15,7 +15,6 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
-using MW5.Attributes.Model;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
@@ -36,8 +35,8 @@ namespace MW5.Plugins.Symbology.Forms
         private readonly bool _categoryEdited;
         private ILabelStyle _category;
         private IFeatureSet _featureSet;
+        private bool _fieldSelection; // field was just selected in the main tab combo box
         private string _initState = "";
-        private bool _fieldSelection;   // field was just selected in the main tab combo box
         private ILayer _layer;
         private bool _noEvents;
 
@@ -93,7 +92,7 @@ namespace MW5.Plugins.Symbology.Forms
             if (_categoryEdited)
             {
                 tabControlAdv1.TabPages.Remove(tabVisibility);
-                tabControlAdv1.TabPages.Remove(tabPosition); 
+                tabControlAdv1.TabPages.Remove(tabPosition);
                 tabControlAdv1.TabPages.Remove(tabExpression);
             }
 
@@ -103,7 +102,11 @@ namespace MW5.Plugins.Symbology.Forms
 
         private IAttributeField SelectedField
         {
-            get { return (cboField.SelectedItem as FieldAdapter).Field; }
+            get
+            {
+                var fieldAdapter = cboField.SelectedItem as FieldAdapter;
+                return fieldAdapter != null ? fieldAdapter.Field : null;
+            }
         }
 
         /// <summary>
@@ -240,6 +243,17 @@ namespace MW5.Plugins.Symbology.Forms
             return string.Format("%.{0}f", cboDecimalPlaces.SelectedIndex);
         }
 
+        private string GetLabelField(ILabelsLayer labels)
+        {
+            var s = labels.Expression.Trim();
+            if (s.StartsWith("[") && s.EndsWith("]"))
+            {
+                return s.Substring(1, s.Length - 2);
+            }
+
+            return string.Empty;
+        }
+
         private void InitAlignment(ILabelsLayer labels)
         {
             var alignment = labels.Style.Alignment;
@@ -270,7 +284,8 @@ namespace MW5.Plugins.Symbology.Forms
         {
             if (_categoryEdited) return;
 
-            var fields = _featureSet.Fields.Where(f => !f.Name.EqualsIgnoreCase(ShapefileHelper.MWShapeIdField)).ToList();
+            var fields =
+                _featureSet.Fields.Where(f => !f.Name.EqualsIgnoreCase(ShapefileHelper.MWShapeIdField)).ToList();
 
             listBox1.DataSource = fields.ToList();
 
@@ -281,9 +296,10 @@ namespace MW5.Plugins.Symbology.Forms
             var fieldList = wrappers.ToList();
             fieldList.Add(new FieldAdapter("<expression>"));
             cboField.DataSource = fieldList;
-            
+
             // sort field
-            wrappers = wrappers.Where(f => f.Field == null || f.Field != null && f.Field.Type != AttributeType.String).ToList();
+            wrappers =
+                wrappers.Where(f => f.Field == null || f.Field != null && f.Field.Type != AttributeType.String).ToList();
             cboSortField.DataSource = wrappers.ToList();
         }
 
@@ -295,45 +311,6 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 cboFontName.Items.Add(family.Name);
             }
-        }
-
-        private void InitLayer(IAppContext context, ILayer layer)
-        {
-            if (context == null) throw new ArgumentNullException("context");
-
-            if (layer == null || layer.FeatureSet == null)
-            {
-                throw new ArgumentNullException("layer");
-            }
-
-            _layer = layer;
-            _featureSet = _layer.FeatureSet;
-
-            Text = "Label Style: " + layer.Name;
-        }
-
-        private void InitScales()
-        {
-            string[] scales =
-                {
-                    "1", "10", "100", "1000", "5000", "10000", "25000", "50000", "100000", "250000",
-                    "500000", "1000000", "10000000"
-                };
-
-            cboBasicScale.Items.Clear();
-
-            foreach (string t in scales)
-            {
-                cboBasicScale.Items.Add(t);
-            }
-        }
-
-        private void InitTextRendering()
-        {
-            var hints = EnumHelper.GetValues<TextRenderingHint>();
-            cboTextRenderingHint.DataSource = hints;
-            SetSelectedIndex(cboTextRenderingHint, (int)_featureSet.Labels.TextRenderingHint);
-            cboTextRenderingHint.SelectedIndexChanged += Ui2LabelStyle;
         }
 
         /// <summary>
@@ -411,50 +388,43 @@ namespace MW5.Plugins.Symbology.Forms
             DrawPreview();
         }
 
-        private void RestoreFields(ILabelsLayer labels)
+        private void InitLayer(IAppContext context, ILayer layer)
         {
-            string name = GetLabelField(labels);
+            if (context == null) throw new ArgumentNullException("context");
 
-            if (string.IsNullOrWhiteSpace(name))
+            if (layer == null || layer.FeatureSet == null)
             {
-                cboField.SelectedIndex = !string.IsNullOrWhiteSpace(labels.Expression) ? cboField.Items.Count - 1 : 0;
-            }
-            else
-            {
-                SetFieldValue(cboField, name);
-            }
-            
-            if (_featureSet != null)
-            {
-                SetFieldValue(cboSortField, _featureSet.SortField);
-                chkSortAscending.Checked = _featureSet.SortAscending;
+                throw new ArgumentNullException("layer");
             }
 
-            chkLogScaleForSize.Checked = labels.LogScaleForSize;
-            chkUseVariableSize.Checked = labels.UseVariableSize;
+            _layer = layer;
+            _featureSet = _layer.FeatureSet;
+
+            Text = @"Label Style: " + layer.Name;
         }
 
-        private string GetLabelField(ILabelsLayer labels)
+        private void InitScales()
         {
-            var s = labels.Expression.Trim();
-            if (s.StartsWith("[") && s.EndsWith("]"))
-            {
-                return s.Substring(1, s.Length - 2);
-            }
-
-            return string.Empty;
-        }
-
-        private void SetFieldValue(ComboBox combo, string text)
-        {
-            foreach (var item in combo.Items)
-            {
-                if (item.ToString().EqualsIgnoreCase(text))
+            string[] scales =
                 {
-                    combo.SelectedItem = item;
-                    break;
-                }
+                    "1", "10", "100", "1000", "5000", "10000", "25000", "50000", "100000", "250000",
+                    "500000", "1000000", "10000000"
+                };
+
+            cboBasicScale.Items.Clear();
+
+            foreach (string t in scales)
+            {
+                cboBasicScale.Items.Add(t);
             }
+        }
+
+        private void InitTextRendering()
+        {
+            var hints = EnumHelper.GetValues<TextRenderingHint>();
+            cboTextRenderingHint.DataSource = hints;
+            SetSelectedIndex(cboTextRenderingHint, (int)_featureSet.Labels.TextRenderingHint);
+            cboTextRenderingHint.SelectedIndexChanged += Ui2LabelStyle;
         }
 
         /// <summary>
@@ -466,11 +436,15 @@ namespace MW5.Plugins.Symbology.Forms
 
             chkVisible.Checked = _category.Visible;
 
-            string fontName = lb.FontName;
-            int j = 0;
+            var fontName = lb.FontName;
+            var j = 0;
             foreach (var family in FontFamily.Families)
             {
-                if (family.Name == fontName) cboFontName.SelectedIndex = j;
+                if (family.Name == fontName)
+                {
+                    cboFontName.SelectedIndex = j;
+                    break;
+                }
                 j++;
             }
             if (cboFontName.SelectedIndex == -1)
@@ -579,6 +553,48 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
+        /// Checks the expression during editing
+        /// </summary>
+        private void OnExpressionChanged(object sender, EventArgs e)
+        {
+            TestExpression();
+
+            if (!_noEvents)
+            {
+                LabelHelper.DrawPreview(_category, _featureSet, pctPreview, txtExpression.Text, true);
+                RefreshControls();
+            }
+
+            if (!_fieldSelection)
+            {
+                // it's user input, select the <expression> on the main tab
+                cboField.SelectedIndex = cboField.Items.Count - 1;
+            }
+
+            btnApply.Enabled = true;
+        }
+
+        private void OnFieldChanged(object sender, EventArgs e)
+        {
+            if (cboField.SelectedIndex == 0)
+            {
+                SetExpressionAfterFieldChange(string.Empty);
+                return;
+            }
+
+            var fld = SelectedField;
+            if (fld != null)
+            {
+                SetExpressionAfterFieldChange("[" + fld.Name + "]");
+            }
+            else
+            {
+                tabControlAdv1.SelectedTab = tabExpression;
+                txtExpression.Focus();
+            }
+        }
+
+        /// <summary>
         /// Adds field to the expression
         /// </summary>
         private void OnFieldListBoxDoubleClick(object sender, EventArgs e)
@@ -630,34 +646,6 @@ namespace MW5.Plugins.Symbology.Forms
             }
         }
 
-        private void SetExpressionAfterFieldChange(string expression)
-        {
-            _fieldSelection = true;
-            txtExpression.Text = expression;
-            OnExpressionChanged(null, null);
-            _fieldSelection = false;
-        }
-
-        private void OnFieldChanged(object sender, EventArgs e)
-        {
-            if (cboField.SelectedIndex == 0)
-            {
-                SetExpressionAfterFieldChange(string.Empty);
-                return;
-            }
-
-            var fld = SelectedField;
-            if (fld != null)
-            {
-                SetExpressionAfterFieldChange("[" + fld.Name + "]");
-            }
-            else
-            {
-                tabControlAdv1.SelectedTab = tabExpression;
-                txtExpression.Focus();
-            }
-        }
-
         /// <summary>
         /// Adds field to the expression
         /// </summary>
@@ -670,6 +658,11 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 txtExpression.SelectedText = "[" + fld.Name + "] ";
             }
+        }
+
+        private void OnNewLineClick(object sender, EventArgs e)
+        {
+            txtExpression.SelectedText = Environment.NewLine;
         }
 
         /// <summary>
@@ -692,6 +685,16 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             DialogResult = DialogResult.OK;
+        }
+
+        private void OnPlusClick(object sender, EventArgs e)
+        {
+            txtExpression.SelectedText = "+ ";
+        }
+
+        private void OnQuotesClick(object sender, EventArgs e)
+        {
+            txtExpression.SelectedText = "\"\"";
         }
 
         /// <summary>
@@ -720,28 +723,6 @@ namespace MW5.Plugins.Symbology.Forms
                     btnApply.Enabled = true;
                 }
             }
-        }
-
-        /// <summary>
-        /// Checks the expression during editing
-        /// </summary>
-        private void OnExpressionChanged(object sender, EventArgs e)
-        {
-            TestExpression();
-
-            if (!_noEvents)
-            {
-                LabelHelper.DrawPreview(_category, _featureSet, pctPreview, txtExpression.Text, true);
-                RefreshControls();
-            }
-
-            if (!_fieldSelection)
-            {
-                // it's user input, select the <expression> on the main tab
-                cboField.SelectedIndex = cboField.Items.Count - 1;
-            }
-
-            btnApply.Enabled = true;
         }
 
         /// <summary>
@@ -815,6 +796,49 @@ namespace MW5.Plugins.Symbology.Forms
             _noEvents = false;
         }
 
+        private void RestoreFields(ILabelsLayer labels)
+        {
+            string name = GetLabelField(labels);
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                cboField.SelectedIndex = !string.IsNullOrWhiteSpace(labels.Expression) ? cboField.Items.Count - 1 : 0;
+            }
+            else
+            {
+                SetFieldValue(cboField, name);
+            }
+
+            if (_featureSet != null)
+            {
+                SetFieldValue(cboSortField, _featureSet.SortField);
+                chkSortAscending.Checked = _featureSet.SortAscending;
+            }
+
+            chkLogScaleForSize.Checked = labels.LogScaleForSize;
+            chkUseVariableSize.Checked = labels.UseVariableSize;
+        }
+
+        private void SetExpressionAfterFieldChange(string expression)
+        {
+            _fieldSelection = true;
+            txtExpression.Text = expression;
+            OnExpressionChanged(null, null);
+            _fieldSelection = false;
+        }
+
+        private void SetFieldValue(ComboBox combo, string text)
+        {
+            foreach (var item in combo.Items)
+            {
+                if (item.ToString().EqualsIgnoreCase(text))
+                {
+                    combo.SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// Sets selected index in the combo in case it's the valid one
         /// </summary>
@@ -837,11 +861,11 @@ namespace MW5.Plugins.Symbology.Forms
             if (expr == String.Empty)
             {
                 lblResult.ForeColor = Color.Black;
-                lblResult.Text = "No expression";
+                lblResult.Text = @"No expression";
             }
             else
             {
-                string err = "";
+                string err;
                 if (!_featureSet.Table.TestExpression(expr, TableValueType.String, out err))
                 {
                     lblResult.ForeColor = Color.Red;
@@ -850,7 +874,7 @@ namespace MW5.Plugins.Symbology.Forms
                 else
                 {
                     lblResult.ForeColor = Color.Green;
-                    lblResult.Text = "Expression is valid";
+                    lblResult.Text = @"Expression is valid";
                 }
             }
         }
@@ -953,8 +977,8 @@ namespace MW5.Plugins.Symbology.Forms
 
             _featureSet.Labels.TextRenderingHint = (TextRenderingHint)cboTextRenderingHint.SelectedIndex;
 
-            string format = _featureSet.Labels.FloatNumberFormat;
-            string newFormat = GetFloatFormat();
+            var format = _featureSet.Labels.FloatNumberFormat;
+            var newFormat = GetFloatFormat();
             _featureSet.Labels.FloatNumberFormat = newFormat;
 
             if (newFormat != format)
@@ -965,21 +989,6 @@ namespace MW5.Plugins.Symbology.Forms
             DrawPreview();
         }
 
-        private void OnNewLineClick(object sender, EventArgs e)
-        {
-            txtExpression.SelectedText = Environment.NewLine;
-        }
-
-        private void OnPlusClick(object sender, EventArgs e)
-        {
-            txtExpression.SelectedText = "+ ";
-        }
-
-        private void OnQuotesClick(object sender, EventArgs e)
-        {
-            txtExpression.SelectedText = "\"\"";
-        }
-
         private void UpdateSize(object sender, EventArgs e)
         {
             if (udFontSize2.Value < udFontSize.Value)
@@ -988,6 +997,12 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             Ui2LabelStyle(null, null);
+        }
+
+        private void LabelStyleForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

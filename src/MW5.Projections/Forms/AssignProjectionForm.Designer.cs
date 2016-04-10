@@ -35,11 +35,11 @@ namespace MW5.Projections.Forms
             this.btnOk = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.LayersControl1 = new LayersControl();
+            this.ProjectionTreeView1 = new MW5.Projections.Controls.ProjectionTreeView();
+            this.LayersControl1 = new MW5.UI.Legacy.LayersControl();
             this.btnTest = new System.Windows.Forms.Button();
             this.lblProjection = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.ProjectionTreeView1 = new ProjectionTreeView();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).BeginInit();
             this.SplitContainer1.Panel1.SuspendLayout();
             this.SplitContainer1.Panel2.SuspendLayout();
@@ -90,9 +90,40 @@ namespace MW5.Projections.Forms
             this.SplitContainer1.SplitterDistance = 326;
             this.SplitContainer1.TabIndex = 10;
             // 
+            // ProjectionTreeView1
+            // 
+            this.ProjectionTreeView1.ApplyStyle = true;
+            this.ProjectionTreeView1.BeforeTouchSize = new System.Drawing.Size(324, 378);
+            this.ProjectionTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ProjectionTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProjectionTreeView1.FullRowSelect = true;
+            // 
+            // 
+            // 
+            this.ProjectionTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
+            this.ProjectionTreeView1.HelpTextControl.Name = "helpText";
+            this.ProjectionTreeView1.HelpTextControl.TabIndex = 0;
+            this.ProjectionTreeView1.HideSelection = false;
+            this.ProjectionTreeView1.InactiveSelectedNodeForeColor = System.Drawing.SystemColors.ControlText;
+            this.ProjectionTreeView1.Location = new System.Drawing.Point(0, 0);
+            this.ProjectionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.ProjectionTreeView1.Name = "ProjectionTreeView1";
+            this.ProjectionTreeView1.SelectedNodeForeColor = System.Drawing.SystemColors.HighlightText;
+            this.ProjectionTreeView1.ShowSuperTooltip = true;
+            this.ProjectionTreeView1.Size = new System.Drawing.Size(324, 378);
+            this.ProjectionTreeView1.TabIndex = 11;
+            // 
+            // 
+            // 
+            this.ProjectionTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
+            this.ProjectionTreeView1.ToolTipControl.Name = "toolTip";
+            this.ProjectionTreeView1.ToolTipControl.TabIndex = 1;
+            this.ProjectionTreeView1.ToolTipDuration = 0;
+            this.ProjectionTreeView1.CoordinateSystemSelected += new System.EventHandler<MW5.Projections.Controls.CoordinateSystemEventArgs>(this.ProjectionTreeView1_CoordinateSystemSelected);
+            // 
             // LayersControl1
             // 
-            this.LayersControl1.ControlType = LayersControl.CustomType.Default;
+            this.LayersControl1.ControlType = MW5.UI.Legacy.LayersControl.CustomType.Default;
             this.LayersControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayersControl1.Location = new System.Drawing.Point(0, 0);
             this.LayersControl1.MinimumSize = new System.Drawing.Size(233, 262);
@@ -124,39 +155,12 @@ namespace MW5.Projections.Forms
             this.lblProjection.Size = new System.Drawing.Size(359, 15);
             this.lblProjection.TabIndex = 15;
             // 
-            // ProjectionTreeView1
-            // 
-            this.ProjectionTreeView1.BeforeTouchSize = new System.Drawing.Size(324, 378);
-            this.ProjectionTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ProjectionTreeView1.CanSelectDisabledNode = false;
-            this.ProjectionTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ProjectionTreeView1.FullRowSelect = true;
-            // 
-            // 
-            // 
-            this.ProjectionTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
-            this.ProjectionTreeView1.HelpTextControl.Name = "helpText";
-            this.ProjectionTreeView1.HelpTextControl.TabIndex = 0;
-            this.ProjectionTreeView1.HideSelection = false;
-            this.ProjectionTreeView1.Location = new System.Drawing.Point(0, 0);
-            this.ProjectionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
-            this.ProjectionTreeView1.Name = "ProjectionTreeView1";
-            this.ProjectionTreeView1.ShowFocusRect = true;
-            this.ProjectionTreeView1.Size = new System.Drawing.Size(324, 378);
-            this.ProjectionTreeView1.TabIndex = 11;
-            // 
-            // 
-            // 
-            this.ProjectionTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
-            this.ProjectionTreeView1.ToolTipControl.Name = "toolTip";
-            this.ProjectionTreeView1.ToolTipControl.TabIndex = 1;
-            this.ProjectionTreeView1.CoordinateSystemSelected += new System.EventHandler<CoordinateSystemEventArgs>(this.ProjectionTreeView1_CoordinateSystemSelected);
-            // 
             // AssignProjectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(671, 417);
             this.Controls.Add(this.lblProjection);
             this.Controls.Add(this.btnTest);
@@ -168,6 +172,7 @@ namespace MW5.Projections.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Assign Projection";
+            this.Load += new System.EventHandler(this.AssignProjectionForm_Load);
             this.SplitContainer1.Panel1.ResumeLayout(false);
             this.SplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).EndInit();

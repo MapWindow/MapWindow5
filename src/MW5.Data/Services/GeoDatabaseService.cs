@@ -14,20 +14,20 @@ namespace MW5.Data.Services
 
         public GeoDatabaseService(IAppContext context)
         {
-            Logger.Current.Debug("In GeoDatabaseService");
+            Logger.Current.Trace("In GeoDatabaseService");
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
         }
 
         public void ImportLayer()
         {
-            Logger.Current.Debug("In GeoDatabaseService.ImportLayer()");
+            Logger.Current.Trace("In GeoDatabaseService.ImportLayer()");
             _context.Container.Run<ImportLayerPresenter>();
         }
 
         public DatabaseConnection PromptUserForConnection(GeoDatabaseType? databaseType = null)
         {
-            Logger.Current.Debug("In GeoDatabaseService.PromptUserForConnection()");
+            Logger.Current.Trace("In GeoDatabaseService.PromptUserForConnection()");
             var p = _context.Container.GetInstance<AddConnectionPresenter>();
 
             var model = new AddConnectionModel(databaseType);

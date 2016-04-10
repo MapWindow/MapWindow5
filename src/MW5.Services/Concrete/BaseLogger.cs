@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Interfaces;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="BaseLogger.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
     public abstract class BaseLogger
     {
-        protected abstract void Log(string msg, Shared.LogLevel level, Exception ex = null);
-
-        public void Info(string msg, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Info);
-        }
-
+        /// <summary>
+        /// Debugs the specified message.
+        /// </summary>
+        /// <param name="msg">The message.</param>
+        /// <param name="param">The parameter.</param>
         public void Debug(string msg, params object[] param)
         {
             Log(string.Format(msg, param), LogLevel.Debug);
-        }
-
-        public void Warn(string msg, Exception ex, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Warn, ex);
         }
 
         public void Error(string msg, Exception ex, params object[] param)
@@ -35,6 +29,28 @@ namespace MW5.Services.Concrete
         public void Fatal(string msg, Exception ex, params object[] param)
         {
             Log(string.Format(msg, param), LogLevel.Fatal, ex);
+        }
+
+        public void Info(string msg, params object[] param)
+        {
+            Log(string.Format(msg, param), LogLevel.Info);
+        }
+
+        /// <summary>
+        /// Traces the specified message.
+        /// Only needed in debug installers, should do nothing for stable releases
+        /// </summary>
+        /// <param name="msg">The message.</param>
+        /// <param name="param">The parameter.</param>
+        public void Trace(string msg, params object[] param)
+        {
+            // Only enable when really needed:
+            // Log(string.Format(msg, param), LogLevel.Debug);
+        }
+
+        public void Warn(string msg, Exception ex, params object[] param)
+        {
+            Log(string.Format(msg, param), LogLevel.Warn, ex);
         }
 
         public void Write(string msg, LogLevel level, params object[] param)
@@ -59,5 +75,7 @@ namespace MW5.Services.Concrete
                     break;
             }
         }
+
+        protected abstract void Log(string msg, LogLevel level, Exception ex = null);
     }
 }

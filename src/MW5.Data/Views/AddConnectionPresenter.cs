@@ -24,7 +24,7 @@ namespace MW5.Data.Views
         public AddConnectionPresenter(IAddConnectionView view, IFileDialogService fileDialog)
             : base(view)
         {
-            Logger.Current.Debug("Start AddConnectionPresenter");
+            Logger.Current.Trace("Start AddConnectionPresenter");
             if (fileDialog == null) throw new ArgumentNullException("fileDialog");
             
             // PM 20160302 Added:
@@ -37,7 +37,7 @@ namespace MW5.Data.Views
             view.TestConnection += TestConnection;
 
             view.ConnectionChanged += OnConnectionChanged;
-            Logger.Current.Debug("End AddConnectionPresenter");
+            Logger.Current.Trace("End AddConnectionPresenter");
         }
 
         public override bool ViewOkClicked()

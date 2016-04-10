@@ -1,26 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="IViewInternal.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Windows.Forms;
 
 namespace MW5.Plugins.Mvp
 {
     public interface IViewInternal
     {
-        void ShowView(IWin32Window parent = null);
-        void Close();
-        bool Visible { get; }
         event Action OkClicked;
+
         ViewStyle Style { get; }
+
+        bool Visible { get; }
+
         void BeforeClose();
+
+        void Close();
+
+        void ShowView(IWin32Window parent = null);
+
         void UpdateView();
     }
 
-    public interface IViewInternal<TModel>: IViewInternal
+    public interface IViewInternal<TModel> : IViewInternal
     {
-        void InitInternal(TModel model);
         TModel Model { get; }
+
+        void InitInternal(TModel model);
     }
 }

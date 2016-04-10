@@ -32,5 +32,7 @@ namespace MW5.Shared.Log
         void Warn(string msg, Exception ex = null, params object[] param);
 
         void Write(string msg, LogLevel level, params object[] param);
+
+        void Trace(string msg, params object[] param);
     }
 }

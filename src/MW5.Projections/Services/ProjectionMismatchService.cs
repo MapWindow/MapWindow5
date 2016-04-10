@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Diagnostics;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ProjectionMismatchService.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
-using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Interfaces.Projections;
 using MW5.Projections.Enums;
 using MW5.Projections.Forms;
 using MW5.Projections.Helpers;
@@ -18,13 +21,13 @@ namespace MW5.Projections.Services
     /// <summary>
     /// Handle various projection mismatch scenarios while adding a layer to the map.
     /// </summary>
-    public class ProjectionMismatchService: IProjectionMismatchService
+    public class ProjectionMismatchService : IProjectionMismatchService
     {
         private readonly IAppContext _context;
+        private readonly TesterReportForm _report = new TesterReportForm(); // TODO: inject
         private readonly IReprojectingService _reprojectingService;
-        private readonly TesterReportForm _report = new TesterReportForm();     // TODO: inject
-        private bool _usePreviousAnswerMismatch;
         private bool _usePreviousAnswerAbsence;
+        private bool _usePreviousAnswerMismatch;
 
         /// <summary>
         /// Creates a new instance of MismatchTester class
@@ -37,7 +40,7 @@ namespace MW5.Projections.Services
             _context = context;
             _reprojectingService = reprojectingService;
         }
-        
+
         /// <summary>
         /// Tests projection of a single layer
         /// </summary>
@@ -75,7 +78,11 @@ namespace MW5.Projections.Services
         /// <summary>
         /// Checks if layer projection is the same as map projection, including search for dialects and substitutes.
         /// </summary>
-        private bool CheckIsSame(ILayerSource layer, ISpatialReference mapProj, ISpatialReference layerProj, out ILayerSource newLayer)
+        private bool CheckIsSame(
+            ILayerSource layer,
+            ISpatialReference mapProj,
+            ISpatialReference layerProj,
+            out ILayerSource newLayer)
         {
             newLayer = null;
 
@@ -90,91 +97,13 @@ namespace MW5.Projections.Services
             {
                 if (layer.SeekSubstituteFile(mapProj, out newLayer))
                 {
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Substituted, newLayer.Filename);
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Substituted,
+                        newLayer.Filename);
                     return true;
                 }
             }
 
             return isSame;
-        }
-
-        /// <summary>
-        /// Assigns laye projection to the map.
-        /// </summary>
-        private TestingResult HandleEmptyMapProjection(ISpatialReference layerProj)
-        {
-            var db = _context.Projections;
-            if (db != null)
-            {
-                var cs = db.GetCoordinateSystem(layerProj, ProjectionSearchType.UseDialects);
-                if (cs != null)
-                {
-                    var proj = new SpatialReference();
-                    if (proj.ImportFromEpsg(cs.Code))
-                    {
-                        layerProj = proj;
-                    }
-                }
-            }
-
-            _context.Map.Projection = layerProj.Clone();
-            return TestingResult.Ok;
-        }
-
-        /// <summary>
-        /// Handles the projection mismatch by implementing the selected mismatch behavior.
-        /// </summary>
-        private TestingResult HandleProjectionMismatch(ILayerSource layer, ISpatialReference mapProj, out ILayerSource newLayer)
-        {
-            newLayer = null;
-
-            if (layer.LayerType == Api.Enums.LayerType.WmsLayer)
-            {
-                return TestingResult.Ok;
-            }
-
-            // user should be prompted
-            if (!_usePreviousAnswerMismatch && _context.Config.ShowProjectionMismatchDialog)
-            {
-                var model = new ProjectionMismatchModel(layer, true, mapProj);
-                if (!_context.Container.Run<ProjectionMismatchPresenter, ProjectionMismatchModel>(model))
-                {
-                    return TestingResult.CancelOperation;
-                }
-
-                _usePreviousAnswerMismatch = model.UseAnswerLater;
-                _context.Config.ProjectionMismatch = model.MismatchBehavior;
-                _context.Config.ShowProjectionMismatchDialog = !model.DontShow;
-            }
-
-            var behavior = _context.Config.ProjectionMismatch;
-
-            switch (behavior)
-            {
-                case ProjectionMismatch.Reproject:
-                    var result = _reprojectingService.Reproject(layer, out newLayer, mapProj, _report);
-
-                    if (result == TestingResult.Ok || result == TestingResult.Substituted)
-                    {
-                        var oper = result == TestingResult.Ok ? ProjectionOperaion.Reprojected : ProjectionOperaion.Substituted;
-                        string newName = newLayer == null ? "" : newLayer.Filename;
-                        _report.AddFile(layer.Filename, layer.Projection.Name, oper, newName);
-                        return newName == layer.Filename ? TestingResult.Ok : TestingResult.Substituted;
-                    }
-
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.FailedToReproject, "");
-                    return TestingResult.Error;
-
-                case ProjectionMismatch.IgnoreMismatch:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.MismatchIgnored, "");
-                    return TestingResult.Ok;
-
-                case ProjectionMismatch.SkipFile:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
-                    return TestingResult.SkipFile;
-            }
-
-            throw new ApplicationException("Invalid ProjectionMismatch setting: " + behavior);
         }
 
         /// <summary>
@@ -190,7 +119,7 @@ namespace MW5.Projections.Services
                 var model = new ProjectionMismatchModel(layer, false, mapProj);
                 if (!_context.Container.Run<ProjectionMismatchPresenter, ProjectionMismatchModel>(model))
                 {
-                    return TestingResult.CancelOperation;    
+                    return TestingResult.CancelOperation;
                 }
 
                 _usePreviousAnswerAbsence = model.UseAnswerLater;
@@ -222,6 +151,90 @@ namespace MW5.Projections.Services
             }
 
             return TestingResult.Ok;
+        }
+
+        /// <summary>
+        /// Assigns laye projection to the map.
+        /// </summary>
+        private TestingResult HandleEmptyMapProjection(ISpatialReference layerProj)
+        {
+            var db = _context.Projections;
+            if (db != null)
+            {
+                var cs = db.GetCoordinateSystem(layerProj, ProjectionSearchType.UseDialects);
+                if (cs != null)
+                {
+                    var proj = new SpatialReference();
+                    if (proj.ImportFromEpsg(cs.Code))
+                    {
+                        layerProj = proj;
+                    }
+                }
+            }
+
+            _context.Map.Projection = layerProj.Clone();
+            return TestingResult.Ok;
+        }
+
+        /// <summary>
+        /// Handles the projection mismatch by implementing the selected mismatch behavior.
+        /// </summary>
+        private TestingResult HandleProjectionMismatch(
+            ILayerSource layer,
+            ISpatialReference mapProj,
+            out ILayerSource newLayer)
+        {
+            newLayer = null;
+
+            if (layer.LayerType == LayerType.WmsLayer)
+            {
+                return TestingResult.Ok;
+            }
+
+            // user should be prompted
+            if (!_usePreviousAnswerMismatch && _context.Config.ShowProjectionMismatchDialog)
+            {
+                var model = new ProjectionMismatchModel(layer, true, mapProj);
+                if (!_context.Container.Run<ProjectionMismatchPresenter, ProjectionMismatchModel>(model))
+                {
+                    return TestingResult.CancelOperation;
+                }
+
+                _usePreviousAnswerMismatch = model.UseAnswerLater;
+                _context.Config.ProjectionMismatch = model.MismatchBehavior;
+                _context.Config.ShowProjectionMismatchDialog = !model.DontShow;
+            }
+
+            var behavior = _context.Config.ProjectionMismatch;
+
+            switch (behavior)
+            {
+                case ProjectionMismatch.Reproject:
+                    var result = _reprojectingService.Reproject(layer, out newLayer, mapProj, _report);
+
+                    if (result == TestingResult.Ok || result == TestingResult.Substituted)
+                    {
+                        var oper = result == TestingResult.Ok
+                                       ? ProjectionOperaion.Reprojected
+                                       : ProjectionOperaion.Substituted;
+                        string newName = newLayer == null ? "" : newLayer.Filename;
+                        _report.AddFile(layer.Filename, layer.Projection.Name, oper, newName);
+                        return newName == layer.Filename ? TestingResult.Ok : TestingResult.Substituted;
+                    }
+
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.FailedToReproject, "");
+                    return TestingResult.Error;
+
+                case ProjectionMismatch.IgnoreMismatch:
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.MismatchIgnored, "");
+                    return TestingResult.Ok;
+
+                case ProjectionMismatch.SkipFile:
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
+                    return TestingResult.SkipFile;
+            }
+
+            throw new ApplicationException("Invalid ProjectionMismatch setting: " + behavior);
         }
     }
 }

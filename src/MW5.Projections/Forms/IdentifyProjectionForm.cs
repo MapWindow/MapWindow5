@@ -1,4 +1,12 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="IdentifyProjectionForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -27,15 +35,16 @@ namespace MW5.Projections.Forms
         /// <summary>
         /// Creates a new instance of the frmIdentifyProjection class
         /// </summary>
-        public IdentifyProjectionForm(IAppContext context): this(context, null)
+        public IdentifyProjectionForm(IAppContext context)
+            : this(context, null)
         {
         }
 
         /// <summary>
         /// Constructor with bounds
         /// </summary>
-        public IdentifyProjectionForm(IAppContext context, Envelope bounds):
-            base(context)
+        public IdentifyProjectionForm(IAppContext context, Envelope bounds)
+            : base(context)
         {
             InitializeComponent();
 
@@ -55,41 +64,8 @@ namespace MW5.Projections.Forms
             listBox1.DoubleClick += listBox1_MouseDoubleClick;
         }
 
-        #region Interaction
-
-        /// <summary>
-        /// Displays projection for the layer
-        /// </summary>
-        private void cboLayer_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_noEvents)
-            {
-                return;
-            }
-
-            var layer = cboLayer.SelectedValue as ILayer;
-            if (layer != null)
-            {
-                textBox1.Text = layer.Projection.ExportToProj4();
-            }
-        }
-
-        /// <summary>
-        /// Shows properties for the selected CS
-        /// </summary>
-        private void listBox1_MouseDoubleClick(object sender, EventArgs e)
-        {
-            if (listBox1.SelectedItem == null)
-            {
-                return;
-            }
-
-            var cs = listBox1.SelectedItem as CoordinateSystem;
-            _context.ShowProjectionProperties(cs, this);
-        }
-        #endregion
-
         #region Identification
+
         /// <summary>
         /// Starts identification
         /// </summary>
@@ -100,7 +76,7 @@ namespace MW5.Projections.Forms
                 MessageService.Current.Info("No input projection is specified");
                 return;
             }
-            
+
             ISpatialReference proj = new SpatialReference();
             if (!proj.ImportFromProj4(textBox1.Text))
             {
@@ -108,7 +84,8 @@ namespace MW5.Projections.Forms
                 {
                     if (!proj.ImportFromEsri(textBox1.Text))
                     {
-                        MessageService.Current.Info("The string can't be identified as one of the following formats: proj4, OGC WKT, ESRI WKT.");
+                        MessageService.Current.Info(
+                            "The string can't be identified as one of the following formats: proj4, OGC WKT, ESRI WKT.");
                         return;
                     }
                 }
@@ -163,9 +140,9 @@ namespace MW5.Projections.Forms
                     }
                     else if (proj.IsProjected)
                     {
-                        var watch = new System.Diagnostics.Stopwatch();
+                        var watch = new Stopwatch();
                         watch.Start();
-                        
+
                         int count = 0;
 
                         foreach (IProjectedCs pcs in db.ProjectedCs)
@@ -195,12 +172,14 @@ namespace MW5.Projections.Forms
             }
 
             MessageService.Current.Warn(listBox1.Items.Count == 0
-                ? "Projection isn't present in the database."
-                : "Projection was identified. One of the listed projections should be the right one.");
+                                            ? "Projection isn't present in the database."
+                                            : "Projection was identified. One of the listed projections should be the right one.");
         }
+
         #endregion
 
         #region Additional
+
         /// <summary>
         /// Adds proj4 string for database
         /// </summary>
@@ -212,6 +191,48 @@ namespace MW5.Projections.Forms
                 db.UpdateProj4Strings(db.Name);
             }
         }
+
+        #endregion
+
+        private void IdentifyProjectionForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
+
+        #region Interaction
+
+        /// <summary>
+        /// Displays projection for the layer
+        /// </summary>
+        private void cboLayer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_noEvents)
+            {
+                return;
+            }
+
+            var layer = cboLayer.SelectedValue as ILayer;
+            if (layer != null)
+            {
+                textBox1.Text = layer.Projection.ExportToProj4();
+            }
+        }
+
+        /// <summary>
+        /// Shows properties for the selected CS
+        /// </summary>
+        private void listBox1_MouseDoubleClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem == null)
+            {
+                return;
+            }
+
+            var cs = listBox1.SelectedItem as CoordinateSystem;
+            _context.ShowProjectionProperties(cs, this);
+        }
+
         #endregion
     }
 }

@@ -182,9 +182,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnContinue;
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(508, 292);
-            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.treeViewAdv1);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnContinue);
@@ -195,6 +196,7 @@
             this.Name = "ErrorView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ooops, we are down";
+            this.Load += new System.EventHandler(this.ErrorView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).EndInit();

@@ -17,6 +17,7 @@
 // ********************************************************************************************************
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -436,6 +437,12 @@ namespace MW5.Plugins.Symbology.Forms
                     btnRename_Click(null, null);
                 }
             }
+        }
+
+        private void OptionsManagerForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
     }
 }

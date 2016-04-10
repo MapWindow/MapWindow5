@@ -18,7 +18,7 @@ namespace MW5.Api.Map
 
         public BoundMapControl()
         {
-            Logger.Current.Debug("In BoundMapControl");
+            Logger.Current.Trace("In BoundMapControl");
             MapCursorChanged += BoundMapControl_MapCursorChanged;
         }
 

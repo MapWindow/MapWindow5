@@ -1,4 +1,12 @@
-﻿using System.Drawing;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ProjectionResultsForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
@@ -13,23 +21,11 @@ namespace MW5.Projections.Forms
     /// </summary>
     public partial class ProjectionResultsForm : MapWindowForm
     {
-        #region Declarations
-        // data grid view columns
-        private const int CMN_FILENAME = 0;
-        private const int CMN_COMMENTS = 1;
-
-        // a handle of the reprojected layer on the map
-        private int _layerHandle = -1;
-
-        // shapefile that was reprojected
-        private IFeatureSet _shapefile;
-        #endregion
-
         /// <summary>
         /// Creates a new instance of the frmProjectionResults class
         /// </summary>
-        public ProjectionResultsForm(IAppContext context):
-            base(context)
+        public ProjectionResultsForm(IAppContext context)
+            : base(context)
         {
             InitializeComponent();
 
@@ -40,12 +36,91 @@ namespace MW5.Projections.Forms
         }
 
         /// <summary>
+        /// Assignes selected projection and displays results
+        /// </summary>
+        public bool Assign(string filename, ISpatialReference proj)
+        {
+            var projWgs84 = new SpatialReference();
+            if (!projWgs84.ImportFromEpsg(4326))
+            {
+                MessageService.Current.Warn("Failed to initialize WGS84 coordinate system.");
+                return false;
+            }
+
+            bool sameProj = proj.IsSame(projWgs84);
+            int count = 0;
+
+            bool success = false;
+            int rowIndex = dgv.Rows.Add();
+
+            _shapefile = new FeatureSet(filename);
+
+            Text = @"Assigning projection: " + Path.GetFileName(filename);
+            lblProjection.Text = @"Projection: " + proj.Name;
+
+            // it will be faster to assing new instance of class
+            // as ImportFromEPSG() is slow according to GDAL documentation
+            _shapefile.Projection.CopyFrom(proj);
+
+            if (!sameProj)
+            {
+                // we can't show preview on map without reprojection
+                if ((_shapefile.StartEditingShapes()))
+                {
+                    if (_shapefile.ReprojectInPlace(projWgs84, ref count))
+                    {
+                        success = true;
+                    }
+                }
+            }
+            else
+            {
+                success = true;
+            }
+
+            if (success)
+            {
+                AddShapefile(_shapefile);
+                return true;
+            }
+
+            // no success in reprojection
+            _shapefile.Close();
+            return false;
+        }
+
+        /// <summary>
+        /// Displaying selected layer on the map
+        /// </summary>
+        private void AddShapefile(IFeatureSet sf)
+        {
+            if (sf == null)
+            {
+                return;
+            }
+
+            _layerHandle = projectionMap1.Layers.Add(sf, true);
+
+            var style = sf.Style;
+            style.Fill.Color = Color.Orange;
+            style.Fill.Transparency = 110;
+            style.Line.Color = Color.Orange;
+            projectionMap1.ZoomToLayer(_layerHandle);
+        }
+
+        /// <summary>
         /// Displays map coordinate when a mouse moves
         /// </summary>
         void projectionMap1_CoordinatesChanged(double x, double y, string textX, string textY)
         {
             lblX.Text = "X: " + textX + "deg.";
             lblY.Text = "Y: " + textY + "deg.";
+        }
+
+        private void ProjectionResultsForm_Load(object sender, EventArgs e)
+        {
+            // Fixing CORE-160
+            CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
 
         // TODO: rather use IDisposable
@@ -73,78 +148,19 @@ namespace MW5.Projections.Forms
             //    }
             //}
         }
-        
-        /// <summary>
-        /// Assignes selected projection and displays results
-        /// </summary>
-        public bool Assign(string filename, ISpatialReference proj) 
-        {
-            var projWgs84 = new SpatialReference();
-            if (!projWgs84.ImportFromEpsg(4326))
-            {
-                MessageService.Current.Warn("Failed to initialize WGS84 coordinate system.");
-                return false;
-            }
-            
-            bool sameProj = proj.IsSame(projWgs84);
-            int count = 0;
-            
-            bool success = false;
-            int rowIndex = dgv.Rows.Add();
 
-            _shapefile = new FeatureSet(filename);
-            
-            Text = "Assigning projection: " + System.IO.Path.GetFileName(filename);
-            lblProjection.Text = "Projection: " + proj.Name;
-                
-            // it will be faster to assing new instance of class
-            // as ImportFromEPSG() is slow according to GDAL documentation
-            _shapefile.Projection.CopyFrom(proj);
+        #region Declarations
 
-            if (!sameProj)
-            {
-                // we can't show preview on map without reprojection
-                if ((_shapefile.StartEditingShapes()))
-                {
-                    if (_shapefile.ReprojectInPlace(projWgs84, ref count))
-                    {
-                        success = true;
-                    }
-                }
-            }
-            else
-            {
-                success = true;
-            }
+        // data grid view columns
+        private const int CMN_FILENAME = 0;
+        private const int CMN_COMMENTS = 1;
 
-            if (success)
-            {
-                AddShapefile(_shapefile);
-                return true;
-            }
-            
-            // no success in reprojection
-            _shapefile.Close();
-            return false;
-        }
+        // a handle of the reprojected layer on the map
+        private int _layerHandle = -1;
 
-        /// <summary>
-        /// Displaying selected layer on the map
-        /// </summary>
-        private void AddShapefile(IFeatureSet sf)
-        {
-            if (sf == null)
-            {
-                return;
-            }
-            
-            _layerHandle = projectionMap1.Layers.Add(sf, true);
-                
-            var style = sf.Style;
-            style.Fill.Color = Color.Orange;
-            style.Fill.Transparency = 110;
-            style.Line.Color = Color.Orange;
-            projectionMap1.ZoomToLayer(_layerHandle);
-        }
+        // shapefile that was reprojected
+        private IFeatureSet _shapefile;
+
+        #endregion
     }
 }
