@@ -1,4 +1,5 @@
 ﻿using MW5.Plugins.Interfaces;
+using MW5.Plugins.Model;
 
 namespace MW5.Plugins.Helpers
 {
@@ -30,6 +31,13 @@ namespace MW5.Plugins.Helpers
                 panel.Visible = true;
                 panel.Activate();
             }
+        }
+
+        public static bool SetCustomTileProvider(this IAppContext context, TmsProvider provider)
+        {
+            var providers = context.Map.Tiles.Providers;
+            providers.Clear(false);
+            return providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom, provider.MaxZoom);
         }
     }
 }

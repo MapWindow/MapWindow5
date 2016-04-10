@@ -8,6 +8,7 @@ using MW5.Api.Helpers;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Events;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Controls;
@@ -94,11 +95,7 @@ namespace MW5.Services.Concrete
                 var provider = _context.Repository.TmsProviders.FirstOrDefault(p => p.Id == providerId);
                 if (provider != null)
                 {
-                    var providers = _context.Map.Tiles.Providers;
-                    providers.Clear(false);
-
-                    providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom,
-                        provider.MaxZoom);
+                    _context.SetCustomTileProvider(provider);
                 }
                 else
                 {

@@ -19,6 +19,7 @@ using MW5.Data.Enums;
 using MW5.Data.Repository;
 using MW5.Data.Views;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
@@ -254,11 +255,7 @@ namespace MW5.Plugins.Repository.Views
             if (provider.IsCustom)
             {
                 // in case of custom provider we need to add definition to the list
-                var providers = _context.Map.Tiles.Providers;
-                providers.Clear(false);
-
-                if (!providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom,
-                        provider.MaxZoom))
+                if (!_context.SetCustomTileProvider(provider))
                 {
                     MessageService.Current.Info("Failed to add custom TMS provider.");
                     return;
