@@ -2,6 +2,8 @@
 MW5 is a desktop GIS which is extendable using the plug-in architecture. 
 It is using the MapWinGIS mapping control and is created from scratch in 2015 using new technologies like MEF and Dependency Injection making it small in size, robust and fast.
 
+![MapWindow-v5.1.1](MapWindow-v5.1.1.png)
+
 We're always looking for C#, C++ and OpenCL/OpenGL developers. 
 If you have design skills we need you as well ;)
 
