@@ -105,7 +105,7 @@ Source: "{#ExeBinPath}\x86\*"; DestDir: "{app}\x86"; Flags: ignoreversion {#Syst
 ;; Config files:
 Source: "{#ExeBinPath}\MapWindow.exe.config"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Permissions: users-modify
 ;; Licenses
-Source: "D:\dev\MapwinGIS\GIT\support\GDAL_SDK\licenses\*.rtf"; DestDir: "{app}\Licenses"; Flags: ignoreversion; Components: MapWindow
+Source: "D:\dev\MapwinGIS\GitHub\support\GDAL_SDK\licenses\*.rtf"; DestDir: "{app}\Licenses"; Flags: ignoreversion; Components: MapWindow
 Source: "{#ExeBinPath}\..\..\..\licenses\*"; DestDir: "{app}\Licenses"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 
 ;; Sample data
