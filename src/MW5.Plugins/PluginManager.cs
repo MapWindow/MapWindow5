@@ -293,8 +293,37 @@ namespace MW5.Plugins
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
 
             path = Path.Combine(path, PluginDirectory);
-
-            return new DirectoryCatalog(path, "*.dll");
+            string l_errMessage = "";
+            try
+            {
+                DirectoryCatalog l_return = new DirectoryCatalog(path, "*.dll");
+                // If all plugins were loaded without exception this call will be harmless
+                // If not an exception will be thrown
+                var list = l_return.Parts.ToList(); 
+                return l_return;
+            }
+            catch (Exception ex)
+            {
+                if(ex is System.Reflection.ReflectionTypeLoadException)
+                {
+                    var typeLoadException = ex as ReflectionTypeLoadException;
+                    var loaderExceptions = typeLoadException.LoaderExceptions;
+                    foreach(Exception exp in loaderExceptions)
+                    {
+                        l_errMessage += exp.Message + "\n";
+                        l_errMessage += "Check for missing dependencies and/or remove the offending plugin.  Until this error is resolved no plugins can be loaded.";
+                    }
+                }
+                if(l_errMessage == "")
+                {
+                    l_errMessage = ex.Message;
+                }
+                //This ensures a message is displayed to user/analyst
+                //currently calling code does not handle exception.
+                MessageService.Current.Warn(l_errMessage);
+                Exception ex2 = new Exception(l_errMessage);
+                throw ex2;
+            }
         }
     }
 }
