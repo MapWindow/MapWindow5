@@ -69,49 +69,48 @@ namespace MW5.Data.Repository
 
         private bool LoadLayers(DatabaseItemMetadata data)
         {
-            if (_datasource.Open(data.Connection.ConnectionString))
+            Logger.Current.Debug("Loading layers");
+            if (!_datasource.Open(data.Connection.ConnectionString)) return false;
+
+            var it = _datasource.GetFastEnumerator();
+
+            while (it.MoveNext())
             {
-                var it = _datasource.GetFastEnumerator();
+                var layer = it.Current;
 
-                while (it.MoveNext())
+                if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql &&
+                    string.IsNullOrWhiteSpace(layer.GeometryColumnName))
                 {
-                    var layer = it.Current;
-
-                    if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql &&
-                        string.IsNullOrWhiteSpace(layer.GeometryColumnName))
-                    {
-                        // MySQL driver lists all tables as layers even if they don't have geometry column
-                        continue;
-                    }
-
-                    if (layer.GeometryType == GeometryType.None)
-                    {
-                        var types = layer.AvailableGeometryTypes.ToList();
-
-                        bool multipleGeometries = types.Count() > 1;
-
-                        foreach (var type in types)
-                        {
-                            // layer reference doesn't stay opened,
-                            // so spare adding another parameter to AddDatabaseLayer when it can be read from property
-                            layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);
-                            AddLayerNode(new VectorLayerWrapper(layer, multipleGeometries));
-                        }
-                    }
-                    else
-                    {
-                        AddLayerNode(new VectorLayerWrapper(layer, false));
-                    }
+                    // MySQL driver lists all tables as layers even if they don't have geometry column
+                    continue;
                 }
 
-                return true;
+                if (layer.GeometryType == GeometryType.None)
+                {
+                    var types = layer.AvailableGeometryTypes.ToList();
+
+                    bool multipleGeometries = types.Count() > 1;
+
+                    foreach (var type in types)
+                    {
+                        // layer reference doesn't stay opened,
+                        // so spare adding another parameter to AddDatabaseLayer when it can be read from property
+                        layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);
+                        AddLayerNode(new VectorLayerWrapper(layer, multipleGeometries));
+                    }
+                }
+                else
+                {
+                    AddLayerNode(new VectorLayerWrapper(layer, false));
+                }
             }
 
-            return false;
+            return true;
         }
 
         private void AddLayerNode(VectorLayerWrapper layer)
         {
+            Logger.Current.Debug("AddLayerNode");
             _syncContext.Post((o) =>
             {
                 var l = o as VectorLayerWrapper;

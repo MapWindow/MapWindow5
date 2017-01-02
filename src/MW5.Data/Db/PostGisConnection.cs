@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Enums;
+﻿using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 
 namespace MW5.Data.Db
@@ -34,7 +29,7 @@ namespace MW5.Data.Db
         public bool ParsePort()
         {
             int port;
-            if (Int32.TryParse(PortString, out port))
+            if (int.TryParse(PortString, out port))
             {
                 Port = port;
                 return true;
@@ -72,8 +67,14 @@ namespace MW5.Data.Db
                 return false;
             }
 
-            int port;
-            if (!Int32.TryParse(PortString, out port))
+            // Fixing https://mapwindow.atlassian.net/browse/CORE-181
+            //int port;
+            //if (!int.TryParse(PortString, out port))
+            //{
+            //    MessageService.Current.Warn("Port must be an integer number.");
+            //    return false;
+            //}
+            if (!ParsePort())
             {
                 MessageService.Current.Warn("Port must be an integer number.");
                 return false;

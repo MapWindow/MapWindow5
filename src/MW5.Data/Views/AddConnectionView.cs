@@ -161,8 +161,7 @@ namespace MW5.Data.Views
             switch (DatabaseType)
             {
                 case GeoDatabaseType.PostGis:
-                    return new PostGisConnection()
-                    {
+                    return new PostGisConnection {
                         Host = txtPostGisHost.Text,
                         PortString = txtPostGisPort.Text,
                         Database = txtPostGisDatabase.Text,
