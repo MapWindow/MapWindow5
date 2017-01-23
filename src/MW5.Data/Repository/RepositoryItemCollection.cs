@@ -108,6 +108,7 @@ namespace MW5.Data.Repository
         public IDatabaseLayerItem AddDatabaseLayer(IVectorLayer layer, bool multipleGeometries= false)
         {
             if (layer == null) throw new ArgumentNullException("layer");
+            Logger.Current.Debug("In AddDatabaseLayer " + layer.Name);
 
             var node = CreateNode(RepositoryItemType.DatabaseLayer);
             node.LeftImageIndices = new[] { GetVectorIcon(layer.ActiveGeometryType) };
@@ -115,7 +116,7 @@ namespace MW5.Data.Repository
             node.Text = layer.Name;
             if (multipleGeometries)
             {
-                node.Text += " [" + layer.ActiveGeometryType + "]";
+                node.Text += @" [" + layer.ActiveGeometryType + @"]";
             }
 
             node.TagObject = new DatabaseLayerMetadata(layer);

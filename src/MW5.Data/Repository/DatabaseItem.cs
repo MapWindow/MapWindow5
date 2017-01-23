@@ -57,10 +57,11 @@ namespace MW5.Data.Repository
                     {
                         Logger.Current.Info("Failed to to load OGR layers.", ex);
                     }
-
-                    HideLoadingIndicator(_node);
-
-                    _datasource.Close();
+                    finally
+                    {
+                        HideLoadingIndicator(_node);
+                        _datasource.Close();
+                    }
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -84,12 +85,12 @@ namespace MW5.Data.Repository
                     // MySQL driver lists all tables as layers even if they don't have geometry column
                     continue;
                 }
-
+                
                 if (layer.GeometryType == GeometryType.None)
                 {
                     var types = layer.AvailableGeometryTypes.ToList();
 
-                    bool multipleGeometries = types.Count() > 1;
+                    bool multipleGeometries = types.Count > 1;
 
                     foreach (var type in types)
                     {
