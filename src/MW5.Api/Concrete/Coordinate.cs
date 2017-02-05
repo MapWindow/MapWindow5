@@ -14,6 +14,11 @@ namespace MW5.Api.Concrete
             _point = new Point {x = x, y = y};
         }
 
+        public Coordinate(double x, double y, double z)
+        {
+            _point = new Point { x = x, y = y, Z = z};
+        }
+
         internal Coordinate(Point point)
         {
             _point = point;
