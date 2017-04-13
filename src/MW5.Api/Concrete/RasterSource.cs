@@ -206,10 +206,10 @@ namespace MW5.Api.Concrete
             get { return _image.BufferOffsetY; }
         }
 
-        public void ImageToBuffer(int imageX, int imageY, out int bufferX, out int bufferY)
+        public void ImageToBuffer(int column, int row, out int bufferX, out int bufferY)
         {
-            bufferX = imageX - _image.BufferOffsetX;
-            bufferY = imageY - _image.BufferOffsetY;
+            bufferX = column - _image.BufferOffsetX;
+            bufferY = row - _image.BufferOffsetY;
         }
 
         public void BufferToProjection(int bufferX, int bufferY, out double projX, out double projY)

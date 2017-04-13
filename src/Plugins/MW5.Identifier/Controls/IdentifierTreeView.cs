@@ -170,10 +170,10 @@ namespace MW5.Plugins.Identifier.Controls
             var pixels = _context.Map.IdentifiedShapes
                 .Where(item => item.LayerHandle == layerHandle).Reverse().ToList();
                 
-            foreach (var pixel in pixels)
+            foreach (SelectionItem pixel in pixels)
             {
-                var nodePixel = layerNode.AddSubItem("Pixel", string.Format("(row = {0}, cmn = {1})", pixel.RasterX, pixel.RasterY));
-                nodePixel.Metadata = new IdentifierNodeMetadata(layerHandle, pixel.RasterX, pixel.RasterY);
+                var nodePixel = layerNode.AddSubItem("Pixel", string.Format("(row = {0}, column = {1})", pixel.Row, pixel.Column));
+                nodePixel.Metadata = new IdentifierNodeMetadata(layerHandle, pixel.Row, pixel.Column);
                 nodePixel.Expanded = false;
 
                 var raster = img as IRasterSource;
@@ -183,7 +183,7 @@ namespace MW5.Plugins.Identifier.Controls
                 }
                 else
                 {
-                    AddColor(nodePixel, img.GetPixel(pixel.RasterX, pixel.RasterY));
+                    AddColor(nodePixel, img.GetPixel(pixel.Row, pixel.Column));
                 }
             }
 
@@ -196,7 +196,7 @@ namespace MW5.Plugins.Identifier.Controls
         private void DisplayPixelInfo(IRasterSource raster, NodeData nodePixel, SelectionItem pixel)
         {
             int bufferX, bufferY;
-            raster.ImageToBuffer(pixel.RasterX, pixel.RasterY, out bufferX, out bufferY);
+            raster.ImageToBuffer(pixel.Column, pixel.Row, out bufferX, out bufferY);
 
             if (raster.RenderingType != RasterRendering.Rgb)
             {
@@ -207,7 +207,7 @@ namespace MW5.Plugins.Identifier.Controls
 
                     double value;
                     nodeBand.AddSubItem("Value",
-                        band.GetValue(pixel.RasterX, pixel.RasterY, out value)
+                        band.GetValue(pixel.Column, pixel.Row, out value)
                             ? value.ToString(CultureInfo.InvariantCulture)
                             : "Failed to retrieve");
 
@@ -244,7 +244,7 @@ namespace MW5.Plugins.Identifier.Controls
             double min, max, mean, stdDev;
             int count;
 
-            if (!band.ComputeLocalStatistics(pixel.RasterX, pixel.RasterY, LocalStatsRange, out min, out max, out mean, out stdDev,
+            if (!band.ComputeLocalStatistics(pixel.Column, pixel.Row, LocalStatsRange, out min, out max, out mean, out stdDev,
                 out count))
             {
                 parent.AddSubItem("Local stats", "<failed to compute>");
@@ -300,7 +300,7 @@ namespace MW5.Plugins.Identifier.Controls
                 {
                     double value;
                     nodeBand.AddSubItem("Value",
-                         band.GetValue(pixel.RasterX, pixel.RasterY, out value)
+                         band.GetValue(pixel.Column, pixel.Row, out value)
                              ? value.ToString(CultureInfo.InvariantCulture)
                              : "Failed to retrieve");
 
@@ -317,7 +317,7 @@ namespace MW5.Plugins.Identifier.Controls
             var nodeBuffer = nodePixel.AddSubItem("Position", " ");
 
             double projX, projY;
-            raster.ImageToProjection(pixel.RasterX, pixel.RasterY, out projX, out projY);
+            raster.ImageToProjection(pixel.Column, pixel.Row, out projX, out projY);
 
             double degX, degY;
             if (_context.Map.ProjToDegrees(projX, projY, out degX, out degY))
@@ -433,6 +433,7 @@ namespace MW5.Plugins.Identifier.Controls
 
         private IdentifierIcon GetIconForFeatureSet(IFeatureSet featureSet)
         {
+            // ReSharper disable once RedundantCaseLabel
             switch (featureSet.GeometryType)
             {
                 case GeometryType.Point:

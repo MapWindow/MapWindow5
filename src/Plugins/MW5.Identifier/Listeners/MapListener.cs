@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
@@ -15,9 +14,10 @@ namespace MW5.Plugins.Identifier.Listeners
     {
         private readonly IAppContext _context;
         private readonly IdentifierPresenter _identifierPresenter;
+        // ReSharper disable once NotAccessedField.Local
         private readonly IConfigService _configService;
 
-        public MapListener(IAppContext context, IdentifierPlugin plugin, IdentifierPresenter identifierPresenter, 
+        public MapListener(IAppContext context, IdentifierPlugin plugin, IdentifierPresenter identifierPresenter,
                             IConfigService configService)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -37,7 +37,7 @@ namespace MW5.Plugins.Identifier.Listeners
 
         private void plugin_MouseMove(IMuteMap map, System.Windows.Forms.MouseEventArgs e)
         {
-            if (map.MapCursor != Api.Enums.MapCursor.Identify)
+            if (map.MapCursor != MapCursor.Identify)
             {
                 return;
             }
@@ -73,28 +73,30 @@ namespace MW5.Plugins.Identifier.Listeners
             {
                 return;
             }
-            
+
             var raster = layer.Raster;
             if (raster == null)
             {
                 return;
             }
-            
+
+            if (raster.RenderingType == RasterRendering.Rgb)
+            {
+                return;
+            }
+
             double projX, projY;
             map.PixelToProj(pixelX, pixelY, out projX, out projY);
 
-            int rasterX, rasterY;
-            if (raster.ProjectionToImage(projX, projY, out rasterX, out rasterY))
+            int column, row;
+            if (raster.ProjectionToImage(projX, projY, out column, out row))
             {
-                if (raster.RenderingType != Api.Enums.RasterRendering.Rgb)
+                var band = raster.ActiveBand;
+                double value;
+                if (band.GetValue(column, row, out value))
                 {
-                    var band = raster.ActiveBand;
-                    double value;
-                    if (band.GetValue(rasterX, rasterY, out value))
-                    {
-                        string msg = string.Format("Raster info. X: {0}; Y: {1}; Value: {2}", rasterX, rasterY, value);
-                        _context.StatusBar.ShowInfo(msg);
-                    }
+                    string msg = string.Format("Raster info. Row: {0}; Column: {1}; Value: {2}", row, column, value);
+                    _context.StatusBar.ShowInfo(msg);
                 }
             }
             else

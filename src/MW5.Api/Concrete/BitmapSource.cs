@@ -25,7 +25,7 @@ namespace MW5.Api.Concrete
             _image = image;
         }
 
-        public stdole.IPictureDisp Picture
+        public IPictureDisp Picture
         {
             get { return _image.Picture; }
             set { _image.Picture = value; }
@@ -179,6 +179,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
+                // ReSharper disable RedundantCaseLabel
                 switch (_image.SourceType)
                 {
                     case tkImageSourceType.istDiskBased:
@@ -221,15 +222,15 @@ namespace MW5.Api.Concrete
             return _image.Save(filename, writeWorldFile, (ImageType) fileType);
         }
 
-        public void ImageToProjection(int imageX, int imageY, out double projX, out double projY)
+        public void ImageToProjection(int column, int row, out double projX, out double projY)
         {
-            _image.ImageToProjection(imageX, imageY, out projX, out projY);
+            _image.ImageToProjection(column, row, out projX, out projY);
         }
 
-        public bool ProjectionToImage(double projX, double projY, out int imageX, out int imageY)
+        public bool ProjectionToImage(double projX, double projY, out int column, out int row)
         {
-            _image.ProjectionToImage(projX, projY, out imageX, out imageY);
-            return imageX >= 0 && imageX < Width && imageY >= 0 && imageY < Height;
+            _image.ProjectionToImage(projX, projY, out column, out row);
+            return column >= 0 && column < Width && row >= 0 && row < Height;
         }
 
         public Color GetPixel(int row, int column)
@@ -369,7 +370,7 @@ namespace MW5.Api.Concrete
         public System.Drawing.Image ToGdiPlusBitmap()
         {
             var utils = new OleImageHelper();
-            return utils.GetPictureFromIPicture(this.Picture);
+            return utils.GetPictureFromIPicture(Picture);
         }
 
         public bool FromGdiPlusBitmap(System.Drawing.Image image)
