@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Attributes.Views.Abstract;
@@ -56,26 +57,26 @@ namespace MW5.Attributes.Views
             _lastQuery = View.Expression;
 
             var results = new List<int>();
-            if (Query(results))
+            if (!Query(results)) return;
+
+            // Open extra form with selection options:
+            var list = new List<SelectionOperation>
+                           {
+                               SelectionOperation.New,
+                               SelectionOperation.Add,
+                               SelectionOperation.Exclude,
+                               SelectionOperation.Invert,
+                           };
+
+            var operation = AppConfig.Instance.QueryBuilderSelectionOperation;
+            const string msg = "Please choose selection mode:";
+
+            var selectedColor = Model.Layer.FeatureSet.SelectionColor;
+            if (OptionListHelper.Select(list, ref operation, msg, ref selectedColor, View as IWin32Window))
             {
-                var list = new List<SelectionOperation>
-                               {
-                                   SelectionOperation.New,
-                                   SelectionOperation.Add,
-                                   SelectionOperation.Exclude,
-                                   SelectionOperation.Invert,
-                               };
-
-                var operation = AppConfig.Instance.QueryBuilderSelectionOperation;
-                const string msg = "Please choose selection mode:";
-
-                if (OptionListHelper.Select(list, ref operation, msg, View as IWin32Window))
-                {
-                    AppConfig.Instance.QueryBuilderSelectionOperation = operation;
-
-                    Model.Layer.UpdateSelection(results, operation);
-                    _context.Map.Redraw();
-                }
+                AppConfig.Instance.QueryBuilderSelectionOperation = operation;
+                Model.Layer.UpdateSelection(results, operation, selectedColor);
+                _context.Map.Redraw();
             }
         }
 
