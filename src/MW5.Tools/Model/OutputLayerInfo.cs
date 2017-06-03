@@ -133,13 +133,13 @@ namespace MW5.Tools.Model
                 return false;
             }
 
-            bool fileExists = false;
+            bool fileExists;
             
             try
             {
                 fileExists = File.Exists(Filename);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 message = "Invalid output name.";
                 return false;

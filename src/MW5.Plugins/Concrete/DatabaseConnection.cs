@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Plugins.Enums;
 
@@ -12,7 +8,7 @@ namespace MW5.Plugins.Concrete
     [DataContract]
     public class DatabaseConnection
     {
-        private string _secureConnection;
+        private readonly string _secureConnection;
 
         public DatabaseConnection(GeoDatabaseType databaseType, string name, string connection, string secureConnection)
         {

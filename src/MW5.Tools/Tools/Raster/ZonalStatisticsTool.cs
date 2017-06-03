@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
@@ -24,7 +20,7 @@ namespace MW5.Tools.Tools.Raster
         [DataTypeHint(DataSourceType.Raster)]
         public string GridFilename { get; set; }
 
-        [Output("Vector layer to write results to", 0)]
+        [Output("Vector layer to write results to")]
         public IVectorInput Vector { get; set; }
 
         [Output("Overwrite fields", 1)]
@@ -75,14 +71,13 @@ namespace MW5.Tools.Tools.Raster
         {
             var grid = new GridSource(GridFilename);
 
-            bool result = false;
-
+            bool result;
             try
             {
                 result = GisUtils.Instance.GridStatisticsToShapefile(grid, Vector.Datasource, Vector.SelectedOnly,
                     OverwriteFields);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 grid.Dispose();
                 throw;

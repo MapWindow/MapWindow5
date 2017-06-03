@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Xml;
-using System.Xml.Serialization;
-using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -33,6 +28,8 @@ namespace MW5.Api.Legend
         private bool _hideFromLegend;
         private bool _recalcHeight;
         private int _height;
+
+        // ReSharper disable once NotAccessedField.Local
         private string _symbologyCaption;
 
         /// <summary>
@@ -45,7 +42,7 @@ namespace MW5.Api.Legend
             _icon = null;
             _elements = new LayerElementsCollection();
             _customObjects = new Dictionary<Guid, ILayerMetadataBase>();
-            _rawObjects = new Dictionary<System.Guid, XmlElement>();
+            _rawObjects = new Dictionary<Guid, XmlElement>();
             _recalcHeight = true;
 
             Guid = Guid.NewGuid();
@@ -149,34 +146,28 @@ namespace MW5.Api.Legend
                     }
 
                     var raster = ImageSource as IRasterSource;
-                    if (raster != null)
+                    if (raster == null) return "RGB";
+
+                    switch (raster.RenderingType)
                     {
-                        switch (raster.RenderingType)
-                        {
-                            case RasterRendering.SingleBand:
-                                return string.Format(raster.GetBandFullName(raster.ActiveBandIndex)) + ": greyscale";
-                            case RasterRendering.Rgb:
-                                return "RGB";
-                            case RasterRendering.ColorScheme:
-                                var band = raster.ActiveBand;
-                                string interp = band != null ? "(" + band.ColorInterpretation + ")" : "";
-                                return string.Format("Band: {0} of {1} {2}", raster.ActiveBandIndex, raster.NumBands,
-                                    interp);
-                            case RasterRendering.BuiltInColorTable:
-                                return "Indexed";
-                            case RasterRendering.Unknown:
-                                return "Unknown";
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    else
-                    {
-                        return "RGB";
+                        case RasterRendering.SingleBand:
+                            return string.Format(raster.GetBandFullName(raster.ActiveBandIndex)) + ": greyscale";
+                        case RasterRendering.Rgb:
+                            return "RGB";
+                        case RasterRendering.ColorScheme:
+                            var band = raster.ActiveBand;
+                            string interp = band != null ? "(" + band.ColorInterpretation + ")" : "";
+                            return string.Format("Band: {0} of {1} {2}", raster.ActiveBandIndex, raster.NumBands,
+                                interp);
+                        case RasterRendering.BuiltInColorTable:
+                            return "Indexed";
+                        case RasterRendering.Unknown:
+                            return "Unknown";
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
-
-                return _symbologyCaption;
+                // return _symbologyCaption;
             }
             set
             {
@@ -533,32 +524,31 @@ namespace MW5.Api.Legend
                 return Constants.IconWidth;
             }
 
-            if (LegendLayerType == LegendLayerType.PointShapefile)
-            {
-                var width = 0;
-                switch (options.PointType)
-                {
-                    case tkPointSymbolType.ptSymbolPicture:
-                        width = options.Picture == null || options.Picture.IsEmpty ||
-                                (options.Picture.Width * options.PictureScaleX <= Constants.IconWidth)
-                            ? Constants.IconWidth
-                            : (int) (options.Picture.Width*options.PictureScaleX);
-                        break;
-                    case tkPointSymbolType.ptSymbolFontCharacter:
-                        var ratio = options.FrameVisible ? 1.4 : 1.0;
-                        width = options.PointSize*ratio <= Constants.IconWidth
-                            ? Constants.IconWidth
-                            : (int) (options.PointSize*ratio);
-                        break;
-                    default:
-                        width = options.PointSize <= Constants.IconWidth ? Constants.IconWidth : (int) options.PointSize;
-                        break;
-                }
+            if (LegendLayerType != LegendLayerType.PointShapefile) return 0;
 
-                return width <= maxWidth ? width : maxWidth;
+            int width;
+            // ReSharper disable once RedundantCaseLabel
+            switch (options.PointType)
+            {
+                case tkPointSymbolType.ptSymbolPicture:
+                    width = options.Picture == null || options.Picture.IsEmpty ||
+                            (options.Picture.Width * options.PictureScaleX <= Constants.IconWidth)
+                                ? Constants.IconWidth
+                                : (int) (options.Picture.Width*options.PictureScaleX);
+                    break;
+                case tkPointSymbolType.ptSymbolFontCharacter:
+                    var ratio = options.FrameVisible ? 1.4 : 1.0;
+                    width = options.PointSize*ratio <= Constants.IconWidth
+                                ? Constants.IconWidth
+                                : (int) (options.PointSize*ratio);
+                    break;
+                case tkPointSymbolType.ptSymbolStandard:
+                default:
+                    width = options.PointSize <= Constants.IconWidth ? Constants.IconWidth : (int) options.PointSize;
+                    break;
             }
 
-            return 0;
+            return width <= maxWidth ? width : maxWidth;
         }
 
         /// <summary>

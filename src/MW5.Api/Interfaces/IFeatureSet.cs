@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Shared.Log;
 
 namespace MW5.Api.Interfaces
 {

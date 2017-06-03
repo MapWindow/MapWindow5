@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="TableEditorView.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015-2017
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -454,11 +454,11 @@ namespace MW5.Plugins.TableEditor.Views
                 if (grid.RowManager.Filtered)
                 {
                     mnuShowSelected.Enabled = true;
-                    mnuShowSelected.Text = "Show All Shapes";
+                    mnuShowSelected.Text = @"Show All Shapes";
                 }
                 else
                 {
-                    mnuShowSelected.Text = "Show Selected Shapes";
+                    mnuShowSelected.Text = @"Show Selected Shapes";
                 }
             }
 

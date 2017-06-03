@@ -1,5 +1,4 @@
 ﻿using System;
-using AxMapWinGIS;
 
 namespace MW5.Api.Events
 {

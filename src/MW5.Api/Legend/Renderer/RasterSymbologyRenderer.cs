@@ -90,7 +90,7 @@ namespace MW5.Api.Legend.Renderer
                 return;
             }
 
-            var count = 0;
+            // var count = 0;
             foreach (var item in scheme)
             {
                 Brush brush;
@@ -112,29 +112,28 @@ namespace MW5.Api.Legend.Renderer
 
                 r.Y += Constants.CsItemHeightAndPad();
                 textRect.Y += Constants.CsItemHeightAndPad();
-
-                count++;
+                // count++;
             }
         }
 
-        /// <summary>
-        /// The draw transparent patch.
-        /// </summary>
-        private void DrawTransparentPatch(Graphics g, int topPos, int leftPos, int boxHeight, int boxWidth, Color outlineColor, bool drawOutline)
-        {
-            // TODO: implement it for color schemes
+        ///// <summary>
+        ///// The draw transparent patch.
+        ///// </summary>
+        //private void DrawTransparentPatch(Graphics g, int topPos, int leftPos, int boxHeight, int boxWidth, Color outlineColor, bool drawOutline)
+        //{
+        //    // TODO: implement it for color schemes
 
-            var rect = new Rectangle(leftPos, topPos, boxWidth, boxHeight);
-            var pen = new Pen(outlineColor);
+        //    var rect = new Rectangle(leftPos, topPos, boxWidth, boxHeight);
+        //    var pen = new Pen(outlineColor);
 
-            // fill the rectangle with a diagonal hatch
-            Brush brush = new HatchBrush(HatchStyle.LightUpwardDiagonal, Color.Gray, Color.White);
-            g.FillRectangle(brush, rect);
+        //    // fill the rectangle with a diagonal hatch
+        //    Brush brush = new HatchBrush(HatchStyle.LightUpwardDiagonal, Color.Gray, Color.White);
+        //    g.FillRectangle(brush, rect);
 
-            if (drawOutline)
-            {
-                g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
-            }
-        }
+        //    if (drawOutline)
+        //    {
+        //        g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
+        //    }
+        //}
     }
 }

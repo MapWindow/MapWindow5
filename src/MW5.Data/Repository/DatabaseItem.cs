@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Data.Properties;
 using MW5.Plugins.Concrete;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
@@ -111,7 +106,7 @@ namespace MW5.Data.Repository
 
         private void AddLayerNode(VectorLayerWrapper layer)
         {
-            Logger.Current.Debug("AddLayerNode");
+            Logger.Current.Debug("AddLayerNode: " + layer.Layer.Name);
             _syncContext.Post((o) =>
             {
                 var l = o as VectorLayerWrapper;

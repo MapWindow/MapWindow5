@@ -35,9 +35,9 @@ namespace MW5.Plugins.TemplatePlugin
 
         public void Write(string prefix, string message)
         {
-            if (this.Visible)
+            if (Visible)
             {
-                this.DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
+                DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
             }
         }
     }

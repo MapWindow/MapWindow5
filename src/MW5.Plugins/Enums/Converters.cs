@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Shared;
 
@@ -244,7 +240,7 @@ namespace MW5.Plugins.Enums
 
     public class ProjectionMistmatchConverter : IEnumConverter<ProjectionMismatch>
     {
-        public string GetString(Enums.ProjectionMismatch value)
+        public string GetString(ProjectionMismatch value)
         {
             switch (value)
             {

@@ -808,7 +808,7 @@ namespace MW5.Api.Concrete
         public IFeatureSet FixUpShapes(bool selectedOnly)
         {
             Shapefile sf;
-            bool result = _shapefile.FixUpShapes2(selectedOnly, out sf);
+            _shapefile.FixUpShapes2(selectedOnly, out sf);
             return WrapShapefile(sf);
         }
 

@@ -1,27 +1,21 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MenuListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015-2017
 // </copyright>
 // <summary>
 //   The menu listener.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
+using MW5.Plugins.TemplatePlugin.Properties;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 
 namespace MW5.Plugins.TemplatePlugin.Menu
 {
-    #region
-
-    using System;
-
-    using MW5.Plugins.Concrete;
-    using MW5.Plugins.Interfaces;
-    using MW5.Plugins.Services;
-    using MW5.Plugins.TemplatePlugin.Properties;
-
-    #endregion
 
     /// <summary>
     ///     The menu listener.
@@ -150,7 +144,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
                 case MenuKeys.ShowDockableWindow:
                     // Clicked on the toolbar button
                     MessageService.Current.Info("Hello from Template plugin");
-                    this.AddDockWindowToPanels();
+                    AddDockWindowToPanels();
                     break;
             }
         }

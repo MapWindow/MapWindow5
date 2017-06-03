@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -25,7 +22,7 @@ namespace MW5.Gdal.Tools
         [DataTypeHint(DataSourceType.Vector)]
         public string InputFilename { get; set; }
 
-        [Output("Output format", 0)]
+        [Output("Output format")]
         [ControlHint(ControlHint.Combo)]
         public DatasourceDriver OutputFormat { get; set; }
 

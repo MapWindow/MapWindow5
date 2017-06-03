@@ -51,9 +51,10 @@ namespace MW5.Controls
             this.mapControl1.BackColor = System.Drawing.Color.White;
             this.mapControl1.BackgroundColor = System.Drawing.Color.White;
             this.mapControl1.ContextMenuStrip = this.contextMenuStripEx1;
-            this.mapControl1.CurrentScale = 69.82776267847855D;
+            this.mapControl1.CurrentScale = 21.133078334935735D;
             this.mapControl1.CurrentZoom = -1;
             this.mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapControl1.ExpandLayersOnAdding = true;
             this.mapControl1.ExtentHistory = 20;
             this.mapControl1.ExtentPad = 0.02D;
             envelope1.Tag = "";
@@ -102,7 +103,7 @@ namespace MW5.Controls
             this.btnClear});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(217, 126);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(217, 104);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
             // btnDisplayBackground

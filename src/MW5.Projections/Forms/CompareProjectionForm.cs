@@ -17,8 +17,6 @@ namespace MW5.Projections.Forms
 {
     public partial class CompareProjectionForm : MapWindowForm
     {
-        private readonly ISpatialReference _layerProj;
-
         /// <summary>
         /// Creates a new instance of the frmProjectionCompare class
         /// </summary>
@@ -28,16 +26,16 @@ namespace MW5.Projections.Forms
             if (context == null) throw new ArgumentNullException("context");
             InitializeComponent();
 
-            _layerProj = layerProj;
+            var layerProj1 = layerProj;
 
-            lblProject.Text = "Project: " + projectProj.Name;
-            lblLayer.Text = "Layer: " + layerProj.Name;
+            lblProject.Text = @"Project: " + projectProj.Name;
+            lblLayer.Text = @"Layer: " + layerProj.Name;
 
             txtProject.Text = projectProj.ExportToProj4();
             txtLayer.Text = layerProj.ExportToProj4();
 
-            btnLayer.Click += (s, e) => ShowProjectionProperties(_layerProj);
-            btnProject.Click += (s, e) => ShowProjectionProperties(_layerProj);
+            btnLayer.Click += (s, e) => ShowProjectionProperties(layerProj1);
+            btnProject.Click += (s, e) => ShowProjectionProperties(layerProj1);
         }
 
         private void CompareProjectionForm_Load(object sender, EventArgs e)

@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using MapWinGIS;
 using MW5.Api.Enums;
-using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Shared;
 
@@ -49,7 +48,7 @@ namespace MW5.Api.Concrete
             {
                 if (index >= 0 && index < Count)
                 {
-                    var color = ColorHelper.UintToColor(_scheme.BreakColor[index]);
+                    // var color = ColorHelper.UintToColor(_scheme.BreakColor[index]);
                     return new ColorInterval(_scheme, index);
                 }
                 return null;

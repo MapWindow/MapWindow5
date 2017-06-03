@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using MapWinGIS;
@@ -42,7 +41,7 @@ namespace MW5.Api.Static
                 return result;
             }
 
-            var source = _manager.Open(filename, (tkFileOpenStrategy)openStrategy, null);
+            var source = _manager.Open(filename, (tkFileOpenStrategy)openStrategy);
             return LayerSourceHelper.Convert(source);
         }
 

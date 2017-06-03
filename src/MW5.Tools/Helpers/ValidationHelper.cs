@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -20,7 +15,7 @@ namespace MW5.Tools.Helpers
     /// </summary>
     internal static class ValidationHelper
     {
-        private static readonly string[] _errors = new [] {
+        private static readonly string[] _errors = {
 		    "Topology Validation Error",
 		    "Repeated Point",
 		    "Hole lies outside shell",

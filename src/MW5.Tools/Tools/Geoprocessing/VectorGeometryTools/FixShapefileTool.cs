@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api.Concrete;
-using MW5.Api.Enums;
-using MW5.Api.Interfaces;
+﻿using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -24,7 +15,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Input datasource", 0)]
         public IVectorInput Input { get; set; }
 
-        [Output("Output layer", 0)]
+        [Output("Output layer")]
         [OutputLayer("{input}_fix.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Shared;
@@ -45,7 +43,7 @@ namespace MW5.Api.Concrete
             {
                 if (index < 0 || index >= DriverCount)
                 {
-                    throw new ArgumentOutOfRangeException("Invalid driver index");
+                    throw new ArgumentOutOfRangeException("index", "Invalid driver index");
                 }
 
                 return get_Driver(index);
@@ -67,7 +65,7 @@ namespace MW5.Api.Concrete
 
         private IEnumerable<string> GetExtensions(SelectedLayerType layerType, bool forCommodDialog)
         {
-            List<DatasourceDriver> list = null;
+            List<DatasourceDriver> list;
 
             switch(layerType)
             {
