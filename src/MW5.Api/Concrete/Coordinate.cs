@@ -24,26 +24,52 @@ namespace MW5.Api.Concrete
             _point = point;
         }
 
+        /// <summary>
+        /// Gets the x.
+        /// </summary>
+        /// <value>
+        /// The x.
+        /// </value>
+        /// <remarks>Use Geometry.MovePoint to set the X and Y</remarks>
         public double X
         {
             get { return _point.x; }
         }
 
+        /// <summary>
+        /// Gets the y.
+        /// </summary>
+        /// <value>
+        /// The y.
+        /// </value>
+        /// <remarks>Use Geometry.MovePoint to set the X and Y</remarks>
         public double Y
         {
             get { return _point.y; }
         }
 
+        /// <summary>
+        /// Gets the z.
+        /// </summary>
+        /// <value>
+        /// The z.
+        /// </value>
+        /// <remarks>Use Geometry.SetZ to set the Z</remarks>
         public double Z
         {
             get { return _point.Z; }
-            set { _point.Z = value; }
         }
 
+        /// <summary>
+        /// Gets the m.
+        /// </summary>
+        /// <value>
+        /// The m.
+        /// </value>
+        /// <remarks>Use Geometry.SetM to set the M</remarks>
         public double M
         {
             get { return _point.M; }
-            set { _point.M = value; }
         }
 
         public ICoordinate Clone()
@@ -51,6 +77,13 @@ namespace MW5.Api.Concrete
             return new Coordinate(_point.Clone());
         }
 
+        /// <summary>
+        /// Gets the internal point object. Use only in specific circumstances.
+        /// Normally it is not recommended to use the internal object directly.
+        /// </summary>
+        /// <value>
+        /// The internal point object.
+        /// </value>
         public object InternalObject
         {
             get { return _point; }

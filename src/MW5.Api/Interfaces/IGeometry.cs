@@ -46,6 +46,9 @@ namespace MW5.Api.Interfaces
         bool ImportFromWkt(string serialized);
         bool Intersects(IGeometry g);
         void Move(double offsetX, double offsetY);
+        bool MovePoint(int pointIndex, double x, double y);
+        bool SetM(int pointIndex, double m);
+        bool SetZ(int pointIndex, double z);
         bool Overlaps(IGeometry g);
         bool PointInThisPoly(ICoordinate pt);
         bool Relates(IGeometry g, SpatialRelation relation);

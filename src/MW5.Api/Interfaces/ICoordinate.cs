@@ -11,13 +11,13 @@ namespace MW5.Api.Interfaces
     /// </summary>
     public interface ICoordinate : IComWrapper
     {
-        double M { get; set; }
+        double M { get; }
 
         double X { get; }
 
         double Y { get;}
 
-        double Z { get; set; }
+        double Z { get; }
 
         ICoordinate Clone();
     }
