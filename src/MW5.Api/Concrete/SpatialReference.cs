@@ -233,5 +233,11 @@ namespace MW5.Api.Concrete
             get { return _projection.Key; }
             set { _projection.Key = value; }
         }
+
+        public override string ToString()
+        {
+            if (_projection.IsEmpty) return "No projection";
+            return _projection.Name;
+        }
     }
 }

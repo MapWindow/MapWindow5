@@ -43,8 +43,10 @@ namespace MW5.Api.Concrete
 
         public bool Open(string connectionString)
         {
-            return _datasource.Open(connectionString);
+            var opened = _datasource.Open(connectionString);
+            return opened;
         }
+
 
         public object InternalObject
         {
@@ -198,7 +200,7 @@ namespace MW5.Api.Concrete
                 string s = string.Empty;
                 string proj = string.Empty;
 
-                foreach (var source in LayerSourceHelper.GetLayers(this))
+                foreach (var source in this.GetLayers())
                 {
                     var layer = source as IVectorLayer;
                     if (layer != null)
@@ -213,7 +215,8 @@ namespace MW5.Api.Concrete
                                              Environment.NewLine;
                         s += "Feature count: " + layer.get_FeatureCount() + Environment.NewLine;
 
-                        proj = layer.Projection.ExportToProj4();
+                        // proj = layer.Projection.ExportToProj4();
+                        proj = layer.Projection.Name;
                     }
                 }
 

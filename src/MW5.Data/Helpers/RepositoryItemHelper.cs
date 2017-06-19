@@ -88,7 +88,8 @@ namespace MW5.Data.Helpers
 
             var s = "Geometry type: " + item.GeometryType.EnumToString() + Environment.NewLine;
             s += "Number of features: " + item.NumFeatures + Environment.NewLine;
-            s += "Projection: " + item.Projection.ExportToProj4();
+            // s += "Projection: " + item.Projection.ExportToProj4();
+            s += "Projection: " + item.Projection.Name;
             return s;
         }
 

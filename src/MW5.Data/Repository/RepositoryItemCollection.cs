@@ -108,10 +108,12 @@ namespace MW5.Data.Repository
         public IDatabaseLayerItem AddDatabaseLayer(IVectorLayer layer, bool multipleGeometries= false)
         {
             if (layer == null) throw new ArgumentNullException("layer");
-            Logger.Current.Debug("In AddDatabaseLayer " + layer.Name);
+            Logger.Current.Trace("In AddDatabaseLayer: " + layer.Name);
 
             var node = CreateNode(RepositoryItemType.DatabaseLayer);
+            Logger.Current.Trace("Node created for " + layer.Name);
             node.LeftImageIndices = new[] { GetVectorIcon(layer.ActiveGeometryType) };
+            Logger.Current.Trace("GetVectorIcon added");
 
             node.Text = layer.Name;
             if (multipleGeometries)
@@ -243,6 +245,7 @@ namespace MW5.Data.Repository
 
         public void UpdateState(HashSet<LayerIdentity> filenames)
         {
+            Logger.Current.Trace("In UpdateState");
             foreach (var item in this)
             {
                 var file = item as ILayerItem;

@@ -160,7 +160,8 @@ namespace MW5.Api.Concrete
             {
                 string s = "Geometry type: " + GeometryType.EnumToString() + Environment.NewLine;
                 s += "Feature count: " + Features.Count + Environment.NewLine;
-                s += "Projection: " + Projection.ExportToProj4();
+                // s += "Projection: " + Projection.ExportToProj4();
+                s += "Projection: " + Projection.Name;
                 return s;
             }
         }
