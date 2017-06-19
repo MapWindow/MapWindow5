@@ -41,6 +41,7 @@ namespace MW5.Data.Repository
             Application.DoEvents();
 
             _syncContext = SynchronizationContext.Current;
+            Logger.Current.Trace("In Expand");
 
             Task.Factory.StartNew(d => LoadLayers(d as DatabaseItemMetadata), data).ContinueWith(t =>
                 {
@@ -56,6 +57,7 @@ namespace MW5.Data.Repository
                     {
                         HideLoadingIndicator(_node);
                         _datasource.Close();
+                        Logger.Current.Debug("Called _datasource.Close()");
                     }
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -65,8 +67,13 @@ namespace MW5.Data.Repository
 
         private bool LoadLayers(DatabaseItemMetadata data)
         {
-            Logger.Current.Debug("Loading layers");
-            if (!_datasource.Open(data.Connection.ConnectionString)) return false;
+            Logger.Current.Trace("Loading layers");
+            
+            if (!_datasource.Open(data.Connection.ConnectionString))
+            {
+                Logger.Current.Debug("Could not open connectionstring: " + data.Connection.ConnectionString);
+                return false;
+            }
 
             var it = _datasource.GetFastEnumerator();
 
@@ -106,13 +113,18 @@ namespace MW5.Data.Repository
 
         private void AddLayerNode(VectorLayerWrapper layer)
         {
-            Logger.Current.Debug("AddLayerNode: " + layer.Layer.Name);
-            _syncContext.Post((o) =>
+            Logger.Current.Trace("AddLayerNode (Post): " + layer.Layer.Name);
+            _syncContext.Send(o =>
             {
                 var l = o as VectorLayerWrapper;
                 if (l != null)
                 {
                     SubItems.AddDatabaseLayer(l.Layer, l.MultipleGeometries);
+                    Logger.Current.Trace(l.Layer.Name + " added as node");
+                }
+                else
+                {
+                    Logger.Current.Trace("In AddLayerNode. l is null.");
                 }
             }, layer);
         }
