@@ -6,5 +6,7 @@ namespace MW5.Projections.Services.Abstract
     public interface IProjectionMismatchService
     {
         TestingResult TestLayer(ILayerSource layer, out ILayerSource newLayer);
+
+        void SetReprojectOnMismatch(bool autoReproject);
     }
 }

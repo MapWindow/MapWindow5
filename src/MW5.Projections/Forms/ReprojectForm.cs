@@ -105,7 +105,7 @@ namespace MW5.Projections.Forms
 
                 if (projection.IsSame(layer.Projection))
                 {
-                    report.AddFile(layer.Filename, projection.Name, ProjectionOperaion.SameProjection, "");
+                    report.AddFile(layer.Filename, projection.Name, ProjectionOperation.SameProjection, "");
                     files.Add(layer.Filename);
                 }
                 else
@@ -114,8 +114,8 @@ namespace MW5.Projections.Forms
                     if (result == TestingResult.Ok || result == TestingResult.Substituted)
                     {
                         var oper = result == TestingResult.Ok
-                                       ? ProjectionOperaion.Reprojected
-                                       : ProjectionOperaion.Substituted;
+                                       ? ProjectionOperation.Reprojected
+                                       : ProjectionOperation.Substituted;
                         string newName = layerNew == null ? "" : layerNew.Filename;
                         report.AddFile(layer.Filename, layer.Projection.Name, oper, newName);
                         files.Add(newName == "" ? layer.Filename : newName);
@@ -124,9 +124,9 @@ namespace MW5.Projections.Forms
                     else
                     {
                         var operation = result == TestingResult.Error
-                                            ? ProjectionOperaion.FailedToReproject
-                                            : ProjectionOperaion.Skipped;
-                        report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
+                                            ? ProjectionOperation.FailedToReproject
+                                            : ProjectionOperation.Skipped;
+                        report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.Skipped, "");
                     }
                 }
 

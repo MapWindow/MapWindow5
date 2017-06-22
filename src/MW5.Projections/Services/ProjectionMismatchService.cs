@@ -42,6 +42,15 @@ namespace MW5.Projections.Services
         }
 
         /// <summary>
+        /// Don't show the popup on projection mismatch, just do the reprojection
+        /// </summary>
+        /// <param name="autoReproject">if set to <c>true</c> [automatic reproject].</param>
+        public void SetReprojectOnMismatch(bool autoReproject)
+        {
+            _usePreviousAnswerMismatch = autoReproject;
+        }
+
+        /// <summary>
         /// Tests projection of a single layer
         /// </summary>
         public TestingResult TestLayer(ILayerSource layer, out ILayerSource newLayer)
@@ -97,7 +106,7 @@ namespace MW5.Projections.Services
             {
                 if (layer.SeekSubstituteFile(mapProj, out newLayer))
                 {
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Substituted,
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.Substituted,
                         newLayer.Filename);
                     return true;
                 }
@@ -137,16 +146,16 @@ namespace MW5.Projections.Services
             switch (behavior)
             {
                 case ProjectionAbsence.AssignFromProject:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Assigned, "");
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.Assigned, "");
                     layer.AssignProjection(mapProj);
                     return TestingResult.Ok;
 
                 case ProjectionAbsence.IgnoreAbsence:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.AbsenceIgnored, "");
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.AbsenceIgnored, "");
                     return TestingResult.Ok;
 
                 case ProjectionAbsence.SkipFile:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.Skipped, "");
                     return TestingResult.SkipFile;
             }
 
@@ -215,22 +224,22 @@ namespace MW5.Projections.Services
                     if (result == TestingResult.Ok || result == TestingResult.Substituted)
                     {
                         var oper = result == TestingResult.Ok
-                                       ? ProjectionOperaion.Reprojected
-                                       : ProjectionOperaion.Substituted;
+                                       ? ProjectionOperation.Reprojected
+                                       : ProjectionOperation.Substituted;
                         string newName = newLayer == null ? "" : newLayer.Filename;
                         _report.AddFile(layer.Filename, layer.Projection.Name, oper, newName);
                         return newName == layer.Filename ? TestingResult.Ok : TestingResult.Substituted;
                     }
 
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.FailedToReproject, "");
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.FailedToReproject, "");
                     return TestingResult.Error;
 
                 case ProjectionMismatch.IgnoreMismatch:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.MismatchIgnored, "");
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.MismatchIgnored, "");
                     return TestingResult.Ok;
 
                 case ProjectionMismatch.SkipFile:
-                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
+                    _report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperation.Skipped, "");
                     return TestingResult.SkipFile;
             }
 

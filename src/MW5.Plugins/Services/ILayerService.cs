@@ -46,5 +46,7 @@ namespace MW5.Plugins.Services
         void SaveStyle();
 
         void ZoomToSelected();
+
+        void SetReprojectOnMismatch(bool autoReproject);
     }
 }
