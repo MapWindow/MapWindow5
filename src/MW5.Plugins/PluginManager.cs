@@ -241,7 +241,8 @@ namespace MW5.Plugins
 
             foreach (var p in AllPlugins)
             {
-                bool active = dict.Contains(p.Identity.Guid);
+                // bool active = dict.Contains(p.Identity.Guid);
+                var active = p.Identity.LoadOnStartup || dict.Contains(p.Identity.Guid); 
                 p.SetApplicationPlugin(active);
 
                 if (active && !PluginActive(p.Identity))

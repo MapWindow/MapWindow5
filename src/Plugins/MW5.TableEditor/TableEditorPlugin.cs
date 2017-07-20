@@ -8,7 +8,7 @@ using MW5.Plugins.TableEditor.Services;
 
 namespace MW5.Plugins.TableEditor
 {
-    [MapWindowPlugin()]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class TableEditorPlugin: BasePlugin
     {
         private IAppContext _context;

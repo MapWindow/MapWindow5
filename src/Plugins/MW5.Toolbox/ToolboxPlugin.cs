@@ -1,14 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DebugWindow.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="ToolboxPlugin.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //   MapWindow OSS Team - 2015
 // </copyright>
 // <summary>
-//   Show a debug window that listens to all events
+//   Load the toolbox
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Diagnostics;
-using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
@@ -20,7 +18,7 @@ namespace MW5.Plugins.Toolbox
     /// <summary>
     ///     The debug window plugin.
     /// </summary>
-    [MapWindowPlugin]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class ToolboxPlugin : BasePlugin
     {
         private IAppContext _context;

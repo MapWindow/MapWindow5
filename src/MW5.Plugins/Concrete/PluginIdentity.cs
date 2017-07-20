@@ -14,7 +14,7 @@ namespace MW5.Plugins.Concrete
             get
             {
                 return new PluginIdentity("MapWindow Core App", "MapWindow Open Source Team",
-                    new Guid("F6D7BB9C-8E9E-4A8A-89BA-D4E1665825B3"));
+                    new Guid("F6D7BB9C-8E9E-4A8A-89BA-D4E1665825B3"), true);
             }
         }
 
@@ -23,11 +23,17 @@ namespace MW5.Plugins.Concrete
             return key + Guid;
         }
 
-        internal PluginIdentity(string name, string author, Guid guid)
+        internal PluginIdentity(bool loadOnStartup)
+        {
+            LoadOnStartup = loadOnStartup;
+        }
+
+        internal PluginIdentity(string name, string author, Guid guid, bool loadOnStartup)
         {
             _name = name;
             _author = author;
             _guid = guid;
+            LoadOnStartup = loadOnStartup;
         }
 
         public Guid Guid
@@ -44,7 +50,9 @@ namespace MW5.Plugins.Concrete
         {
             get { return _author; }
         }
-        
+
+        public bool LoadOnStartup { get; private set; }
+
         public bool Equals(PluginIdentity other)
         {
             return Guid == other.Guid;

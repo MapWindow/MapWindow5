@@ -1,14 +1,13 @@
 ﻿using MW5.Plugins.Concrete;
 using MW5.Plugins.Identifier.Listeners;
 using MW5.Plugins.Identifier.Menu;
-using MW5.Plugins.Identifier.Views;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.Identifier
 {
-    [MapWindowPlugin()]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class IdentifierPlugin: BasePlugin
     {
         private IAppContext _context;

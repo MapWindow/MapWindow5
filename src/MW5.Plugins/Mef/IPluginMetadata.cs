@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MW5.Plugins.Mef
+﻿namespace MW5.Plugins.Mef
 {
     public interface IPluginMetadata
     {
@@ -8,5 +6,6 @@ namespace MW5.Plugins.Mef
         string Author { get; }
         string Guid { get; }
         bool Empty { get; }
+        bool LoadOnStartUp { get; }
     }
 }

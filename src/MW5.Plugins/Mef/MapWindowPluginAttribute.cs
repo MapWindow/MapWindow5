@@ -11,6 +11,7 @@ namespace MW5.Plugins.Mef
         private string _author;
         private string _guid;
         private bool _empty;
+        private bool _loadOnStartUp = false;
 
         public MapWindowPluginAttribute()
             : base(typeof(IPlugin))
@@ -18,7 +19,14 @@ namespace MW5.Plugins.Mef
             _empty = true;
         }
 
-        public MapWindowPluginAttribute(string name,  string author, string guid)
+        public MapWindowPluginAttribute(bool loadOnStartUp)
+            : base(typeof(IPlugin))
+        {
+            _empty = true;
+            _loadOnStartUp = loadOnStartUp;
+        }
+
+        public MapWindowPluginAttribute(string name, string author, string guid)
             : base(typeof(IPlugin))
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -29,6 +37,7 @@ namespace MW5.Plugins.Mef
             {
                 throw new ArgumentException("Plugin author is not specified.");
             }
+
             try
             {
                 var temp = new Guid(guid);
@@ -62,6 +71,11 @@ namespace MW5.Plugins.Mef
         public string Guid
         {
             get { return _guid; }
+        }
+
+        public bool LoadOnStartUp
+        {
+            get { return _loadOnStartUp; }
         }
     }
 }
