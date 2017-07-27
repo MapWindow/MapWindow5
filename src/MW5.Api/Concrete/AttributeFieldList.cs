@@ -62,9 +62,9 @@ namespace MW5.Api.Concrete
             return GetEnumerator();
         }
 
-        public void Add(IAttributeField item)
+        public bool Add(IAttributeField item)
         {
-            _table.EditInsertField(item.GetInternal(), _table.NumFields);
+            return _table.EditInsertField(item.GetInternal(), _table.NumFields);
         }
 
         public int Add(string name, AttributeType type, int precision, int width)
@@ -104,9 +104,9 @@ namespace MW5.Api.Concrete
             return IndexByName(fieldName) != -1;
         }
 
-        public void Insert(int index, IAttributeField item)
+        public bool Insert(int index, IAttributeField item)
         {
-            _table.EditInsertField(item.GetInternal(), index);
+            return _table.EditInsertField(item.GetInternal(), index);
         }
 
         public int IndexByName(string fieldName)
