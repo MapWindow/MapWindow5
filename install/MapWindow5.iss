@@ -14,7 +14,7 @@
 #define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
 
-;#define x64BitVersion true
+#define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"
@@ -82,7 +82,7 @@ Name: "USASampleData"; Description: "USA Sample data"; Types: full
 
 [Files]
 ;; MapWinGIS
-Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
+Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "libecwj2.dll, *.exe"
 ;; MapWindow5 dlls
 Source: "{#ExeBinPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 Source: "{#ExeBinPath}\MapWindow.exe"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
@@ -158,6 +158,8 @@ Root: HKCR; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueNam
 [InstallDelete]
 Type: files; Name: "{app}\Plugins\MW5.TemplatePlugin.dll"; Components: MapWindow
 Type: files; Name: "{app}\Plugins\Interop.MapWinGIS.dll"; Components: MapWindow
+;; Old ECW driver, conflicts with new driver:
+Type: files; Name: "{app}\MapWinGIS\libecwj2.dll"; Components: MapWindow
 
 [Code]
 #IFDEF UNICODE
