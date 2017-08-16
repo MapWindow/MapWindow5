@@ -338,6 +338,12 @@ namespace MW5.Api.Concrete
             return _shape.Relates(g.GetInternal(), (tkSpatialRelation)relation);
         }
 
+        /// <summary>
+        /// Rotates the geometry.
+        /// </summary>
+        /// <param name="originX">The origin x.</param>
+        /// <param name="originY">The origin y.</param>
+        /// <param name="angle">The angle, in degrees</param>
         public void Rotate(double originX, double originY, double angle)
         {
             _shape.Rotate(originX, originY, angle);
