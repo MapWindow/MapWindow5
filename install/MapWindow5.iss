@@ -70,8 +70,8 @@ VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
 AlwaysShowComponentsList=false
 #ifdef x64BitVersion
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+  ArchitecturesAllowed=x64
+  ArchitecturesInstallIn64BitMode=x64
 #endif
 ChangesAssociations=True
 UsePreviousAppDir=False
@@ -93,7 +93,7 @@ Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: igno
 ;; Manuals sub folder
 Source: "{#ExeBinPath}\Manuals\*"; DestDir: "{app}\Manuals"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; Plugins subfolder
-Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll"
+Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*"
 ;; Styles subfolder
 Source: "{#ExeBinPath}\Styles\*"; DestDir: "{app}\Styles"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; SQLite interop:
