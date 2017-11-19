@@ -41,13 +41,6 @@ namespace MW5.Api.Static
                 return result;
             }
 
-            //MWGIS-70:
-            if (Path.GetExtension(filename) == ".ecw")
-            {
-                var rasterSource = BitmapSource.Open(filename, false);
-                return rasterSource;
-            }
-
             var source = _manager.Open(filename, (tkFileOpenStrategy)openStrategy);
             return LayerSourceHelper.Convert(source);
         }
