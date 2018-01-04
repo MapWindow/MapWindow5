@@ -30,6 +30,7 @@ namespace MW5.Test
         private Mock<IMessageService> _messageService;
         private Mock<IProjectionMismatchService> _reprojectingService;
         private Mock<IBroadcasterService> _broadcaster;
+        private Mock<IFileDialogService> _fileDialogService;
         private Mock<ILayerCollection<ILayer>> _layerColection;
         private Mock<IMuteLegend> _legend;
 
@@ -62,6 +63,8 @@ namespace MW5.Test
             _reprojectingService = new Mock<IProjectionMismatchService>();
 
             _broadcaster = new Mock<IBroadcasterService>();
+
+            _fileDialogService = new Mock<IFileDialogService>();
         }
         
         [Test]

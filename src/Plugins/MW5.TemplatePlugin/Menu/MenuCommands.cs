@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MenuCommands.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015 - 2017
 // </copyright>
 // <summary>
 //   The menu commands.
@@ -26,11 +26,9 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MenuCommands"/> class.
+        /// Initializes a new instance of the <see cref="MenuCommands" /> class.
         /// </summary>
-        /// <param name="identity">
-        /// The identity.
-        /// </param>
+        /// <param name="identity">The identity.</param>
         public MenuCommands(PluginIdentity identity)
             : base(identity)
         {
@@ -44,7 +42,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// The commands of the toolbar buttons.
         /// </summary>
         /// <returns>
-        /// The <see cref="MenuCommand"/> as an IEnumerable
+        /// The <see cref="MenuCommand" /> as an IEnumerable
         /// </returns>
         public override IEnumerable<MenuCommand> GetCommands()
         {

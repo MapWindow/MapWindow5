@@ -39,7 +39,7 @@ namespace MW5.Plugins.TemplatePlugin.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MW5.Plugins.TemplatePlugin.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("MW5.Plugins.TemplatePlugin.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,7 @@ namespace MW5.Plugins.TemplatePlugin.Properties {
         /// </summary>
         internal static System.Drawing.Icon ico_template {
             get {
-                object obj = ResourceManager.GetObject("ico_template", resourceCulture);
+                var obj = ResourceManager.GetObject("ico_template", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -75,7 +75,7 @@ namespace MW5.Plugins.TemplatePlugin.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap monitor {
             get {
-                object obj = ResourceManager.GetObject("monitor", resourceCulture);
+                var obj = ResourceManager.GetObject("monitor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

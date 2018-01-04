@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
+using MW5.Api.Interfaces;
+using MW5.Api.Static;
 using NUnit.Framework;
 
 namespace MW5.API.Test
@@ -37,6 +40,28 @@ namespace MW5.API.Test
             Assert.AreEqual(wkt, wkt2);
 
             Assert.AreNotEqual(wkt, esri);
+        }
+
+        [Test]
+        public void GetEPSGCode()
+        {
+            var sr = new SpatialReference();
+            const int Amersfoort = 28992;
+            if (!sr.ImportFromEpsg(Amersfoort))
+            {
+                Assert.Fail("Failed to import projection: " + Amersfoort);
+            }
+
+            var code = sr.GetEpsgCode();
+            Assert.AreEqual(Amersfoort, code);
+
+            // Load shapefile and get its projection:
+            const string sfFilename = @"D:\dev\GIS-Data\MapWindow-Projects\TheNetherlands\Assen.shp";
+            var ds = GeoSource.Open(sfFilename);
+            var layer = ds as ILayerSource;
+            Assert.IsNotNull(layer);
+            var layerCode = layer.Projection.GetEpsgCode();
+            Assert.AreEqual(Amersfoort, layerCode);
         }
     }
 }

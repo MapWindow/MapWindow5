@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CompositionRoot.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015 - 2017
 // </copyright>
 // <summary>
 //   The composition root.
@@ -25,9 +25,7 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// Composing the container
         /// </summary>
-        /// <param name="container">
-        /// The container.
-        /// </param>
+        /// <param name="container">The container.</param>
         public static void Compose(IApplicationContainer container)
         {
         }

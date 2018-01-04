@@ -54,17 +54,11 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MenuListener"/> class.
+        /// Initializes a new instance of the <see cref="MenuListener" /> class.
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        /// <param name="plugin">
-        /// The plugin.
-        /// </param>
-        /// <param name="sampleDockWindow">
-        /// The sample dock wi
-        /// </param>
+        /// <param name="context">The application context.</param>
+        /// <param name="plugin">The plugin.</param>
+        /// <param name="sampleDockWindow">The sample dock wi</param>
         public MenuListener(IAppContext context, InitPlugin plugin, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
@@ -131,12 +125,8 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <summary>
         /// The toolbar button clicked event handler
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The menu item event arguments
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The menu item event arguments</param>
         private void Plugin_ItemClicked(object sender, MenuItemEventArgs e)
         {
             switch (e.ItemKey)
