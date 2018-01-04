@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using BruTile.Extensions;
 using BruTile.Wms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
@@ -19,7 +16,8 @@ namespace MW5.Tiles.Helpers
     {
         private static string GetRequestUrl(string url)
         {
-            return string.Format("{0}?REQUEST=GetCapabilities&SERVICE=WMS", url);   //&VERSION=1.1.1
+            var argumentDivider = url.Contains("?") ? "&" : "?";
+            return $"{url}{argumentDivider}REQUEST=GetCapabilities&SERVICE=WMS"; 
         }
 
         private static Stream GetRemoteXmlStream(Uri uri)
@@ -40,8 +38,7 @@ namespace MW5.Tiles.Helpers
 
         public static Stream GetWmsCapabilitiesStream(string url)
         {
-            string requestUrl = GetRequestUrl(url);
-
+            var requestUrl = GetRequestUrl(url);
             return GetRemoteXmlStream(new Uri(requestUrl));
         }
 
@@ -50,7 +47,8 @@ namespace MW5.Tiles.Helpers
         /// </summary>
         public static WmsSource CreateWmsLayer(this WmsCapabilities capabilities, IEnumerable<Layer> layers, string serverUrl, ISpatialReference mapProjection)
         {
-            var layer = layers.FirstOrDefault();
+            var layersArray = layers as Layer[] ?? layers.ToArray();
+            var layer = layersArray.FirstOrDefault();
             if (layer == null)
             {
                 return null;
@@ -63,7 +61,7 @@ namespace MW5.Tiles.Helpers
                 return null;
             }
 
-            int epsg = -1;
+            var epsg = -1;
             if (!ParseEpsg(box.CRS, ref epsg))
             {
                 MessageService.Current.Info("Failed to determine coordinate system for the layer.");
@@ -72,7 +70,7 @@ namespace MW5.Tiles.Helpers
 
             var provider = new WmsSource("WMS provider")
             {
-                Layers = GetLayers(layers),
+                Layers = GetLayers(layersArray),
                 Epsg = epsg,
                 BoundingBox = new Envelope(box.MinX, box.MaxX, box.MinY, box.MaxY),
                 BaseUrl = serverUrl,
@@ -85,12 +83,7 @@ namespace MW5.Tiles.Helpers
         private static string GetFormat(this WmsCapabilities capabilities)
         {
             var list = capabilities.Capability.Request.GetMap.Format;
-            if (list.Count > 2)
-            {
-                return list[2];
-            }
-
-            return list.FirstOrDefault();
+            return list.Count > 2 ? list[2] : list.FirstOrDefault();
         }
 
         private static string GetLayers(this IEnumerable<Layer> layers)
@@ -109,14 +102,13 @@ namespace MW5.Tiles.Helpers
             //    }
             //}
 
-            if (mapProjection != null)
+            if (mapProjection == null) return layer.BoundingBox.FirstOrDefault();
+
+            foreach (var box in layer.BoundingBox)
             {
-                foreach (var box in layer.BoundingBox)
+                if (IsSameProjection(box, mapProjection))
                 {
-                    if (IsSameProjection(box, mapProjection))
-                    {
-                        return box;
-                    }
+                    return box;
                 }
             }
 
@@ -125,36 +117,18 @@ namespace MW5.Tiles.Helpers
 
         private static bool IsSameProjection(BoundingBox box, ISpatialReference mapProjection)
         {
-            int epsg = -1;
-            if (ParseEpsg(box.CRS, ref epsg))
-            {
-                var sr = new SpatialReference();
-                if (sr.ImportFromEpsg(epsg))
-                {
-                    if (sr.IsSame(mapProjection))
-                    {
-                        return true;
-                    }
-                }
-            }
+            var epsg = -1;
+            if (!ParseEpsg(box.CRS, ref epsg)) return false;
 
-            return false;
+            var sr = new SpatialReference();
+            return sr.ImportFromEpsg(epsg) && sr.IsSame(mapProjection);
         }
 
         private static bool ParseEpsg(string crs, ref int epsg)
         {
-            epsg = -1;
-
-            if (!string.IsNullOrWhiteSpace(crs) && crs.Length > 5)
-            {
-                crs = crs.Substring(5);
-                if (Int32.TryParse(crs, out epsg))
-                {
-                    return true;                    
-                }
-            }
-
-            return false;
+            if (string.IsNullOrWhiteSpace(crs) || crs.Length <= 5) return false;
+            crs = crs.Substring(5);
+            return int.TryParse(crs, out epsg);
         }
     }
 }
