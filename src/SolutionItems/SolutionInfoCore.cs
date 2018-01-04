@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="SolutionInfo.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015-2018
 // </copyright>
 // <summary>
 //   SolutionInfo.cs
@@ -15,8 +15,8 @@ using System.Runtime.InteropServices;
 #endregion
 
 [assembly: AssemblyCompany("MapWindow OSS Team - www.mapwindow.org")]
-[assembly: AssemblyCopyright("Copyright (C) 1998-2016 MapWindow OSS Team")]
-[assembly: AssemblyTrademark("MapWindow GIS is a trademark of Daniel P. Ames, 2005-2016")]
+[assembly: AssemblyCopyright("Copyright (C) 1998-2018 MapWindow OSS Team")]
+[assembly: AssemblyTrademark("MapWindow GIS is a trademark of Daniel P. Ames, 2005-2018")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyTitle("MapWindow5 GIS")]
 [assembly: AssemblyDescription("MapWindow5 Open Source GIS application")]
@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("5.1.1.*")]
-[assembly: AssemblyFileVersion("5.1.1.0")]
+[assembly: AssemblyVersion("5.2.0.*")]
+[assembly: AssemblyFileVersion("5.2.0.0")]

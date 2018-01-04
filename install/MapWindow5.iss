@@ -73,7 +73,7 @@ AlwaysShowComponentsList=false
   ArchitecturesAllowed=x64
   ArchitecturesInstallIn64BitMode=x64
 #endif
-ChangesAssociations=True
+ChangesAssociations=Yes
 UsePreviousAppDir=False
 
 [Components]
@@ -82,7 +82,7 @@ Name: "USASampleData"; Description: "USA Sample data"; Types: full
 
 [Files]
 ;; MapWinGIS
-Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "libecwj2.dll, *.exe"
+Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "libecwj2.dll, *.exe, *.pdb"
 ;; MapWindow5 dlls
 Source: "{#ExeBinPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 Source: "{#ExeBinPath}\MapWindow.exe"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
@@ -150,10 +150,10 @@ Type: filesandordirs; Name: "{app}\Logs"; Components: MapWindow
 
 [Registry]
 ;; http://www.jrsoftware.org/isfaq.php#assoc
-Root: HKCR; Subkey: ".mwproj"; ValueType: string; ValueName: ""; ValueData: "MW5Project"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "MW5Project"; ValueType: string; ValueName: ""; ValueData: "MW5 Project"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "MW5Project\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\MAPWINDOW.EXE,0"
-Root: HKCR; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\MAPWINDOW.EXE"" ""%1"""
+Root: "HKCR"; Subkey: ".mwproj"; ValueType: string; ValueData: "MW5Project"; Flags: uninsdeletevalue;
+Root: "HKCR"; Subkey: "MW5Project"; ValueType: string; ValueData: "MW5 Project"; Flags: uninsdeletekey
+Root: "HKCR"; Subkey: "MW5Project\DefaultIcon"; ValueType: string; ValueData: "{app}\MAPWINDOW.EXE,0"
+Root: "HKCR"; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueData: """{app}\MAPWINDOW.EXE"" ""%1"""
 
 [InstallDelete]
 Type: files; Name: "{app}\Plugins\MW5.TemplatePlugin.dll"; Components: MapWindow
