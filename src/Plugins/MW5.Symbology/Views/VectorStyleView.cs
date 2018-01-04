@@ -18,7 +18,6 @@ using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
-using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
@@ -45,8 +44,8 @@ namespace MW5.Plugins.Symbology.Views
 
         public VectorStyleView(IAppContext context, CategoriesPresenter categoriesPresenter)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (categoriesPresenter == null) throw new ArgumentNullException("categoriesPresenter");
+            if (context == null) throw new ArgumentNullException(nameof(context));
+            if (categoriesPresenter == null) throw new ArgumentNullException(nameof(categoriesPresenter));
 
             _context = context;
             _categoriesPresenter = categoriesPresenter;
@@ -80,15 +79,9 @@ namespace MW5.Plugins.Symbology.Views
             }
         }
 
-        public ButtonBase OkButton
-        {
-            get { return null; }
-        }
+        public ButtonBase OkButton => null;
 
-        public bool SpatialIndex
-        {
-            get { return chkSpatialIndex.Checked; }
-        }
+        public bool SpatialIndex => chkSpatialIndex.Checked;
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
@@ -105,7 +98,7 @@ namespace MW5.Plugins.Symbology.Views
 
             MapConfig.ForceHideLabels = true;
 
-            Text = "Layer properties: " + Model.Name;
+            Text = @"Layer properties: " + Model.Name;
 
             _initState = SaveState();
 
@@ -148,7 +141,6 @@ namespace MW5.Plugins.Symbology.Views
             chkShowLabels.Checked = options.Visible;
 
             UpdateView();
-
             DrawLabelsPreview();
         }
 
@@ -181,7 +173,7 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void CancelChanges()
         {
-            string state = Model.Serialize();
+            var state = Model.Serialize();
 
             if (state != _initState)
             {
@@ -221,10 +213,7 @@ namespace MW5.Plugins.Symbology.Views
             var pct = pictureBox1;
             var sdo = _featureSet.Style;
 
-            if (pct.Image != null)
-            {
-                pct.Image.Dispose();
-            }
+            pct.Image?.Dispose();
 
             var rect = pct.ClientRectangle;
             var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
@@ -243,10 +232,10 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     else
                     {
-                        int w = rect.Width - 40;
-                        int h = rect.Height - 40;
-                        int x = Convert.ToInt32((rect.Width - w) / 2.0);
-                        int y = Convert.ToInt32((rect.Height - h) / 2);
+                        var w = rect.Width - 40;
+                        var h = rect.Height - 40;
+                        var x = Convert.ToInt32((rect.Width - w) / 2.0);
+                        var y = Convert.ToInt32((rect.Height - h) / 2);
                         sdo.DrawLine(g, x, y, w, h, true, rect.Width, rect.Height, Color.White);
                     }
                     break;
@@ -254,6 +243,8 @@ namespace MW5.Plugins.Symbology.Views
                     sdo.DrawRectangle(g, rect.Width / 2 - 40, rect.Height / 2 - 40, 80, 80, true, rect.Width, rect.Height, Color.White);
                     break;
             }
+
+            g.Dispose();
 
             pct.Image = bmp;
         }
@@ -269,11 +260,12 @@ namespace MW5.Plugins.Symbology.Views
             var charts = _featureSet.Diagrams;
             if (charts.Count > 0 && charts.Fields.Any())
             {
-                var g = Graphics.FromImage(bmp);
-
-                int x = Convert.ToInt32((rect.Width - charts.IconWidth) / 2.0);
-                int y = Convert.ToInt32((rect.Height - charts.IconHeight) / 2.0);
-                _featureSet.Diagrams.DrawChart(g, x, y, false, Color.White);
+                using (var g = Graphics.FromImage(bmp))
+                {
+                    var x = Convert.ToInt32((rect.Width - charts.IconWidth) / 2.0);
+                    var y = Convert.ToInt32((rect.Height - charts.IconHeight) / 2.0);
+                    _featureSet.Diagrams.DrawChart(g, x, y, false, Color.White);
+                }
             }
 
             pctCharts.Image = bmp;
@@ -352,7 +344,7 @@ namespace MW5.Plugins.Symbology.Views
 
             txtLayerName.Text = Model.Name;
 
-            string filename = string.IsNullOrWhiteSpace(Model.Filename) ? "<not defined>" : Model.Filename;
+            var filename = string.IsNullOrWhiteSpace(Model.Filename) ? "<not defined>" : Model.Filename;
             txtDatasourceName.Text = filename;
 
             txtProjection.Text = Model.Projection.IsEmpty ? "<not defined>" : Model.Projection.Name;
@@ -362,14 +354,14 @@ namespace MW5.Plugins.Symbology.Views
             dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
             dynamicVisibilityControl1.ValueChanged += (s, e) => MarkStateChanged();
 
-            int numFeatures = _featureSet.Features.Count;
+            var numFeatures = _featureSet.Features.Count;
             var type = _featureSet.GeometryType.EnumToString().ToLower();
-            
-            string msg = string.Format("Feature count: {0}; geometry type: {1}", numFeatures, type);
+
+            txtBriefInfo.Text = $@"Feature count: {numFeatures}; geometry type: {type}";
 
             if (_featureSet.ZValueType != ZValueType.None)
             {
-                txtBriefInfo.Text = msg + "; subtype: " + _featureSet.ZValueType;
+                txtBriefInfo.Text += @"; subtype: " + _featureSet.ZValueType;
             }
         }
 
@@ -399,7 +391,7 @@ namespace MW5.Plugins.Symbology.Views
             InitLabelsTab();
 
             InitChartsTab();
-            
+
             InitInfoTextBox();
 
             txtLayerExpression.Text = _featureSet.VisibilityExpression;
@@ -407,7 +399,6 @@ namespace MW5.Plugins.Symbology.Views
             attributesControl1.Initialize(_featureSet);
 
             joinControl1.Initialize(_context, _featureSet.Table);
-
             joinControl1.JoinsChanged += () => attributesControl1.UpdateView();
 
             _lockUpdate = false;
@@ -488,12 +479,11 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void OnChartColorSchemeSelectedIndexChanged(object sender, EventArgs e)
         {
-            if (icbChartColorScheme.ColorSchemes != null && icbChartColorScheme.SelectedIndex >= 0)
-            {
-                RefreshModel();
-                DrawChartsPreview();
-                RedrawMap();
-            }
+            if (icbChartColorScheme.ColorSchemes == null || icbChartColorScheme.SelectedIndex < 0) return;
+
+            RefreshModel();
+            DrawChartsPreview();
+            RedrawMap();
         }
 
         private void OnChartsClick(object sender, EventArgs e)
@@ -506,11 +496,10 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void OnCommentsKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                Model.Description = txtComments.Text;
-                MarkStateChanged();
-            }
+            if (e.KeyChar != (char)Keys.Enter) return;
+
+            Model.Description = txtComments.Text;
+            MarkStateChanged();
         }
 
         /// <summary>
@@ -527,16 +516,13 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void OnDefaultDrawingOptionsClick(object sender, EventArgs e)
         {
-            if (_context.ShowDefaultStyleDialog(Model.Handle, true, this))
-            {
-                DrawAllPreviews();
+            if (!_context.ShowDefaultStyleDialog(Model.Handle, true, this)) return;
 
-                Application.DoEvents();
+            DrawAllPreviews();
+            Application.DoEvents();
 
-                RedrawMap();
-
-                RefreshControls();
-            }
+            RedrawMap();
+            RefreshControls();
         }
 
         /// <summary>
@@ -552,18 +538,17 @@ namespace MW5.Plugins.Symbology.Views
             LockLegendAndMap(false);
 
             var lyr = Model;
-            if (lyr != null)
+            if (lyr == null) return;
+
+            lyr.Name = txtLayerName.Text;
+            _tabIndex = tabControl1.SelectedIndex;
+
+            _metadata.ShowLayerPreview = chkLayerPreview.Checked;
+            _metadata.Comments = txtComments.Text;
+
+            if (_previewLayerHandle != -1)
             {
-                lyr.Name = txtLayerName.Text;
-                _tabIndex = tabControl1.SelectedIndex;
-
-                _metadata.ShowLayerPreview = chkLayerPreview.Checked;
-                _metadata.Comments = txtComments.Text;
-
-                if (_previewLayerHandle != -1)
-                {
-                    axMap1.Layers.RemoveWithoutClosing(_previewLayerHandle);
-                }
+                axMap1.Layers.RemoveWithoutClosing(_previewLayerHandle);
             }
         }
 
@@ -571,7 +556,7 @@ namespace MW5.Plugins.Symbology.Views
         {
             Application.DoEvents();
 
-            MapConfig.ForceHideLabels = false; // TODO: it's ugly; thing of a better way to show preview
+            MapConfig.ForceHideLabels = false; // TODO: it's ugly; think of a better way to show preview
         }
 
         /// /// <summary>
@@ -623,12 +608,11 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void OnLayerNameKeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                Model.Name = txtLayerName.Text;
-                MarkStateChanged();
-                RedrawLegend();
-            }
+            if (e.KeyChar != (char)Keys.Enter) return;
+
+            Model.Name = txtLayerName.Text;
+            MarkStateChanged();
+            RedrawLegend();
         }
 
         /// <summary>
@@ -716,7 +700,7 @@ namespace MW5.Plugins.Symbology.Views
             groupChartAppearance.Enabled = _featureSet.Diagrams.Count > 0;
 
             // charts
-            bool enabled = (_featureSet.Diagrams.Count > 0 && (_featureSet.Diagrams.Fields.Any()));
+            var enabled = _featureSet.Diagrams.Count > 0 && _featureSet.Diagrams.Fields.Any();
             groupChartAppearance.Enabled = enabled;
             btnClearCharts.Enabled = enabled;
             icbChartColorScheme.Enabled = enabled;
@@ -778,7 +762,7 @@ namespace MW5.Plugins.Symbology.Views
             _featureSet.Labels.SavingMode = PersistenceType.None;
             _featureSet.Diagrams.SavingMode = PersistenceType.None;
 
-            string state = Model.Serialize();
+            var state = Model.Serialize();
 
             _featureSet.Labels.SavingMode = mode1;
             _featureSet.Diagrams.SavingMode = mode2;
@@ -791,7 +775,7 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void ShowLayerPreview()
         {
-            bool val = MapConfig.LoadSymbologyOnAddLayer;
+            var val = MapConfig.LoadSymbologyOnAddLayer;
             MapConfig.LoadSymbologyOnAddLayer = false;
 
             axMap1.ShowCoordinates = CoordinatesDisplay.None;
@@ -802,7 +786,7 @@ namespace MW5.Plugins.Symbology.Views
             axMap1.MapCursor = MapCursor.None;
             axMap1.MouseWheelSpeed = 1.0;
             axMap1.ZoomBehavior = ZoomBehavior.Default;
-            _previewLayerHandle = axMap1.Layers.Add(_featureSet, true);
+            _previewLayerHandle = axMap1.Layers.Add(_featureSet);
             axMap1.ZoomToLayer(_previewLayerHandle);
 
             MapConfig.LoadSymbologyOnAddLayer = val;
@@ -815,8 +799,8 @@ namespace MW5.Plugins.Symbology.Views
             var data2 = VectorInfoHelper.GetVectorLayerInfo(Model.VectorSource);
             temp.AddSubItem(data);
             temp.AddSubItem(data2);
-            string s = temp.Serialize();
-            
+            var s = temp.Serialize();
+
             ClipboardHelper.SetText(s);
         }
     }
