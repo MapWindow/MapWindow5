@@ -187,7 +187,8 @@ namespace MW5.Plugins
             var plugin = _plugins.FirstOrDefault(p => p.Identity.Guid == pluginGuid);
             if (plugin == null)
             {
-                throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
+                // throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
+                MessageService.Current.Warn("Plugin which requested for loading isn't present in the list.");
             }
 
             try
