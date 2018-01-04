@@ -17,7 +17,7 @@ using MW5.Plugins.Printing.Services;
 
 namespace MW5.Plugins.Printing
 {
-    [MapWindowPlugin]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class PrintingPlugin : BasePlugin
     {
         private MenuGenerator _menuGenerator;

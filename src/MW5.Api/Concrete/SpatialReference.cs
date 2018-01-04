@@ -11,9 +11,10 @@ namespace MW5.Api.Concrete
     {
         private readonly GeoProjection _projection;
 
+        private int _epsgCode = -1;
+
         public SpatialReference()
         {
-            Logger.Current.Trace("In SpatialReference");
             _projection = new GeoProjection();
         }
 
@@ -143,6 +144,7 @@ namespace MW5.Api.Concrete
 
         public bool ImportFromEpsg(int projCode)
         {
+            _epsgCode = projCode;
             return _projection.ImportFromEPSG(projCode);
         }
 
@@ -168,16 +170,19 @@ namespace MW5.Api.Concrete
 
         public bool SetGoogleMercator()
         {
+            _epsgCode = 3857;
             return _projection.SetGoogleMercator();
         }
 
         public bool SetWgs84()
         {
+            _epsgCode = 4326;
             return _projection.SetWgs84();
         }
 
         public void SetWgs84Projection(Wgs84Projection projection)
         {
+            _epsgCode = (int)projection;
             _projection.SetWgs84Projection((tkWgs84Projection)projection);
         }
 
@@ -198,7 +203,9 @@ namespace MW5.Api.Concrete
 
         public bool TryAutoDetectEpsg(out int epsgCode)
         {
-            return _projection.TryAutoDetectEpsg(out epsgCode);
+            var retVal = _projection.TryAutoDetectEpsg(out epsgCode);
+            _epsgCode = epsgCode;
+            return retVal;
         }
 
         public bool WriteToFile(string filename)
@@ -218,6 +225,24 @@ namespace MW5.Api.Concrete
             return proj2.ImportFromWkt(esri) ? proj2 : null;
         }
 
+        public int GetEpsgCode()
+        {
+            // Check cached value:
+            if (_epsgCode > -1) return _epsgCode;
+
+            // Get new:
+            int epsgCode;
+            if (!_projection.TryAutoDetectEpsg(out epsgCode))
+            {
+                // TODO Use dialects to get the GetCoordinateSystem, which has the epsgCode as well
+                // See ProjectionMismatchService.HandleEmptyMapProjection()
+                return -1;
+            }
+
+            _epsgCode = epsgCode;
+            return _epsgCode;
+        }
+
         public object InternalObject
         {
             get { return _projection; }
@@ -232,6 +257,12 @@ namespace MW5.Api.Concrete
         {
             get { return _projection.Key; }
             set { _projection.Key = value; }
+        }
+
+        public override string ToString()
+        {
+            if (_projection.IsEmpty) return "No projection";
+            return _projection.Name;
         }
     }
 }

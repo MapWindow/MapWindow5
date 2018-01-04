@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MapWinGIS;
+﻿using System.Collections.Generic;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
@@ -25,7 +23,7 @@ namespace MW5.Api.Interfaces
         int BufferOffsetX { get; }
         int BufferOffsetY { get; }
 
-        void ImageToBuffer(int imageX, int imageY, out int bufferX, out int bufferY);
+        void ImageToBuffer(int column, int row, out int bufferX, out int bufferY);
 
         void BufferToProjection(int bufferX, int bufferY, out double projX, out double projY);
         void ProjectionToBuffer(double projX, double projY, out int bufferX, out int bufferY);

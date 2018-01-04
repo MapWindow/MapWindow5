@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="InitPlugin.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015 - 2017
 // </copyright>
 // <summary>
 //   The initialization of the plugin.
@@ -25,35 +25,36 @@ namespace MW5.Plugins.TemplatePlugin
     #endregion
 
     /// <summary>
-    ///     The template plugin.
+    /// The template plugin.
     /// </summary>
-    [MapWindowPlugin]
+    /// <seealso cref="MW5.Plugins.Concrete.BasePlugin" />
+    [MapWindowPlugin(loadOnStartUp: false)]
     public class InitPlugin : BasePlugin
     {
         #region Fields
 
         /// <summary>
-        ///     The context of the application, holding the menu, layers, project, etc.
+        /// The context of the application, holding the menu, layers, project, etc.
         /// </summary>
         private IAppContext _context;
 
         /// <summary>
-        ///     The reference to the map listener class, is used in the constructor
+        /// The reference to the map listener class, is used in the constructor
         /// </summary>
         private MapListener _mapListener;
 
         /// <summary>
-        ///     The reference to the menu generator class, is used in the constructor
+        /// The reference to the menu generator class, is used in the constructor
         /// </summary>
         private MenuGenerator _menuGenerator;
 
         /// <summary>
-        ///     The reference to the menu listener class, is used in the constructor
+        /// The reference to the menu listener class, is used in the constructor
         /// </summary>
         private MenuListener _menuListener;
 
         /// <summary>
-        ///     The reference to the sample dock user control, is used in the constructor
+        /// The reference to the sample dock user control, is used in the constructor
         /// </summary>
         private SampleDockWindow _sampleDockWindow;
 
@@ -64,6 +65,7 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// Set up container for dependency injection:
         /// </summary>
+        /// <param name="container">The container.</param>
         protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
@@ -72,9 +74,7 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// The initialize method, called when the plug-in is loaded
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
+        /// <param name="context">The application context.</param>
         public override void Initialize(IAppContext context)
         {
             // Save to local properties:

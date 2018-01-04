@@ -160,7 +160,8 @@ namespace MW5.Api.Concrete
             {
                 string s = "Geometry type: " + GeometryType.EnumToString() + Environment.NewLine;
                 s += "Feature count: " + Features.Count + Environment.NewLine;
-                s += "Projection: " + Projection.ExportToProj4();
+                // s += "Projection: " + Projection.ExportToProj4();
+                s += "Projection: " + Projection.Name;
                 return s;
             }
         }
@@ -808,7 +809,7 @@ namespace MW5.Api.Concrete
         public IFeatureSet FixUpShapes(bool selectedOnly)
         {
             Shapefile sf;
-            bool result = _shapefile.FixUpShapes2(selectedOnly, out sf);
+            _shapefile.FixUpShapes2(selectedOnly, out sf);
             return WrapShapefile(sf);
         }
 

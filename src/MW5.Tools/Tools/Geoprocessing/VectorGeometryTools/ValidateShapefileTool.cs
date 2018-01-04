@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -14,11 +8,9 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
-using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
-using MW5.Tools.Views.Custom;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
@@ -26,12 +18,12 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.Validation)]
     public class ValidateShapefileTool: GisTool
     {
-        private int _errorCount = 0;
+        private int _errorCount;
 
         [Input("Input datasource", 0)]
         public IVectorInput Input { get; set; }
 
-        [Output("Output layer", 0)]
+        [Output("Output layer")]
         [OutputLayer("{input}_errors.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 

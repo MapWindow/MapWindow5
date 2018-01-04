@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
@@ -35,6 +36,8 @@ namespace MW5.Api.Interfaces
         bool Deserialize(string state);
 
         void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode);
+
+        void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode, Color selectionColor);
 
         ISpatialReference Projection { get; }
         IEnvelope Envelope { get; }

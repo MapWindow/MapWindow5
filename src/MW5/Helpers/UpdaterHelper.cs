@@ -28,6 +28,9 @@ namespace MW5.Helpers
         {
             var config = AppConfig.Instance;
 
+            // TODO: Need modifications, skip for now:
+            return;
+
             if (!config.UpdaterCheckNewVersion)
             {
                 return;
@@ -96,6 +99,9 @@ namespace MW5.Helpers
         /// </summary>
         private static async void DownloadNewerVersion()
         {
+            // TODO: Needs modifications. For now, skip:
+            return;
+
             Logger.Current.Debug("Checking for new version");
             var assembly = Assembly.GetExecutingAssembly();
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);

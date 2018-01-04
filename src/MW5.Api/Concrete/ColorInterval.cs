@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using MapWinGIS;
-using MW5.Api.Helpers;
 using MW5.Shared;
 
 namespace MW5.Api.Concrete
@@ -9,11 +8,11 @@ namespace MW5.Api.Concrete
     public class ColorInterval : IEquatable<ColorInterval>
     {
         // these 2 are used to loop through breaks
-        private int _breakIndex = -1;
-        private ColorScheme _scheme = null;
+        private readonly int _breakIndex = -1;
+        private readonly ColorScheme _scheme;
         
         // these ones for adding a new break
-        private double _value;
+        private readonly double _value;
         private Color _color;
 
         public double Value
@@ -62,7 +61,7 @@ namespace MW5.Api.Concrete
             }
             if (breakIndex < 0 || breakIndex >= scheme.NumBreaks)
             {
-                throw new ArgumentOutOfRangeException("Color break index is out of range.");
+                throw new ArgumentOutOfRangeException("breakIndex", "Color break index is out of range.");
             }
             _scheme = scheme;
             _breakIndex = breakIndex;
@@ -71,7 +70,7 @@ namespace MW5.Api.Concrete
         public bool Equals(ColorInterval other)
         {
             // TODO: use tolerance for comparison
-            return other.Value == this.Value;
+            return other != null && other.Value.Equals(Value);
         }
 
         public override bool Equals(object obj)

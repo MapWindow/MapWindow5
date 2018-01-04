@@ -1,4 +1,6 @@
-﻿namespace MW5.UI.Forms
+﻿using MW5.UI.Controls;
+
+namespace MW5.UI.Forms
 {
     partial class OptionsForm
     {
@@ -29,9 +31,11 @@
         private void InitializeComponent()
         {
             this.lblText = new System.Windows.Forms.Label();
+            this.lblColorText = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.chkDontShow = new System.Windows.Forms.CheckBox();
+            this.colorPicker = new MW5.UI.Controls.Office2007ColorPicker();
             this.SuspendLayout();
             // 
             // lblText
@@ -76,6 +80,28 @@
             this.chkDontShow.UseVisualStyleBackColor = true;
             this.chkDontShow.Visible = false;
             // 
+            // lblColorText
+            // 
+            this.lblColorText.Location = new System.Drawing.Point(18, 150);
+            this.lblColorText.Name = "lblColorText";
+            this.lblColorText.Size = new System.Drawing.Size(174, 32);
+            this.lblColorText.TabIndex = 8;
+            this.lblColorText.Text = "Please select the selection color:";
+            // 
+            // colorPicker
+            // 
+            this.colorPicker.Color = System.Drawing.Color.Yellow;
+            this.colorPicker.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.colorPicker.DropDownHeight = 1;
+            this.colorPicker.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.colorPicker.FormattingEnabled = true;
+            this.colorPicker.IntegralHeight = false;
+            this.colorPicker.Items.AddRange(new object[] { "Color" });
+            this.colorPicker.Location = new System.Drawing.Point(190, 150);
+            this.colorPicker.Name = "colorPicker";
+            this.colorPicker.Size = new System.Drawing.Size(74, 21);
+            this.colorPicker.TabIndex = 120;
+            // 
             // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,6 +109,8 @@
             this.CancelButton = this.button2;
             this.CaptionFont = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientSize = new System.Drawing.Size(378, 217);
+            this.Controls.Add(this.colorPicker);
+            this.Controls.Add(this.lblColorText);
             this.Controls.Add(this.chkDontShow);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -92,7 +120,7 @@
             this.MinimizeBox = false;
             this.Name = "OptionsForm";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MapWindow";
             this.Load += new System.EventHandler(this.OptionsForm_Load);
             this.ResumeLayout(false);
@@ -102,10 +130,12 @@
 
         #endregion
 
+        protected System.Windows.Forms.Label lblColorText;
         protected System.Windows.Forms.Label lblText;
         protected System.Windows.Forms.Button button1;
         protected System.Windows.Forms.Button button2;
         protected System.Windows.Forms.CheckBox chkDontShow;
+        protected Office2007ColorPicker colorPicker;
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Serialization;
 using AxMapWinGIS;
 using MapWinGIS;
@@ -8,6 +9,7 @@ using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
@@ -270,6 +272,12 @@ namespace MW5.Api.Concrete
             FeatureSet.UpdateSelection(indices, mode);
 
             MapControl.FireSelectionChanged(MapControl, new SelectionChangedEventArgs(Handle, true));
+        }
+
+        public void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode, Color selectionColor)
+        {
+            FeatureSet.SelectionColor = selectionColor;
+            UpdateSelection(indices, mode);
         }
 
         public ISpatialReference Projection

@@ -14,7 +14,7 @@
 #define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
 
-;#define x64BitVersion true
+#define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"
@@ -70,10 +70,10 @@ VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
 AlwaysShowComponentsList=false
 #ifdef x64BitVersion
-ArchitecturesAllowed=x64
-ArchitecturesInstallIn64BitMode=x64
+  ArchitecturesAllowed=x64
+  ArchitecturesInstallIn64BitMode=x64
 #endif
-ChangesAssociations=True
+ChangesAssociations=Yes
 UsePreviousAppDir=False
 
 [Components]
@@ -82,7 +82,7 @@ Name: "USASampleData"; Description: "USA Sample data"; Types: full
 
 [Files]
 ;; MapWinGIS
-Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
+Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "libecwj2.dll, *.exe, *.pdb"
 ;; MapWindow5 dlls
 Source: "{#ExeBinPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 Source: "{#ExeBinPath}\MapWindow.exe"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
@@ -93,7 +93,7 @@ Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: igno
 ;; Manuals sub folder
 Source: "{#ExeBinPath}\Manuals\*"; DestDir: "{app}\Manuals"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; Plugins subfolder
-Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll"
+Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*"
 ;; Styles subfolder
 Source: "{#ExeBinPath}\Styles\*"; DestDir: "{app}\Styles"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; SQLite interop:
@@ -125,9 +125,9 @@ BeveledLabel={#MyAppName}
 [Run]
 ; Install VC++ 2013 if needed:
 #ifdef x64BitVersion
-Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x64()
+Filename: "{tmp}\{#vcredist}"; Parameters: "/quiet"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x64()
 #else
-Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x86()
+Filename: "{tmp}\{#vcredist}"; Parameters: "/quiet"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x86()
 #endif
 Filename: "{app}\MapWindow.exe"; Flags: shellexec runasoriginaluser postinstall nowait skipifsilent; Description: "Start MapWindow5 GIS?"
 Filename: "{code:GetDataDir}"; Flags: shellexec runasoriginaluser nowait skipifsilent; Description: "Open sample data folder"; Components: USASampleData
@@ -150,14 +150,16 @@ Type: filesandordirs; Name: "{app}\Logs"; Components: MapWindow
 
 [Registry]
 ;; http://www.jrsoftware.org/isfaq.php#assoc
-Root: HKCR; Subkey: ".mwproj"; ValueType: string; ValueName: ""; ValueData: "MW5Project"; Flags: uninsdeletevalue
-Root: HKCR; Subkey: "MW5Project"; ValueType: string; ValueName: ""; ValueData: "MW5 Project"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "MW5Project\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\MAPWINDOW.EXE,0"
-Root: HKCR; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\MAPWINDOW.EXE"" ""%1"""
+Root: "HKCR"; Subkey: ".mwproj"; ValueType: string; ValueData: "MW5Project"; Flags: uninsdeletevalue;
+Root: "HKCR"; Subkey: "MW5Project"; ValueType: string; ValueData: "MW5 Project"; Flags: uninsdeletekey
+Root: "HKCR"; Subkey: "MW5Project\DefaultIcon"; ValueType: string; ValueData: "{app}\MAPWINDOW.EXE,0"
+Root: "HKCR"; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueData: """{app}\MAPWINDOW.EXE"" ""%1"""
 
 [InstallDelete]
 Type: files; Name: "{app}\Plugins\MW5.TemplatePlugin.dll"; Components: MapWindow
 Type: files; Name: "{app}\Plugins\Interop.MapWinGIS.dll"; Components: MapWindow
+;; Old ECW driver, conflicts with new driver:
+Type: files; Name: "{app}\MapWinGIS\libecwj2.dll"; Components: MapWindow
 
 [Code]
 #IFDEF UNICODE

@@ -32,7 +32,7 @@ namespace MW5.Services.Concrete
         private int _lastLayerHandle;
         private bool _withinBatch;
         private bool _aborted;
-
+        
         public LayerService(
             IAppContext context,
             IFileDialogService fileDialogService,
@@ -48,6 +48,15 @@ namespace MW5.Services.Concrete
             _broadcaster = broadcaster;
             _mismatchTester = mismatchTester;
             _aborted = false;
+        }
+
+        /// <summary>
+        /// Don't show the popup on projection mismatch, just do the reprojection
+        /// </summary>
+        /// <param name="autoReproject">if set to <c>true</c> [automatic reproject].</param>
+        public void SetReprojectOnMismatch(bool autoReproject)
+        {
+            _mismatchTester.SetReprojectOnMismatch(autoReproject);
         }
 
         public bool RemoveSelectedLayer()

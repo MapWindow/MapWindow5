@@ -47,18 +47,18 @@ namespace MW5.Projections.Forms
         /// <param name="projection">Projection name</param>
         /// <param name="operation">Operation that was applied to the file</param>
         /// <param name="newName">The new name of the file (in case of reprojection)</param>
-        public void AddFile(string filename, string projection, ProjectionOperaion operation, string newName)
+        public void AddFile(string filename, string projection, ProjectionOperation operation, string newName)
         {
             string s = operation.ToString();
             switch (operation)
             {
-                case ProjectionOperaion.AbsenceIgnored:
+                case ProjectionOperation.AbsenceIgnored:
                     s = "Absence ignored";
                     break;
-                case ProjectionOperaion.MismatchIgnored:
+                case ProjectionOperation.MismatchIgnored:
                     s = "Mismatch ignored";
                     break;
-                case ProjectionOperaion.FailedToReproject:
+                case ProjectionOperation.FailedToReproject:
                     s = "Failed to reproject";
                     break;
             }
@@ -68,7 +68,7 @@ namespace MW5.Projections.Forms
             item.SubItems.Add(s);
             item.SubItems.Add(Path.GetFileName(newName));
 
-            if (operation == ProjectionOperaion.Skipped || operation == ProjectionOperaion.FailedToReproject)
+            if (operation == ProjectionOperation.Skipped || operation == ProjectionOperation.FailedToReproject)
             {
                 item.SubItems.Add(MapConfig.GdalReprojectionErrorMsg);
             }

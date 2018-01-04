@@ -289,6 +289,40 @@ namespace MW5.Api.Concrete
             _shape.Move(offsetX, offsetY);
         }
 
+        /// <summary>
+        /// Moves the point.
+        /// </summary>
+        /// <param name="pointIndex">Index of the point.</param>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        public bool MovePoint(int pointIndex, double x, double y)
+        {
+            return _shape.put_XY(pointIndex, x, y);
+        }
+
+        /// <summary>
+        /// Sets the M-value.
+        /// </summary>
+        /// <param name="pointIndex">Index of the point.</param>
+        /// <param name="m">The m.</param>
+        /// <returns>True on success</returns>
+        public bool SetM(int pointIndex, double m)
+        {
+            return _shape.put_M(pointIndex, m);
+        }
+
+        /// <summary>
+        /// Sets the Z-value.
+        /// </summary>
+        /// <param name="pointIndex">Index of the point.</param>
+        /// <param name="z">The z.</param>
+        /// <returns>True on success</returns>
+        public bool SetZ(int pointIndex, double z)
+        {
+            return _shape.put_Z(pointIndex, z);
+        }
+
         public bool Overlaps(IGeometry g)
         {
             return _shape.Overlaps(g.GetInternal());
@@ -304,6 +338,12 @@ namespace MW5.Api.Concrete
             return _shape.Relates(g.GetInternal(), (tkSpatialRelation)relation);
         }
 
+        /// <summary>
+        /// Rotates the geometry.
+        /// </summary>
+        /// <param name="originX">The origin x.</param>
+        /// <param name="originY">The origin y.</param>
+        /// <param name="angle">The angle, in degrees</param>
         public void Rotate(double originX, double originY, double angle)
         {
             _shape.Rotate(originX, originY, angle);
@@ -396,7 +436,7 @@ namespace MW5.Api.Concrete
             x = 0.0;
             y = 0.0;
 
-            return _shape.get_XY(index, ref x, ref y);
+            return _shape.XY[index, x, y];
         }
     }
 }

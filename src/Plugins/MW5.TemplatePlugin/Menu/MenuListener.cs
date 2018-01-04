@@ -1,27 +1,21 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MenuListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015-2017
 // </copyright>
 // <summary>
 //   The menu listener.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
+using MW5.Plugins.TemplatePlugin.Properties;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 
 namespace MW5.Plugins.TemplatePlugin.Menu
 {
-    #region
-
-    using System;
-
-    using MW5.Plugins.Concrete;
-    using MW5.Plugins.Interfaces;
-    using MW5.Plugins.Services;
-    using MW5.Plugins.TemplatePlugin.Properties;
-
-    #endregion
 
     /// <summary>
     ///     The menu listener.
@@ -60,17 +54,11 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MenuListener"/> class.
+        /// Initializes a new instance of the <see cref="MenuListener" /> class.
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        /// <param name="plugin">
-        /// The plugin.
-        /// </param>
-        /// <param name="sampleDockWindow">
-        /// The sample dock wi
-        /// </param>
+        /// <param name="context">The application context.</param>
+        /// <param name="plugin">The plugin.</param>
+        /// <param name="sampleDockWindow">The sample dock wi</param>
         public MenuListener(IAppContext context, InitPlugin plugin, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
@@ -137,12 +125,8 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <summary>
         /// The toolbar button clicked event handler
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The menu item event arguments
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The menu item event arguments</param>
         private void Plugin_ItemClicked(object sender, MenuItemEventArgs e)
         {
             switch (e.ItemKey)
@@ -150,7 +134,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
                 case MenuKeys.ShowDockableWindow:
                     // Clicked on the toolbar button
                     MessageService.Current.Info("Hello from Template plugin");
-                    this.AddDockWindowToPanels();
+                    AddDockWindowToPanels();
                     break;
             }
         }

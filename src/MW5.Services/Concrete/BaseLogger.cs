@@ -44,8 +44,10 @@ namespace MW5.Services.Concrete
         /// <param name="param">The parameter.</param>
         public void Trace(string msg, params object[] param)
         {
+#if DEBUG
             // Only enable when really needed:
             // Log(string.Format(msg, param), LogLevel.Debug);
+#endif
         }
 
         public void Warn(string msg, Exception ex, params object[] param)

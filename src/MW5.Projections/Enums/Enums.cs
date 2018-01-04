@@ -27,7 +27,7 @@
         Substituted = 4
     }
 
-    public enum ProjectionOperaion
+    public enum ProjectionOperation
     {
         Reprojected = 0,
         Assigned = 1,

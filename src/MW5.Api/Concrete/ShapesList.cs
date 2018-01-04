@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MapWinGIS;
 using MW5.Api.Interfaces;
 
@@ -24,9 +21,9 @@ namespace MW5.Api.Concrete
             _list.AddShape(layerHandle, shapeIndex);
         }
 
-        public void AddPixel(int layerHandle, int rasterX, int rasterY)
+        public void AddPixel(int layerHandle, int column, int row)
         {
-            _list.AddPixel(layerHandle, rasterX, rasterY);
+            _list.AddPixel(layerHandle, column, row);
         }
 
         public void Clear()

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MenuGenerator.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015 - 2017
 // </copyright>
 // <summary>
 //   The menu generator.
@@ -35,14 +35,10 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MenuGenerator"/> class.
+        /// Initializes a new instance of the <see cref="MenuGenerator" /> class.
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        /// <param name="plugin">
-        /// The plugin.
-        /// </param>
+        /// <param name="context">The application context.</param>
+        /// <param name="plugin">The plugin.</param>
         public MenuGenerator(IAppContext context, InitPlugin plugin)
         {
             _commands = new MenuCommands(plugin.Identity);
@@ -60,12 +56,8 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <summary>
         /// Initialize the new menu.
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        /// <param name="identity">
-        /// The plug-in identity.
-        /// </param>
+        /// <param name="context">The application context.</param>
+        /// <param name="identity">The plug-in identity.</param>
         private void InitMenu(IAppContext context, PluginIdentity identity)
         {
             var menu = context.Menu.Items.AddDropDown("Template", "_", identity);
@@ -75,12 +67,8 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <summary>
         /// Initialize the toolbar.
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        /// <param name="identity">
-        /// The plug-in identity.
-        /// </param>
+        /// <param name="context">The application context.</param>
+        /// <param name="identity">The plug-in identity.</param>
         private void InitToolbar(IAppContext context, PluginIdentity identity)
         {
             // Create a new toolbar

@@ -105,7 +105,7 @@ namespace MW5.Projections.Forms
                 }
                 else
                 {
-                    report.AddFile(name, projName, ProjectionOperaion.Skipped, "");
+                    report.AddFile(name, projName, ProjectionOperation.Skipped, "");
                 }
             }
 

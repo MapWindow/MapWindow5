@@ -189,6 +189,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void UpdateDescription(IRepositoryItem item)
         {
+            Logger.Current.Debug("In UpdateDescription");
             richTextBox1.SetText("Loading...");
 
             Task<string>.Factory.StartNew(item.GetDescription).ContinueWith(description =>
@@ -197,6 +198,7 @@ namespace MW5.Plugins.Repository.Views
                     {
                         string msg = string.Format("{0}{2}{2}{1}", item.DisplayName, description.Result,
                             Environment.NewLine);
+                        Logger.Current.Debug(msg);
                         richTextBox1.SetDescription(msg);
                     }
                     catch (Exception ex)

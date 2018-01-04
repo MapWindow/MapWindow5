@@ -1,24 +1,20 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GisTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015-2017
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Helpers;
-using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Services;
@@ -135,16 +131,18 @@ namespace MW5.Tools.Model
 
                 var input = Parameters.OfType<LayerParameterBase>().ToList();
 
-                if (input.Count() == 1)
+                if (input.Count == 1)
                 {
-                    name += ": " + input.FirstOrDefault().DatasourceName;
+                    var layerParameterBase = input.FirstOrDefault();
+                    if (layerParameterBase != null) name += ": " + layerParameterBase.DatasourceName;
                     return name;
                 }
 
                 var output = Parameters.OfType<OutputLayerInfo>().ToList();
-                if (output.Count() == 1)
+                if (output.Count == 1)
                 {
-                    name += ": " + output.FirstOrDefault().Name;
+                    var outputLayerInfo = output.FirstOrDefault();
+                    if (outputLayerInfo != null) name += ": " + outputLayerInfo.Name;
                     return name;
                 }
 
@@ -220,7 +218,10 @@ namespace MW5.Tools.Model
         /// </summary>
         public BaseParameter FindParameter<TTool, T>(Expression<Func<TTool, T>> parameter)
         {
-            var name = (parameter.Body as MemberExpression).Member.Name;
+            var memberExpression = parameter.Body as MemberExpression;
+            if (memberExpression == null) return null;
+
+            var name = memberExpression.Member.Name;
             return Parameters.FirstOrDefault(p => p.Name == name);
         }
 

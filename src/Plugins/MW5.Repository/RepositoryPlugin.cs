@@ -7,7 +7,7 @@ using MW5.Plugins.Repository.Views;
 
 namespace MW5.Plugins.Repository
 {
-    [MapWindowPlugin()]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class RepositoryPlugin: BasePlugin
     {
         private RepositoryPresenter _repositoryPresenter;

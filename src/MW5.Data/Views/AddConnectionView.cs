@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Data.Db;
 using MW5.Data.Views.Abstract;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
-using MW5.Shared;
 using MW5.UI.Forms;
 
 namespace MW5.Data.Views
@@ -38,7 +36,7 @@ namespace MW5.Data.Views
 
             UpdateView();
 
-            Shown += (s, e) => tabControlAdv1.Focus(); ;
+            Shown += (s, e) => tabControlAdv1.Focus();
         }
 
         private void RestoreSettings()
@@ -161,8 +159,7 @@ namespace MW5.Data.Views
             switch (DatabaseType)
             {
                 case GeoDatabaseType.PostGis:
-                    return new PostGisConnection()
-                    {
+                    return new PostGisConnection {
                         Host = txtPostGisHost.Text,
                         PortString = txtPostGisPort.Text,
                         Database = txtPostGisDatabase.Text,

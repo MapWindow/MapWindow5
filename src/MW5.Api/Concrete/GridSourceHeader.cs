@@ -12,7 +12,7 @@ namespace MW5.Api.Concrete
         internal GridSourceHeader(GridHeader header)
         {
             _header = header;
-            if (header != null)
+            if (header == null)
             {
                 throw new NullReferenceException("Internal reference is null");
             }

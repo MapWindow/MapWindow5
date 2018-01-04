@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 
 namespace MW5.Data.Repository
 {
@@ -14,12 +11,18 @@ namespace MW5.Data.Repository
         {
             if (layer == null) throw new ArgumentNullException("layer");
 
+            Logger.Current.Trace("In DatabaseLayerMetadata");
             // we don't want to keep the connection open all the time, so simply grab the necessary data
             Name = layer.Name;
+            Logger.Current.Trace("Name: " + Name);
             GeometryType = layer.ActiveGeometryType;
+            Logger.Current.Trace("GeometryType: " + GeometryType);
             NumFeatures = layer.get_FeatureCount();
+            Logger.Current.Trace("NumFeatures: " + NumFeatures);
             Projection = layer.Projection;
+            Logger.Current.Trace("Projection: " + Projection);
             Connection = layer.ConnectionString;
+            Logger.Current.Trace("Connection: " + Connection);
         }
 
         public string Name { get; set; }

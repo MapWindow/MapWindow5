@@ -68,8 +68,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LightInject, Version=4.0.9.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.4.0.9\lib\net45\LightInject.dll</HintPath>
+    <Reference Include="LightInject, Version=5.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.5.0.3\lib\net45\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

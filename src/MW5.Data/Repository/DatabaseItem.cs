@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Data.Properties;
 using MW5.Plugins.Concrete;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
@@ -46,6 +41,7 @@ namespace MW5.Data.Repository
             Application.DoEvents();
 
             _syncContext = SynchronizationContext.Current;
+            Logger.Current.Trace("In Expand");
 
             Task.Factory.StartNew(d => LoadLayers(d as DatabaseItemMetadata), data).ContinueWith(t =>
                 {
@@ -57,10 +53,12 @@ namespace MW5.Data.Repository
                     {
                         Logger.Current.Info("Failed to to load OGR layers.", ex);
                     }
-
-                    HideLoadingIndicator(_node);
-
-                    _datasource.Close();
+                    finally
+                    {
+                        HideLoadingIndicator(_node);
+                        _datasource.Close();
+                        Logger.Current.Debug("Called _datasource.Close()");
+                    }
 
                 }, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -69,55 +67,64 @@ namespace MW5.Data.Repository
 
         private bool LoadLayers(DatabaseItemMetadata data)
         {
-            if (_datasource.Open(data.Connection.ConnectionString))
+            Logger.Current.Trace("Loading layers");
+            
+            if (!_datasource.Open(data.Connection.ConnectionString))
             {
-                var it = _datasource.GetFastEnumerator();
-
-                while (it.MoveNext())
-                {
-                    var layer = it.Current;
-
-                    if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql &&
-                        string.IsNullOrWhiteSpace(layer.GeometryColumnName))
-                    {
-                        // MySQL driver lists all tables as layers even if they don't have geometry column
-                        continue;
-                    }
-
-                    if (layer.GeometryType == GeometryType.None)
-                    {
-                        var types = layer.AvailableGeometryTypes.ToList();
-
-                        bool multipleGeometries = types.Count() > 1;
-
-                        foreach (var type in types)
-                        {
-                            // layer reference doesn't stay opened,
-                            // so spare adding another parameter to AddDatabaseLayer when it can be read from property
-                            layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);
-                            AddLayerNode(new VectorLayerWrapper(layer, multipleGeometries));
-                        }
-                    }
-                    else
-                    {
-                        AddLayerNode(new VectorLayerWrapper(layer, false));
-                    }
-                }
-
-                return true;
+                Logger.Current.Debug("Could not open connectionstring: " + data.Connection.ConnectionString);
+                return false;
             }
 
-            return false;
+            var it = _datasource.GetFastEnumerator();
+
+            while (it.MoveNext())
+            {
+                var layer = it.Current;
+
+                if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql &&
+                    string.IsNullOrWhiteSpace(layer.GeometryColumnName))
+                {
+                    // MySQL driver lists all tables as layers even if they don't have geometry column
+                    continue;
+                }
+                
+                if (layer.GeometryType == GeometryType.None)
+                {
+                    var types = layer.AvailableGeometryTypes.ToList();
+
+                    bool multipleGeometries = types.Count > 1;
+
+                    foreach (var type in types)
+                    {
+                        // layer reference doesn't stay opened,
+                        // so spare adding another parameter to AddDatabaseLayer when it can be read from property
+                        layer.SetActiveGeometryType(type.GeometryType, type.ZValueType);
+                        AddLayerNode(new VectorLayerWrapper(layer, multipleGeometries));
+                    }
+                }
+                else
+                {
+                    AddLayerNode(new VectorLayerWrapper(layer, false));
+                }
+            }
+
+            return true;
         }
 
         private void AddLayerNode(VectorLayerWrapper layer)
         {
-            _syncContext.Post((o) =>
+            Logger.Current.Trace("AddLayerNode (Post): " + layer.Layer.Name);
+            _syncContext.Send(o =>
             {
                 var l = o as VectorLayerWrapper;
                 if (l != null)
                 {
                     SubItems.AddDatabaseLayer(l.Layer, l.MultipleGeometries);
+                    Logger.Current.Trace(l.Layer.Name + " added as node");
+                }
+                else
+                {
+                    Logger.Current.Trace("In AddLayerNode. l is null.");
                 }
             }, layer);
         }

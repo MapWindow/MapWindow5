@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;

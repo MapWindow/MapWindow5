@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
-using MW5.Helpers;
-using MW5.Plugins;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
@@ -24,7 +15,7 @@ namespace MW5.Controls
     {
         private readonly IMap _mainMap;
         private readonly LocatorDockPanel _view;
-        private bool _noEvents = false;
+        private bool _noEvents;
 
         public LocatorPresenter(IMap map)
         {
@@ -151,7 +142,7 @@ namespace MW5.Controls
             img.Dx = (exts.MaxX - exts.MinX) / img.Width;
             img.Dy = (exts.MaxY - exts.MinY) / img.Height;
             img.XllCenter = exts.MinX + 0.5 * img.Dx;
-            img.YllCenter = exts.MinY + 0.5 * img.Dx;
+            img.YllCenter = exts.MinY + 0.5 * img.Dx; // TODO: Shouldn't this be img.Dy?
             img.DownsamplingMode = InterpolationType.HighQualityBicubic;
             img.UpsamplingMode = InterpolationType.HighQualityBicubic;
 

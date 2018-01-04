@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MapListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015 - 2017
 // </copyright>
 // <summary>
 //   The map listener.
@@ -23,14 +23,14 @@ namespace MW5.Plugins.TemplatePlugin
     #endregion
 
     /// <summary>
-    ///     The map listener.
+    /// The map listener.
     /// </summary>
     public class MapListener
     {
         #region Fields
 
         /// <summary>
-        ///     The context of the application, holding the menu, layers, project, etc.
+        /// The context of the application, holding the menu, layers, project, etc.
         /// </summary>
         private readonly IAppContext _context;
 
@@ -44,33 +44,17 @@ namespace MW5.Plugins.TemplatePlugin
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MapListener"/> class.
+        /// Initializes a new instance of the <see cref="MapListener" /> class.
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        /// <param name="plugin">
-        /// The plugin.
-        /// </param>
-        /// <param name="sampleDockWindow">
-        /// Reference to the sample dock window
-        /// </param>
+        /// <param name="context">The application context.</param>
+        /// <param name="plugin">The plugin.</param>
+        /// <param name="sampleDockWindow">Reference to the sample dock window</param>
         public MapListener(IAppContext context, InitPlugin plugin, SampleDockWindow sampleDockWindow)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
-
-            if (plugin == null)
-            {
-                throw new ArgumentNullException("plugin");
-            }
-
-            if (sampleDockWindow == null)
-            {
-                throw new ArgumentNullException("sampleDockWindow");
-            }
+            // Check input:
+            if (context == null) throw new ArgumentNullException("context");
+            if (plugin == null) throw new ArgumentNullException("plugin");
+            if (sampleDockWindow == null) throw new ArgumentNullException("sampleDockWindow");
 
             // Save local references:
             _context = context;
@@ -80,9 +64,9 @@ namespace MW5.Plugins.TemplatePlugin
             Debug.WriteLine("Number of loaded layers; " + _context.Layers.Count);
 
             // Create event handlers:
-            plugin.ExtentsChanged += this.PluginOnExtentsChanged;
-            plugin.ChooseLayer += this.PluginOnChooseLayer;
-            plugin.LayerSelected += this.PluginOnLayerSelected;
+            plugin.ExtentsChanged += PluginOnExtentsChanged;
+            plugin.ChooseLayer += PluginOnChooseLayer;
+            plugin.LayerSelected += PluginOnLayerSelected;
         }
 
         #endregion
@@ -92,12 +76,8 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// The plugin on choose layer.
         /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
+        /// <param name="map">The map.</param>
+        /// <param name="e">The ChooseLayer EventArgs.</param>
         private void PluginOnChooseLayer(IMuteMap map, ChooseLayerEventArgs e)
         {
             if (e.LayerHandle == -1)
@@ -113,12 +93,8 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// The extents changed event handler
         /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The event arguments
-        /// </param>
+        /// <param name="map">The map.</param>
+        /// <param name="e">The event arguments</param>
         private void PluginOnExtentsChanged(IMuteMap map, EventArgs e)
         {
             _sampleDockWindow.Write("MapListener.PluginOnExtentsChanged", map.Extents.ToString());
@@ -127,12 +103,8 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// The layer selected event handler
         /// </summary>
-        /// <param name="legend">
-        /// The legend.
-        /// </param>
-        /// <param name="e">
-        /// The layer event arguments
-        /// </param>
+        /// <param name="legend">The legend.</param>
+        /// <param name="e">The layer event arguments</param>
         private void PluginOnLayerSelected(IMuteLegend legend, LayerEventArgs e)
         {
             if (e.LayerHandle == -1)
@@ -140,7 +112,7 @@ namespace MW5.Plugins.TemplatePlugin
                 return;
             }
 
-            string filename = _context.Layers.ItemByHandle(e.LayerHandle).Filename;
+            var filename = _context.Layers.ItemByHandle(e.LayerHandle).Filename;
             if (File.Exists(filename))
             {
                 filename = Path.GetFileName(filename);

@@ -42,5 +42,6 @@ namespace MW5.Api.Interfaces
         bool WriteToFile(string filename);
         string ExportToEsri();
         ISpatialReference MorphToEsri();
+        int GetEpsgCode();
     }
 }

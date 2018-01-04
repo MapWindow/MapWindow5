@@ -4,7 +4,6 @@ using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
-using MW5.Shared;
 using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
@@ -132,7 +131,7 @@ namespace MW5.Api.Concrete
 
         public bool Save(string filename, GridFormat format = GridFormat.UseExtension)
         {
-            return _grid.Save(filename, (GridFileType) format, null);
+            return _grid.Save(filename, (GridFileType) format);
         }
 
         public bool Clear(object clearValue)

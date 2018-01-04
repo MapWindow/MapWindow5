@@ -17,7 +17,7 @@ namespace MW5.Plugins.DebugWindow
     /// <summary>
     /// The debug window plugin.
     /// </summary>
-    [MapWindowPlugin]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class DebugWindowPlugin : BasePlugin
     {
         private IAppContext _context;

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.ShapeEditor.Controls;
-using MW5.Plugins.ShapeEditor.Helpers;
 using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor
 {
-    [MapWindowPlugin()]
+    [MapWindowPlugin(loadOnStartUp: true)]
     public class ShapeEditor: BasePlugin
     {
         private IAppContext _context;

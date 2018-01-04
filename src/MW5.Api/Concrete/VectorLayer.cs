@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Api.Enums;
@@ -20,7 +19,7 @@ namespace MW5.Api.Concrete
             _layer = layer;
             if (layer == null)
             {
-                throw new NullReferenceException("Internal style reference is null.");
+                throw new NullReferenceException("Internal layer is null.");
             }
         }
 
@@ -301,7 +300,8 @@ namespace MW5.Api.Concrete
             {
                 string s = "Geometry type: " + GeometryType.EnumToString() + Environment.NewLine;
                 s += "Feature count: " + get_FeatureCount() + Environment.NewLine;
-                s += Projection.ExportToProj4();
+                // s += Projection.ExportToProj4();
+                s += Projection.Name;
                 return s;
             }
         }

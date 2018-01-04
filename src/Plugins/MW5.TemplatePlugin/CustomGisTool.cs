@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Concrete;
+﻿using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
 using MW5.Tools.Model;
 
 namespace MW5.Plugins.TemplatePlugin
@@ -51,6 +45,12 @@ namespace MW5.Plugins.TemplatePlugin
             return true;
         }
 
+        /// <summary>
+        /// A method called after the main IGisTool.Run method is successfully finished.
+        /// Is executed on the UI thread. Typically used to save output datasources.
+        /// Default implementation automatically handles values assigned to OutputLayerInfo.Result.
+        /// </summary>
+        /// <returns></returns>
         public override bool AfterRun()
         {
             Log.Info("Custom tool was executed successfully");

@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="TypedOptionsForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2016
+//  MapWindow OSS Team - 2016-2017
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -40,7 +40,8 @@ namespace MW5.UI.Forms
                 button.Tag = list[i];
             }
 
-            Height = 150 + 23 * list.Count;
+            
+            Height = 180 + 23 * list.Count;
         }
 
         public T SelectedItem
@@ -68,6 +69,12 @@ namespace MW5.UI.Forms
             }
         }
 
+        public Color SelectedColor
+        {
+            get { return colorPicker.Color; }
+            set { colorPicker.Color = value; }
+        }
+
         private void InitializeComponent()
         {
             SuspendLayout();
@@ -76,7 +83,7 @@ namespace MW5.UI.Forms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             CaptionFont = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ClientSize = new Size(378, 217);
+            ClientSize = new Size(378, 317);
             Name = "TypedOptionsForm";
             Load += TypedOptionsForm_Load;
             ResumeLayout(false);

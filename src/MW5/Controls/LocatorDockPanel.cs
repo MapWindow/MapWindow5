@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="LocatorDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015 - 2017
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ namespace MW5.Controls
 {
     public partial class LocatorDockPanel : DockPanelControlBase
     {
-        private readonly Color _locatorColor = Color.Red;
+        // private readonly Color _locatorColor = Color.Red;
 
         private bool _dragging;
         private IEnvelope _extents; // extents of the main map

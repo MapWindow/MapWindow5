@@ -5,7 +5,7 @@ namespace MW5.Configuration.Plugins
 {
     public class PluginInfo
     {
-        private BasePlugin _plugin;
+        private readonly BasePlugin _plugin;
 
         public PluginInfo(BasePlugin plugin, bool selected)
         {
@@ -25,6 +25,11 @@ namespace MW5.Configuration.Plugins
         public string Author
         {
             get { return _plugin.Identity.Author; }
+        }
+
+        public bool LoadOnStartup
+        {
+            get { return _plugin.Identity.LoadOnStartup; }
         }
 
         internal BasePlugin BasePlugin

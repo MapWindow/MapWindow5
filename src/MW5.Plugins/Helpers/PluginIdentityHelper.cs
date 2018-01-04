@@ -57,7 +57,7 @@ namespace MW5.Plugins.Helpers
                     var info = pluginType.GetAssemblyInfo();
                     var attr = pluginType.Assembly.GetAttribute<GuidAttribute>();
                     var guid = new Guid(attr.Value);
-                    return new PluginIdentity(info.ProductName, info.CompanyName, guid);
+                    return new PluginIdentity(info.ProductName, info.CompanyName, guid, metadata.LoadOnStartUp);
                 }
                 catch (Exception ex)
                 {
@@ -65,7 +65,7 @@ namespace MW5.Plugins.Helpers
                 }
             }
 
-            return new PluginIdentity(metadata.Name, metadata.Author, new Guid(metadata.Guid));
+            return new PluginIdentity(metadata.Name, metadata.Author, new Guid(metadata.Guid), metadata.LoadOnStartUp);
         }
     }
 }
