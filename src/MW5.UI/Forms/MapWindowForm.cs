@@ -6,6 +6,7 @@
 
 using System;
 using System.Drawing;
+using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.UI.Properties;
 using Syncfusion.Windows.Forms;
@@ -19,6 +20,7 @@ namespace MW5.UI.Forms
 #endif
     {
         protected readonly IAppContext _context;
+        public static bool IsLoaded;
 
         public MapWindowForm()
         {
@@ -33,24 +35,23 @@ namespace MW5.UI.Forms
             : this()
         {
             _context = context;
+            InitializeComponent();
         }
 
-        public IAppContext AppContext
-        {
-            get { return _context; }
-        }
+        public IAppContext AppContext => _context;
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // MapWindowForm
             // 
-            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Name = "MapWindowForm";
-            this.Load += new System.EventHandler(this.MapWindowForm_Load);
-            this.ResumeLayout(false);
+            CaptionFont = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ClientSize = new Size(284, 261);
+            Name = "MapWindowForm";
+            FormClosed += MapWindowForm_FormClosed;
+            Load += MapWindowForm_Load;
+            ResumeLayout(false);
 
         }
 
@@ -58,6 +59,14 @@ namespace MW5.UI.Forms
         {
             // Fixing CORE-160
             CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            
+            // To prevent loading multiple instances:
+            IsLoaded = true;
+        }
+
+        private void MapWindowForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IsLoaded = false;
         }
     }
 }

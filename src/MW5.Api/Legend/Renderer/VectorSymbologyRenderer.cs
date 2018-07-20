@@ -160,7 +160,7 @@ namespace MW5.Api.Legend.Renderer
         /// <summary>
         /// Draws the shapefile categories.
         /// </summary>
-        private void DrawShapefileCategories(int top, bool isSnapshot, int maxWidth)
+        private void DrawShapefileCategories(ref int top, bool isSnapshot, int maxWidth)
         {
             if (_sf.Categories.Count == 0)
             {
@@ -348,7 +348,7 @@ namespace MW5.Api.Legend.Renderer
 
             top += height;
 
-            DrawShapefileCategories(top, _isSnapshot, maxWidth);
+            DrawShapefileCategories(ref top, _isSnapshot, maxWidth);
 
             DrawCharts(top);
         }

@@ -11,10 +11,10 @@
 #define SystemFlag "32bit"
 #define MyAppName "MapWindow5"
 #define MyAppPublisher "MapWindow Open Source GIS Community"
-#define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
+#define MyAppURL "https://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
 
-#define x64BitVersion true
+;; #define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"

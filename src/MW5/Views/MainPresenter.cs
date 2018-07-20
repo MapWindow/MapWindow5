@@ -170,29 +170,31 @@ namespace MW5.Views
             // Check if a new installer is still downloading:
             if (AppConfig.Instance.UpdaterIsDownloading)
             {
-                if (
-                    MessageService.Current.Ask(
-                        "A new version of MapWindow is being downloaded, but hasn't finished yet. Do you want to wait for it? In the debug window a message will be added when the download is finished."))
-                {
-                    e.Cancel = true;
-                    return;
-                }
+                // Skip for now:
+                // if (
+                //     MessageService.Current.Ask(
+                //         "A new version of MapWindow is being downloaded, but hasn't finished yet. Do you want to wait for it? In the debug window a message will be added when the download is finished."))
+                // {
+                //     e.Cancel = true;
+                //     return;
+                // }
             }
 
             // Check if a new installer is downloaded and can be installed:
             if (AppConfig.Instance.UpdaterHasNewInstaller)
             {
-                var filename = AppConfig.Instance.UpdaterInstallername;
-                if (File.Exists(filename))
-                {
-                    if (MessageService.Current.Ask("A new installer is downloaded do you want to install it now?"))
-                    {
-                        AppConfig.Instance.UpdaterHasNewInstaller = false;
-                        _configService.SaveAll();
-                        var myProcess = new Process { StartInfo = { UseShellExecute = false, FileName = filename, CreateNoWindow = true } };
-                        myProcess.Start();
-                    }
-                }
+                // Skip for now:
+                // var filename = AppConfig.Instance.UpdaterInstallername;
+                // if (File.Exists(filename))
+                // {
+                //     if (MessageService.Current.Ask("A new installer is downloaded do you want to install it now?"))
+                //     {
+                //         AppConfig.Instance.UpdaterHasNewInstaller = false;
+                //         _configService.SaveAll();
+                //         var myProcess = new Process { StartInfo = { UseShellExecute = false, FileName = filename, CreateNoWindow = true } };
+                //         myProcess.Start();
+                //     }
+                // }
             }
 
             if (_context.Tasks.All(t => t.IsFinished))
@@ -230,10 +232,7 @@ namespace MW5.Views
             _statusBarListener.Update();
 
             var appContext = _context as AppContext;
-            if (appContext != null)
-            {
-                appContext.Broadcaster.BroadcastEvent(p => p.ViewUpdating_, sender, e);
-            }
+            appContext?.Broadcaster.BroadcastEvent(p => p.ViewUpdating_, sender, e);
         }
     }
 }

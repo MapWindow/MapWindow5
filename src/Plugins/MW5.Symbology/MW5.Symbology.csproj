@@ -4,6 +4,7 @@
   <PropertyGroup>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <SGenUseProxyTypes>false</SGenUseProxyTypes>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MW5.Plugins.Symbology</RootNamespace>
     <AssemblyName>MW5.Symbology</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <OutputPath>..\..\..\bin\$(Platform)\$(Configuration)\Plugins\</OutputPath>
   </PropertyGroup>
@@ -51,25 +52,25 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Syncfusion.Chart.Base, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89">
+    <Reference Include="Syncfusion.Chart.Base, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Syncfusion.Chart.Windows, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.Chart.Windows, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Syncfusion.Grid.Windows, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.Grid.Windows, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Syncfusion.Grouping.Base, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.Grouping.Base, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Syncfusion.Shared.Base, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.Shared.Base, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Syncfusion.Tools.Windows, Version=15.3450.0.26, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+    <Reference Include="Syncfusion.Tools.Windows, Version=16.1460.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
