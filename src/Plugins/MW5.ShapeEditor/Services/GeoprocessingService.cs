@@ -1,7 +1,9 @@
 ﻿using System;
 using MW5.Api.Enums;
+using MW5.Api.Events;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Events;
+using MW5.Api.Map;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Operations;
@@ -183,10 +185,16 @@ namespace MW5.Plugins.ShapeEditor.Services
             var features = fs.Features;
             for (var i = features.Count - 1; i >= 0; i--)
             {
+
                 if (!features[i].Selected) continue;
 
-                list.Add(UndoOperation.RemoveShape, layerHandle, i);
-                features.EditDelete(i);
+                if (features[i].Selected)
+                {
+                    _broadcaster.BroadcastEvent(p => p.BeforeShapeEdit_, _context.Map, new BeforeShapeEditEventArgs(layerHandle, i, false));
+                    list.Add(UndoOperation.RemoveShape, layerHandle, i);
+                    features.EditDelete(i);
+                }
+
             }
 
             list.EndBatch();

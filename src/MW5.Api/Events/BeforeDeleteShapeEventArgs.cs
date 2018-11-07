@@ -9,6 +9,14 @@ namespace MW5.Api.Events
     {
         private readonly _DMapEvents_BeforeDeleteShapeEvent _args;
 
+        public BeforeDeleteShapeEventArgs(DeleteTarget target, bool cancel)
+        {
+            _args = new _DMapEvents_BeforeDeleteShapeEvent(
+                (tkDeleteTarget) target,
+                cancel ? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse
+            );
+        }
+
         internal BeforeDeleteShapeEventArgs(_DMapEvents_BeforeDeleteShapeEvent args)
         {
             _args = args;
