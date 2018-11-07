@@ -17,6 +17,13 @@ namespace MW5.Api.Events
             }
         }
 
+        public BeforeShapeEditEventArgs(int layerHandle, int shapeIndex, bool cancel) : this(new _DMapEvents_BeforeShapeEditEvent(
+                layerHandle,
+                shapeIndex,
+                cancel? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse
+            ))
+        { }
+
         public int LayerHandle
         {
             get { return _args.layerHandle; }
