@@ -66,99 +66,70 @@ namespace MW5.Api.Concrete
         /// </summary>
         internal FeatureSet(Shapefile sf)
         {
-            if (sf == null)
-            {
-                throw new NullReferenceException("Shapefile reference is null.");
-            }
-            _shapefile = sf;
+            _shapefile = sf ?? throw new NullReferenceException("Shapefile reference is null.");
         }
 
         /// <summary>
         /// Returns description of last error which occured within this FeatureSet. Check this property
         /// after some method returned false.
         /// </summary>
-        public string LastError
-        {
-            get { return _shapefile.ErrorMessage(); }
-        }
+        public string LastError => _shapefile.ErrorMessage();
 
         public string Tag
         {
-            get { return _shapefile.Key; }
-            set { _shapefile.Key = value; }
+            get => _shapefile.Key;
+            set => _shapefile.Key = value;
         }
 
         public void Dispose()
         {
-            if (_shapefile != null)
-            {
-                _shapefile.Close();
-                _shapefile = null;
-            }
+            if (_shapefile == null) return;
+
+            _shapefile.Close();
+            _shapefile = null;
         }
 
-        public object InternalObject
-        {
-            get { return _shapefile; }
-        }
+        public object InternalObject => _shapefile;
 
-        public IEnvelope Envelope
-        {
-            get { return new Envelope(_shapefile.Extents); }
-        }
+        public IEnvelope Envelope => new Envelope(_shapefile.Extents);
 
-        public string Name
-        {
-            get { return Path.GetFileNameWithoutExtension(Filename);  }
-        }
+        public string Name => Path.GetFileNameWithoutExtension(Filename);
 
-        public string Filename
-        {
-            get { return _shapefile.Filename; }
-        }
+        public string Filename => _shapefile.Filename;
 
-        public ISpatialReference Projection
-        {
-            get { return new SpatialReference(_shapefile.GeoProjection); }
-        }
+        public ISpatialReference Projection => new SpatialReference(_shapefile.GeoProjection);
 
+        /// <inheritdoc />
         /// <summary>
         /// Assigns projection to the layer if the layer doesn't have one.
+        /// No need to clone it first.
         /// </summary>
         public void AssignProjection(ISpatialReference proj)
         {
-            if (proj == null) throw new ArgumentNullException("proj");
+            if (proj == null) throw new ArgumentNullException(nameof(proj));
 
             _shapefile.GeoProjection = proj.Clone().GetInternal();
         }
 
-        public bool IsEmpty
-        {
-            // TODO: add Shapefile.IsEmpty property to ocx
-            get { return _shapefile.NumShapes == 0; }
-        }
+        /// <inheritdoc />
+        /// <summary>
+        /// Does the shapefile has any shapes?
+        /// </summary>
+        public bool IsEmpty => _shapefile.NumShapes == 0;
 
+        /// <inheritdoc />
         /// <summary>
         /// Gets string with the information on datasource size, i.e. number of features, pixels, etc.
         /// </summary>
-        public string SizeInfo 
-        {
-            get
-            {
-                return "[" + NumFeatures + " features]";
-            } 
-        }
+        public string SizeInfo => "[" + NumFeatures + " features]";
 
-        public LayerType LayerType
-        {
-            get { return LayerType.Shapefile; }
-        }
+        public LayerType LayerType => LayerType.Shapefile;
 
         public string ToolTipText
         {
             get
             {
-                string s = "Geometry type: " + GeometryType.EnumToString() + Environment.NewLine;
+                var s = "Geometry type: " + GeometryType.EnumToString() + Environment.NewLine;
                 s += "Feature count: " + Features.Count + Environment.NewLine;
                 // s += "Projection: " + Projection.ExportToProj4();
                 s += "Projection: " + Projection.Name;
@@ -166,30 +137,18 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool IsVector
-        {
-            get { return true; }
-        }
+        public bool IsVector => true;
 
-        public bool IsRaster
-        {
-            get { return false; }
-        }
+        public bool IsRaster => false;
 
         public void Close()
         {
             Dispose();
         }
 
-        string IDatasource.OpenDialogFilter
-        {
-            get { return OpenDialogFilter; }
-        }
+        string IDatasource.OpenDialogFilter => OpenDialogFilter;
 
-        public static string OpenDialogFilter
-        {
-            get { return "ESRI Shapefiles (*.shp)|*.shp"; }
-        }
+        public static string OpenDialogFilter => "ESRI Shapefiles (*.shp)|*.shp";
 
         /// <summary>
         /// Opens ESRI shapefile datasource, reads it into memory breaks any connection with the source.
@@ -213,6 +172,7 @@ namespace MW5.Api.Concrete
         /// Creates a new disk-based shapefile and open it as new feature set.
         /// </summary>
         /// <returns>Feature set for newly created shapefile.</returns>
+        // ReSharper disable once UnusedMember.Global
         public static IFeatureSet CreateShapefile(string filename, GeometryType geomType,
             ZValueType zValue = ZValueType.None)
         {
@@ -224,7 +184,7 @@ namespace MW5.Api.Concrete
             var shpType = GeometryHelper.GeometryType2ShpType(geomType, zValue);
 
             var sf = new Shapefile();
-            if (!sf.CreateNew(filename, shpType))
+            if (!sf.CreateNewWithShapeID(filename, shpType))
             {
                 throw new ApplicationException("Failed to create shapefile: " + sf.ErrorMessage());
             }
@@ -233,56 +193,48 @@ namespace MW5.Api.Concrete
             return fs;
         }
 
-
-        public GeometryType GeometryType
+        /// <summary>
+        /// Delete all files associated with the shapefile
+        /// </summary>
+        /// <param name="filename">The full path of the shapefile</param>
+        public static void DeleteShapefile(string filename)
         {
-            get { return GeometryHelper.ShapeType2GeometryType(_shapefile.ShapefileType); }
+            if (string.IsNullOrEmpty(filename)) return;
+            if (!File.Exists(filename)) return;
+            var folder = Path.GetDirectoryName(filename);
+            if (folder == null) return;
+
+            var filenameBody = Path.GetFileNameWithoutExtension(filename);
+            foreach (var f in Directory.EnumerateFiles(folder, filenameBody + ".*"))
+            {
+                File.Delete(f);
+            }
         }
 
-        public ZValueType ZValueType
-        {
-            get { return GeometryHelper.ShapeType2ZValueType(_shapefile.ShapefileType); }
-        }
+        public GeometryType GeometryType => GeometryHelper.ShapeType2GeometryType(_shapefile.ShapefileType);
 
-        public FeatureSourceType SourceType
-        {
-            get { return (FeatureSourceType)_shapefile.SourceType; }
-        }
+        public ZValueType ZValueType => GeometryHelper.ShapeType2ZValueType(_shapefile.ShapefileType);
 
-        public FeatureSetSpatialIndex SpatialIndex
-        {
-            get { return new FeatureSetSpatialIndex(_shapefile); }
-        }
+        public FeatureSourceType SourceType => (FeatureSourceType)_shapefile.SourceType;
 
-        public AttributeTable Table
-        {
-            get { return new AttributeTable(_shapefile.Table); }
-        }
+        public FeatureSetSpatialIndex SpatialIndex => new FeatureSetSpatialIndex(_shapefile);
 
-        public ILabelsLayer Labels
-        {
-            get { return new LabelsLayer(_shapefile.Labels); }
-        }
+        public AttributeTable Table => new AttributeTable(_shapefile.Table);
 
-        public DiagramsLayer Diagrams
-        {
-            get { return new DiagramsLayer(_shapefile.Charts); }
-        }
+        public ILabelsLayer Labels => new LabelsLayer(_shapefile.Labels);
 
-        public AttributeFieldList Fields
-        {
-            get { return Table.Fields; }
-        }
+        public DiagramsLayer Diagrams => new DiagramsLayer(_shapefile.Charts);
+
+        public AttributeFieldList Fields => Table.Fields;
 
         public IEnumerable<IFeature> SelectShapes(IEnvelope boundBox, double tolerance = 0, MapSelectionMode selectionMode = MapSelectionMode.Intersection)
         {
-            if (boundBox == null) throw new ArgumentNullException("boundBox");
+            if (boundBox == null) throw new ArgumentNullException(nameof(boundBox));
             
             object result = null;
             if (_shapefile.SelectShapes(boundBox.GetInternal(), tolerance, (SelectMode)selectionMode, ref result))
             {
-                var indices = result as int[];
-                if (indices != null)
+                if (result is int[] indices)
                 {
                     return indices.Select(index => new Feature(_shapefile, index));
                 }
@@ -293,60 +245,54 @@ namespace MW5.Api.Concrete
 
         public CollisionMode CollisionMode
         {
-            get { return (CollisionMode)_shapefile.CollisionMode; }
-            set { _shapefile.CollisionMode = (tkCollisionMode)value; }
+            get => (CollisionMode)_shapefile.CollisionMode;
+            set => _shapefile.CollisionMode = (tkCollisionMode)value;
         }
 
         public bool Snappable
         {
-            get { return _shapefile.Snappable; }
-            set { _shapefile.Snappable = value; }
+            get => _shapefile.Snappable;
+            set => _shapefile.Snappable = value;
         }
 
         public bool Volatile
         {
-            get { return _shapefile.Volatile; }
-            set { _shapefile.Volatile = value; }
+            get => _shapefile.Volatile;
+            set => _shapefile.Volatile = value;
         }
 
         public bool Identifiable
         {
-            get { return _shapefile.Identifiable; }
-            set { _shapefile.Identifiable = value; }
+            get => _shapefile.Identifiable;
+            set => _shapefile.Identifiable = value;
         }
 
         public string VisibilityExpression
         {
-            get { return _shapefile.VisibilityExpression; }
-            set { _shapefile.VisibilityExpression = value; }
+            get => _shapefile.VisibilityExpression;
+            set => _shapefile.VisibilityExpression = value;
         }
 
         public Color SelectionColor
         {
-            get { return ColorHelper.UintToColor(_shapefile.SelectionColor); }
-            set { _shapefile.SelectionColor = ColorHelper.ColorToUInt(value); }
+            get => ColorHelper.UintToColor(_shapefile.SelectionColor);
+            set => _shapefile.SelectionColor = ColorHelper.ColorToUInt(value);
         }
 
         public byte SelectionTransparency
         {
-            get { return _shapefile.SelectionTransparency; }
-            set { _shapefile.SelectionTransparency = value; }
+            get => _shapefile.SelectionTransparency;
+            set => _shapefile.SelectionTransparency = value;
         }
 
-        public bool EditingShapes
-        {
-            get { return _shapefile.EditingShapes; }
-        }
+        public bool EditingShapes => _shapefile.EditingShapes;
 
-        public bool EditingTable
-        {
-            get { return _shapefile.EditingTable; }
-        }
+        public bool EditingTable => _shapefile.EditingTable;
 
         public bool InteractiveEditing
         {
-            get { return _shapefile.InteractiveEditing; }
-            set { _shapefile.InteractiveEditing = value; }
+            get => _shapefile.InteractiveEditing;
+            set => _shapefile.InteractiveEditing = value;
         }
 
         public bool StartEditingShapes(bool startEditTable = true)
@@ -372,26 +318,17 @@ namespace MW5.Api.Concrete
         /// <summary>
         /// Gets underlying feature collection. Collection may additionally implement IFeatureList interface.
         /// </summary>
-        public FeatureCollection Features
-        {
-            get { return new FeatureCollection(_shapefile); }
-        }
+        public FeatureCollection Features => new FeatureCollection(_shapefile);
 
         /// <summary>
         /// Gets default FeatureStyle used for rendering of the FeatureSet.
         /// </summary>
-        public IGeometryStyle Style
-        {
-            get { return new GeometryStyle(_shapefile.DefaultDrawingOptions); }
-        }
+        public IGeometryStyle Style => new GeometryStyle(_shapefile.DefaultDrawingOptions);
 
         /// <summary>
         /// Gets list of categories which define additional rendering styles.
         /// </summary>
-        public FeatureCategoryList Categories
-        {
-            get { return new FeatureCategoryList(_shapefile.Categories); }
-        }
+        public FeatureCategoryList Categories => new FeatureCategoryList(_shapefile.Categories);
 
         public string Serialize()
         {
@@ -504,25 +441,13 @@ namespace MW5.Api.Concrete
             return _shapefile.SaveAsEx(filename, stopEditMode, unboundFile);
         }
 
-        public bool PointOrMultiPoint
-        {
-            get { return GeometryType == GeometryType.Point || GeometryType == GeometryType.MultiPoint; }
-        }
+        public bool PointOrMultiPoint => GeometryType == GeometryType.Point || GeometryType == GeometryType.MultiPoint;
 
-        public bool IsPolyline
-        {
-            get { return GeometryType == GeometryType.Polyline; }
-        }
+        public bool IsPolyline => GeometryType == GeometryType.Polyline;
 
-        public bool IsPolygon
-        {
-            get { return GeometryType == GeometryType.Polygon; }
-        }
+        public bool IsPolygon => GeometryType == GeometryType.Polygon;
 
-        public int NumSelected
-        {
-            get { return _shapefile.NumSelected; }
-        }
+        public int NumSelected => _shapefile.NumSelected;
 
         public void SelectAll()
         {
@@ -586,9 +511,9 @@ namespace MW5.Api.Concrete
             return WrapShapefile(sf);
         }
 
-        public IFeatureSet Sort(int fieldIndex, bool @ascending)
+        public IFeatureSet Sort(int fieldIndex, bool ascending)
         {
-            var sf = _shapefile.Sort(fieldIndex, @ascending);
+            var sf = _shapefile.Sort(fieldIndex, ascending);
             return WrapShapefile(sf);
         }
 
@@ -707,7 +632,7 @@ namespace MW5.Api.Concrete
 
         public IStopExecutionCallback StopExecution
         {
-            set { _shapefile.StopExecution = new StopExecution(value); }
+            set => _shapefile.StopExecution = new StopExecution(value);
         }
 
         public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false)
@@ -747,27 +672,24 @@ namespace MW5.Api.Concrete
             _shapefile.ShapeSelected[shapeIndex] = value;
         }
 
-        public int NumFeatures
-        {
-            get { return _shapefile.NumShapes; }
-        }
+        public int NumFeatures => _shapefile.NumShapes;
 
         public int MinDrawingSize
         {
-            get { return _shapefile.MinDrawingSize; }
-            set { _shapefile.MinDrawingSize = value; }
+            get => _shapefile.MinDrawingSize;
+            set => _shapefile.MinDrawingSize = value;
         }
 
         public string SortField
         {
-            get { return _shapefile.SortField; }
-            set { _shapefile.SortField = value; }
+            get => _shapefile.SortField;
+            set => _shapefile.SortField = value;
         }
 
         public bool SortAscending
         {
-            get { return _shapefile.SortAscending; }
-            set { _shapefile.SortAscending = value; }
+            get => _shapefile.SortAscending;
+            set => _shapefile.SortAscending = value;
         }
 
         public void UpdateSortField()
@@ -785,10 +707,7 @@ namespace MW5.Api.Concrete
             _shapefile.StopAppendMode();
         }
 
-        public bool AppendMode
-        {
-            get { return _shapefile.AppendMode; }
-        }
+        public bool AppendMode => _shapefile.AppendMode;
 
         public int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false)
         {
@@ -797,7 +716,7 @@ namespace MW5.Api.Concrete
 
         public IGlobalListener Callback
         {
-            get { return NativeCallback.UnWrap(_shapefile.GlobalCallback); }
+            get => NativeCallback.UnWrap(_shapefile.GlobalCallback);
             set
             {
                 var callback = NativeCallback.Wrap(value);
@@ -808,8 +727,7 @@ namespace MW5.Api.Concrete
 
         public IFeatureSet FixUpShapes(bool selectedOnly)
         {
-            Shapefile sf;
-            _shapefile.FixUpShapes2(selectedOnly, out sf);
+            _shapefile.FixUpShapes2(selectedOnly, out var sf);
             return WrapShapefile(sf);
         }
 
