@@ -105,7 +105,7 @@ namespace MW5.Tools.Test
             _timer.Restart();
             var fs = OpenFeatureSet(Path.Combine(NlShapefilesPath, "Buurtkaart.shp"));
             var outputFilename = Path.ChangeExtension(fs.Filename, ".fixed.shp");
-            DeleteShapefile(outputFilename);
+            FeatureSet.DeleteShapefile(outputFilename);
 
             Debug.Write("Fix shapefile");
             var tool = new FixShapefileTool { Input = new DatasourceInput(fs), Output = new OutputLayerInfo { Filename = outputFilename, MemoryLayer = false, Overwrite = true } };
@@ -254,20 +254,6 @@ namespace MW5.Tools.Test
         }
 
 #endregion
-        private static void DeleteShapefile(string filename)
-        {
-            var folder = Path.GetDirectoryName(filename);
-            if (folder == null)
-            {
-                return;
-            }
-
-            foreach (string f in Directory.EnumerateFiles(folder, Path.GetFileNameWithoutExtension(filename) + ".*"))
-            {
-                Debug.WriteLine("Deleting " + f);
-                File.Delete(f);
-            }
-        }
 
         private static string GetDateString(long milliseconds)
         {
