@@ -26,5 +26,10 @@
         public const string SplitByPolyline = "se_SplitByPolyline";
         public const string PolygonOverlayDropDown = "se_PolygonOverlayDropDown";
         public const string DeleteSelected = "se_DeleteSelected";
+
+        public const string SnapToActiveLayer = "se_SnapToActiveLayer";
+        public const string SnapToAlLayers = "se_SnapToAllLayers";
+        public const string SnapToVertices = "se_SnapToVertices";
+        public const string SnapToSegments = "se_SnapToSegments";
     }
 }

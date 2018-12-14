@@ -21,6 +21,7 @@ namespace MW5.Api.Interfaces
         int ShapeIndex { get; }
         GeometryType GeometryType { get; set; }
         LayerSelectionMode SnapBehavior { get; set; }
+        SnapMode SnapMode { get; set; }
         double SnapTolerance { get; set; }
         IGeometry ValidatedShape { get; }
         EditorValidation ValidationMode { get; set; }

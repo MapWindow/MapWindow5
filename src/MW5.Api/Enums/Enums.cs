@@ -902,6 +902,13 @@
         ActiveLayer = 2,
     }
 
+    public enum SnapMode
+    {
+        Vertices = 0,
+        VerticesAndLines = 1,
+        Lines = 2
+    }
+
     public enum LengthDisplay
     {
         Metric = 0,

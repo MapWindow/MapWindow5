@@ -5,5 +5,9 @@
         void ToggleVectorLayerEditing();
         bool SaveLayerChanges(int layerHandle);
         void CreateLayer();
+        void ToggleSnapToActiveLayer();
+        void ToggleSnapToAllLayers();
+        void ToggleSnapToSegments();
+        void ToggleSnapToVertices();
     }
 }

@@ -235,6 +235,12 @@
   <ItemGroup>
     <None Include="Resources\img_shape_editor32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_snap_active_layer.png" />
+    <None Include="Resources\img_snap_all_layers.png" />
+    <None Include="Resources\img_snap_to_segments.png" />
+    <None Include="Resources\img_snap_to_vertices.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
