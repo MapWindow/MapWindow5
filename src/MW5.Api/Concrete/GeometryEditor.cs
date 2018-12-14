@@ -47,7 +47,13 @@ namespace MW5.Api.Concrete
             get { return (LayerSelectionMode)_editor.HighlightVertices; }
             set { _editor.HighlightVertices = (tkLayerSelection)value; }
         }
-        
+
+        public SnapMode SnapMode
+        {
+            get { return (SnapMode)_editor.SnapMode; }
+            set { _editor.SnapMode = (tkSnapMode) value; }
+        }
+
         public bool IsDigitizing
         {
             get { return _editor.IsDigitizing; }

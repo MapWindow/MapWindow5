@@ -264,5 +264,38 @@ namespace MW5.Plugins.ShapeEditor.Services
                 _layerService.AddDatasource(fs, model.LayerName);
             }
         }
+
+        public void ToggleSnapToActiveLayer()
+        {
+            if (_context.Map.GeometryEditor.SnapBehavior == LayerSelectionMode.ActiveLayer)
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            else
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.ActiveLayer;
+        }
+
+        public void ToggleSnapToAllLayers()
+        {
+            if (_context.Map.GeometryEditor.SnapBehavior == LayerSelectionMode.AllLayers)
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            else
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.AllLayers;
+        }
+
+        public void ToggleSnapToSegments()
+        {
+            if (_context.Map.GeometryEditor.SnapMode == SnapMode.Vertices)
+                _context.Map.GeometryEditor.SnapMode = SnapMode.VerticesAndLines;
+            else
+                _context.Map.GeometryEditor.SnapMode = SnapMode.Vertices;
+        }
+
+        public void ToggleSnapToVertices()
+        {
+            if (_context.Map.GeometryEditor.SnapMode == SnapMode.Lines)
+                _context.Map.GeometryEditor.SnapMode = SnapMode.VerticesAndLines;
+            else
+                _context.Map.GeometryEditor.SnapMode = SnapMode.Lines;
+
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace MW5.Plugins.ShapeEditor
         private MenuGenerator _menuGenerator;
         private MenuListener _menuListener;
         private ProjectListener _projectListener;
-        private MenuUpdater _menuUpdater;
+        internal MenuUpdater _menuUpdater;
 
         protected override void RegisterServices(IApplicationContainer container)
         {

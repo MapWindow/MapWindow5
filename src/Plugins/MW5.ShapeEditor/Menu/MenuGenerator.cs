@@ -17,6 +17,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
         
         private readonly MenuCommands _commands;
 
+        private IToolbar _toolbar;
+
         public MenuGenerator(IAppContext context, ShapeEditor plugin)
         {
             _commands = new MenuCommands(plugin.Identity);
@@ -32,18 +34,21 @@ namespace MW5.Plugins.ShapeEditor.Menu
             items.AddButton(_commands[MenuKeys.CreateLayer]).BeginGroup = true;
             context.Toolbars.FileToolbar.Update();
 
-            var bar = context.Toolbars.Add(ShapeEditorToolbar, identity);
-            bar.DockState = ToolbarDockState.Top;
+            _toolbar = context.Toolbars.Add(ShapeEditorToolbar, identity);
+            _toolbar.DockState = ToolbarDockState.Top;
 
-            items = bar.Items;
+            items = _toolbar.Items;
 
             items.AddButton(_commands[MenuKeys.LayerEdit]);
+
             items.AddButton(_commands[MenuKeys.GeometryCreate], true);
             items.AddButton(_commands[MenuKeys.VertexEditor]);
+
             items.AddButton(_commands[MenuKeys.SplitShapes], true);
             items.AddButton(_commands[MenuKeys.MergeShapes]);
             items.AddButton(_commands[MenuKeys.MoveShapes]);
             items.AddButton(_commands[MenuKeys.RotateShapes]);
+
             items.AddButton(_commands[MenuKeys.Copy], true);
             items.AddButton(_commands[MenuKeys.Paste]);
             items.AddButton(_commands[MenuKeys.Cut]);
@@ -63,7 +68,12 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             items.AddButton(_commands[MenuKeys.Redo]);
 
-            bar.Update();
+            items.AddButton(_commands[MenuKeys.SnapToActiveLayer], true);
+            items.AddButton(_commands[MenuKeys.SnapToAlLayers]);
+            items.AddButton(_commands[MenuKeys.SnapToVertices], true);
+            items.AddButton(_commands[MenuKeys.SnapToSegments]);
+
+            _toolbar.Update();
         }
 
         private void InitMenu(IAppContext context, PluginIdentity identity)

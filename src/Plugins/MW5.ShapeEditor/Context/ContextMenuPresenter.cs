@@ -4,6 +4,7 @@ using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor.Context
 {
@@ -12,8 +13,9 @@ namespace MW5.Plugins.ShapeEditor.Context
         private readonly IAppContext _context;
         private readonly ILayerService _layerService;
         private readonly IGeoprocessingService _geoService;
+        private readonly ShapeEditor _plugin;
 
-        public ContextMenuPresenter(IAppContext context, ILayerService layerService, 
+        public ContextMenuPresenter(IAppContext context, ShapeEditor plugin, ILayerService layerService, 
                         IGeoprocessingService geoService, ContextMenuView view)
             :base(view)
         {
@@ -23,6 +25,7 @@ namespace MW5.Plugins.ShapeEditor.Context
             _context = context;
             _layerService = layerService;
             _geoService = geoService;
+            _plugin = plugin;
         }
 
         public ContextMenuStrip DigitizingMenu
@@ -74,28 +77,50 @@ namespace MW5.Plugins.ShapeEditor.Context
         {
             var editor = _context.Map.GeometryEditor;
 
+            var handled = false;
             switch (command)
             {
+                case EditorCommand.SnapToVertices:
+                    editor.SnapMode = SnapMode.Vertices;
+                    handled = true;
+                    break;
+                case EditorCommand.SnapToLinesAndVertices:
+                    editor.SnapMode = SnapMode.VerticesAndLines;
+                    handled = true;
+                    break;
+                case EditorCommand.SnapToLines:
+                    editor.SnapMode = SnapMode.Lines;
+                    handled = true;
+                    break;
                 case EditorCommand.SnappingNone:
                     editor.SnapBehavior = LayerSelectionMode.NoLayer;
+                    handled = true;
                     break;
                 case EditorCommand.SnappingCurrent:
                     editor.SnapBehavior = LayerSelectionMode.ActiveLayer;
+                    handled = true;
                     break;
                 case EditorCommand.SnappingAll:
                     editor.SnapBehavior = LayerSelectionMode.AllLayers;
+                    handled = true;
                     break;
                 case EditorCommand.HighlightNone:
                     editor.HighlightVertices = LayerSelectionMode.NoLayer;
+                    handled = true;
                     break;
                 case EditorCommand.HighlightCurrent:
                     editor.HighlightVertices = LayerSelectionMode.ActiveLayer;
+                    handled = true;
                     break;
                 case EditorCommand.HighlightAll:
                     editor.HighlightVertices = LayerSelectionMode.AllLayers;
+                    handled = true;
                     break;
             }
-            return false;
+
+            _plugin._menuUpdater.UpdateSnapStates();
+
+            return handled;
         }
 
         public bool HandleVertexEditor(EditorCommand command)

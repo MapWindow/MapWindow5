@@ -11,17 +11,15 @@ namespace MW5.Plugins.ShapeEditor.Menu
         private readonly ILayerEditingService _layerService;
         private readonly IGeoprocessingService _geoprocessingService;
         private readonly IAppContext _context;
+        private readonly ShapeEditor _plugin;
 
         public MenuListener(IAppContext context, ShapeEditor plugin, ILayerEditingService layerService, 
                 IGeoprocessingService geoprocessingService)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (layerService == null) throw new ArgumentNullException("layerService");
-            if (geoprocessingService == null) throw new ArgumentNullException("geoprocessingService");
-
-            _layerService = layerService;
-            _geoprocessingService = geoprocessingService;
-            _context = context;
+            _plugin = plugin ?? throw new ArgumentNullException("plugin");
+            _layerService = layerService ?? throw new ArgumentNullException("layerService");
+            _geoprocessingService = geoprocessingService ?? throw new ArgumentNullException("geoprocessingService");
+            _context = context ?? throw new ArgumentNullException("context");
 
             plugin.ItemClicked += Plugin_ItemClicked;
         }
@@ -40,27 +38,55 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 return;
             }
 
-            switch (e.ItemKey)
+            if (HandleSnapSetting(e.ItemKey))
             {
-                case MenuKeys.DeleteSelected:
-                    _geoprocessingService.RemoveSelectedShapes(true);
-                    break;
-                case MenuKeys.CreateLayer:
-                    _layerService.CreateLayer();
-                    break;
-                case MenuKeys.LayerEdit:
-                    _layerService.ToggleVectorLayerEditing();
-                    break;
+                _context.View.Update();
+                return;
+            }
+
+            if (HandleLayerKeys(e.ItemKey))
+            {
+                _context.View.Update();
+                return;
+            }
+
+            if (HandleUndoRedo(e.ItemKey))
+            {
+                _context.View.Update();
+                return;
+            }
+
+            _context.View.Update();
+        }
+
+        public bool HandleUndoRedo(string itemKey)
+        {
+            switch (itemKey)
+            {
                 case MenuKeys.Undo:
                     _context.Map.History.Undo();
                     _context.Map.Redraw(RedrawType.SkipDataLayers);
-                    break;
+                    return true;
                 case MenuKeys.Redo:
                     _context.Map.History.Redo();
                     _context.Map.Redraw(RedrawType.SkipDataLayers);
-                    break;
+                    return true;
             }
-            _context.View.Update();
+            return false;
+        }
+
+        public bool HandleLayerKeys(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.CreateLayer:
+                    _layerService.CreateLayer();
+                    return true;
+                case MenuKeys.LayerEdit:
+                    _layerService.ToggleVectorLayerEditing();
+                    return true;
+            }
+            return false;
         }
 
         public bool HandleMapCursorChange(string itemKey)
@@ -114,8 +140,29 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 case MenuKeys.SplitShapes:
                     _geoprocessingService.ExplodeShapes();
                     return true;
+                case MenuKeys.DeleteSelected:
                 case MenuKeys.RemoveShapes:
                     _geoprocessingService.RemoveSelectedShapes(true);
+                    return true;
+            }
+            return false;
+        }
+
+        public bool HandleSnapSetting(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.SnapToActiveLayer:
+                    _layerService.ToggleSnapToActiveLayer();
+                    return true;
+                case MenuKeys.SnapToAlLayers:
+                    _layerService.ToggleSnapToAllLayers();
+                    return true;
+                case MenuKeys.SnapToSegments:
+                    _layerService.ToggleSnapToSegments();
+                    return true;
+                case MenuKeys.SnapToVertices:
+                    _layerService.ToggleSnapToVertices();
                     return true;
             }
             return false;

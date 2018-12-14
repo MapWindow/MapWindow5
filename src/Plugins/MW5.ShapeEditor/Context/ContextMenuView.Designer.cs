@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.contextDigitizing = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ctxUndoPoint = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxSnapNone = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxSnapCurrent = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,18 +45,9 @@
             this.ctxSelectByRectangle = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxClearSelection = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctxSplitShapes = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxMergeShapes = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxRotateShapes = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxMoveShapes = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctxCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctxRemoveShapes = new System.Windows.Forms.ToolStripMenuItem();
             this.contextVertex = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ctxUndo = new System.Windows.Forms.ToolStripMenuItem();
             this.digitizerSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.ctxVertexEditor = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxPartEditor = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,9 +56,6 @@
             this.ctxRemovePart = new System.Windows.Forms.ToolStripMenuItem();
             this.editorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxSnapping = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxSnappingNone = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxSnappingCurrent = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctxSnappingAll = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxHighlighting = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHighlightNone = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHighlightCurrent = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +63,24 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxSaveShape = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxClearEditor = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSnapMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSnapToLinesAndVertices = new System.Windows.Forms.ToolStripMenuItem();
+            this.snapSourcesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSnappingNone = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSnappingCurrent = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSnappingAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxUndoPoint = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSplitShapes = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMergeShapes = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxRotateShapes = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMoveShapes = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxRemoveShapes = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxUndo = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSnapToVertices = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSnapToLines = new System.Windows.Forms.ToolStripMenuItem();
             this.contextDigitizing.SuspendLayout();
             this.contextSelection.SuspendLayout();
             this.contextVertex.SuspendLayout();
@@ -98,14 +103,6 @@
             this.ctxCancelShape});
             this.contextDigitizing.Name = "contextMenuStrip1";
             this.contextDigitizing.Size = new System.Drawing.Size(176, 220);
-            // 
-            // ctxUndoPoint
-            // 
-            this.ctxUndoPoint.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_undo;
-            this.ctxUndoPoint.Name = "ctxUndoPoint";
-            this.ctxUndoPoint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.ctxUndoPoint.Size = new System.Drawing.Size(175, 22);
-            this.ctxUndoPoint.Text = "Undo Point";
             // 
             // toolStripSeparator2
             // 
@@ -209,71 +206,15 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
-            // ctxSplitShapes
-            // 
-            this.ctxSplitShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_split;
-            this.ctxSplitShapes.Name = "ctxSplitShapes";
-            this.ctxSplitShapes.Size = new System.Drawing.Size(180, 26);
-            this.ctxSplitShapes.Text = "Explode";
-            // 
-            // ctxMergeShapes
-            // 
-            this.ctxMergeShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_merge;
-            this.ctxMergeShapes.Name = "ctxMergeShapes";
-            this.ctxMergeShapes.Size = new System.Drawing.Size(180, 26);
-            this.ctxMergeShapes.Text = "Merge";
-            // 
-            // ctxRotateShapes
-            // 
-            this.ctxRotateShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_rotate;
-            this.ctxRotateShapes.Name = "ctxRotateShapes";
-            this.ctxRotateShapes.Size = new System.Drawing.Size(180, 26);
-            this.ctxRotateShapes.Text = "Rotate";
-            // 
-            // ctxMoveShapes
-            // 
-            this.ctxMoveShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_move;
-            this.ctxMoveShapes.Name = "ctxMoveShapes";
-            this.ctxMoveShapes.Size = new System.Drawing.Size(180, 26);
-            this.ctxMoveShapes.Text = "Move";
-            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
-            // ctxCopy
-            // 
-            this.ctxCopy.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_copy;
-            this.ctxCopy.Name = "ctxCopy";
-            this.ctxCopy.Size = new System.Drawing.Size(180, 26);
-            this.ctxCopy.Text = "Copy";
-            // 
-            // ctxCut
-            // 
-            this.ctxCut.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_cut;
-            this.ctxCut.Name = "ctxCut";
-            this.ctxCut.Size = new System.Drawing.Size(180, 26);
-            this.ctxCut.Text = "Cut";
-            // 
-            // ctxPaste
-            // 
-            this.ctxPaste.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_paste;
-            this.ctxPaste.Name = "ctxPaste";
-            this.ctxPaste.Size = new System.Drawing.Size(180, 26);
-            this.ctxPaste.Text = "Paste";
-            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
-            // 
-            // ctxRemoveShapes
-            // 
-            this.ctxRemoveShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.img_delete_selected;
-            this.ctxRemoveShapes.Name = "ctxRemoveShapes";
-            this.ctxRemoveShapes.Size = new System.Drawing.Size(180, 26);
-            this.ctxRemoveShapes.Text = "Delete";
             // 
             // contextVertex
             // 
@@ -293,15 +234,7 @@
             this.ctxSaveShape,
             this.ctxClearEditor});
             this.contextVertex.Name = "contextMenuStrip1";
-            this.contextVertex.Size = new System.Drawing.Size(202, 284);
-            // 
-            // ctxUndo
-            // 
-            this.ctxUndo.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_undo;
-            this.ctxUndo.Name = "ctxUndo";
-            this.ctxUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.ctxUndo.Size = new System.Drawing.Size(201, 26);
-            this.ctxUndo.Text = "Undo Point";
+            this.contextVertex.Size = new System.Drawing.Size(202, 262);
             // 
             // digitizerSeparator
             // 
@@ -345,30 +278,11 @@
             // ctxSnapping
             // 
             this.ctxSnapping.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxSnappingNone,
-            this.ctxSnappingCurrent,
-            this.ctxSnappingAll});
+            this.tsmSnapMode,
+            this.snapSourcesToolStripMenuItem});
             this.ctxSnapping.Name = "ctxSnapping";
             this.ctxSnapping.Size = new System.Drawing.Size(201, 26);
             this.ctxSnapping.Text = "Snapping";
-            // 
-            // ctxSnappingNone
-            // 
-            this.ctxSnappingNone.Name = "ctxSnappingNone";
-            this.ctxSnappingNone.Size = new System.Drawing.Size(152, 22);
-            this.ctxSnappingNone.Text = "No Layers";
-            // 
-            // ctxSnappingCurrent
-            // 
-            this.ctxSnappingCurrent.Name = "ctxSnappingCurrent";
-            this.ctxSnappingCurrent.Size = new System.Drawing.Size(152, 22);
-            this.ctxSnappingCurrent.Text = "Current Layer";
-            // 
-            // ctxSnappingAll
-            // 
-            this.ctxSnappingAll.Name = "ctxSnappingAll";
-            this.ctxSnappingAll.Size = new System.Drawing.Size(152, 22);
-            this.ctxSnappingAll.Text = "All Layers";
             // 
             // ctxHighlighting
             // 
@@ -414,6 +328,135 @@
             this.ctxClearEditor.Name = "ctxClearEditor";
             this.ctxClearEditor.Size = new System.Drawing.Size(201, 26);
             this.ctxClearEditor.Text = "Discard Shape Changes";
+            // 
+            // tsmSnapMode
+            // 
+            this.tsmSnapMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxSnapToVertices,
+            this.ctxSnapToLines,
+            this.ctxSnapToLinesAndVertices});
+            this.tsmSnapMode.Name = "tsmSnapMode";
+            this.tsmSnapMode.Size = new System.Drawing.Size(180, 22);
+            this.tsmSnapMode.Text = "Snap Targets";
+            // 
+            // ctxSnapToLinesAndVertices
+            // 
+            this.ctxSnapToLinesAndVertices.Name = "ctxSnapToLinesAndVertices";
+            this.ctxSnapToLinesAndVertices.Size = new System.Drawing.Size(180, 22);
+            this.ctxSnapToLinesAndVertices.Text = "Lines and Vertices";
+            // 
+            // snapSourcesToolStripMenuItem
+            // 
+            this.snapSourcesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxSnappingAll,
+            this.ctxSnappingCurrent,
+            this.ctxSnappingNone});
+            this.snapSourcesToolStripMenuItem.Name = "snapSourcesToolStripMenuItem";
+            this.snapSourcesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.snapSourcesToolStripMenuItem.Text = "Snap Sources";
+            // 
+            // ctxSnappingNone
+            // 
+            this.ctxSnappingNone.Name = "ctxSnappingNone";
+            this.ctxSnappingNone.Size = new System.Drawing.Size(145, 22);
+            this.ctxSnappingNone.Text = "No Layers";
+            // 
+            // ctxSnappingCurrent
+            // 
+            this.ctxSnappingCurrent.Name = "ctxSnappingCurrent";
+            this.ctxSnappingCurrent.Size = new System.Drawing.Size(145, 22);
+            this.ctxSnappingCurrent.Text = "Current Layer";
+            // 
+            // ctxSnappingAll
+            // 
+            this.ctxSnappingAll.Name = "ctxSnappingAll";
+            this.ctxSnappingAll.Size = new System.Drawing.Size(145, 22);
+            this.ctxSnappingAll.Text = "All Layers";
+            // 
+            // ctxUndoPoint
+            // 
+            this.ctxUndoPoint.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_undo;
+            this.ctxUndoPoint.Name = "ctxUndoPoint";
+            this.ctxUndoPoint.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.ctxUndoPoint.Size = new System.Drawing.Size(175, 22);
+            this.ctxUndoPoint.Text = "Undo Point";
+            // 
+            // ctxSplitShapes
+            // 
+            this.ctxSplitShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_split;
+            this.ctxSplitShapes.Name = "ctxSplitShapes";
+            this.ctxSplitShapes.Size = new System.Drawing.Size(180, 26);
+            this.ctxSplitShapes.Text = "Explode";
+            // 
+            // ctxMergeShapes
+            // 
+            this.ctxMergeShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_merge;
+            this.ctxMergeShapes.Name = "ctxMergeShapes";
+            this.ctxMergeShapes.Size = new System.Drawing.Size(180, 26);
+            this.ctxMergeShapes.Text = "Merge";
+            // 
+            // ctxRotateShapes
+            // 
+            this.ctxRotateShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_rotate;
+            this.ctxRotateShapes.Name = "ctxRotateShapes";
+            this.ctxRotateShapes.Size = new System.Drawing.Size(180, 26);
+            this.ctxRotateShapes.Text = "Rotate";
+            // 
+            // ctxMoveShapes
+            // 
+            this.ctxMoveShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_geometry_move;
+            this.ctxMoveShapes.Name = "ctxMoveShapes";
+            this.ctxMoveShapes.Size = new System.Drawing.Size(180, 26);
+            this.ctxMoveShapes.Text = "Move";
+            // 
+            // ctxCopy
+            // 
+            this.ctxCopy.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_copy;
+            this.ctxCopy.Name = "ctxCopy";
+            this.ctxCopy.Size = new System.Drawing.Size(180, 26);
+            this.ctxCopy.Text = "Copy";
+            // 
+            // ctxCut
+            // 
+            this.ctxCut.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_cut;
+            this.ctxCut.Name = "ctxCut";
+            this.ctxCut.Size = new System.Drawing.Size(180, 26);
+            this.ctxCut.Text = "Cut";
+            // 
+            // ctxPaste
+            // 
+            this.ctxPaste.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_paste;
+            this.ctxPaste.Name = "ctxPaste";
+            this.ctxPaste.Size = new System.Drawing.Size(180, 26);
+            this.ctxPaste.Text = "Paste";
+            // 
+            // ctxRemoveShapes
+            // 
+            this.ctxRemoveShapes.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.img_delete_selected;
+            this.ctxRemoveShapes.Name = "ctxRemoveShapes";
+            this.ctxRemoveShapes.Size = new System.Drawing.Size(180, 26);
+            this.ctxRemoveShapes.Text = "Delete";
+            // 
+            // ctxUndo
+            // 
+            this.ctxUndo.Image = global::MW5.Plugins.ShapeEditor.Properties.Resources.icon_edit_undo;
+            this.ctxUndo.Name = "ctxUndo";
+            this.ctxUndo.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.ctxUndo.Size = new System.Drawing.Size(201, 26);
+            this.ctxUndo.Text = "Undo Point";
+            // 
+            // ctxSnapToVertices
+            // 
+            this.ctxSnapToVertices.Name = "ctxSnapToVertices";
+            this.ctxSnapToVertices.Size = new System.Drawing.Size(180, 22);
+            this.ctxSnapToVertices.Text = "Vertices";
+            // 
+            // ctxSnapToLines
+            // 
+            this.ctxSnapToLines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ctxSnapToLines.Name = "ctxSnapToLines";
+            this.ctxSnapToLines.Size = new System.Drawing.Size(180, 22);
+            this.ctxSnapToLines.Text = "Segments";
             // 
             // ContextMenuView
             // 
@@ -466,9 +509,6 @@
         private System.Windows.Forms.ToolStripMenuItem ctxRemovePart;
         private System.Windows.Forms.ToolStripSeparator editorSeparator2;
         private System.Windows.Forms.ToolStripMenuItem ctxSnapping;
-        private System.Windows.Forms.ToolStripMenuItem ctxSnappingNone;
-        private System.Windows.Forms.ToolStripMenuItem ctxSnappingCurrent;
-        private System.Windows.Forms.ToolStripMenuItem ctxSnappingAll;
         private System.Windows.Forms.ToolStripMenuItem ctxHighlighting;
         private System.Windows.Forms.ToolStripMenuItem mnuHighlightNone;
         private System.Windows.Forms.ToolStripMenuItem mnuHighlightCurrent;
@@ -476,5 +516,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem ctxSaveShape;
         private System.Windows.Forms.ToolStripMenuItem ctxClearEditor;
+        private System.Windows.Forms.ToolStripMenuItem tsmSnapMode;
+        private System.Windows.Forms.ToolStripMenuItem ctxSnapToVertices;
+        private System.Windows.Forms.ToolStripMenuItem ctxSnapToLines;
+        private System.Windows.Forms.ToolStripMenuItem ctxSnapToLinesAndVertices;
+        private System.Windows.Forms.ToolStripMenuItem snapSourcesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ctxSnappingAll;
+        private System.Windows.Forms.ToolStripMenuItem ctxSnappingCurrent;
+        private System.Windows.Forms.ToolStripMenuItem ctxSnappingNone;
     }
 }

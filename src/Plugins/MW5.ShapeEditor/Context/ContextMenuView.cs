@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -80,16 +81,9 @@ namespace MW5.Plugins.ShapeEditor.Context
             ctxVertexEditor.Checked = editor.EditorBehavior == EditorBehavior.VertexEditor;
             ctxPartEditor.Checked = editor.EditorBehavior == EditorBehavior.PartEditor;
 
-            ctxSnappingAll.Checked = editor.SnapBehavior == LayerSelectionMode.AllLayers;
-            ctxSnappingNone.Checked = editor.SnapBehavior == LayerSelectionMode.NoLayer;
-            ctxSnappingCurrent.Checked = editor.SnapBehavior == LayerSelectionMode.ActiveLayer;
+            SetupSnapping(editor);
 
-            mnuHighlightCurrent.Checked = editor.HighlightVertices == LayerSelectionMode.ActiveLayer;
-            mnuHighlightAll.Checked = editor.HighlightVertices == LayerSelectionMode.AllLayers;
-            mnuHighlightNone.Checked = editor.HighlightVertices == LayerSelectionMode.NoLayer;
-
-            ctxHighlighting.Enabled = true;
-            ctxSnapping.Enabled = true;
+            SetupHighlighting(editor);
 
             bool editing = _context.Map.MapCursor == MapCursor.EditShape;
             ctxPartEditor.Visible = editing;
@@ -157,13 +151,31 @@ namespace MW5.Plugins.ShapeEditor.Context
             ctxFinishShape.Enabled = notEmpty;
             ctxUndoPoint.Enabled = notEmpty;
 
+            SetupSnapping(editor);
+
+            SetupHighlighting(editor);
+        }
+
+        private void SetupSnapping(IGeometryEditor editor)
+        {
             ctxSnapAll.Checked = editor.SnapBehavior == LayerSelectionMode.AllLayers;
             ctxSnapNone.Checked = editor.SnapBehavior == LayerSelectionMode.NoLayer;
             ctxSnapCurrent.Checked = editor.SnapBehavior == LayerSelectionMode.ActiveLayer;
 
-            ctxHighlightCurrent.Checked = editor.HighlightVertices == LayerSelectionMode.ActiveLayer;
-            ctxHighlightAll.Checked = editor.HighlightVertices == LayerSelectionMode.AllLayers;
-            ctxHighlightNone.Checked = editor.HighlightVertices == LayerSelectionMode.NoLayer;
+            ctxSnapToLines.Checked = editor.SnapMode == SnapMode.VerticesAndLines;
+            ctxSnapToVertices.Checked = editor.SnapMode == SnapMode.Vertices;
+            ctxSnapToLines.Checked = editor.SnapMode == SnapMode.Lines;
+
+            ctxSnapping.Enabled = true;
+        }
+
+        private void SetupHighlighting(IGeometryEditor editor)
+        {
+            mnuHighlightCurrent.Checked = editor.HighlightVertices == LayerSelectionMode.ActiveLayer;
+            mnuHighlightAll.Checked = editor.HighlightVertices == LayerSelectionMode.AllLayers;
+            mnuHighlightNone.Checked = editor.HighlightVertices == LayerSelectionMode.NoLayer;
+
+            ctxHighlighting.Enabled = true;
         }
 
         private void DisableAll(ContextMenuStrip menu)
