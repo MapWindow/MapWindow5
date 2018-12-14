@@ -26,6 +26,7 @@
         bool SetInteger(int fieldIndex, int value);
         bool SetString(int fieldIndex, string value);
         IAttributeField GetField(int fieldIndex);
-        bool RowModified { get; } 
+        bool RowModified { get; }
+        bool IsPartOfSet(IFeatureSet featureSet);
     }
 }
