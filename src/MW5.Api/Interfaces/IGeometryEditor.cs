@@ -30,6 +30,7 @@ namespace MW5.Api.Interfaces
         ICoordinate GetPoint(int pointIndex);
         double GetSegmentAngle(int segmentIndex);
         double GetSegmentLength(int segmentIndex);
+        bool AddPoint(ICoordinate pnt);
         bool SetPoint(int pointIndex, double x, double y);
         bool SetPoint(int pointIndex, ICoordinate pnt);
         bool SaveChanges();

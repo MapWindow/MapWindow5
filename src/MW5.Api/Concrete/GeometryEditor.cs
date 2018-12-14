@@ -169,6 +169,11 @@ namespace MW5.Api.Concrete
             return _editor.put_PointXY(pointIndex, pnt.X, pnt.Y);
         }
 
+        public bool AddPoint(ICoordinate pnt)
+        {
+            return _editor.AddPoint((MapWinGIS.Point) pnt.InternalObject);
+        }
+
         public bool SaveChanges()
         {
             return _editor.SaveChanges();
