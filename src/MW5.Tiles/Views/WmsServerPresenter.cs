@@ -33,11 +33,12 @@ namespace MW5.Tiles.Views
                 return false;
             }
 
-            if (url.ToLower().StartsWith("https"))
-            {
-                MessageService.Current.Info("HTTPS protocol is not supported.");
-                return false;
-            }
+            // Since MWGIS-5 we now support HTTPS:
+            //if (url.ToLower().StartsWith("https"))
+            //{
+            //    MessageService.Current.Info("HTTPS protocol is not supported.");
+            //    return false;
+            //}
 
             try
             {
