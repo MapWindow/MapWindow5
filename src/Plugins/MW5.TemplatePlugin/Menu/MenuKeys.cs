@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MenuKeys.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015 - 2017
+//   MapWindow OSS Team - 2015 - 2019
 // </copyright>
 // <summary>
 //   The menu keys.
