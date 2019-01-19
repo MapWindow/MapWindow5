@@ -221,10 +221,7 @@ namespace MW5.Api.Map
         private void Invoke<T>(object sender, EventHandler<T> d, T args) where T : EventArgs
         {
             var handler = d;
-            if (handler != null)
-            {
-                handler.Invoke(this, args);
-            }
+            handler?.Invoke(this, args);
         }
 
         protected void FireMapCursorChanged(object sender, EventArgs args)
