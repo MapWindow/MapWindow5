@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
@@ -26,17 +25,11 @@ namespace MW5.Listeners
         public MapListener(IAppContext context, IBroadcasterService broadcaster, ILayerService layerService,
                 ContextMenuPresenter contextMenuPresenter, IProjectService projectService)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
-            if (layerService == null) throw new ArgumentNullException("layerService");
-            if (contextMenuPresenter == null) throw new ArgumentNullException("contextMenuPresenter");
-            if (projectService == null) throw new ArgumentNullException("projectService");
-
-            _context = context;
-            _broadcaster = broadcaster;
-            _layerService = layerService;
-            _contextMenuPresenter = contextMenuPresenter;
-            _projectService = projectService;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _broadcaster = broadcaster ?? throw new ArgumentNullException(nameof(broadcaster));
+            _layerService = layerService ?? throw new ArgumentNullException(nameof(layerService));
+            _contextMenuPresenter = contextMenuPresenter ?? throw new ArgumentNullException(nameof(contextMenuPresenter));
+            _projectService = projectService ?? throw new ArgumentNullException(nameof(projectService));
 
             _map = _context.Map as IMap;
             if (_map == null)
@@ -69,8 +62,7 @@ namespace MW5.Listeners
             _map.ValidateShape += MapValidateShape;
             _map.TmsProviderChanged += MapTmsProviderChanged;
 
-            var mapControl = (_map as MapControl);
-            if (mapControl != null)
+            if (_map is MapControl mapControl)
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
@@ -197,31 +189,26 @@ namespace MW5.Listeners
             }
 
             _layerService.AddLayersFromFilename(e.Filename);
-            int handle = _layerService.LastLayerHandle;
+            var handle = _layerService.LastLayerHandle;
             _map.ZoomToLayer(handle);
         }
 
         private bool TryParseTmsProviderFromDroppedFilename(string filename)
         {
             // expected format: "TmsProvider|" + Provider.Id (see RepositoryTreeView)
-            if (filename.ToLower().StartsWith("tmsprovider"))
-            {
-                var parts = filename.Split('|');
-                if (parts.Length == 2)
-                {
-                    int providerId;
-                    if (Int32.TryParse(parts[1], out providerId))
-                    {
-                        _map.SetTileProvider(providerId);
-                        _map.Redraw(RedrawType.Minimal, true);
-                        _context.View.Update();
-                    }
-                }
+            if (!filename.ToLower().StartsWith("tmsprovider")) return false;
 
-                return true;
-            }
+            var parts = filename.Split('|');
+            if (parts.Length != 2) return false;
 
-            return false;
+            if (!int.TryParse(parts[1], out var providerId)) return false;
+
+            _map.SetTileProvider(providerId);
+            _map.Redraw(RedrawType.Minimal, true);
+            _context.View.Update();
+
+            return true;
+
         }
 
         private void MapExtentsChanged(object sender, EventArgs e)
@@ -246,8 +233,7 @@ namespace MW5.Listeners
 
         private void ShowContextMenu(int x, int y)
         {
-            var parent = _map as Control;
-            if (parent == null)
+            if (!(_map is Control parent))
             {
                 return;
             }
@@ -264,12 +250,35 @@ namespace MW5.Listeners
                 case MapCursor.Pan:
                      menu = _contextMenuPresenter.ZoomingMenu;
                     break;
+                case MapCursor.Selection:
+                    break;
+                case MapCursor.None:
+                    break;
+                case MapCursor.AddShape:
+                    break;
+                case MapCursor.EditShape:
+                    break;
+                case MapCursor.SplitByPolyline:
+                    break;
+                case MapCursor.Identify:
+                    break;
+                case MapCursor.MoveShapes:
+                    break;
+                case MapCursor.RotateShapes:
+                    break;
+                case MapCursor.SelectByPolygon:
+                    break;
+                case MapCursor.EraseByPolygon:
+                    break;
+                case MapCursor.SplitByPolygon:
+                    break;
+                case MapCursor.ClipByPolygon:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
-            if (menu != null)
-            {
-                menu.Show(parent, x, y);
-            }
+            menu?.Show(parent, x, y);
         }
     }
 }
