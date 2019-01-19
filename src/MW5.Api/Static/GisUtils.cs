@@ -5,6 +5,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Shared.Log;
+// ReSharper disable UnusedMember.Global
 
 namespace MW5.Api.Static
 {
@@ -17,14 +18,11 @@ namespace MW5.Api.Static
         /// Static instance of MapWinGIS.Utils class. 
         /// Use whenever there is no need to share callback in multithreading scenario.
         /// </summary>
-        public static GisUtils Instance
-        {
-            get { return _staticUilts; }
-        }
+        public static GisUtils Instance => _staticUilts;
 
         public IGlobalListener Callback
         {
-            get { return NativeCallback.UnWrap(_utils.GlobalCallback); }
+            get => NativeCallback.UnWrap(_utils.GlobalCallback);
             set
             {
                 var callback = NativeCallback.Wrap(value);
@@ -199,8 +197,8 @@ namespace MW5.Api.Static
 
         public string Key
         {
-            get { return _utils.Key; }
-            set { _utils.Key = value; }
+            get => _utils.Key;
+            set => _utils.Key = value;
         }
 
         public string GetComUsageReport()
@@ -228,6 +226,15 @@ namespace MW5.Api.Static
         public bool ExportSelection(IFeatureSet fs, string outputFilename, bool overwrite)
         {
             return _utils.ExportSelection(fs.GetInternal(), outputFilename, overwrite);
+        }
+
+        public double GetAngle(ICoordinate firstCoordinate, ICoordinate secondCoordinate, bool inCartesian = true, bool inRadians = true)
+        {
+            var angle = _utils.GetAngle(firstCoordinate.GetInternal(), secondCoordinate.GetInternal());
+            if (inCartesian) angle = (450 - angle) % 360;
+            if (inRadians) angle = angle * Math.PI / 180.0;
+
+            return angle;
         }
 
         #region Not implemented
@@ -269,20 +276,14 @@ namespace MW5.Api.Static
 
         #endregion
 
-        public object InternalObject
-        {
-            get { return _utils; }
-        }
+        public object InternalObject => _utils;
 
-        string IComWrapper.LastError
-        {
-            get { return _utils.ErrorMsg[_utils.LastErrorCode]; }
-        }
+        string IComWrapper.LastError => _utils.ErrorMsg[_utils.LastErrorCode];
 
         public string Tag
         {
-            get { return _utils.Key;  }
-            set { _utils.Key = value; }
+            get => _utils.Key;
+            set => _utils.Key = value;
         }
     }
 }
