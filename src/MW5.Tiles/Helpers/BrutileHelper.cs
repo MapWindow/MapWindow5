@@ -54,7 +54,8 @@ namespace MW5.Tiles.Helpers
                 return null;
             }
 
-            var box = layer.ChooseBoundingBox(mapProjection);
+            // First try the layer, as a fallback, use the bounding box defined in the capabilities
+            var box = layer.ChooseBoundingBox(mapProjection) ?? capabilities.Capability.Layer.ChooseBoundingBox(mapProjection);
             if (box == null)
             {
                 MessageService.Current.Info("Failed to determine bounds of the layer.");
@@ -82,8 +83,7 @@ namespace MW5.Tiles.Helpers
 
         private static string GetFormat(this WmsCapabilities capabilities)
         {
-            var list = capabilities.Capability.Request.GetMap.Format;
-            return list.Count > 2 ? list[2] : list.FirstOrDefault();
+            return capabilities.Capability.Request.GetMap.Format.DefaultIfEmpty("image/png").FirstOrDefault();
         }
 
         private static string GetLayers(this IEnumerable<Layer> layers)
