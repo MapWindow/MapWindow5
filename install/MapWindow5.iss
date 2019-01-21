@@ -93,7 +93,7 @@ Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: igno
 ;; Manuals sub folder
 Source: "{#ExeBinPath}\Manuals\*"; DestDir: "{app}\Manuals"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; Plugins subfolder
-Source: "{#ExeBinPath}\Plugins\*.dll"; DestDir: "{app}\Plugins"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*"
+Source: "{#ExeBinPath}\Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*"
 ;; Styles subfolder
 Source: "{#ExeBinPath}\Styles\*"; DestDir: "{app}\Styles"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; SQLite interop:
@@ -154,6 +154,7 @@ Root: "HKCR"; Subkey: ".mwproj"; ValueType: string; ValueData: "MW5Project"; Fla
 Root: "HKCR"; Subkey: "MW5Project"; ValueType: string; ValueData: "MW5 Project"; Flags: uninsdeletekey
 Root: "HKCR"; Subkey: "MW5Project\DefaultIcon"; ValueType: string; ValueData: "{app}\MAPWINDOW.EXE,0"
 Root: "HKCR"; Subkey: "MW5Project\shell\open\command"; ValueType: string; ValueData: """{app}\MAPWINDOW.EXE"" ""%1"""
+Root: "HKCR"; Subkey: "MW5Project\"; ValueName: "InstallDir"; ValueType: string; ValueData: "{app}"
 
 [InstallDelete]
 Type: files; Name: "{app}\Plugins\MW5.TemplatePlugin.dll"; Components: MapWindow
