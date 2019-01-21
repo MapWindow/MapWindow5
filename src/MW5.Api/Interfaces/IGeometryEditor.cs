@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using System.Drawing;
 using MW5.Api.Enums;
 
@@ -5,6 +7,8 @@ namespace MW5.Api.Interfaces
 {
     public interface IGeometryEditor: IComWrapper
     {
+        event EventHandler BeforeClearChangesEvent;
+        event CancelEventHandler BeforeSaveChangesEvent;
         double Area { get; }
         EditorBehavior EditorBehavior { get; set; }
         EditorState EditorState { get; }
