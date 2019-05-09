@@ -38,6 +38,7 @@ namespace MW5.Api.Map
             _map.TilesLoaded += MapTilesLoaded;
             _map.UndoListChanged += MapUndoListChanged;
             _map.ValidateShape += MapValidateShape;
+            _map.BeforeVertexDigitized += MapBeforeVertexDigitized;
         }
 
         public void DetachHandlers()
@@ -68,9 +69,14 @@ namespace MW5.Api.Map
             _map.TilesLoaded -= MapTilesLoaded;
             _map.UndoListChanged -= MapUndoListChanged;
             _map.ValidateShape -= MapValidateShape;
+            _map.BeforeVertexDigitized -= MapBeforeVertexDigitized;
         }
 
         #region Handlers
+        private void MapBeforeVertexDigitized(object sender, _DMapEvents_BeforeVertexDigitizedEvent e)
+        {
+            Invoke(sender, BeforeVertexDigitized, new BeforeVertexDigitizedEventArgs(e));
+        }
 
         private void MapValidateShape(object sender, _DMapEvents_ValidateShapeEvent e)
         {

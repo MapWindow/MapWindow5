@@ -91,6 +91,7 @@
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />
     <Compile Include="Concrete\WmsSource.cs" />
+    <Compile Include="Events\BeforeVertexDigitizedEventArgs.cs" />
     <Compile Include="Interfaces\ICancellableEvent.cs" />
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
@@ -309,8 +310,8 @@
   <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <COMReference Include="AxMapWinGIS">
       <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>True</Isolated>
@@ -318,8 +319,8 @@
     </COMReference>
     <COMReference Include="MapWinGIS">
       <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>True</Isolated>
@@ -330,8 +331,8 @@
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <COMReference Include="AxMapWinGIS">
       <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
@@ -339,8 +340,8 @@
     </COMReference>
     <COMReference Include="MapWinGIS">
       <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
