@@ -105,7 +105,18 @@ namespace MW5.Controls
                         var group = Legend.Groups.ItemByHandle(_legendDockPanel.SelectedGroupHandle);
                         if (group != null)
                         {
-                            if (MessageService.Current.Ask("Do you want to remove group: " + group.Text + "?"))
+                            var cancel = false;
+                            foreach (var layer in group.Layers)
+                            {
+                                var args = new Plugins.Events.LayerCancelEventArgs(layer.Handle);
+                                _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, Legend, args);
+                                if (args.Cancel)
+                                {
+                                    cancel = true;
+                                    break;
+                                }
+                            }
+                            if (!cancel && MessageService.Current.Ask("Do you want to remove group: " + group.Text + "?"))
                             {
                                 Legend.Groups.Remove(group.Handle);
                             }
