@@ -125,6 +125,25 @@ namespace MW5.Plugins.ShapeEditor.Services
             }
         }
 
+        public void ReplaceShape(int layerHandle, int shapeIndex, IGeometry newGeometry)
+        {
+            var layer = _context.Layers.GetVectorLayer(layerHandle);
+            if (layer == null)
+            {
+                MessageService.Current.Info("Layer with specified handle not found.");
+                return;
+            }
+
+            BeforeShapeEditEventArgs beforeargs = new BeforeShapeEditEventArgs(layerHandle, shapeIndex, false);
+            _broadcaster.BroadcastEvent(p => p.BeforeShapeEdit_, _context.Map, beforeargs);
+            
+            _context.Map.History.Add(UndoOperation.EditShape, layerHandle, shapeIndex);
+            layer.Data.Features.EditUpdate(shapeIndex, newGeometry);
+
+            AfterShapeEditEventArgs afterargs = new AfterShapeEditEventArgs(UndoOperation.EditShape, layerHandle, shapeIndex);
+            _broadcaster.BroadcastEvent(p => p.AfterShapeEdit_, _context.Map, afterargs);
+        }
+
         /// <summary>
         /// Removes selected shapes
         /// </summary>

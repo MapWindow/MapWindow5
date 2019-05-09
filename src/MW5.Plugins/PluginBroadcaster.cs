@@ -104,8 +104,6 @@ namespace MW5.Plugins
             
             string eventName = expression.Member.Name;
 
-            var singleTargetArgs = args as SingleTargetEventArgs;
-
             bool IsCancelled() => (
                 (args is ICancellableEvent bargs && bargs.Cancel) ||
                 (args is CancelEventArgs cargs && cargs.Cancel)
