@@ -269,6 +269,11 @@ namespace MW5.Api.Concrete
             Map.ReloadOgrLayerFromSource(LayerHandle);
         }
 
+        public void RestartBackgroundLoading()
+        {
+            Map.RestartBackgroundLoading(LayerHandle);
+        }
+
         /// <summary>
         /// Changes selection of the shapefile adding new shapes using the specified mode
         /// </summary>
