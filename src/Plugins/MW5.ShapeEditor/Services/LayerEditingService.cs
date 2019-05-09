@@ -69,11 +69,11 @@ namespace MW5.Plugins.ShapeEditor.Services
             {
                 if (ogrLayer != null)
                 {
-                    if (ogrLayer.DynamicLoading)
+                    /*if (ogrLayer.DynamicLoading)
                     {
                         MessageService.Current.Info("Editing of dynamically loaded OGR layers isn't allowed.");
                         return;
-                    }
+                    }*/
                     if (!ogrLayer.get_SupportsEditing(SaveType.SaveAll))
                     {
                         MessageService.Current.Info("OGR layer doesn't support editing: " + ogrLayer.LastError);
