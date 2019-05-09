@@ -12,6 +12,7 @@ namespace MW5.Api.Interfaces
     {
         event EventHandler<EventArgs> MapCursorChanged;
         event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
+        event EventHandler<BeforeVertexDigitizedEventArgs> BeforeVertexDigitized;
         event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
         event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
         event EventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape;

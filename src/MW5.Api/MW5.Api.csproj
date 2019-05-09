@@ -99,6 +99,7 @@
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />
     <Compile Include="Concrete\WmsSource.cs" />
+    <Compile Include="Events\BeforeVertexDigitizedEventArgs.cs" />
     <Compile Include="Interfaces\ICancellableEvent.cs" />
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
