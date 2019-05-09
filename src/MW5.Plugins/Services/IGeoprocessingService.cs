@@ -1,4 +1,6 @@
-﻿namespace MW5.Plugins.Services
+﻿using MW5.Api.Interfaces;
+
+namespace MW5.Plugins.Services
 {
     public interface IGeoprocessingService
     {
@@ -23,5 +25,7 @@
         void CopyShapes();
         void PasteShapes();
         void CutShapes();
+
+        void ReplaceShape(int layerHandle, int shapeIndex, IGeometry newGeometry);
     }
 }
