@@ -201,7 +201,7 @@ namespace MW5.Plugins.ShapeEditor.Services
                 MessageService.Current.Info(msg);
 
                 // reload from datasource to be sure that there is no stale data
-                ogrLayer.ReloadFromSource();
+                ogrLayer.ReloadFromSource(true);
             }
 
             return success;
@@ -224,7 +224,7 @@ namespace MW5.Plugins.ShapeEditor.Services
             
             if (ogrLayer != null)
             {
-                ogrLayer.ReloadFromSource();
+                ogrLayer.ReloadFromSource(true);
                 fs = ogrLayer.Data;
             }
             else
