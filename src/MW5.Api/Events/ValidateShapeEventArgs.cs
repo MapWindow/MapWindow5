@@ -6,7 +6,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
-    public class ValidateShapeEventArgs : EventArgs
+    public class ValidateShapeEventArgs : EventArgs, ICancellableEvent
     {
         private readonly _DMapEvents_ValidateShapeEvent _args;
 
@@ -19,10 +19,10 @@ namespace MW5.Api.Events
             }
         }
 
-        public tkMwBoolean Cancel
+        public bool Cancel
         {
-            get { return _args.cancel; }
-            set { _args.cancel = value; }
+            get { return _args.cancel == tkMwBoolean.blnTrue; }
+            set { _args.cancel = value ? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse; }
         }
 
         public int LayerHandle

@@ -106,6 +106,9 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
         internal EventHandler<EventArgs> ProjectClosed_;
+        internal EventHandler<CancelEventArgs> ProjectSaving_;
+        internal EventHandler<EventArgs> ProjectSaved_;
+        internal EventHandler<LayerCancelEventArgs> BeforeLayerEditingChanged_;
         internal EventHandler<LayerEventArgs> LayerEditingChanged_;
         internal EventHandler<LayerCancelEventArgs> BeforeRemoveLayer_;
         internal EventHandler<EventArgs> ViewUpdating_;
@@ -141,6 +144,12 @@ namespace MW5.Plugins.Concrete
             remove { LayerEditingChanged_ -= value; }
         }
 
+        public event EventHandler<LayerCancelEventArgs> BeforeLayerEditingChanged
+        {
+            add { BeforeLayerEditingChanged_ += value; }
+            remove { BeforeLayerEditingChanged_ -= value; }
+        }
+
         public event EventHandler<LayerEventArgs> LayerFeatureCountChanged
         {
             add { LayerFeatureCountChanged_ += value; }
@@ -169,6 +178,18 @@ namespace MW5.Plugins.Concrete
         {
             add { ItemClicked_ += value; }
             remove { ItemClicked_ -= value; }
+        }
+
+        public event EventHandler<CancelEventArgs> ProjectSaving
+        {
+            add { ProjectSaving_ += value; }
+            remove { ProjectSaving_ -= value; }
+        }
+
+        public event EventHandler<EventArgs> ProjectSaved
+        {
+            add { ProjectSaved_ += value; }
+            remove { ProjectSaved_ -= value; }
         }
 
         public event EventHandler<CancelEventArgs> ProjectClosing

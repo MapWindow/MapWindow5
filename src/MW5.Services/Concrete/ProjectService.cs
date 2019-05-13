@@ -169,9 +169,18 @@ namespace MW5.Services.Concrete
 
         public bool Save()
         {
+            var args = new CancelEventArgs();
+
             string filename = _filename;
-            var state = State; 
-            
+            var state = State;
+
+            _broadcaster.BroadcastEvent(p => p.ProjectSaving_, this, args);
+            if (args.Cancel)
+            {
+                return false;
+            }
+
+
             bool newProject = state == ProjectState.NotSaved || state == ProjectState.Empty;
             if (newProject)
             {
@@ -188,6 +197,7 @@ namespace MW5.Services.Concrete
                 // OnProjectChanged();
             }
 
+            _broadcaster.BroadcastEvent(p => p.ProjectSaved_, this, args);
             return true;
         }
 

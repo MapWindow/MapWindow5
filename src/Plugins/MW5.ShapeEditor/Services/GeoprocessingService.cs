@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
@@ -179,27 +182,39 @@ namespace MW5.Plugins.ShapeEditor.Services
 
         private void RemoveSelectedShapesNoPrompt(IMuteMap map, IFeatureSet fs, int layerHandle)
         {
-            var list = map.History;
-            list.BeginBatch();
 
+            // First try to delete each feature - some may get cancelled
             var features = fs.Features;
-            for (var i = features.Count - 1; i >= 0; i--)
+            var actualDeletes = new List<int>();
+
+            try
             {
-
-                if (!features[i].Selected) continue;
-
-                if (features[i].Selected)
+                for (int i = features.Count - 1; i >= 0; i--)
                 {
-                    _broadcaster.BroadcastEvent(p => p.BeforeShapeEdit_, _context.Map, new BeforeShapeEditEventArgs(layerHandle, i, false));
-                    list.Add(UndoOperation.RemoveShape, layerHandle, i);
-                    features.EditDelete(i);
+                    if (!features[i].Selected) continue;
+
+                    var args = new BeforeDeleteShapeEventArgs(DeleteTarget.Shape, false);
+                    _broadcaster.BroadcastEvent(p => p.BeforeDeleteShape_, _context.Map, args);
+                    if (!args.Cancel && features.EditDelete(i))
+                    {
+                        actualDeletes.Add(i);
+                    }
                 }
-
             }
-
-            list.EndBatch();
+            finally
+            {
+                // Then add this to the undo history
+                var list = map.History;
+                list.BeginBatch();
+                foreach (var i in actualDeletes)
+                {
+                    list.Add(UndoOperation.RemoveShape, layerHandle, i);
+                }
+                list.EndBatch();
+            }
 
             _broadcaster.BroadcastEvent(p => p.LayerFeatureCountChanged_, fs, new LayerEventArgs(layerHandle));
         }
+
     }
 }
