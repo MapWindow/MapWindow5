@@ -148,12 +148,16 @@ namespace MW5.Controls
                         if (layer != null)
                         {
                             if (!LayerSerializationHelper.CheckFilename(layer.Filename))
+                                LayerSerializationHelper.SaveSettings(layer);
+                            else
                             {
-                                MessageService.Current.Info("Can not save settings for a non-disk based layer.");
-                                return;
+                                if (!layer.SaveOptions("", true, ""))
+                                {
+                                    MessageService.Current.Info("Can not save settings for a non-disk based layer.");
+                                    return;
+                                }
                             }
-
-                            LayerSerializationHelper.SaveSettings(layer);
+                            
                         }
                         break;
                     }
@@ -163,13 +167,17 @@ namespace MW5.Controls
 
                         if (layer != null)
                         {
-                            if (!LayerSerializationHelper.CheckFilename(layer.Filename))
+                            if (LayerSerializationHelper.CheckFilename(layer.Filename))
+                                LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
+                            else
                             {
-                                MessageService.Current.Info("Can not load settings for a non-disk based layer.");
-                                return;
+                                string desc="";
+                                if (!layer.LoadOptions("", ref desc))
+                                {
+                                    MessageService.Current.Info("Can not load settings for a non-disk based layer.");
+                                    return;
+                                }
                             }
-
-                            LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
                         }
                         
                         _context.Legend.Redraw(LegendRedraw.LegendAndMap);
