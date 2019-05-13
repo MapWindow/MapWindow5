@@ -2,10 +2,11 @@
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
-    public class BeforeDeleteShapeEventArgs : EventArgs
+    public class BeforeDeleteShapeEventArgs : EventArgs, ICancellableEvent
     {
         private readonly _DMapEvents_BeforeDeleteShapeEvent _args;
 

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MW5.Api.Interfaces;
+using System;
 using System.ComponentModel;
 
 namespace MW5.Plugins.Events
 {
-    public class LayerCancelEventArgs: CancelEventArgs
+    public class LayerCancelEventArgs: CancelEventArgs, ICancellableEvent
     {
         public LayerCancelEventArgs(int layerHandle)
         {

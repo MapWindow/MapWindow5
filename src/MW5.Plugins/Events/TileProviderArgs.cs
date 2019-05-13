@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Events
 {
-    public class TileProviderArgs: CancelEventArgs
+    public class TileProviderArgs: CancelEventArgs, ICancellableEvent
     {
         public TileProviderArgs(int providerId)
         {

@@ -1,10 +1,11 @@
 ﻿using System;
 using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
-    public class BeforeShapeEditEventArgs : EventArgs
+    public class BeforeShapeEditEventArgs : EventArgs, ICancellableEvent
     {
         private readonly _DMapEvents_BeforeShapeEditEvent _args;
 
