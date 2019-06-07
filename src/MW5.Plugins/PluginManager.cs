@@ -237,7 +237,7 @@ namespace MW5.Plugins
             FirePluginUnloaded(identity);
         }
 
-        public void RestoreApplicationPlugins(IEnumerable<Guid> plugins, IAppContext context)
+        public void RestoreApplicationPlugins(IEnumerable<Guid> plugins, IAppContext context, Action<PluginIdentity> pluginLoadingCallback = null)
         {
             var dict = new HashSet<Guid>(plugins);
 
@@ -249,6 +249,7 @@ namespace MW5.Plugins
 
                 if (active && !PluginActive(p.Identity))
                 {
+                    pluginLoadingCallback?.Invoke(p.Identity);
                     LoadPlugin(p.Identity, context);
                 }
             }

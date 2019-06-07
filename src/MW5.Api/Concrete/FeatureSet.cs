@@ -213,6 +213,8 @@ namespace MW5.Api.Concrete
 
         public GeometryType GeometryType => GeometryHelper.ShapeType2GeometryType(_shapefile.ShapefileType);
 
+        public bool Selectable { get => _shapefile.Selectable; set => _shapefile.Selectable = value; }
+
         public ZValueType ZValueType => GeometryHelper.ShapeType2ZValueType(_shapefile.ShapefileType);
 
         public FeatureSourceType SourceType => (FeatureSourceType)_shapefile.SourceType;

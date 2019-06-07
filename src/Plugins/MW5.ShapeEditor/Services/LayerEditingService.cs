@@ -13,6 +13,7 @@ using MW5.Plugins.Services;
 using MW5.Services.Views;
 using MW5.Shared;
 using MW5.UI.Helpers;
+using LayerCancelEventArgs = MW5.Plugins.Events.LayerCancelEventArgs;
 
 namespace MW5.Plugins.ShapeEditor.Services
 {
@@ -46,6 +47,11 @@ namespace MW5.Plugins.ShapeEditor.Services
             int handle = _context.Legend.SelectedLayerHandle;
             var fs = _context.Layers.GetFeatureSet(handle);
             var ogrLayer = _context.Layers.GetVectorLayer(handle);
+
+            var args = new LayerCancelEventArgs(handle);
+            _broadcaster.BroadcastEvent(p => p.BeforeLayerEditingChanged_, _context.Legend, args);
+            if (args.Cancel)
+                return;
 
             if (fs == null)
             {
@@ -87,13 +93,22 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// Saves changes for the layer with specified handle.
         /// </summary>
         public bool SaveLayerChanges(int layerHandle)
+            => ProcessDiscardOrSave(layerHandle, SaveLayerChangesCore);
+
+        /// <summary>
+        /// Discard changes for the layer with the specfied handle
+        /// </summary>
+        public bool DiscardLayerChanges(int layerHandle)
+            => ProcessDiscardOrSave(layerHandle, DiscardChangesCore);
+
+        private bool ProcessDiscardOrSave(int layerHandle, Func<int, bool> action)
         {
             if (!_context.Map.GeometryEditor.SaveChanges())
             {
                 return false;
             }
 
-            bool success = SaveLayerChangesCore(layerHandle);
+            bool success = action(layerHandle);
 
             if (success)
             {
@@ -104,8 +119,10 @@ namespace MW5.Plugins.ShapeEditor.Services
                 }
             }
 
+            _broadcaster.BroadcastEvent(p => p.LayerEditingChanged_, _context.Legend, new LayerEventArgs(layerHandle));
             return success;
         }
+
 
         private bool SaveLayerChangesCore(int layerHandle)
         {
@@ -184,7 +201,7 @@ namespace MW5.Plugins.ShapeEditor.Services
                 MessageService.Current.Info(msg);
 
                 // reload from datasource to be sure that there is no stale data
-                ogrLayer.ReloadFromSource();
+                ogrLayer.ReloadFromSource(true);
             }
 
             return success;
@@ -193,7 +210,7 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// <summary>
         /// Discards changes for the layer.
         /// </summary>
-        private void DiscardChangesCore(int layerHandle)
+        private bool DiscardChangesCore(int layerHandle)
         {
             var fs = _context.Layers.GetFeatureSet(layerHandle);
             if (fs == null)
@@ -207,7 +224,7 @@ namespace MW5.Plugins.ShapeEditor.Services
             
             if (ogrLayer != null)
             {
-                ogrLayer.ReloadFromSource();
+                ogrLayer.ReloadFromSource(true);
                 fs = ogrLayer.Data;
             }
             else
@@ -221,6 +238,8 @@ namespace MW5.Plugins.ShapeEditor.Services
             }
 
             CloseEditing(layerHandle);
+
+            return true;
         }
 
         /// <summary>
@@ -263,6 +282,39 @@ namespace MW5.Plugins.ShapeEditor.Services
 
                 _layerService.AddDatasource(fs, model.LayerName);
             }
+        }
+
+        public void ToggleSnapToActiveLayer()
+        {
+            if (_context.Map.GeometryEditor.SnapBehavior == LayerSelectionMode.ActiveLayer)
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            else
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.ActiveLayer;
+        }
+
+        public void ToggleSnapToAllLayers()
+        {
+            if (_context.Map.GeometryEditor.SnapBehavior == LayerSelectionMode.AllLayers)
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            else
+                _context.Map.GeometryEditor.SnapBehavior = LayerSelectionMode.AllLayers;
+        }
+
+        public void ToggleSnapToSegments()
+        {
+            if (_context.Map.GeometryEditor.SnapMode == SnapMode.Vertices)
+                _context.Map.GeometryEditor.SnapMode = SnapMode.VerticesAndLines;
+            else
+                _context.Map.GeometryEditor.SnapMode = SnapMode.Vertices;
+        }
+
+        public void ToggleSnapToVertices()
+        {
+            if (_context.Map.GeometryEditor.SnapMode == SnapMode.Lines)
+                _context.Map.GeometryEditor.SnapMode = SnapMode.VerticesAndLines;
+            else
+                _context.Map.GeometryEditor.SnapMode = SnapMode.Lines;
+
         }
     }
 }

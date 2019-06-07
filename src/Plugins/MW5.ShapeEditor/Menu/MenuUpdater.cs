@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Properties;
-using MW5.Plugins.ShapeEditor.Services;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.ShapeEditor.Menu
@@ -67,7 +61,9 @@ namespace MW5.Plugins.ShapeEditor.Menu
             FindToolbarItem(MenuKeys.SplitByPolygon).Checked = map.MapCursor == MapCursor.SplitByPolygon;
             FindToolbarItem(MenuKeys.EraseByPolygon).Checked = map.MapCursor == MapCursor.EraseByPolygon;
             FindToolbarItem(MenuKeys.ClipByPolygon).Checked = map.MapCursor == MapCursor.ClipByPolygon;
-            
+
+            UpdateSnapStates();
+
             bool polygonCursor = map.MapCursor ==  MapCursor.ClipByPolygon || 
                                  map.MapCursor == MapCursor.SplitByPolygon || 
                                  map.MapCursor == MapCursor.EraseByPolygon;
@@ -120,6 +116,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
                FindToolbarItem(MenuKeys.SplitShapes).Enabled = selectedCount > 0;
                FindToolbarItem(MenuKeys.MoveShapes).Enabled = selectedCount > 0;
                FindToolbarItem(MenuKeys.RotateShapes).Enabled = selectedCount > 0;
+
+               UpdateSnapStates();
             }
 
             UpdateCopyPaste(true);
@@ -175,6 +173,29 @@ namespace MW5.Plugins.ShapeEditor.Menu
                     return !_geoprocessingService.BufferIsEmpty && fs.InteractiveEditing;
             }
             return false;
+        }
+
+        internal void UpdateSnapStates()
+        {
+            var map = _context.Map;
+            var editor = map.GeometryEditor;
+
+            FindToolbarItem(MenuKeys.SnapToActiveLayer).Checked = editor.SnapBehavior == LayerSelectionMode.ActiveLayer;
+            FindToolbarItem(MenuKeys.SnapToAlLayers).Checked = editor.SnapBehavior == LayerSelectionMode.AllLayers;
+            FindToolbarItem(MenuKeys.SnapToSegments).Checked = editor.SnapMode != SnapMode.Vertices;
+            FindToolbarItem(MenuKeys.SnapToVertices).Checked = editor.SnapMode != SnapMode.Lines;
+
+            bool snapEditing = (
+                map.MapCursor == MapCursor.MoveShapes ||
+                map.MapCursor == MapCursor.RotateShapes ||
+                map.MapCursor == MapCursor.AddShape ||
+                map.MapCursor == MapCursor.EditShape
+            );
+
+            FindToolbarItem(MenuKeys.SnapToActiveLayer).Enabled = snapEditing;
+            FindToolbarItem(MenuKeys.SnapToAlLayers).Enabled = snapEditing;
+            FindToolbarItem(MenuKeys.SnapToSegments).Enabled = snapEditing;
+            FindToolbarItem(MenuKeys.SnapToVertices).Enabled = snapEditing;
         }
 
         private void MenuDropDownOpening(object sender, EventArgs e)

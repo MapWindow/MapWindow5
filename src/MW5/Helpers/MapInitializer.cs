@@ -92,6 +92,7 @@ namespace MW5.Helpers
             map.Identifier.HotTracking = true;
             map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
             map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            map.GeometryEditor.SnapMode = SnapMode.VerticesAndLines;
             map.Identifier.HotTracking = false;
             map.ResizeBehavior = ResizeBehavior.KeepScale;
             map.Measuring.UndoButton = UndoShortcut.CtrlZ;

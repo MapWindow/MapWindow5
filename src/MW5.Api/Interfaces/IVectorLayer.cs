@@ -34,6 +34,7 @@ namespace MW5.Api.Interfaces
         bool Open(string connectionString, string layerName, bool forUpdate = false);
         bool OpenFromQuery(string connectionString, string sql);
         void ReloadFromSource();
+        void ReloadFromSource(bool preserveStyleAndLabels = true);
         IEnumerable<ComplexGeometryType> AvailableGeometryTypes {get;}
         void SetActiveGeometryType(GeometryType type, ZValueType zValue);
         GeometryType ActiveGeometryType { get; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
@@ -103,7 +104,13 @@ namespace MW5.Plugins
             
             string eventName = expression.Member.Name;
 
-            var singleTargetArgs = args as SingleTargetEventArgs;
+            bool IsCancelled() => (
+                (args is ICancellableEvent bargs && bargs.Cancel) ||
+                (args is CancelEventArgs cargs && cargs.Cancel)
+            );
+            bool StopBubbling() => (
+                (args is SingleTargetEventArgs sargs && sargs.Handled) || IsCancelled()
+            );
 
             var fieldInfo = GetEventField(eventName);
             if (fieldInfo != null)
@@ -120,17 +127,16 @@ namespace MW5.Plugins
                     var del = fieldInfo.GetValue(p) as MulticastDelegate;
                     if (del != null)
                     {
-                        if (del.GetInvocationList().Any())
+                        var invlst = del.GetInvocationList();
+                        foreach (var adel in invlst)
                         {
-                            del.Method.Invoke(del.Target, new[] { sender, args });
+                            adel.Method.Invoke(adel.Target, new[] { sender, args });
+                            if (StopBubbling())
+                                break;
                         }
                     }
-
-                    // in case we want only one handler
-                    if (singleTargetArgs != null && singleTargetArgs.Handled)
-                    {
+                    if (StopBubbling())
                         break;
-                    }
                 }
             }
         }

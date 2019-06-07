@@ -8,7 +8,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Legend.Events
 {
-    public class DatasourceCancelEventArgs: CancelEventArgs
+    public class DatasourceCancelEventArgs: CancelEventArgs, ICancellableEvent
     {
         public DatasourceCancelEventArgs(ILayerSource datasource)
         {

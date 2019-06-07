@@ -1,10 +1,11 @@
 ﻿using System;
 using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
-    public class BeforeShapeEditEventArgs : EventArgs
+    public class BeforeShapeEditEventArgs : EventArgs, ICancellableEvent
     {
         private readonly _DMapEvents_BeforeShapeEditEvent _args;
 
@@ -16,6 +17,13 @@ namespace MW5.Api.Events
                 throw new NullReferenceException("Internal reference is null.");
             }
         }
+
+        public BeforeShapeEditEventArgs(int layerHandle, int shapeIndex, bool cancel) : this(new _DMapEvents_BeforeShapeEditEvent(
+                layerHandle,
+                shapeIndex,
+                cancel? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse
+            ))
+        { }
 
         public int LayerHandle
         {

@@ -100,7 +100,8 @@ namespace MW5.Views
                 _menuUpdater = new MenuUpdater(_context, PluginIdentity.Default);
 
                 SplashView.Instance.ShowStatus("Loading plugins");
-                appContext.InitPlugins(configService); // must be called after docking is initialized
+                // must be called after docking is initialized:
+                appContext.InitPlugins(configService, p => SplashView.Instance.ShowStatus($"Loading plugins: {p.Name}"));
 
                 // this will display progress updates and debug window
                 // file based-logger is already working
