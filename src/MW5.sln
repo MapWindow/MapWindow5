@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Api", "MW5.Api\MW5.Api.csproj", "{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}"
 EndProject
@@ -437,5 +437,8 @@ Global
 		{48A39A36-1485-4FB9-A8F3-A7E68FAFC595} = {063A0090-3675-43DB-AA46-C282C643D9DF}
 		{01A845C6-D391-4258-81B0-C6ABF23D3364} = {9E2D7F0D-69A6-40B8-BCCF-B22EFE7CE4D1}
 		{2F64E258-741E-42E2-919D-63F4855F0115} = {9E2D7F0D-69A6-40B8-BCCF-B22EFE7CE4D1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B507E4B-7671-45FC-AB6A-769C505B0608}
 	EndGlobalSection
 EndGlobal
