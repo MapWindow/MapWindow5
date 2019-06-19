@@ -18,7 +18,7 @@
 
 #ifdef x64BitVersion
   #define CPU "x64"
-  #define vcredist "vcredist_x64_2015.exe"
+  #define vcredist "vcredist_x64-2015.exe"
   #define ExeBinPath "..\bin\x64\Release"
   #define SystemFlag "64bit"
 #endif
