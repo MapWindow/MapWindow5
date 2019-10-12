@@ -23,7 +23,6 @@
     <SccProvider>
     </SccProvider>
     <OutputPath>..\..\..\bin\$(Platform)\$(Configuration)\Plugins\</OutputPath>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

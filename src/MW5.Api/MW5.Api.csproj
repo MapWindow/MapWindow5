@@ -57,14 +57,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.MapWinGIS">
-      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\AxInterop.MapWinGIS.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\16.0\AxInterop.MapWinGIS.dll</HintPath>
     </Reference>
     <Reference Include="Interop.MapWinGIS">
-      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\Interop.MapWinGIS.dll</HintPath>
+      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\16.0\Interop.MapWinGIS.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -343,7 +343,9 @@
       <Name>MW5.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
