@@ -126,13 +126,15 @@ namespace MW5.Api.Concrete
 
         public bool Draw(IntPtr hdc, float x, float y, int clipWidth, int clipHeight, Color? backColor = null)
         {
-            return _pattern.Draw(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            return _pattern.Draw(hdcInt, x, y, clipWidth, clipHeight, backColor.ToUInt());
         }
 
         public bool Draw(Graphics g, float x, float y, int clipWidth, int clipHeight, Color? backColor = null)
         {
             var hdc = g.GetHdc();
-            bool result = _pattern.Draw(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            var result = _pattern.Draw(hdcInt, x, y, clipWidth, clipHeight, backColor.ToUInt());
             g.ReleaseHdc(hdc);
             return result;
         }

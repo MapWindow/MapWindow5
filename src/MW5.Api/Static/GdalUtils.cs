@@ -107,7 +107,7 @@ namespace MW5.Api.Static
         /// <returns>True on success</returns>
         public bool WarpRaster(string srcFilename, string dstFilename, string[] options)
         {
-            var retVal = _mwgisGdalUtils.GDALWarp(srcFilename, dstFilename, options);
+            var retVal = _mwgisGdalUtils.GdalRasterWarp(srcFilename, dstFilename, options);
             if (!retVal)
             {
                 _lastErrorMessage = _mwgisGdalUtils.ErrorMsg[_mwgisGdalUtils.LastErrorCode];
