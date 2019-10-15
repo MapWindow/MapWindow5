@@ -136,7 +136,10 @@ namespace MW5.Plugins.ShapeEditor.Services
 
             BeforeShapeEditEventArgs beforeargs = new BeforeShapeEditEventArgs(layerHandle, shapeIndex, false);
             _broadcaster.BroadcastEvent(p => p.BeforeShapeEdit_, _context.Map, beforeargs);
-            
+
+            if (beforeargs.Cancel == true)
+                return;
+
             _context.Map.History.Add(UndoOperation.EditShape, layerHandle, shapeIndex);
             layer.Data.Features.EditUpdate(shapeIndex, newGeometry);
 

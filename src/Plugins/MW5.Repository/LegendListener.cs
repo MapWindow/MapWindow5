@@ -42,11 +42,14 @@ namespace MW5.Plugins.Repository
 
         private void UpdateRepositoryTree(int newLayerHandle = -1)
         {
-            if (!_context.Map.IsLocked)
+            if (!_context.Map.IsLocked && !_context.Legend.Locked)
             {
                 var list = new List<LayerIdentity>();
                 foreach (var layer in _context.Layers)
                 {
+                    if (layer == null)
+                        return;
+
                     var identity = layer.Identity;
 
                     if (newLayerHandle == layer.Handle)
