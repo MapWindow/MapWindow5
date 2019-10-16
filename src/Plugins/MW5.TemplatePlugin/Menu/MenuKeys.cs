@@ -19,7 +19,10 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <summary>
         /// The menu item key. Used to identify which toolbar button or menu item was clicked.
         /// </summary>
-        public const string ShowDockableWindow = "change this and make sure it is unique for all plug-ins";
+        public const string ShowDockableWindow = "ShowDockableWindow - change this and make sure it is unique for all plug-ins";
+        public const string SubMenu = "SubMenu - change this and make sure it is unique for all plug-ins";
+        public const string Foo = "Foo - change this and make sure it is unique for all plug-ins";
+        public const string Bar = "Bar - change this and make sure it is unique for all plug-ins";
 
         #endregion
     }
