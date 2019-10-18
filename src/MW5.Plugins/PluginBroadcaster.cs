@@ -112,14 +112,6 @@ namespace MW5.Plugins
                 (args is SingleTargetEventArgs sargs && sargs.Handled) || IsCancelled()
             );
 
-            bool IsCancelled() => (
-                (args is ICancellableEvent bargs && bargs.Cancel) ||
-                (args is CancelEventArgs cargs && cargs.Cancel)
-            );
-            bool StopBubbling() => (
-                (args is SingleTargetEventArgs sargs && sargs.Handled) || IsCancelled()
-            );
-
             var fieldInfo = GetEventField(eventName);
             if (fieldInfo != null)
             {
