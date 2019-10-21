@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Properties;
@@ -52,7 +45,7 @@ namespace MW5.Plugins.TableEditor.Controls
             Adapter.SetColumnIcon(f => f.Details, GetIcon);
         }
 
-        private int GetIcon(RecalculateFieldWrapper field)
+        private static int GetIcon(RecalculateFieldWrapper field)
         {
             switch (field.Result)
             {

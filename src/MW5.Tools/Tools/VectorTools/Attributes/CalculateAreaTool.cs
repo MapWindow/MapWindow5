@@ -1,12 +1,19 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CalculateAreaTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015-2019
+// </copyright>
+// <summary>
+//   Defines the CalculateAreaTool tool.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
-using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
-using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
@@ -14,10 +21,10 @@ using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Attributes
+namespace MW5.Tools.Tools.VectorTools.Attributes
 {
     [CustomLayout]
-    [GisTool(GroupKeys.Attributes)]
+    [GisTool(GroupKeys.Attributes, parentGroupKey: GroupKeys.VectorTools)]
     public class CalculateAreaTool: GisTool
     {
         [Input("Input layer", 0)]
@@ -50,31 +57,19 @@ namespace MW5.Tools.Tools.Attributes
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Calculate area"; }
-        }
+        public override string Name => "Calculate area";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Calculates area of polygons and writes results in the attribute table."; }
-        }
+        public override string Description => "Calculates area of polygons and writes results in the attribute table.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
-        public override bool SupportsCancel
-        {
-            get  { return true; }
-        }
+        public override bool SupportsCancel => true;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
@@ -87,13 +82,10 @@ namespace MW5.Tools.Tools.Attributes
                 return false;
             }
 
-            if (Input.Datasource.Fields.Exists(FieldName) && !Overwrite)
-            {
-                MessageService.Current.Info("Field with such name already exists while no override flag was set.");
-                return false;
-            }
+            if (!Input.Datasource.Fields.Exists(FieldName) || Overwrite) return true;
 
-            return true;
+            MessageService.Current.Info("Field with such name already exists while no override flag was set.");
+            return false;
         }
 
         /// <summary>

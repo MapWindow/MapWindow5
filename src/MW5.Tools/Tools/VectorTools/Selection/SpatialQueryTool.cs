@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="SpatialQueryTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -13,9 +15,9 @@ using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Selection
 {
-    [GisTool(GroupKeys.Selection)]
+    [GisTool(GroupKeys.Selection, parentGroupKey: GroupKeys.VectorTools)]
     public class SpatialQueryTool: GisTool
     {
         // TODO: disable the selection of datasources from disk
@@ -50,49 +52,35 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Spatial query"; }
-        }
+        public override string Name => "Spatial query";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Selects shapes of the subject vector layer which are in a certain relation to the features of another layer."; }
-        }
+        public override string Description => "Selects shapes of the subject vector layer which are in a certain relation to the features of another layer.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>
-        public override bool SupportsBatchExecution
-        {
-            get { return false; }
-        }
+        public override bool SupportsBatchExecution => false;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>
         protected override bool BeforeRun()
         {
-            int[] result;
-            if (Input.Datasource.SelectByShapefile(Input2.Datasource, Relation, Input2.SelectedOnly, out result))
+            if (Input.Datasource.SelectByShapefile(Input2.Datasource, Relation, Input2.SelectedOnly, out var result))
             {
                 var layer = _context.Layers.FirstOrDefault(l => l.Handle == Input.LayerHandle);
-                if (layer != null)
-                {
-                    layer.UpdateSelection(result, SelectionOperation);
-                    MessageService.Current.Info("Number of features selected: " + result.Length);
-                }
+                if (layer == null) return false;
+
+                layer.UpdateSelection(result, SelectionOperation);
+                MessageService.Current.Info("Number of features selected: " + result.Length);
             }
             else
             {
@@ -110,8 +98,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             // implement the run part as well, although it won't be called from UI,
             // to make the core MapWinGIS method testable
-            int[] result;
-            if (Input.Datasource.SelectByShapefile(Input2.Datasource, Relation, Input2.SelectedOnly, out result))
+            if (Input.Datasource.SelectByShapefile(Input2.Datasource, Relation, Input2.SelectedOnly, out var result))
             {
                 Log.Info("Number of features selected: " + result.Length);
             }

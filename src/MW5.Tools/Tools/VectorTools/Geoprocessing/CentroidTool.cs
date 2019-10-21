@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="BufferTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -17,10 +18,10 @@ using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Geoprocessing
 {
     [CustomLayout]
-    [GisTool(GroupKeys.Geoprocessing)]
+    [GisTool(GroupKeys.Geoprocessing, parentGroupKey: GroupKeys.VectorTools)]
     public class CentroidTool: GisTool
     {
         [Input("Input datasource", 0)]
@@ -54,44 +55,30 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Calculate centroids"; }
-        }
+        public override string Name => "Calculate centroids";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Calculate centroids for polugon features."; }
-        }
+        public override string Description => "Calculate centroids for polugon features.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
-        public override bool SupportsCancel
-        {
-            get  { return true; }
-        }
+        public override bool SupportsCancel => true;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>
         protected override bool BeforeRun()
         {
-            if (Input.Datasource.GeometryType == GeometryType.Point)
-            {
-                MessageService.Current.Info("Operations is not supported for point layers");
-                return false;
-            }
+            if (Input.Datasource.GeometryType != GeometryType.Point) return true;
 
-            return true;
+            MessageService.Current.Info("Operations is not supported for point layers");
+            return false;
+
         }
 
         /// <summary>
@@ -102,10 +89,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             var fs = Input.Datasource;
             var fsNew = fs.Clone(GeometryType.Point);
 
-            int lastPercent = 0;
+            var lastPercent = 0;
 
             var features = Input.Datasource.GetFeatures(Input.SelectedOnly);
-            for (int i = 0; i < features.Count; i++)
+            for (var i = 0; i < features.Count; i++)
             {
                 task.CheckPauseAndCancel();
                 task.Progress.TryUpdate("Calculating...", i, features.Count, ref lastPercent);
@@ -169,7 +156,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 case PolygonCenter.InteriorPoint:
                     return g.InteriorPoint;
                 default:
-                    throw new ArgumentOutOfRangeException("method");
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

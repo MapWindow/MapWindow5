@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="BufferTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2016
+//  MapWindow OSS Team - 2016-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -16,10 +16,10 @@ using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Geoprocessing
 {
     [CustomLayout]
-    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer, parentGroupKey: GroupKeys.VectorTools)]
     public class BufferTool : AppendModeGisTool
     {
         [Input("Buffer distance", 1)]
@@ -28,10 +28,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Gets description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Builds a buffer around features of input vector layer."; }
-        }
+        public override string Description => "Builds a buffer around features of input vector layer.";
 
         [Input("Input layer", 0)]
         public IVectorInput Input { get; set; }
@@ -42,10 +39,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Gets name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Buffer by distance"; }
-        }
+        public override string Name => "Buffer by distance";
 
         [Input("Number of segments", 0, true)]
         public int NumSegments { get; set; }
@@ -57,10 +51,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Provide execution logic for the tool.
@@ -69,9 +60,9 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             var units = Input.Datasource.GetLengthUnits();
 
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, units, BufferDistance.Value);
+            var bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, units, BufferDistance.Value);
 
-            bool success = false;
+            var success = false;
 
             if (Output.MemoryLayer)
             {

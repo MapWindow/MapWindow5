@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="CreateGridProxyTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -64,31 +65,19 @@ namespace MW5.Tools.Tools.Raster
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Create grid proxy"; }
-        }
+        public override string Name => "Create grid proxy";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Creates an RGB image file to be used for fast visualisation of the grid."; }
-        }
+        public override string Description => "Creates an RGB image file to be used for fast visualisation of the grid.";
 
-        public override string TaskName
-        {
-            get { return "Proxy: " + Path.GetFileName(Input); }
-        }
+        public override string TaskName => "Proxy: " + Path.GetFileName(Input);
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Runs the tool.
@@ -97,7 +86,7 @@ namespace MW5.Tools.Tools.Raster
         {
             using (var grid = new GridSource(Input))
             {
-                RasterColorScheme rcs = null;
+                RasterColorScheme rcs;
 
                 if (UseBuiltInColorScheme)
                 {
@@ -132,8 +121,11 @@ namespace MW5.Tools.Tools.Raster
                 var img = Output.Result as IImageSource;
                 if (OutputManager.AddToMap(img))
                 {
+                    if (img == null) return false;
+
                     Output.Filename = img.Filename;
                     Output.DatasourcePointer = new DatasourcePointer(img.Filename);
+
                     return true;
                 }
             }

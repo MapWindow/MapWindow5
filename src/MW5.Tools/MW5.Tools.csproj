@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -336,31 +336,32 @@
     <Compile Include="Tools\Fake\LongExecutionTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tools\Attributes\CalculateAreaTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ConvertTo2DTool.cs" />
-    <Compile Include="Tools\Attributes\AggregateShapesTool.cs">
+    <Compile Include="Tools\VectorTools\Attributes\CalculateAreaTool.cs" />
+    <Compile Include="Tools\VectorTools\Basic\ConvertTo2DTool.cs" />
+    <Compile Include="Tools\VectorTools\Attributes\AggregateShapesTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs">
+    <Compile Include="Tools\VectorTools\VectorToolsGroup.cs" />
+    <Compile Include="Tools\VectorTools\Geoprocessing\BufferTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\CentroidTool.cs" />
-    <Compile Include="Tools\Attributes\DissolveTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExplodeShapesTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\FixShapefileTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\InteractiveClippingTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\MergeShapefilesTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\OverlayTool.cs">
+    <Compile Include="Tools\VectorTools\Geoprocessing\CentroidTool.cs" />
+    <Compile Include="Tools\VectorTools\Attributes\DissolveTool.cs" />
+    <Compile Include="Tools\VectorTools\Geoprocessing\ExplodeShapesTool.cs" />
+    <Compile Include="Tools\VectorTools\Selection\ExportSelectionTool.cs" />
+    <Compile Include="Tools\VectorTools\Validation\FixShapefileTool.cs" />
+    <Compile Include="Tools\VectorTools\Geoprocessing\InteractiveClippingTool.cs" />
+    <Compile Include="Tools\VectorTools\Basic\MergeShapefilesTool.cs" />
+    <Compile Include="Tools\VectorTools\Geoprocessing\OverlayTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs">
+    <Compile Include="Tools\VectorTools\Geoprocessing\RandomPointsTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SimplifyLinesTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SortShapefileTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SpatialQueryTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ValidateShapefileTool.cs" />
+    <Compile Include="Tools\VectorTools\Geoprocessing\SimplifyLinesTool.cs" />
+    <Compile Include="Tools\VectorTools\Basic\SortShapefileTool.cs" />
+    <Compile Include="Tools\VectorTools\Selection\SpatialQueryTool.cs" />
+    <Compile Include="Tools\VectorTools\Validation\ValidateShapefileTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>
     </Compile>

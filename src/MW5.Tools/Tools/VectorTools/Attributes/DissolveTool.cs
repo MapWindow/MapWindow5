@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AggregateShapesTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+// <copyright file="DissolveTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015-2019
 // </copyright>
 // <summary>
-//   Defines the AggregateShapes tool.
+//   Defines the DissolveTool tool.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -19,24 +19,24 @@ using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
-namespace MW5.Tools.Tools.Attributes
+namespace MW5.Tools.Tools.VectorTools.Attributes
 {
     [CustomLayout]
-    [GisTool(GroupKeys.Attributes, ToolIcon.Hammer)]
-    public class AggregateShapesTool : GisTool
+    [GisTool(GroupKeys.Attributes, parentGroupKey: GroupKeys.VectorTools)]
+    public class DissolveTool: GisTool
     {
-        [Input("Input layer", 0)]
-        public IVectorInput InputLayer { get; set; }
+        [Input("Input datasource", 0)]
+        public IVectorInput Input { get; set; }
 
-        [Input("Field", 1, false)]
+        [Input("Field index", 1)]
         [ControlHint(ControlHint.Field)]
         public int FieldIndex { get; set; }
 
-        [Input("Group operations", 0, true)]
+        [Input("Group operations", 2, true)]
         public FieldOperationList GroupOperations { get; set; }
 
         [Output("Save results as")]
-        [OutputLayer(@"{input}_aggregate.shp", LayerType.Shapefile)]
+        [OutputLayer(@"{input}_dissolve.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>
@@ -46,42 +46,30 @@ namespace MW5.Tools.Tools.Attributes
         {
             base.Configure(context, configuration);
 
-            configuration.Get<AggregateShapesTool>()
-                .AddField(t => t.InputLayer, t => t.FieldIndex)
-                .AddField(t => t.InputLayer, t => t.GroupOperations);
+            configuration.Get<DissolveTool>()
+                .AddField(t => t.Input, t => t.FieldIndex)
+                .AddField(t => t.Input, t => t.GroupOperations);
         }
+
+        /// <summary>
+        /// The name of the tool.
+        /// </summary>
+        public override string Name => "Dissolve by attribute";
+
+        /// <summary>
+        /// Description of the tool.
+        /// </summary>
+        public override string Description => "Merges together vector features which have the same value of a given field.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
-
-        /// <summary>
-        /// Gets name of the tool.
-        /// </summary>
-        public override string Name
-        {
-            get { return "Aggregate shapes by attribute"; }
-        }
-
-        /// <summary>
-        /// Gets description of the tool.
-        /// </summary>
-        public override string Description
-        {
-            get { return "Creates a new shapefile by creating multi-part shapes from shapes with the same value of specified attribute."; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>
-        public override bool SupportsBatchExecution
-        {
-            get { return false; }
-        }
+        public override bool SupportsBatchExecution => false;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
@@ -89,17 +77,17 @@ namespace MW5.Tools.Tools.Attributes
         /// <returns></returns>
         protected override bool BeforeRun()
         {
-            return GroupOperations.ValidateWithMessage(InputLayer.Datasource);
+            return GroupOperations.ValidateWithMessage(Input.Datasource);
         }
 
         /// <summary>
-        /// Provide execution logic for the tool.
+        /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
             Log.Info("Number of group operations specified: " + GroupOperations.Count);
 
-            Output.Result = InputLayer.Datasource.AggregateShapesWithStats(InputLayer.SelectedOnly, FieldIndex, GroupOperations);
+            Output.Result = Input.Datasource.DissolveWithStats(FieldIndex, Input.SelectedOnly, GroupOperations);
             return true;
         }
     }

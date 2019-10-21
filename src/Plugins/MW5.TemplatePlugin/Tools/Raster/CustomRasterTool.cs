@@ -1,13 +1,19 @@
-﻿using MW5.Plugins.Concrete;
-using MW5.Plugins.Enums;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="CustomRasterTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 
-namespace MW5.Plugins.TemplatePlugin
+namespace MW5.Plugins.TemplatePlugin.Tools.Raster
 {
-    [GisTool(GroupKeys.Fake)]
-    public class CustomGisTool: GisTool
+    [GisTool("Raster", groupDescription: GroupKeys.TemplateRasterDesc, icon: ToolIcon.Hammer, parentGroupKey: GroupKeys.TemplateGroup)]
+    public class CustomRasterTool : GisTool
     {
         [Input("Input value", 0)]
         public int Value { get; set; }
@@ -15,26 +21,17 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Custom tool from Template plugin"; }
-        }
+        public override string Name => "Custom tool from Template plugin";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Custom tool added from Template plugin"; }
-        }
+        public override string Description => "Custom tool added from Template plugin";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentityHelper.GetIdentity(typeof(InitPlugin)); }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentityHelper.GetIdentity(typeof(InitPlugin));
 
         /// <summary>
         /// Runs the tool.

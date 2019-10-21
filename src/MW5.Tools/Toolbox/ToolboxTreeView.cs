@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
-using MW5.Tools.Enums;
 using MW5.Tools.Properties;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;

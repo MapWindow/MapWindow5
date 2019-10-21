@@ -1,17 +1,21 @@
-﻿using System.Windows.Forms;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ConvertTo2DTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Shared;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Basic
 {
-    [GisTool(GroupKeys.Basic)]
+    [GisTool(GroupKeys.Basic, parentGroupKey: GroupKeys.VectorTools)]
     public class ConvertTo2DTool: AppendModeGisTool
     {
         [Input("Input datasource", 0)]
@@ -24,44 +28,29 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Convert to 2D"; }
-        }
+        public override string Name => "Convert to 2D";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Removes M, Z components from vector datasource."; }
-        }
+        public override string Description => "Removes M, Z components from vector datasource.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
-        public override bool SupportsBatchExecution
-        {
-            get  { return true; }
-        }
+        public override bool SupportsBatchExecution => true;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>
         protected override bool BeforeRun()
         {
-            if (Input.Datasource.ZValueType == ZValueType.None)
-            {
-                MessageService.Current.Info("The datasource doesn't have M, Z values: " + Input.Name);
-                return false;
-            }
+            if (Input.Datasource.ZValueType != ZValueType.None) return true;
 
-            return true;
+            MessageService.Current.Info("The datasource doesn't have M, Z values: " + Input.Name);
+            return false;
         }
 
         /// <summary>
@@ -78,10 +67,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 return false;
             }
 
-            int lastPercent = 0;
+            var lastPercent = 0;
 
             var features = Input.Datasource.GetFeatures(Input.SelectedOnly);
-            for (int i = 0; i < features.Count; i++)
+            for (var i = 0; i < features.Count; i++)
             {
                 task.CheckPauseAndCancel();
                 task.Progress.TryUpdate("Calculating...", i, features.Count, ref lastPercent);
@@ -89,7 +78,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 var ft = features[i];
 
                 var gm = ft.Geometry.Clone(fs.GeometryType);
-                int shapeIndex = fsNew.Features.EditAdd(gm);
+                var shapeIndex = fsNew.Features.EditAdd(gm);
 
                 if (shapeIndex != -1)
                 {

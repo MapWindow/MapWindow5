@@ -1,23 +1,19 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ToolboxDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
-using MW5.Tools.Helpers;
 using MW5.Tools.Model;
-using MW5.Tools.Views;
 using MW5.UI.Controls;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
@@ -47,8 +43,8 @@ namespace MW5.Tools.Toolbox
 
         public event KeyEventHandler ToolboxKeyDown
         {
-            add { _treeView.KeyDown += value; }
-            remove { _treeView.KeyDown -= value; }
+            add => _treeView.KeyDown += value;
+            remove => _treeView.KeyDown -= value;
         }
 
         private void OnContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -62,28 +58,19 @@ namespace MW5.Tools.Toolbox
             txtSearch.Focus();
         }
 
-        public ITool SelectedTool
-        {
-            get { return _treeView.SelectedTool; }
-        }
+        public ITool SelectedTool => _treeView.SelectedTool;
 
         public event EventHandler<ToolboxToolEventArgs> ToolClicked;
 
         /// <summary>
         /// Returns list of groups located at the top level of toolbox.
         /// </summary>
-        public IToolboxGroups Groups
-        {
-            get { return new ToolboxGroupCollection(_treeView.Nodes); }
-        }
+        public IToolboxGroups Groups => new ToolboxGroupCollection(_treeView.Nodes);
 
         /// <summary>
         /// Returns list of all tools in the toolbox
         /// </summary>
-        public IToolCollection Tools
-        {
-            get { return new ToolboxToolCollection(_treeView.Nodes); }
-        }
+        public IToolCollection Tools => new ToolboxToolCollection(_treeView.Nodes);
 
         /// <summary>
         /// Expands all the groups up to the specified level.
@@ -111,7 +98,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Recursively expands all the child groups up to the specified level.
         /// </summary>
-        private void ExpandGroups(IToolboxGroups groups, int level)
+        private static void ExpandGroups(IToolboxGroups groups, int level)
         {
             foreach (var group in groups)
             {
@@ -130,9 +117,9 @@ namespace MW5.Tools.Toolbox
             splitContainerAdv1.InitDockPanel(0.9);
 
             _textbox.InitDockPanelFooter();
-            _textbox.Text = "No tool is selected.";
+            _textbox.Text = @"No tool is selected.";
         }
-        
+
         private void OnGroupSelected(object sender, ToolboxGroupEventArgs e)
         {
             _textbox.SetDescription(e.Group.Name + Environment.NewLine + Environment.NewLine + e.Group.Description);
@@ -163,25 +150,54 @@ namespace MW5.Tools.Toolbox
                     continue;
                 }
 
-                string groupKey = tool.GetType().GetAttributeValue((GisToolAttribute att) => att.GroupKey);
+                var attributes = AttributeHelper.GetAttribute<GisToolAttribute>(tool.GetType());
+                var groupKey = attributes.GroupKey;
 
                 if (string.IsNullOrWhiteSpace(groupKey))
                 {
-                    Logger.Current.Warn("No group is specified for the tool: " + tool.Name);
+                    Logger.Current.Warn("No toolbox group is specified for the tool: " + tool.Name);
                     continue;
                 }
 
-                var group = groups.FindGroup(groupKey);     // can be optimized with dictionary to speed it up
-
-                if (group == null)
+                if (string.IsNullOrEmpty(attributes.ParentGroupKey))
                 {
-                    Logger.Current.Warn("Group with the key wasn't found: " + groupKey);
-                    continue;
-                }
+                    var group = groups.FindGroup(groupKey); // can be optimized with dictionary to speed it up
+                    // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
+                    if (group == null)
+                    {
+                        // Create group:
+                        group = groups.Add(attributes.GroupName, groupKey, tool.PluginIdentity);
+                    }
+                    group.Description = attributes.GroupDescription;
+                    group.Name = attributes.GroupName;
 
-                group.Tools.Add(tool);
+                    if (!attributes.OnlyGroup) group.Tools.Add(tool);
+                }
+                else
+                {
+                    // Get parent group    
+                    var parentGroup = groups.FindGroup(attributes.ParentGroupKey); // Copied from above
+                    // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
+                    if (parentGroup == null)
+                    {
+                        // Create group:
+                        parentGroup = groups.Add(attributes.ParentGroupKey, attributes.ParentGroupKey,
+                            tool.PluginIdentity);
+                    }
+
+                    var subGroup = parentGroup.SubGroups.FindGroup(groupKey);
+                    if (subGroup == null)
+                    {
+                        // Add group as subgroup:
+                        subGroup = parentGroup.SubGroups.Add(attributes.GroupName, groupKey, tool.PluginIdentity);
+                        subGroup.Description = attributes.GroupDescription;
+                    }
+
+                    if (!attributes.OnlyGroup) subGroup.Tools.Add(tool);
+                }
             }
-            
+
+            _treeView.Nodes.Sort();
             SelectGroup(Groups.FirstOrDefault());
         }
 
@@ -208,7 +224,7 @@ namespace MW5.Tools.Toolbox
 
         private void SelectGroupCore(IToolboxGroups groups, string groupKey)
         {
-            foreach (var g in Groups)
+            foreach (var g in groups)
             {
                 if (g.Key == groupKey)
                 {
@@ -223,10 +239,7 @@ namespace MW5.Tools.Toolbox
         private void FireToolClicked(ITool tool)
         {
             var handler = ToolClicked;
-            if (handler != null)
-            {
-                handler(tool, new ToolboxToolEventArgs(tool));
-            }
+            handler?.Invoke(tool, new ToolboxToolEventArgs(tool));
         }
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
@@ -266,21 +279,24 @@ namespace MW5.Tools.Toolbox
             finally
             {
                 _treeView.EndUpdate();
+                _treeView.Invalidate();
             }
         }
 
-        private bool Filter(IEnumerable<IToolboxGroup> groups, string token)
+        private static bool Filter(IEnumerable<IToolboxGroup> groups, string token)
         {
-            bool parentVisible = false;
+            var parentVisible = false;
 
             foreach (var g in groups)
             {
-                bool result = Filter(g.SubGroups, token);
+                var result = Filter(g.SubGroups, token);
 
                 foreach (var item in g.Tools)
                 {
-                    bool visible = item.Tool.Name.ContainsIgnoreCase(token);
-                    
+                    var visible = true;
+                    if (!string.IsNullOrEmpty(token))
+                        visible = item.Tool.Name.ContainsIgnoreCase(token);
+
                     item.Visible = visible;
                     if (item.Visible)
                     {
@@ -288,12 +304,16 @@ namespace MW5.Tools.Toolbox
                     }
                 }
 
-                var node = g.InnerObject as TreeNodeAdv;
-                if (node != null)
+                if (g.InnerObject is TreeNodeAdv node)
                 {
                     node.Height = result ? ToolboxTreeView.TreeViewNodeHeight : 0;
                     node.IsSelectable = result;
                     node.Expanded = result;
+                    // https://mapwindow.atlassian.net/browse/MW5CORE-247
+                    if (result)
+                    {
+                        node.BringIntoView();
+                    }
                 }
 
                 if (result)

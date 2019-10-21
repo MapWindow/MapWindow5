@@ -67,7 +67,8 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="CustomGisTool.cs" />
+    <Compile Include="GroupKeys.cs" />
+    <Compile Include="Tools\Raster\CustomRasterTool.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="SampleDockWindow.Designer.cs">
       <DependentUpon>SampleDockWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\TemplateToolsGroup.cs" />
+    <Compile Include="Tools\Vector\CustomVectorTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
@@ -125,6 +128,7 @@
   <ItemGroup>
     <None Include="Resources\hello-icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

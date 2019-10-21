@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="SortShapefileTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -11,9 +12,9 @@ using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Basic
 {
-    [GisTool(GroupKeys.Basic)]
+    [GisTool(GroupKeys.Basic, parentGroupKey: GroupKeys.VectorTools)]
     public class SortShapefileTool: GisTool
     {
         [Input("Input datasource", 0)]
@@ -45,26 +46,17 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Sort shapefile"; }
-        }
+        public override string Name => "Sort shapefile";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Sorts shapefile by the given attribute, physically changing the order of records."; }
-        }
+        public override string Description => "Sorts shapefile by the given attribute, physically changing the order of records.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Runs the tool.

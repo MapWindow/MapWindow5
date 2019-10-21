@@ -7,7 +7,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Tools.Model.Layers;
-using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+using MW5.Tools.Tools.VectorTools.Geoprocessing;
 using MW5.Tools.Views.Custom.Abstract;
 
 namespace MW5.Tools.Views.Custom

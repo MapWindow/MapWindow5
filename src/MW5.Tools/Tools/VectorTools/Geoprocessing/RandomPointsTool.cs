@@ -1,12 +1,13 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="RandomPointsTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015-2019
 // </copyright>
 // <summary>
 //   Generates random points within extents of selected datasource.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -18,15 +19,14 @@ using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
-using System;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Geoprocessing
 {
     /// <summary>
     /// Generates random points within extents of selected datasource.
     /// </summary>
     [CustomLayout]
-    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer, parentGroupKey: GroupKeys.VectorTools)]
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
@@ -42,31 +42,19 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Gets description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Create a new shapefile with random points."; }
-        }
+        public override string Description => "Create a new shapefile with random points.";
 
         /// <summary>
         /// Gets name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Random points"; }
-        }
+        public override string Name => "Random points";
 
-        public override bool SupportsCancel
-        {
-            get  { return false; }
-        }
+        public override bool SupportsCancel => false;
 
         /// <summary>
         /// Runs the tool.
@@ -81,8 +69,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             var fs = new FeatureSet(GeometryType.Point);
             fs.Projection.CopyFrom(InputLayer.Datasource.Projection);
 
-            var vector = InputLayer as IVectorInput;
-            if (vector != null && vector.SelectedOnly)
+            if (InputLayer is IVectorInput vector && vector.SelectedOnly)
             {
                 // Get the extent, taking into account selected shapes:
                 extents = vector.Datasource.GetSelectedExtents();
@@ -91,7 +78,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             var random = new Random();
             var lastPercent = 0;
 
-            for (int i = 0; i < NumPoints; i++)
+            for (var i = 0; i < NumPoints; i++)
             {
                 task.CheckPauseAndCancel();
                 var x = extents.MinX + (extents.Width * random.NextDouble());

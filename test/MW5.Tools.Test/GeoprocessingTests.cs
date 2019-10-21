@@ -22,7 +22,8 @@ using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Test.Properties;
-using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+using MW5.Tools.Tools.VectorTools.Geoprocessing;
+using MW5.Tools.Tools.VectorTools.Validation;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
 

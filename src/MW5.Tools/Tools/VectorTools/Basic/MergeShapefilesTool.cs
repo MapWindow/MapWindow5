@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="MergeShapefilesTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -12,9 +13,9 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Basic
 {
-    [GisTool(GroupKeys.Basic)]
+    [GisTool(GroupKeys.Basic, parentGroupKey: GroupKeys.VectorTools)]
     public class MergeShapefilesTool: GisTool
     {
         [Input("First datasource", 0)]
@@ -30,38 +31,24 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Merge shapefiles"; }
-        }
+        public override string Name => "Merge shapefiles";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get
-            {
-                return "Merges 2 shapefiles into one copying all the shapes and fields from both intputs." + 
-                "Input shapefiles must have the same geometry type.";
-            }
-        }
+        public override string Description =>
+            "Merges 2 shapefiles into one copying all the shapes and fields from both intputs." + 
+            "Input shapefiles must have the same geometry type.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>
-        public override bool SupportsBatchExecution
-        {
-            get { return false; }
-        }
+        public override bool SupportsBatchExecution => false;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
@@ -74,13 +61,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 return false;
             }
 
-            if (Input.Datasource.GeometryType != Input2.Datasource.GeometryType)
-            {
-                MessageService.Current.Info("Geometry type for both inputs must be the same.");
-                return false;
-            }
+            if (Input.Datasource.GeometryType == Input2.Datasource.GeometryType) return true;
 
-            return true;
+            MessageService.Current.Info("Geometry type for both inputs must be the same.");
+            return false;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="OverlayTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015-2019
 // </copyright>
 // <summary>
 //   Defines the Intersection Tool.
@@ -19,10 +19,10 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Geoprocessing
 {
     [CustomLayout]
-    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Geoprocessing, ToolIcon.Hammer, parentGroupKey: GroupKeys.VectorTools)]
     public class OverlayTool : GisTool
     {
         [Input("First layer", 0)]
@@ -56,51 +56,31 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Gets description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get
-            {
-                return "Performs overlay operation for 2 vector layers. " +
-                       "Avaialable operations: clip, difference, intersection, symmetrical difference, union.";
-            }
-        }
+        public override string Description =>
+            "Performs overlay operation for 2 vector layers. " +
+            "Avaialable operations: clip, difference, intersection, symmetrical difference, union.";
 
         /// <summary>
         /// Gets name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Overlay (multiple operations)"; }
-        }
+        public override string Name => "Overlay (multiple operations)";
 
         /// <summary>
         /// Gets the name to be displayed as a name of the task.
         /// </summary>
-        public override string TaskName
-        {
-            get { return InputLayer.Name + ": " + GetShortOperationString(Operation); }
-        }
+        public override string TaskName => InputLayer.Name + ": " + GetShortOperationString(Operation);
 
-        public override bool SupportsCancel
-        {
-            get  { return true; }
-        }
+        public override bool SupportsCancel => true;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>
-        public override bool SupportsBatchExecution
-        {
-            get { return false; }
-        }
+        public override bool SupportsBatchExecution => false;
 
         /// <summary>
         /// Gets the short operation string.
@@ -129,15 +109,12 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         protected override bool BeforeRun()
         {
-            if (InputHelper.InputsAreEqual(InputLayer, InputLayer2))
-            {
-                string msg = "The same datasource is used for both input parameters. ";
-                msg += "The operation is meaningless.";
-                MessageService.Current.Info(msg);
-                return false;
-            }
+            if (!InputHelper.InputsAreEqual(InputLayer, InputLayer2)) return true;
 
-            return true;
+            var msg = "The same datasource is used for both input parameters. ";
+            msg += "The operation is meaningless.";
+            MessageService.Current.Info(msg);
+            return false;
         }
 
         /// <summary>

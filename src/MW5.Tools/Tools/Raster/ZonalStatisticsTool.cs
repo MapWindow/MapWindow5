@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ZonalStatisticsTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
@@ -29,39 +35,28 @@ namespace MW5.Tools.Tools.Raster
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Zonal overlay statistics"; }
-        }
+        public override string Name => "Zonal overlay statistics";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "For every shape of the shapefile statistics of the grid will be calculated and added as attributes."; }
-        }
+        public override string Description => "For every shape of the shapefile statistics of the grid will be calculated and added as attributes.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>
         protected override bool BeforeRun()
         {
-            if (Vector.Datasource.GeometryType != GeometryType.Polygon)
-            {
-                MessageService.Current.Info("Vector layer of polygon type is expected");
-                return false;
-            }
+            if (Vector.Datasource.GeometryType == GeometryType.Polygon) return true;
 
-            return true;
+            MessageService.Current.Info("Vector layer of polygon type is expected");
+            return false;
+
         }
 
         /// <summary>

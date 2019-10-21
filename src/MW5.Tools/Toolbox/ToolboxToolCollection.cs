@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ToolboxToolCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -30,9 +30,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         internal ToolboxToolCollection(TreeNodeAdvCollection nodes)
         {
-            if (nodes == null) throw new NullReferenceException();
-
-            _nodes = nodes;
+            _nodes = nodes ?? throw new NullReferenceException(nameof(nodes));
         }
 
         /// <summary>
@@ -48,7 +46,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public void Add(ITool item)
         {
-            if (item == null) throw new ArgumentNullException("item");
+            if (item == null) throw new ArgumentNullException(nameof(item));
 
             var node = new TreeNodeAdv
             {
@@ -60,18 +58,17 @@ namespace MW5.Tools.Toolbox
             // let's insert it in alphabetical order
             foreach (var tool in this)
             {
-                if (String.CompareOrdinal(tool.Tool.Name, item.Name) > 0)
-                {
-                    int index = _nodes.IndexOf(tool.InternalObject);
-                    _nodes.Insert(index, node);
-                    return;
-                }
+                if (string.CompareOrdinal(tool.Tool.Name, item.Name) <= 0) continue;
+                
+                var index = _nodes.IndexOf(tool.InternalObject);
+                _nodes.Insert(index, node);
+                return;
             }
 
             _nodes.Add(node);
         }
 
-        private int GetIconIndex(ITool tool)
+        private static int GetIconIndex(ITool tool)
         {
             var attr = AttributeHelper.GetAttribute<GisToolAttribute>(tool.GetType());
             return attr != null ? (int)attr.Icon : (int)ToolIcon.ToolDefault;
@@ -143,7 +140,7 @@ namespace MW5.Tools.Toolbox
             return GetEnumerator();
         }
 
-        private ITool GetTool(TreeNodeAdv node)
+        private static ITool GetTool(TreeNodeAdv node)
         {
             return node.Tag as ITool;
         }

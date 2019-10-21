@@ -7,7 +7,7 @@ namespace MW5.UI.Helpers
     {
         public static int GetImageIndex(this TreeNodeAdv node)
         {
-            return node.LeftImageIndices.Count() > 0 ? node.LeftImageIndices[0] : -1;
+            return node.LeftImageIndices.Any() ? node.LeftImageIndices[0] : -1;
         }
 
         public static TreeNodeAdv CreateNode(this TreeNodeAdvCollection nodes, string key, string text, int imageIndex)

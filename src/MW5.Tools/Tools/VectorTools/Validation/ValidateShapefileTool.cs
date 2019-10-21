@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ValidateShapefileTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -12,10 +18,10 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Validation
 {
     [CustomLayout]
-    [GisTool(GroupKeys.Validation)]
+    [GisTool(GroupKeys.Validation, parentGroupKey: GroupKeys.VectorTools)]
     public class ValidateShapefileTool: GisTool
     {
         private int _errorCount;
@@ -44,43 +50,26 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Validate shapefile"; }
-        }
+        public override string Name => "Validate shapefile";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get
-            {
-                return "Validates vector layer. " + 
-                "Adds icons to the map marking the location of validation errors.";
-            }
-        }
+        public override string Description =>
+            "Validates vector layer. " + 
+            "Adds icons to the map marking the location of validation errors.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
-        public override bool SupportsCancel
-        {
-            get  { return true; }
-        }
+        public override bool SupportsCancel => true;
 
         /// <summary>
         /// Gets the name to be displayed as a name of the task.
         /// </summary>
-        public override string TaskName
-        {
-            get { return "Validating [" + Input.Name + "]: " + (_errorCount == 0 ? "no errors" : _errorCount + " errors"); }
-        }
+        public override string TaskName => "Validating [" + Input.Name + "]: " + (_errorCount == 0 ? "no errors" : _errorCount + " errors");
 
         /// <summary>
         /// Runs the tool.
@@ -112,22 +101,21 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         private IEnumerable<ErrorInfo> GetErrors(IFeatureSet fs, ITaskHandle task)
         {
-            int lastPercent = 0;
+            var lastPercent = 0;
 
-            for (int i = 0; i < fs.NumFeatures; i++)
+            for (var i = 0; i < fs.NumFeatures; i++)
             {
                 task.CheckPauseAndCancel();
                 task.Progress.TryUpdate("Calculating...", i, fs.NumFeatures, ref lastPercent);
 
                 var gm = fs.Features[i].Geometry;
-                if (!gm.IsValid)
-                {
-                    var info = ValidationHelper.GetErrorInfo(fs, i, gm.IsValidReason);
+                if (gm.IsValid) continue;
 
-                    Log.Info(info.Message);
+                var info = ValidationHelper.GetErrorInfo(fs, i, gm.IsValidReason);
 
-                    yield return info;
-                }
+                Log.Info(info.Message);
+
+                yield return info;
             }
 
             task.Progress.Clear();
@@ -146,12 +134,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 gm.Points.Add(err.Location);
 
                 var index = fs.Features.EditAdd(gm);
-                if (index != -1)
-                {
-                    // MWShapeId has 0 index
-                    fs.Table.EditCellValue(1, index, (int)err.ErrorType);
-                    fs.Table.EditCellValue(2, index, err.Message);
-                }
+                if (index == -1) continue;
+
+                // MWShapeId has 0 index
+                fs.Table.EditCellValue(1, index, (int)err.ErrorType);
+                fs.Table.EditCellValue(2, index, err.Message);
             }
 
             fs.Categories.ApplyExpressions();
@@ -165,18 +152,15 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool AfterRun()
         {
-            if (Output.Result != null)
-            {
-                if (!OutputManager.Save(Output.Result, Output))
-                {
-                    Log.Error("Failed to save output: {0}", null, Output.Filename);
-                }    
+            if (Output.Result == null) return true;
 
-                // false since there are invalid shapes, i.e. validation failed
-                return false;
-            }
-            
-            return true;
+            if (!OutputManager.Save(Output.Result, Output))
+            {
+                Log.Error("Failed to save output: {0}", null, Output.Filename);
+            }    
+
+            // false since there are invalid shapes, i.e. validation failed
+            return false;
         }
     }
 }

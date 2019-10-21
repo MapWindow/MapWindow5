@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ImportLayerTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2016
+//  MapWindow OSS Team - 2016-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ using MW5.Tools.Services;
 namespace MW5.Tools.Tools.Database
 {
     [CustomLayout]
-    [GisTool(GroupKeys.GeoDatabases, ToolIcon.Database)]
+    [GisTool(GroupKeys.GeoDatabases, groupDescription:"Tools to work with spatial datatabases like PostGIS, SpatialLite, MS SQL Spatial, etc.", icon: ToolIcon.Database)]
     public class ImportLayerTool : GisTool
     {
         [Output("Database")]
@@ -29,10 +29,7 @@ namespace MW5.Tools.Tools.Database
         /// <summary>
         /// Gets description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Imports layer in the geodatabase."; }
-        }
+        public override string Description => "Imports layer in the geodatabase.";
 
         [Input("Input layer", 0)]
         public IVectorInput InputLayer { get; set; }
@@ -40,10 +37,7 @@ namespace MW5.Tools.Tools.Database
         /// <summary>
         /// Gets name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Import layer"; }
-        }
+        public override string Name => "Import layer";
 
         [Output("New layer name", 2)]
         [ControlHint(ControlHint.OutputName)]
@@ -55,10 +49,7 @@ namespace MW5.Tools.Tools.Database
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         [Output("Schema", 1)]
         public string Schema { get; set; }
@@ -67,39 +58,34 @@ namespace MW5.Tools.Tools.Database
         /// Gets a value indicating whether tasks should be executed
         /// in sequence rather than in parallel when running in batch mode.
         /// </summary>
-        public override bool SequentialBatchExecution
-        {
-            get { return true; }
-        }
+        public override bool SequentialBatchExecution => true;
 
         /// <summary>
         /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            string options = PrepareOptions();
+            var options = PrepareOptions();
 
             var ds = new VectorDatasource();
 
-            if (ds.Open(Database.ConnectionString))
+            if (!ds.Open(Database.ConnectionString)) return false;
+
+            if (InputLayer.Datasource.HasInvalidShapes())
             {
-                if (InputLayer.Datasource.HasInvalidShapes())
-                {
-                    Log.Warn("Datasource has invalid shapes. Please run Fix tool before importing it.", null);
-                    return false;
-                }
-
-                if (!ds.ImportLayer(InputLayer.Datasource, NewLayerName, options, ValidationMode.NoValidation))
-                {
-                    Log.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg, null);
-                    return false;
-                }
-
-                Log.Info("Layer was imported: " + NewLayerName);
-                return true;
+                Log.Warn("Datasource has invalid shapes. Please run Fix tool before importing it.", null);
+                return false;
             }
 
-            return false;
+            if (!ds.ImportLayer(InputLayer.Datasource, NewLayerName, options, ValidationMode.NoValidation))
+            {
+                Log.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg, null);
+                return false;
+            }
+
+            Log.Info("Layer was imported: " + NewLayerName);
+            return true;
+
         }
 
         /// <summary>
@@ -137,7 +123,7 @@ namespace MW5.Tools.Tools.Database
                 list.Add("OVERWRITE=TRUE");
             }
 
-            string s = string.Empty;
+            var s = string.Empty;
             foreach (var item in list)
             {
                 s += item + ";";

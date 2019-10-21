@@ -1,4 +1,10 @@
-﻿using MW5.Api.Enums;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="FixShapefileTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -7,9 +13,9 @@ using MW5.Plugins.Services;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.VectorTools.Validation
 {
-    [GisTool(GroupKeys.Validation)]
+    [GisTool(GroupKeys.Validation, parentGroupKey: GroupKeys.VectorTools)]
     public class FixShapefileTool : AppendModeGisTool
     {
         [Input("Input datasource", 0)]
@@ -22,39 +28,27 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Fix shapefile"; }
-        }
+        public override string Name => "Fix shapefile";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Creates a new shapefile by fixing invalid geometries of the current one."; }
-        }
+        public override string Description => "Creates a new shapefile by fixing invalid geometries of the current one.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>
         protected override bool BeforeRun()
         {
-            if (!Input.Datasource.HasInvalidShapes())
-            {
-                MessageService.Current.Info("Input shapefile doesn't have invalid shapes.");
-                return false;
-            }
+            if (Input.Datasource.HasInvalidShapes()) return true;
 
-            return true;
+            MessageService.Current.Info("Input shapefile doesn't have invalid shapes.");
+            return false;
         }
 
         /// <summary>
