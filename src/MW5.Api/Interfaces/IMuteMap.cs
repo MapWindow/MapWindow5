@@ -64,8 +64,10 @@ namespace MW5.Api.Interfaces
 
         bool PixelToDegrees(double pixelX, double pixelY, out double degreesLngX, out double degreesLatY);
         void PixelToProj(double pixelX, double pixelY, out double projX, out double projY);
+        ICoordinate PixelToProj(ICoordinate pixel);
         bool ProjToDegrees(double projX, double projY, out double degreesLngX, out double degreesLatY);
         void ProjToPixel(double projX, double projY, out double pixelX, out double pixelY);
+        ICoordinate ProjToPixel(ICoordinate projected);
         bool DegreesToPixel(double degreesLngX, double degreesLatY, out double pixelX, out double pixelY);
         bool DegreesToProj(double degreesLngX, double degreesLatY, out double projX, out double projY);
 

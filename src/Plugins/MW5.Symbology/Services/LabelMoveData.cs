@@ -10,26 +10,32 @@ namespace MW5.Plugins.Symbology.Services
     /// <summary>
     /// Holds information about the currently selected label (probably beter move to another file)
     /// </summary>
-    internal class LabelMoveData
+    internal class ObjectMoveData
     {
         internal int LayerHandle;
-        internal int LabelIndex;
+        internal int ObjectIndex;
         internal int PartIndex;
         internal int X;   // in screen coordinates
         internal int Y;   // in screen coordinates
         internal Rectangle Rect;
         internal bool IsChart;  // label or chart
 
+        internal bool HasBackingOffsetFields;
+        internal int OffsetXField;
+        internal int OffsetYField;
+
         internal void Clear()
         {
             LayerHandle = -1;
-            LabelIndex = -1;
+            ObjectIndex = -1;
             PartIndex = -1;
+            OffsetXField = -1;
+            OffsetYField = -1;
             X = 0;
             Y = 0;
         }
 
-        internal LabelMoveData()
+        internal ObjectMoveData()
         {
             Clear();
         }

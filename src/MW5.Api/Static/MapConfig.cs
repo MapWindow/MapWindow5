@@ -344,6 +344,13 @@ namespace MW5.Api.Static
             set { _settings.OgrShareConnection = value; }
         }
 
+        public static double GetProjectedMouseTolerance(IMuteMap map)
+        {
+            map.PixelToProj(0, 0, out double x1, out double _);
+            map.PixelToProj(MapConfig.MouseTolerance, 0, out double x2, out _);
+            return Math.Abs(x1-x2);
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

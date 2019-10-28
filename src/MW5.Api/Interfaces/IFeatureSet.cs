@@ -89,7 +89,7 @@ namespace MW5.Api.Interfaces
         IStopExecutionCallback StopExecution { set; }
         
         // TODO: better to have it in labels class (make changes in ocx); 
-        int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false);
+        int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1);
 
         IList<int> SelectedIndices { get; }
 
@@ -108,7 +108,7 @@ namespace MW5.Api.Interfaces
         void StopAppendMode();
         bool AppendMode { get; }
 
-        int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false);
+        int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1);
 
         #region Not implemented
 

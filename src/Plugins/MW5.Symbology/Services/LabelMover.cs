@@ -20,21 +20,19 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Services
 {
-    public class LabelMover
+    public class MapObjectMover
     {
         private const int MOUSE_TOLERANCE = 0;
 
         private readonly IAppContext _context;
         private readonly SymbologyPlugin _plugin;
         private readonly IMuteMap _map;
-        private LabelMoveData _currentLabel = new LabelMoveData();        // The label being moved currently
+        private ObjectMoveData _currentObject = new ObjectMoveData();        // The object being moved currently
 
-        public LabelMover(IAppContext context, SymbologyPlugin plugin)
+        public MapObjectMover(IAppContext context, SymbologyPlugin plugin)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (plugin == null) throw new ArgumentNullException("plugin");
-            _context = context;
-            _plugin = plugin;
+            _context = context ?? throw new ArgumentNullException("context");
+            _plugin = plugin ?? throw new ArgumentNullException("plugin");
             _map = context.Map;
 
             plugin.MouseDown += MapMouseDown;
@@ -67,114 +65,170 @@ namespace MW5.Plugins.Symbology.Services
                 return;
             }
 
-            _currentLabel = data;
+            _currentObject = data;
 
-            var fs = _map.GetFeatureSet(_currentLabel.LayerHandle);
+            var fs = _map.GetFeatureSet(_currentObject.LayerHandle);
             if (fs == null)
             {
                 return;
             }
 
             IEnvelope env = null;
-            if (_currentLabel.IsChart)
+            if (_currentObject.IsChart)
             {
-                var chart = fs.Diagrams[_currentLabel.LabelIndex];
+                var chart = fs.Diagrams[_currentObject.ObjectIndex];
                 env = chart.ScreenExtents;
             }
             else
             {
-                var label = fs.Labels.Items[_currentLabel.LabelIndex, _currentLabel.PartIndex];
+                var label = fs.Labels.Items[_currentObject.ObjectIndex, _currentObject.PartIndex];
                 env = label.ScreenExtents;
             }
 
-            _currentLabel.Rect = env.ToRectangle();
+            _currentObject.Rect = env.ToRectangle();
 
-            DrawLabelRectangle(_currentLabel.Rect);
+            DrawLabelRectangle(_currentObject.Rect);
         }
 
         private void MapMouseMove(IMuteMap map, MouseEventArgs e)
         {
-            if (!Active || _currentLabel.LayerHandle == -1)
+            if (!Active || _currentObject.LayerHandle == -1)
             {
                 return;
             }
 
-            if (e.X != _currentLabel.X || e.Y != _currentLabel.Y)
+            if (e.X != _currentObject.X || e.Y != _currentObject.Y)
             {
-                int dx = -_currentLabel.X + e.X;
-                int dy = -_currentLabel.Y + e.Y;
-                var r = _currentLabel.Rect.CloneWithOffset(dx, dy);
+                int dx, dy;
+                GetEventDelta(e, out dx, out dy);
+                var r = _currentObject.Rect.CloneWithOffset(dx, dy);
                 DrawLabelRectangle(r);
             }
         }
 
+        private void GetEventDelta(MouseEventArgs e, out int dx, out int dy)
+        {
+            dx = -_currentObject.X + e.X;
+            dy = -_currentObject.Y + e.Y;
+        }
+
+        private void GetProjectedEventDelta(IMuteMap map, MouseEventArgs e, out double dx, out double dy)
+        {
+            double x1, x2, y1, y2;
+            map.PixelToProj(_currentObject.X, _currentObject.Y, out x1, out y1);
+            map.PixelToProj(e.X, e.Y, out x2, out y2);
+
+            dx = -x1 + x2;
+            dy = -y1 + y2;
+        }
+
         /// <summary>
-        /// Finishes the label moving operation.
+        /// Finishes the moving operation.
         /// </summary>
         private void MapMouseUp(IMuteMap map, MouseEventArgs e)
         {
-            if (!Active || _currentLabel.LayerHandle == -1)
+            if (!Active || _currentObject.LayerHandle == -1)
             {
                 return;
             }
 
-            if (e.X == _currentLabel.X || e.Y == _currentLabel.Y)
+            if (e.X == _currentObject.X || e.Y == _currentObject.Y)
             {
                 Clear();
                 return;
             }
 
             // check that new position is within map
-            if (e.X < 0 || e.Y < 0 || e.X > map.Width || e.Y > map.Height)
+            if (!EventWithinMap(map, e))
             {
                 Clear();
                 return;
             }
 
-            var fs = map.GetFeatureSet(_currentLabel.LayerHandle);
+            // Get the distance the object was moved (in projected coordinates)
+            GetProjectedEventDelta(map, e, out double dx, out double dy);
 
-            if (_currentLabel.IsChart)
-            {
-                var chart = fs.Diagrams[_currentLabel.LabelIndex];
-                if (chart != null)
-                {
-                    double x1, x2, y1, y2;
-                    map.PixelToProj(_currentLabel.X, _currentLabel.Y, out x1, out y1);
-                    map.PixelToProj(e.X, e.Y, out x2, out y2);
-                    chart.PositionX = chart.PositionX - x1 + x2;
-                    chart.PositionY = chart.PositionY - y1 + y2;
-                    fs.Diagrams.SavingMode = PersistenceType.XmlOverwrite; // .chart file should be overwritten
-                    _context.Project.SetModified();
-                    map.Redraw();
-                }
-            }
+            // Move the object
+            if (_currentObject.IsChart)
+                MoveChart(map, dx, dy);
             else
-            {
-                var lb = fs.Labels.Items[_currentLabel.LabelIndex, _currentLabel.PartIndex];
-                if (lb != null)
-                {
-                    double x1, x2, y1, y2;
-                    map.PixelToProj(_currentLabel.X, _currentLabel.Y, out x1, out y1);
-                    map.PixelToProj(e.X, e.Y, out x2, out y2);
-                    lb.X = lb.X - x1 + x2;
-                    lb.Y = lb.Y - y1 + y2;
-                    fs.Labels.SavingMode = PersistenceType.XmlOverwrite; // .lbl file should be overwritten
-                    _context.Project.SetModified();
-                    map.Redraw();
-                }
-            }
+                MoveLabel(map, dx, dy);
 
+            // Clear the mover
             Clear();
+        }
+
+        /// <summary>
+        /// Check if final location is valid
+        /// </summary>
+        private static bool EventWithinMap(IMuteMap map, MouseEventArgs e)
+        {
+            return !(e.X < 0 || e.Y < 0 || e.X > map.Width || e.Y > map.Height);
+        }
+
+        /// <summary>
+        /// Moves the current label
+        /// </summary>
+        private void MoveLabel(IMuteMap map, double dx, double dy)
+        {
+            var layer = map.GetLayer(_currentObject.LayerHandle);
+            var fs = layer.FeatureSet;
+            var label = fs.Labels.Items[_currentObject.ObjectIndex, _currentObject.PartIndex];
+            if (label != null)
+            {
+                // Check if the featureset has setup offset x or y fields & store the new offset if so
+                if (_currentObject.HasBackingOffsetFields)
+                {
+                    // We add the existing offset to the new offset & store it in the tabe of the shapefile
+                    dx += label.OffsetX;
+                    dy += label.OffsetY;
+                    var feature = fs.Features[_currentObject.ObjectIndex];
+                    bool needToCloseTable = !fs.EditingTable;
+                    if (needToCloseTable) fs.StartEditingTable();
+                    if (_currentObject.OffsetXField != -1)
+                        feature.SetDouble(_currentObject.OffsetXField, dx);
+                    if (_currentObject.OffsetYField != -1)
+                        feature.SetDouble(_currentObject.OffsetYField, dy);
+                    layer.VectorSource?.SaveChanges(out int count, SaveType.AttributesOnly, false);
+                    if (needToCloseTable) fs.StopEditingTable();
+                }
+                else // in case offsets are not backed by fields, just store the new position directly
+                {
+
+                    label.X = label.X + dx;
+                    label.Y = label.Y + dy;
+                    fs.Labels.SavingMode = PersistenceType.XmlOverwrite; // .lbl file should be overwritten
+                }
+                _context.Project.SetModified();
+                map.Redraw();
+            }
+        }
+
+        /// <summary>
+        /// Moves the current chart
+        /// </summary>
+        private void MoveChart(IMuteMap map, double dx, double dy)
+        {
+            var fs = map.GetFeatureSet(_currentObject.LayerHandle);
+            var chart = fs.Diagrams[_currentObject.ObjectIndex];
+            if (chart != null)
+            {
+                chart.PositionX = chart.PositionX + dx;
+                chart.PositionY = chart.PositionY + dy;
+                fs.Diagrams.SavingMode = PersistenceType.XmlOverwrite; // .chart file should be overwritten
+                _context.Project.SetModified();
+                map.Redraw();
+            }
         }
 
         private void Clear()
         {
-            _currentLabel.Clear();
+            _currentObject.Clear();
             _map.FocusRectangle.Visible = false;
             _map.Redraw(RedrawType.Minimal);
         }
 
-        private LabelMoveData FindMovableItem(int x, int y)
+        private ObjectMoveData FindMovableItem(int x, int y)
         {
             // Actually, collision avoidance is turned on for all layers now
             // and Labels.Select, Charts.Select return only visible objects
@@ -186,8 +240,6 @@ namespace MW5.Plugins.Symbology.Services
             // 1 - vpAboveAll layers (considered first)                                                    
             // 0 - above current layer
 
-            var data = new LabelMoveData() { X = x, Y = y };
-
             for (int z = 1; z >= 0; z--)        // Considering position above the layer and above all layers
             {
                 int layerCount = _map.Layers.Count;
@@ -196,9 +248,7 @@ namespace MW5.Plugins.Symbology.Services
                 {
                     var layer = _map.Layers[i];
                     if (layer == null || !layer.IsVector || layer.FeatureSet == null)
-                    {
                         continue;
-                    }
 
                     var fs = layer.FeatureSet;
 
@@ -207,28 +257,46 @@ namespace MW5.Plugins.Symbology.Services
 
                     var position = (VerticalPosition)z;
 
-                    int chartIndex = FindChart(fs, env, position);
-                    if (chartIndex != -1)
-                    {
-                        data.LayerHandle = layer.Handle;
-                        data.LabelIndex = chartIndex;
-                        data.IsChart = true;
-                        return data;
-                    }
+                    // Try to find a chart
+                    if (FindChart(fs, env, position) is int chartIndex)
+                        return CreateObjectMoveDataForChart(x, y, layer, chartIndex);
 
-                    var info = FindLabel(fs, env, position);
-                    if (info != null)
-                    {
-                        data.LayerHandle = layer.Handle;
-                        data.LabelIndex = info.LabelIndex;
-                        data.PartIndex = info.PartIndex;
-                        data.IsChart = false;
-                        return data;
-                    }
+                    // Try to find a label
+                    if (FindLabel(fs, env, position) is LabelInfo info)
+                        return CreateObjectMoveDataForLabel(x, y, layer, fs, info);
                 }
             }
 
             return null;
+        }
+
+        private ObjectMoveData CreateObjectMoveDataForChart(int x, int y, ILayer layer, int chartIndex)
+        {
+            var data = new ObjectMoveData() { X = x, Y = y };
+            data.LayerHandle = layer.Handle;
+            data.ObjectIndex = chartIndex;
+            data.IsChart = true;
+            return data;
+        }
+
+        private ObjectMoveData CreateObjectMoveDataForLabel(int x, int y, ILayer layer, IFeatureSet fs, LabelInfo info)
+        {
+            var data = new ObjectMoveData() { X = x, Y = y };
+            data.LayerHandle = layer.Handle;
+            data.ObjectIndex = info.LabelIndex;
+            data.PartIndex = info.PartIndex;
+            data.IsChart = false;
+
+            var label = fs.Labels.Items[data.ObjectIndex, data.PartIndex];
+            ILabelStyle labelStyle = fs.Labels.GetStyle(label);
+            if (fs.Labels.Synchronized && (labelStyle.OffsetXField != -1 || labelStyle.OffsetYField != -1))
+            {
+                data.HasBackingOffsetFields = true;
+                data.OffsetXField = labelStyle.OffsetXField;
+                data.OffsetYField = labelStyle.OffsetYField;
+            }
+
+            return data;
         }
 
         private LabelInfo FindLabel(IFeatureSet fs, IEnvelope envelope, VerticalPosition position)
@@ -249,7 +317,7 @@ namespace MW5.Plugins.Symbology.Services
             return null;
         }
 
-        private int FindChart(IFeatureSet fs, IEnvelope envelope, VerticalPosition position)
+        private int? FindChart(IFeatureSet fs, IEnvelope envelope, VerticalPosition position)
         {
             // analyzing charts: they are drawn on the top of the labels
             if (position == fs.Diagrams.VerticalPosition)
@@ -263,7 +331,7 @@ namespace MW5.Plugins.Symbology.Services
                     return index;
                 }
             }
-            return -1;
+            return null;
         }
 
         /// <summary>

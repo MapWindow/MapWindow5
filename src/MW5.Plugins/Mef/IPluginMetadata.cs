@@ -1,4 +1,6 @@
-﻿namespace MW5.Plugins.Mef
+﻿using System.ComponentModel;
+
+namespace MW5.Plugins.Mef
 {
     public interface IPluginMetadata
     {

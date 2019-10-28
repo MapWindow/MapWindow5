@@ -625,6 +625,14 @@ namespace MW5.Api.Map
             _map.PixelToProj(pixelX, pixelY, ref projX, ref projY);
         }
 
+        public ICoordinate PixelToProj(ICoordinate pixel)
+        {
+            double projX = 0.0;
+            double projY = 0.0;
+            _map.PixelToProj(pixel.X, pixel.Y, ref projX, ref projY);
+            return new Coordinate(projX, projY);
+        }
+
         public bool ProjToDegrees(double projX, double projY, out double degreesLngX, out double degreesLatY)
         {
             degreesLngX = degreesLatY = 0.0;
@@ -635,6 +643,14 @@ namespace MW5.Api.Map
         {
             pixelX = pixelY = 0.0;
             _map.ProjToPixel(projX, projY, ref pixelX, ref pixelY);
+        }
+
+        public ICoordinate ProjToPixel(ICoordinate projected)
+        {
+            double pixelX = 0.0;
+            double pixelY = 0.0;
+            _map.ProjToPixel(projected.X, projected.Y, ref pixelX, ref pixelY);
+            return new Coordinate(pixelX, pixelY);
         }
 
         public bool DegreesToPixel(double degreesLngX, double degreesLatY, out double pixelX, out double pixelY)

@@ -637,9 +637,9 @@ namespace MW5.Api.Concrete
             set => _shapefile.StopExecution = new StopExecution(value);
         }
 
-        public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false)
+        public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1)
         {
-            return _shapefile.GenerateLabels(-1, (tkLabelPositioning) method, largestPartOnly);
+            return _shapefile.GenerateLabels(-1, (tkLabelPositioning) method, largestPartOnly, offsetXField, offsetYField);
         }
 
         public IList<int> SelectedIndices
@@ -711,9 +711,9 @@ namespace MW5.Api.Concrete
 
         public bool AppendMode => _shapefile.AppendMode;
 
-        public int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false)
+        public int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1)
         {
-            return _shapefile.GenerateLabels(fieldIndex, (tkLabelPositioning)position, largestPartOnly);
+            return _shapefile.GenerateLabels(fieldIndex, (tkLabelPositioning)position, largestPartOnly, offsetXField, offsetYField);
         }
 
         public IGlobalListener Callback

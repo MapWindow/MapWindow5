@@ -1,19 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing.Text;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {
-    public interface ILabelsLayer: ISerializableComWrapper, IDynamicVisibilityTarget
+    public interface ILabelsLayer : ISerializableComWrapper, IDynamicVisibilityTarget
     {
         bool Empty { get; }
 
-        ILabelStyle Style { get; set;  }
-        
+        ILabelStyle Style { get; set; }
+
         LabelStyleList Styles { get; }
 
+        [Obsolete("Use the ApplyCategories method instead")]
         int Generate(string expression, LabelPosition position, bool largestPartOnly = true);
+
+        void ApplyCategories();
 
         LabelCollection Items { get; }
 
@@ -32,8 +36,12 @@ namespace MW5.Api.Interfaces
         string FloatNumberFormat { get; set; }
 
         double OffsetX { get; set; }
-        
+
         double OffsetY { get; set; }
+
+        int OffsetXField { get; set; }
+
+        int OffsetYField { get; set; }
 
         LabelPosition Positioning { get; set; }
 
@@ -62,6 +70,8 @@ namespace MW5.Api.Interfaces
         bool UseVariableSize { get; set; }
 
         void UpdateSizeField();
+
+        ILabelStyle GetStyle(GeoLabel lb);
 
         //void ForceRecalculateExpression();
 
