@@ -87,6 +87,8 @@ namespace MW5.Api.Map
         public event EventHandler<EventArgs> HistoryChanged;
         public event EventHandler<ValidateShapeEventArgs> ValidateShape;
         public event EventHandler<BeforeVertexDigitizedEventArgs> BeforeVertexDigitized;
+        public event EventHandler<SnapPointRequestedEventArgs> SnapPointRequested;
+        public event EventHandler<SnapPointFoundEventArgs> SnapPointFound;
         public event EventHandler<LockedEventArgs> MapLocked;
         public event EventHandler<EventArgs> TmsProviderChanged;
 

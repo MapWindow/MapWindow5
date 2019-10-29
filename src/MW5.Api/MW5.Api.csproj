@@ -95,6 +95,8 @@
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />
     <Compile Include="Concrete\WmsSource.cs" />
+    <Compile Include="Events\SnapPointFoundEventArgs.cs" />
+    <Compile Include="Events\SnapPointRequestedEventArgs.cs" />
     <Compile Include="Events\BeforeVertexDigitizedEventArgs.cs" />
     <Compile Include="Interfaces\ICancellableEvent.cs" />
     <Compile Include="Events\LockedEventArgs.cs" />
