@@ -85,6 +85,7 @@
     <Compile Include="FontHelper.cs" />
     <Compile Include="GcHelper.cs" />
     <Compile Include="IMarshal.cs" />
+    <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="RectangleHelper.cs" />
     <Compile Include="ReflectionHelper.cs" />
     <Compile Include="ReplaceControlDescripterProvider.cs" />

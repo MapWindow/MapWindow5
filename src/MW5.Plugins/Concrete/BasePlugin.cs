@@ -5,9 +5,11 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using MW5.Api.Events;
@@ -75,6 +77,12 @@ namespace MW5.Plugins.Concrete
 
         public abstract void Initialize(IAppContext context);
 
+        public virtual void Initialize(IAppContext context, IDictionary<string, string> settings)
+        {
+            Initialize(context);
+            SetSettings(settings);
+        }
+
         public virtual void Terminate()
         {
             // do nothing
@@ -94,6 +102,24 @@ namespace MW5.Plugins.Concrete
         internal void SetApplicationPlugin(bool value)
         {
             IsApplicationPlugin = value;
+        }
+
+        /// <summary>
+        /// Called on serializing the application state
+        /// </summary>
+        /// <returns>A dictionary mapping a setting's name with its value</returns>
+        public virtual IDictionary<string, string> GetSettings()
+        {
+            return Enumerable.Empty<string>().ToDictionary(s => s);
+        }
+
+        /// <summary>
+        /// Called after deserializing and after Initialize was called
+        /// </summary>
+        /// <param name="settings">A mapping of settings and their values</param>
+        public virtual void SetSettings(IDictionary<string, string> settings)
+        {
+            return;
         }
 
 #pragma warning disable 67

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
@@ -80,7 +81,7 @@ namespace MW5.Menu
                     }
                     else
                     {
-                        _manager.LoadPlugin(identity, _context);
+                        _manager.LoadPlugin(identity, Enumerable.Empty<string>().ToDictionary(s => s), _context);
                     }
                     item.Checked = !item.Checked;
                     _context.View.Update();

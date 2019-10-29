@@ -294,12 +294,12 @@ namespace MW5.Plugins
         /// </summary>
         /// <param name="identity">Plugin identity.</param>
         /// <param name="context">Application context.</param>
-        public void LoadPlugin(PluginIdentity identity, IAppContext context)
+        public void LoadPlugin(PluginIdentity identity, IDictionary<string, string> settings, IAppContext context)
         {
-            LoadPlugin(identity.Guid, context);
+            LoadPlugin(identity.Name, identity.Guid, settings, context);
         }
 
-        public void LoadPlugin(Guid pluginGuid, IAppContext context)
+        public void LoadPlugin(string pluginName, Guid pluginGuid, IDictionary<string, string> settings, IAppContext context)
         {
             if (_active.Select(p => p.Guid).Contains(pluginGuid))
             {
@@ -310,7 +310,7 @@ namespace MW5.Plugins
             if (plugin == null)
             {
                 // throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
-                MessageService.Current.Warn("Plugin which requested for loading isn't present in the list.");
+                MessageService.Current.Warn($"Could not find requested plugin '{pluginName}'.");
                 return;
             }
 
@@ -320,19 +320,17 @@ namespace MW5.Plugins
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to register services for plugin: " + plugin.Identity +
-                                            Environment.NewLine + ex.Message);
+                MessageService.Current.Warn($"Failed to register services for plugin '{plugin.Identity}':{Environment.NewLine}{ex.Message}");
                 return;
             }
 
             try
             {
-                plugin.Initialize(context);
+                plugin.Initialize(context, settings);
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine +
-                                            ex.Message);
+                MessageService.Current.Warn($"Failed to load plugin '{plugin.Identity}':{Environment.NewLine}{ex.Message}");
                 return;
             }
 
@@ -372,7 +370,7 @@ namespace MW5.Plugins
                 if (active && !PluginActive(p.Identity))
                 {
                     pluginLoadingCallback?.Invoke(p.Identity);
-                    LoadPlugin(p.Identity, context);
+                    LoadPlugin(p.Identity, Enumerable.Empty<string>().ToDictionary(s => s), context);
                 }
             }
         }

@@ -18,6 +18,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Plugins
 {
@@ -130,7 +131,17 @@ namespace MW5.Plugins
                         var invlst = del.GetInvocationList();
                         foreach (var adel in invlst)
                         {
-                            adel.Method.Invoke(adel.Target, new[] { sender, args });
+                            try
+                            {
+                                adel.Method.Invoke(adel.Target, new[] { sender, args });
+                            }
+                            catch (Exception ex )
+                            {
+                                Logger.Current.Error("Unhandled exception in PluginBroadcaster", ex);
+                                if (ex.InnerException != null)
+                                    Logger.Current.Error("Inner exception in PluginBroadcaster was:", ex.InnerException);
+                            }
+                            
                             if (StopBubbling())
                                 break;
                         }

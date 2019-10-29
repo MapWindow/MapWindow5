@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
@@ -14,12 +15,12 @@ namespace MW5.UI.Menu
 
         public string Key
         {
-            get { return Metadata.Key; }
+            get { return Metadata?.Key; }
         }
 
         public object Tag
         {
-            get { return Metadata.Tag; }
+            get { return Metadata?.Tag; }
             set { Metadata.Tag = value; }
         }
 
@@ -27,40 +28,36 @@ namespace MW5.UI.Menu
         {
             get
             {
-                return Metadata.PluginIdentity;
+                return Metadata?.PluginIdentity;
             }
         }
 
         public bool BeginGroup
         {
-            get { return Metadata.BeginGroup; }
+            get { return Metadata?.BeginGroup ?? false; }
             set { Metadata.BeginGroup = value; }
         }
 
         public string Description
         {
-            get { return Metadata.Description; }
+            get { return Metadata?.Description; }
             set
             {
                 Metadata.Description = value;
-                FireItemChanged("Description");
+                FireItemChanged();
             }
         }
 
         public string UniqueKey
         {
-            get { return Key + PluginIdentity.Guid; }
+            get { return Key + PluginIdentity?.Guid; }
         }
 
         protected abstract MenuItemMetadata Metadata { get; }
 
-        protected void FireItemChanged(string propertyName)
+        protected void FireItemChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = ItemChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            ItemChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event EventHandler<PropertyChangedEventArgs> ItemChanged;

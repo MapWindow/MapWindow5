@@ -30,7 +30,8 @@ namespace MW5.Services.Serialization
             Plugins = context.PluginManager.ActivePlugins.Select(p => new XmlPlugin()
             {
                 Name = p.Identity.Name,
-                Guid = p.Identity.Guid
+                Guid = p.Identity.Guid,
+                Settings = p.GetSettings()
             }).ToList();
 
             Map = new XmlMap
