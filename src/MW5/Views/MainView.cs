@@ -157,9 +157,14 @@ namespace MW5.Views
             }
             else
             {
-                _dockingManager1.SaveLayout(SerializationKey, false);
-                _mainFrameBarManager1.SaveLayout(SerializationKey, false);
+                StoreCurrentState();
             }
+        }
+
+        private void StoreCurrentState()
+        {
+            _dockingManager1.SaveLayout(SerializationKey, false);
+            _mainFrameBarManager1.SaveLayout(SerializationKey, false);
         }
 
         #region IView implementation

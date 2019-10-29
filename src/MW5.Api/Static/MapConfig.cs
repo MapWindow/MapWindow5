@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Static
 {
