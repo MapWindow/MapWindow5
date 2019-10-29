@@ -9,5 +9,11 @@ namespace MW5.Plugins.Mef
         string Guid { get; }
         bool Empty { get; }
         bool LoadOnStartUp { get; }
+
+        [DefaultValue(new string[] { })]
+        string[] Before { get; }
+
+        [DefaultValue(new string[] { })]
+        string[] After { get; }
     }
 }
