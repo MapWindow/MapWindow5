@@ -348,6 +348,8 @@ namespace MW5.Plugins.Symbology.Forms
 
             using (var form = _context.GetSymbologyForm(_layerHandle, cat.Style, true))
             {
+                if (form == null)
+                    return;
                 form.Text = @"Category drawing options";
 
                 if (_context.View.ShowChildView(form, this))

@@ -33,6 +33,9 @@ namespace MW5.Plugins.Symbology.Helpers
 
             var type = fs.GeometryType;
 
+            if (type == GeometryType.None)
+                type = layer.VectorSource.ActiveGeometryType;
+
             if (type == GeometryType.Point || type == GeometryType.MultiPoint)
             {
                 form = new PointsForm(context.Legend, layer, options, applyDisabled);
@@ -67,6 +70,8 @@ namespace MW5.Plugins.Symbology.Helpers
 
             using (var form = context.GetSymbologyForm(layer.Handle, style, applyDisabled))
             {
+                if (form == null)
+                    return false;
                 form.Text = "Default Layer Style";
 
                 if (context.View.ShowChildView(form, parent))
