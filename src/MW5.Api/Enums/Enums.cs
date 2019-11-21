@@ -4,7 +4,9 @@
     {
         String = 0,
         Integer = 1,
-        Double = 2
+        Double = 2,
+        Boolean = 3,
+        Date = 4
     }
 
     public enum GeometryType

@@ -190,6 +190,12 @@ namespace MW5.Plugins.TableEditor.Editor
                     case AttributeType.Double:
                         _table.EditCellValue(e.ColumnIndex, realIndex, 0.0);
                         break;
+                    case AttributeType.Boolean:
+                        _table.EditCellValue(e.ColumnIndex, realIndex, false);
+                        break;
+                    case AttributeType.Date:
+                        _table.EditCellValue(e.ColumnIndex, realIndex, DateTime.MinValue);
+                        break;
                 }
             }
             else
@@ -207,8 +213,7 @@ namespace MW5.Plugins.TableEditor.Editor
                         break;
                     case AttributeType.Integer:
                         {
-                            int val;
-                            if (Int32.TryParse(s, out val))
+                            if (int.TryParse(s, out int val))
                             {
                                 _table.EditCellValue(e.ColumnIndex, realIndex, val);
                             }
@@ -220,8 +225,7 @@ namespace MW5.Plugins.TableEditor.Editor
                         break;
                     case AttributeType.Double:
                         {
-                            double val;
-                            if (Double.TryParse(s, out val))
+                            if (double.TryParse(s, out double val))
                             {
                                 _table.EditCellValue(e.ColumnIndex, realIndex, val);
                             }
@@ -229,6 +233,32 @@ namespace MW5.Plugins.TableEditor.Editor
                             {
                                 MessageService.Current.Info(
                                     "The string is not recognized as a floating point numeric value.");
+                            }
+                        }
+                        break;
+                    case AttributeType.Date:
+                        {
+                            if (DateTime.TryParse(s, out DateTime val))
+                            {
+                                _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                            }
+                            else
+                            {
+                                MessageService.Current.Info(
+                                    "The string is not recognized as a date/time value.");
+                            }
+                        }
+                        break;
+                    case AttributeType.Boolean:
+                        {
+                            if (bool.TryParse(s, out bool val))
+                            {
+                                _table.EditCellValue(e.ColumnIndex, realIndex, val);
+                            }
+                            else
+                            {
+                                MessageService.Current.Info(
+                                    "The string is not recognized as a boolean value.");
                             }
                         }
                         break;
@@ -301,11 +331,17 @@ namespace MW5.Plugins.TableEditor.Editor
                 case AttributeType.String:
                     SortByColumn<string>(columnIndex, ascending);
                     break;
+                case AttributeType.Date:
+                    SortByColumn<DateTime>(columnIndex, ascending);
+                    break;
                 case AttributeType.Integer:
                     SortByColumn<int>(columnIndex, ascending);
                     break;
                 case AttributeType.Double:
                     SortByColumn<double>(columnIndex, ascending);
+                    break;
+                case AttributeType.Boolean:
+                    SortByColumn<bool>(columnIndex, ascending);
                     break;
             }
 
@@ -586,6 +622,10 @@ namespace MW5.Plugins.TableEditor.Editor
                     return NumericHelper.IsNumeric(newValue, NumberStyles.Integer);
                 case AttributeType.Double:
                     return NumericHelper.IsNumeric(newValue, NumberStyles.Float);
+                case AttributeType.Boolean:
+                    return bool.TryParse(newValue, out bool _);
+                case AttributeType.Date:
+                    return DateTime.TryParse(newValue, out DateTime _);
             }
 
             return true;

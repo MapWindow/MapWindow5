@@ -127,12 +127,16 @@ namespace MW5.Api.Concrete
             {
                 switch (Type)
                 {
+                    case AttributeType.Date:
+                        return "01/01/01";
                     case AttributeType.String:
                         return "az";
                     case AttributeType.Integer:
                         return "09";
                     case AttributeType.Double:
                         return ".0";
+                    case AttributeType.Boolean:
+                        return "1-0";
                     default:
                         throw new ArgumentOutOfRangeException("Unexpected field type");
                 }

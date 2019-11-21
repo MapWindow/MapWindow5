@@ -124,8 +124,13 @@ namespace MW5.Attributes.Helpers
                     case "System.Int32":
                         type = AttributeType.Integer;
                         break;
+                    case "System.DateTime":
+                        type = AttributeType.Date;
+                        break;
+                    case "System.Boolean":
+                        type = AttributeType.Boolean;
+                        break;
                 }
-
                 var fld = new AttributeField { Name = dt.Columns[i].ColumnName, Type = type, Precision = 6, };
 
                 if (dt.Columns[i].MaxLength != -1)

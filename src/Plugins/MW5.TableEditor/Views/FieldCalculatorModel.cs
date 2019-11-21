@@ -28,8 +28,10 @@ namespace MW5.Plugins.TableEditor.Views
             {
                 switch (Field.Type)
                 {
+                    case AttributeType.Date:
                     case AttributeType.String:
                         return TableValueType.String;
+                    case AttributeType.Boolean:
                     case AttributeType.Integer:
                     case AttributeType.Double:
                         return TableValueType.Double;
