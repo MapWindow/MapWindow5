@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ToolboxDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Api.Concrete;
-using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Gdal.Model;
 using MW5.Gdal.Views;
@@ -17,8 +17,8 @@ using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalPresenter))]
-    public class AddOverviewsTool: GdalTool
+    [GisTool("GdalTools", groupName: "GDAL / OGR tools", groupDescription: "GDAL / OGR tools", icon: ToolIcon.Hammer, presenter: typeof(GdalPresenter))]
+    public class AddOverviewsTool : GdalTool
     {
         [ControlHint(ControlHint.Filename)]
         [DataTypeHint(DataSourceType.Raster)]
@@ -80,41 +80,29 @@ namespace MW5.Gdal.Tools
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Add overviews"; }
-        }
+        public override string Name => "Add overviews";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Builds or rebuilds overview images for raster datasources."; }
-        }
+        public override string Description => "Builds or rebuilds overview images for raster datasources.";
 
         /// <summary>
         /// Gets the name to be displayed as a name of the task.
         /// </summary>
-        public override string TaskName
-        {
-            get { return "Overviews: " + InputFilename; }
-        }
+        public override string TaskName => "Overviews: " + InputFilename;
 
         /// <summary>
         /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            string options = GetOptions();
+            var options = GetOptions();
 
             return GdalUtils.Instance.GdalAddOverviews(InputFilename, options, Levels);
         }

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ReprojectTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -12,7 +13,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Tools.Projections
 {
-    [GisTool(GroupKeys.Projections, Enums.ToolIcon.ToolDefault)]
+    [GisTool(GroupKeys.Projections, groupDescription: "Tools to work with coordinate systems and projections.")]
     public class ReprojectTool: GisTool
     {
         [Input("Input datasource", 0)]
@@ -28,26 +29,17 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Reproject shapefile"; }
-        }
+        public override string Name => "Reproject shapefile";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Reproject vector datasources."; }
-        }
+        public override string Description => "Reproject vector datasources.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Runs the tool.
@@ -61,8 +53,7 @@ namespace MW5.Tools.Tools.Projections
                 Log.Info("Source and target projections are the same. Continuing anyway.", null);
             }
 
-            int count;
-            var newFs = fs.Reproject(NewProjection, out count);
+            var newFs = fs.Reproject(NewProjection, out var count);
 
             if (newFs == null || count == 0)
             {

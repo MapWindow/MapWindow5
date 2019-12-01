@@ -55,6 +55,12 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 new MenuCommand("Split by Polyline", MenuKeys.SplitByPolyline, Resources.icon_geometry_split_by_polyline),
 
                 new MenuCommand("Delete Selected", MenuKeys.DeleteSelected, Resources.img_delete_selected),
+
+                new MenuCommand("Snap to Active Layer", MenuKeys.SnapToActiveLayer, Resources.img_snap_active_layer),
+                new MenuCommand("Snap to All Layers", MenuKeys.SnapToAlLayers, Resources.img_snap_all_layers),
+
+                new MenuCommand("Snap to Vertices", MenuKeys.SnapToVertices, Resources.img_snap_to_vertices),
+                new MenuCommand("Snap to Segments", MenuKeys.SnapToSegments, Resources.img_snap_to_segments),
             };
         }
     }

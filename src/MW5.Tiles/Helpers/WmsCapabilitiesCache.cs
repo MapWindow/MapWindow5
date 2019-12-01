@@ -17,7 +17,7 @@ namespace MW5.Tiles.Helpers
     {
         private static string GetXmlPath(string url)
         {
-            url = url.Replace('/', '_').Replace(':', '_');
+            url = System.Uri.UnescapeDataString(url.Replace('/', '_').Replace(':', '_').Replace('?', '_'));
             return ConfigPathHelper.GetWmsCachePath() + url + ".xml";
         }
 

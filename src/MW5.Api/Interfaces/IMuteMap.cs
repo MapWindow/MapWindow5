@@ -104,6 +104,8 @@ namespace MW5.Api.Interfaces
         void Clear();
         void Undo();
         bool FindSnapPoint(double tolerance, double xScreen, double yScreen, ref double xFound, ref double yFound);
+        bool StartNewBoundShape(double xScreen, double yScreen);
+        bool StartNewBoundShape(int layerHandle);
 
         double GeodesicArea(IGeometry polygon);
         double GeodesicDistance(double projX1, double projY1, double projX2, double projY2);

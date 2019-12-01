@@ -67,6 +67,11 @@ namespace MW5.Api.Concrete
             get { return _shapeIndex; }
         }
 
+        public bool IsPartOfSet(IFeatureSet set)
+        {
+            return set?.InternalObject == InternalShapefile;
+        }
+
         public IGeometry Geometry
         {
             get

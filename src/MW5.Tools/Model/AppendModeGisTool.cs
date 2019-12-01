@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="AppendModeGisTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2016-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Tools.Helpers;
@@ -19,16 +21,13 @@ namespace MW5.Tools.Model
         /// </summary>
         protected bool TrySaveForAppendMode(OutputLayerInfo output, IFeatureSet fsNew)
         {
-            if (!output.MemoryLayer)
-            {
-                if (!OutputManager.SaveAppendModeFeatureSet(fsNew, output, Log))
-                {
-                    fsNew.Dispose();
-                    return false;
-                }
-            }
+            if (output.MemoryLayer) return true;
 
-            return true;
+            if (OutputManager.SaveAppendModeFeatureSet(fsNew, output, Log)) return true;
+
+            fsNew.Dispose();
+            return false;
+
         }
 
         /// <summary>
@@ -40,33 +39,26 @@ namespace MW5.Tools.Model
         {
             var output = this.GetOutputs().FirstOrDefault();
 
-            if (output != null && !output.MemoryLayer)
+            if (output == null || output.MemoryLayer) return base.AfterRun();
+
+            if (output.Result != null)
             {
-                if (output.Result != null)
+                if (output.Result is IFeatureSet fs)
                 {
-                    var fs = output.Result as IFeatureSet;
-                    if (fs != null)
-                    {
-                        fs.StopAppendMode();
-                        fs.Dispose();
-                    }
-
-                    output.Result = null;
+                    fs.StopAppendMode();
+                    fs.Dispose();
                 }
 
-                // the append mode will close the append mode and datasource,
-                // so we only need to add it to the map if it's requested by user
-                if (output.AddToMap)
-                {
-                    var fs = new FeatureSet(output.Filename);
-                    OutputManager.AddToMap(fs);
-                    return true;
-                }
-
-                return true;
+                output.Result = null;
             }
 
-            return base.AfterRun();
+            // the append mode will close the append mode and datasource,
+            // so we only need to add it to the map if it's requested by user
+            if (!output.AddToMap) return true;
+
+            var fsNew = new FeatureSet(output.Filename);
+            OutputManager.AddToMap(fsNew);
+            return true;
         }
     }
 }

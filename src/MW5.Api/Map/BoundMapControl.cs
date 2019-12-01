@@ -115,6 +115,16 @@ namespace MW5.Api.Map
             return _map.SnapShotToDC2(hDC, extents.GetInternal(), width, offsetX, offsetY, clipX, clipY, clipWidth, clipHeight);
         }
 
+        public bool StartNewBoundShape(double xScreen, double yScreen)
+        {
+            return _map.StartNewBoundShape(xScreen, yScreen);
+        }
+
+        public bool StartNewBoundShape(int layerHandle)
+        {
+            return _map.StartNewBoundShapeEx(layerHandle);
+        }
+
         [Browsable(false)]
         public IFeatureSet SelectedFeatureSet
         {

@@ -44,6 +44,9 @@ namespace MW5.Api.Interfaces
 
         string SizeInfo { get; }
 
+        void ReloadOgrLayerFromSource();
+        void RestartBackgroundLoading();
+
         #region Not implemented
 
         // bool SkipOnSaving { get; set; }

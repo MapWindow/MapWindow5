@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GisTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015-2017
+//  MapWindow OSS Team - 2015-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -26,8 +26,6 @@ namespace MW5.Tools.Model
     /// </summary>
     public abstract class GisTool : IGisTool, IParametrizedTool, IXmlSerializable
     {
-        private readonly ToolConfiguration _config = new ToolConfiguration();
-        private readonly IToolLogger _logger = new ToolLogger();
         private IGlobalListener _callback;
         protected IAppContext _context;
         private OutputManager _outputManager;
@@ -40,7 +38,7 @@ namespace MW5.Tools.Model
         /// </summary>
         public IGlobalListener Callback
         {
-            get { return _callback; }
+            get => _callback;
             set
             {
                 _callback = value;
@@ -51,10 +49,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Gets tool's configuration settings.
         /// </summary>
-        public ToolConfiguration Configuration
-        {
-            get { return _config; }
-        }
+        public ToolConfiguration Configuration { get; } = new ToolConfiguration();
 
         /// <summary>
         /// Description of the tool.
@@ -64,10 +59,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Gets the logger associated with tool.
         /// </summary>
-        public IToolLogger Log
-        {
-            get { return _logger; }
-        }
+        public IToolLogger Log { get; } = new ToolLogger();
 
         /// <summary>
         /// The name of the tool.
@@ -77,10 +69,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Gets combined list of required and optional parameters.
         /// </summary>
-        public ParameterCollection Parameters
-        {
-            get { return _parameters ?? (_parameters = new ParameterCollection(this)); }
-        }
+        public ParameterCollection Parameters => _parameters ?? (_parameters = new ParameterCollection(this));
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
@@ -91,34 +80,22 @@ namespace MW5.Tools.Model
         /// Gets a value indicating whether tasks should be executed
         /// in sequence rather than in parallel when running in batch mode.
         /// </summary>
-        public virtual bool SequentialBatchExecution
-        {
-            get { return false; }
-        }
+        public virtual bool SequentialBatchExecution => false;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>
-        public virtual bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
+        public virtual bool SupportsBatchExecution => true;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports canceling.
         /// </summary>
-        public virtual bool SupportsCancel
-        {
-            get { return false; }
-        }
+        public virtual bool SupportsCancel => false;
 
         /// <summary>
         /// Returns true if a tool can be executed asynchronously using tasks.
         /// </summary>
-        public bool SupportsTasks
-        {
-            get { return true; }
-        }
+        public bool SupportsTasks => true;
 
         /// <summary>
         /// Gets the name to be displayed as a name of the task.
@@ -127,8 +104,7 @@ namespace MW5.Tools.Model
         {
             get
             {
-                string name = Name;
-
+                var name = Name;
                 var input = Parameters.OfType<LayerParameterBase>().ToList();
 
                 if (input.Count == 1)
@@ -139,21 +115,15 @@ namespace MW5.Tools.Model
                 }
 
                 var output = Parameters.OfType<OutputLayerInfo>().ToList();
-                if (output.Count == 1)
-                {
-                    var outputLayerInfo = output.FirstOrDefault();
-                    if (outputLayerInfo != null) name += ": " + outputLayerInfo.Name;
-                    return name;
-                }
+                if (output.Count != 1) return name;
 
+                var outputLayerInfo = output.FirstOrDefault();
+                if (outputLayerInfo != null) name += ": " + outputLayerInfo.Name;
                 return name;
             }
         }
 
-        protected IAppContext Context
-        {
-            get { return _context; }
-        }
+        protected IAppContext Context => _context;
 
         /// <summary>
         /// Gets the output manager which can be used to save results of tool execution.
@@ -162,11 +132,10 @@ namespace MW5.Tools.Model
         {
             get
             {
-                if (_outputManager == null)
-                {
-                    var layerService = _context.Container.Resolve<ILayerService>();
-                    _outputManager = new OutputManager(layerService);
-                }
+                if (_outputManager != null) return _outputManager;
+
+                var layerService = _context.Container.Resolve<ILayerService>();
+                _outputManager = new OutputManager(layerService);
 
                 return _outputManager;
             }
@@ -183,7 +152,7 @@ namespace MW5.Tools.Model
         /// </summary>
         public virtual bool AfterRun()
         {
-            bool success = true;
+            var success = true;
 
             foreach (var info in this.GetOutputs())
             {
@@ -194,11 +163,10 @@ namespace MW5.Tools.Model
                 }
                 else
                 {
-                    if (!OutputManager.Save(info.Result, info))
-                    {
-                        Log.Error("Failed to save output: {0}", null, info.Filename);
-                        success = false;
-                    }
+                    if (OutputManager.Save(info.Result, info)) continue;
+
+                    Log.Error("Failed to save output: {0}", null, info.Filename);
+                    success = false;
                 }
             }
 
@@ -218,8 +186,7 @@ namespace MW5.Tools.Model
         /// </summary>
         public BaseParameter FindParameter<TTool, T>(Expression<Func<TTool, T>> parameter)
         {
-            var memberExpression = parameter.Body as MemberExpression;
-            if (memberExpression == null) return null;
+            if (!(parameter.Body is MemberExpression memberExpression)) return null;
 
             var name = memberExpression.Member.Name;
             return Parameters.FirstOrDefault(p => p.Name == name);
@@ -231,16 +198,15 @@ namespace MW5.Tools.Model
         /// </summary>
         public void Initialize(IAppContext context)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
 
-            Configure(_context, _config);
+            Configure(_context, Configuration);
 
             // a) default values set in attributes will be stored in BaseParameter.DefaultValue
             // on first call of Parameters property;
             // b) default values set in configuration will be applied in ToolConfigurationManager.Apply method;
             var builder = new ToolConfigurationManager();
-            builder.Apply(_config, Parameters);
+            builder.Apply(Configuration, Parameters);
         }
 
         /// <summary>

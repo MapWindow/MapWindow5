@@ -1,13 +1,13 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="FunctionTreeView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Plugins.TableEditor.Properties;
 using MW5.Shared;
@@ -42,13 +42,13 @@ namespace MW5.Plugins.TableEditor.Controls
 
             e.ToolTip.Header.Text = fn.Signature;
 
-            string s = fn.Description + Environment.NewLine;
-            
+            var s = fn.Description + Environment.NewLine;
+
             if (fn.NumParameters > 0)
             {
                 s += Environment.NewLine + "Parameters: ";
 
-                for (int i = 0; i < fn.NumParameters; i++)
+                for (var i = 0; i < fn.NumParameters; i++)
                 {
                     s += Environment.NewLine;
                     s += "   " + fn.GetParameterName(i) + ": " + fn.GetParameterDescription(i).Replace(".", ";").ToLower();
@@ -58,7 +58,7 @@ namespace MW5.Plugins.TableEditor.Controls
             {
                 s += Environment.NewLine + "<no parameters>";
             }
-            
+
             e.ToolTip.Body.Text = s;
         }
 
@@ -73,7 +73,7 @@ namespace MW5.Plugins.TableEditor.Controls
 
             var groups = _eval.GroupBy(fn => fn.Group);
 
-            bool empty = string.IsNullOrWhiteSpace(searchToken);
+            var empty = string.IsNullOrWhiteSpace(searchToken);
 
             foreach (var g in groups)
             {
@@ -85,11 +85,9 @@ namespace MW5.Plugins.TableEditor.Controls
 
                 foreach (var fn in g.OrderBy(fn => fn.Name))
                 {
-                    if (empty || fn.Name.ContainsIgnoreCase(searchToken))
-                    {
-                        var nodeFn = new TreeNodeAdv {Text = fn.Name, Tag = fn};
-                        node.Nodes.Add(nodeFn);
-                    }
+                    if (!empty && !fn.Name.ContainsIgnoreCase(searchToken)) continue;
+                    var nodeFn = new TreeNodeAdv { Text = fn.Name, Tag = fn };
+                    node.Nodes.Add(nodeFn);
                 }
 
                 node.Expanded = true;
@@ -101,10 +99,7 @@ namespace MW5.Plugins.TableEditor.Controls
             }
         }
 
-        public ExpressionFunction SelectedFunction
-        {
-            get { return SelectedNode != null ? SelectedNode.Tag as ExpressionFunction : null; }
-        }
+        public ExpressionFunction SelectedFunction => SelectedNode?.Tag as ExpressionFunction;
 
         public void Filter(string searchToken)
         {
@@ -113,10 +108,7 @@ namespace MW5.Plugins.TableEditor.Controls
 
         protected override IEnumerable<Bitmap> OnCreateImageList()
         {
-            return new List<Bitmap>()
-            {
-                Resources.img_folder_open
-            };
+            return new List<Bitmap> { Resources.img_folder_open };
         }
     }
 }

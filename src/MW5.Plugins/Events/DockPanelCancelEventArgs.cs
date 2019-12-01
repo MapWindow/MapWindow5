@@ -1,8 +1,9 @@
-﻿using MW5.Plugins.Interfaces;
+﻿using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.Events
 {
-    public class DockPanelCancelEventArgs: DockPanelEventArgs
+    public class DockPanelCancelEventArgs: DockPanelEventArgs, ICancellableEvent
     {
         public DockPanelCancelEventArgs(IDockPanel panel, string key) : base(panel, key)
         {

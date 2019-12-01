@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using System.Drawing;
 using MW5.Api.Enums;
 
@@ -5,6 +7,8 @@ namespace MW5.Api.Interfaces
 {
     public interface IGeometryEditor: IComWrapper
     {
+        event EventHandler BeforeClearChangesEvent;
+        event CancelEventHandler BeforeSaveChangesEvent;
         double Area { get; }
         EditorBehavior EditorBehavior { get; set; }
         EditorState EditorState { get; }
@@ -21,6 +25,7 @@ namespace MW5.Api.Interfaces
         int ShapeIndex { get; }
         GeometryType GeometryType { get; set; }
         LayerSelectionMode SnapBehavior { get; set; }
+        SnapMode SnapMode { get; set; }
         double SnapTolerance { get; set; }
         IGeometry ValidatedShape { get; }
         EditorValidation ValidationMode { get; set; }
@@ -29,6 +34,7 @@ namespace MW5.Api.Interfaces
         ICoordinate GetPoint(int pointIndex);
         double GetSegmentAngle(int segmentIndex);
         double GetSegmentLength(int segmentIndex);
+        bool AddPoint(ICoordinate pnt);
         bool SetPoint(int pointIndex, double x, double y);
         bool SetPoint(int pointIndex, ICoordinate pnt);
         bool SaveChanges();

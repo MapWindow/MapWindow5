@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MW5.UI.Docking
 {
-    internal class DockPanelKeys
+    public class DockPanelKeys
     {
         public const string Legend = "DockPanelLegend";
         public const string Preview = "DockPanelPreview";

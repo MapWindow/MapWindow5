@@ -264,6 +264,16 @@ namespace MW5.Api.Concrete
             return Map.DeserializeLayer(LayerHandle, state);
         }
 
+        public void ReloadOgrLayerFromSource()
+        {
+            Map.ReloadOgrLayerFromSource(LayerHandle);
+        }
+
+        public void RestartBackgroundLoading()
+        {
+            Map.RestartBackgroundLoading(LayerHandle);
+        }
+
         /// <summary>
         /// Changes selection of the shapefile adding new shapes using the specified mode
         /// </summary>

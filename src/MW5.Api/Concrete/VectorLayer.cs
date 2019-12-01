@@ -55,9 +55,18 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public void ReloadFromSource(bool preserveStyleAndLabels = true)
+        {
+            var lbls = Data.Labels.Style.Serialize();
+            var cats = Data.Categories.Serialize();
+            _layer.ReloadFromSource();
+            Data.Labels.Deserialize(lbls);
+            Data.Categories.Deserialize(cats);
+        }
+
         public void ReloadFromSource()
         {
-            _layer.ReloadFromSource();
+            this.ReloadFromSource(true);
         }
 
         public bool Open(string filename, bool forUpdate = false)

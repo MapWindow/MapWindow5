@@ -1,4 +1,5 @@
-﻿using MapWinGIS;
+﻿using System.Reflection;
+using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
@@ -16,7 +17,8 @@ namespace MW5.Api.Static
             _settings.ApplicationCallback = new GlobalNativeCallback();
 
             // default mode, don't expose it to API
-            _settings.ShapefileFastMode = true;    
+            _settings.ShapefileFastMode = true;
+            _settings.SetHttpUserAgent("MapWindowGIS/" + Assembly.GetExecutingAssembly().GetName().Version);
         }
 
         internal static void Init()

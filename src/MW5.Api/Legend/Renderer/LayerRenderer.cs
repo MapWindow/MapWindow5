@@ -292,6 +292,7 @@ namespace MW5.Api.Legend.Renderer
 
             // drawing category symbol
             var hdc = g.GetHdc();
+            var hdcInt = hdc.ToInt32();
             var clr = (lyr.Handle == Legend.SelectedLayerHandle && bounds.Width > 25)
                           ? Legend.SelectionColor
                           : Legend.BackColor;
@@ -305,7 +306,7 @@ namespace MW5.Api.Legend.Renderer
                 if (lyr.LegendLayerType == LegendLayerType.PointShapefile)
                 {
                     sf.DefaultDrawingOptions.DrawPoint(
-                        hdc,
+                        hdcInt,
                         left,
                         top,
                         Constants.IconSize,
@@ -315,7 +316,7 @@ namespace MW5.Api.Legend.Renderer
                 else if (lyr.LegendLayerType == LegendLayerType.LineShapefile)
                 {
                     sf.DefaultDrawingOptions.DrawLine(
-                        hdc,
+                        hdcInt,
                         left,
                         top,
                         Constants.IconSize - 1,
@@ -328,7 +329,7 @@ namespace MW5.Api.Legend.Renderer
                 else if (lyr.LegendLayerType == LegendLayerType.PolygonShapefile)
                 {
                     sf.DefaultDrawingOptions.DrawRectangle(
-                        hdc,
+                        hdcInt,
                         left,
                         top,
                         Constants.IconSize - 1,

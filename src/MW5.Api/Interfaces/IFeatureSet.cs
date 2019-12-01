@@ -40,6 +40,7 @@ namespace MW5.Api.Interfaces
 
         CollisionMode CollisionMode { get; set; }
         bool Snappable { get; set; }
+        bool Selectable { get; set; }
         bool Volatile { get; set; }
         bool Identifiable { get; set; }
         string VisibilityExpression { get; set; }

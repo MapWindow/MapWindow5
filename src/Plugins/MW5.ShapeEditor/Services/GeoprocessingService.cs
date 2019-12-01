@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using MW5.Api;
 using MW5.Api.Enums;
+using MW5.Api.Events;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Events;
+using MW5.Api.Map;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Operations;
@@ -120,6 +125,25 @@ namespace MW5.Plugins.ShapeEditor.Services
             }
         }
 
+        public void ReplaceShape(int layerHandle, int shapeIndex, IGeometry newGeometry)
+        {
+            var layer = _context.Layers.GetVectorLayer(layerHandle);
+            if (layer == null)
+            {
+                MessageService.Current.Info("Layer with specified handle not found.");
+                return;
+            }
+
+            BeforeShapeEditEventArgs beforeargs = new BeforeShapeEditEventArgs(layerHandle, shapeIndex, false);
+            _broadcaster.BroadcastEvent(p => p.BeforeShapeEdit_, _context.Map, beforeargs);
+            
+            _context.Map.History.Add(UndoOperation.EditShape, layerHandle, shapeIndex);
+            layer.Data.Features.EditUpdate(shapeIndex, newGeometry);
+
+            AfterShapeEditEventArgs afterargs = new AfterShapeEditEventArgs(UndoOperation.EditShape, layerHandle, shapeIndex);
+            _broadcaster.BroadcastEvent(p => p.AfterShapeEdit_, _context.Map, afterargs);
+        }
+
         /// <summary>
         /// Removes selected shapes
         /// </summary>
@@ -177,21 +201,39 @@ namespace MW5.Plugins.ShapeEditor.Services
 
         private void RemoveSelectedShapesNoPrompt(IMuteMap map, IFeatureSet fs, int layerHandle)
         {
-            var list = map.History;
-            list.BeginBatch();
 
+            // First try to delete each feature - some may get cancelled
             var features = fs.Features;
-            for (var i = features.Count - 1; i >= 0; i--)
+            var actualDeletes = new List<int>();
+
+            try
             {
-                if (!features[i].Selected) continue;
+                for (int i = features.Count - 1; i >= 0; i--)
+                {
+                    if (!features[i].Selected) continue;
 
-                list.Add(UndoOperation.RemoveShape, layerHandle, i);
-                features.EditDelete(i);
+                    var args = new BeforeDeleteShapeEventArgs(DeleteTarget.Shape, false);
+                    _broadcaster.BroadcastEvent(p => p.BeforeDeleteShape_, _context.Map, args);
+                    if (!args.Cancel && features.EditDelete(i))
+                    {
+                        actualDeletes.Add(i);
+                    }
+                }
             }
-
-            list.EndBatch();
+            finally
+            {
+                // Then add this to the undo history
+                var list = map.History;
+                list.BeginBatch();
+                foreach (var i in actualDeletes)
+                {
+                    list.Add(UndoOperation.RemoveShape, layerHandle, i);
+                }
+                list.EndBatch();
+            }
 
             _broadcaster.BroadcastEvent(p => p.LayerFeatureCountChanged_, fs, new LayerEventArgs(layerHandle));
         }
+
     }
 }

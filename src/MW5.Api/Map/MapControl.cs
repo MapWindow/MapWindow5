@@ -86,6 +86,7 @@ namespace MW5.Api.Map
         public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
         public event EventHandler<EventArgs> HistoryChanged;
         public event EventHandler<ValidateShapeEventArgs> ValidateShape;
+        public event EventHandler<BeforeVertexDigitizedEventArgs> BeforeVertexDigitized;
         public event EventHandler<LockedEventArgs> MapLocked;
         public event EventHandler<EventArgs> TmsProviderChanged;
 

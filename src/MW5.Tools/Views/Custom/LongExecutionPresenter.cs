@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="LongExecutionPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Plugins.Services;
 using MW5.Shared;
-using MW5.Tools.Model;
-using MW5.Tools.Model.Layers;
 using MW5.Tools.Tools.Fake;
-using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
 using MW5.Tools.Views.Custom.Abstract;
 
 namespace MW5.Tools.Views.Custom
@@ -24,14 +22,12 @@ namespace MW5.Tools.Views.Custom
         public LongExecutionPresenter(IAppContext context, ILongExecutionView view)
             : base(view)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public override bool ViewOkClicked()
         {
-            var tool = Model.Tool as LongExecutionTool;
-            if (tool == null) throw new InvalidCastException("LongExecutionTool was expected");
+            if (!(Model.Tool is LongExecutionTool tool)) throw new InvalidCastException("LongExecutionTool was expected");
 
             tool.SecondsPerStep = View.SecondsPerStep;
 
@@ -57,11 +53,9 @@ namespace MW5.Tools.Views.Custom
 
         private void OnStatusChanged(object sender, TaskStatusChangedEventArgs e)
         {
-            if (e.Task.IsFinished)
-            {
-                _context.Tasks.Add(e.Task);
-                View.Close();
-            }
+            if (!e.Task.IsFinished) return;
+            _context.Tasks.Add(e.Task);
+            View.Close();
         }
 
         private void OnProgressChanged(object sender, ProgressEventArgs e)

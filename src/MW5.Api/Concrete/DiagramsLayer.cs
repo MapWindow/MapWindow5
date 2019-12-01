@@ -324,13 +324,15 @@ namespace MW5.Api.Concrete
 
         public bool DrawChart(IntPtr hdc, float x, float y, bool hideLabels, Color? backColor)
         {
-            return _charts.DrawChart(hdc, x, y, hideLabels, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            return _charts.DrawChart(hdcInt, x, y, hideLabels, backColor.ToUInt());
         }
 
         public bool DrawChart(Graphics g, float x, float y, bool hideLabels, Color? backColor)
         {
             var hdc = g.GetHdc();
-            bool result = _charts.DrawChart(hdc, x, y, hideLabels, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            var result = _charts.DrawChart(hdcInt, x, y, hideLabels, backColor.ToUInt());
             g.ReleaseHdc(hdc);
             return result;
         }

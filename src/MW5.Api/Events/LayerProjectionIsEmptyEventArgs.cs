@@ -1,10 +1,11 @@
 ﻿using System;
 using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
-    public class LayerProjectionIsEmptyEventArgs: EventArgs
+    public class LayerProjectionIsEmptyEventArgs: EventArgs, ICancellableEvent
     {
         private readonly _DMapEvents_LayerProjectionIsEmptyEvent _args;
 
@@ -27,5 +28,7 @@ namespace MW5.Api.Events
             get { return _args.cancelAdding == tkMwBoolean.blnTrue; }
             set { _args.cancelAdding = value ? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse; }
         }
+
+        public bool Cancel => CancelAdding;
     }
 }

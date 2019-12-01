@@ -87,40 +87,45 @@ namespace MW5.Api.Concrete
         public bool DrawLine(IntPtr hdc, float x, float y, int width, int height, bool drawVertices, int clipWidth, int clipHeight,
             Color? backColor = null)
         {
-            return _style.DrawLine(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            return _style.DrawLine(hdcInt, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor.ToUInt());
         }
 
         public bool DrawPoint(IntPtr hdc, float x, float y, int clipWidth = 0, int clipHeight = 0, Color? backColor = null)
         {
-            return _style.DrawPoint(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            return _style.DrawPoint(hdcInt, x, y, clipWidth, clipHeight, backColor.ToUInt());
         }
 
         public bool DrawRectangle(IntPtr hdc, float x, float y, int width, int height, bool drawVertices, int clipWidth = 0,
             int clipHeight = 0, Color? backColor = null)
         {
-            return _style.DrawRectangle(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight,
+            var hdcInt = hdc.ToInt32();
+            return _style.DrawRectangle(hdcInt, x, y, width, height, drawVertices, clipWidth, clipHeight,
                 backColor.ToUInt());
         }
 
         public bool DrawShape(IntPtr hdc, float x, float y, IGeometry geometry, bool drawVertices, int clipWidth, int clipHeight,
             Color? backColor = null)
         {
-            return _style.DrawShape(hdc, x, y, geometry.GetInternal(), drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+            var hdcInt = hdc.ToInt32();
+            return _style.DrawShape(hdcInt, x, y, geometry.GetInternal(), drawVertices, clipWidth, clipHeight, backColor.ToUInt());
         }
 
         public bool DrawLine(Graphics g, float x, float y, int width, int height, bool drawVertices, int clipWidth, int clipHeight,
             Color? backColor = null)
         {
-            IntPtr hdc = g.GetHdc();
-            bool result = DrawLine(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor);
+            var hdc = g.GetHdc();
+            var result = DrawLine(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor);
             g.ReleaseHdc(hdc);
             return result;
         }
 
         public bool DrawPoint(Graphics g, float x, float y, int clipWidth = 0, int clipHeight = 0, Color? backColor = null)
         {
-            IntPtr hdc = g.GetHdc();
-            bool result = _style.DrawPoint(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            var hdc = g.GetHdc();
+            var hdcInt = hdc.ToInt32();
+            var result = _style.DrawPoint(hdcInt, x, y, clipWidth, clipHeight, backColor.ToUInt());
             g.ReleaseHdc(hdc);
             return result;
         }
@@ -128,8 +133,9 @@ namespace MW5.Api.Concrete
         public bool DrawRectangle(Graphics g, float x, float y, int width, int height, bool drawVertices, int clipWidth = 0,
             int clipHeight = 0, Color? backColor = null)
         {
-            IntPtr hdc = g.GetHdc();
-            bool result = _style.DrawRectangle(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+            var hdc = g.GetHdc();
+            var hdcInt = hdc.ToInt32();
+            var result = _style.DrawRectangle(hdcInt, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor.ToUInt());
             g.ReleaseHdc(hdc);
             return result;
         }
@@ -137,8 +143,9 @@ namespace MW5.Api.Concrete
         public bool DrawShape(Graphics g, float x, float y, IGeometry geometry, bool drawVertices, int clipWidth, int clipHeight,
             Color? backColor = null)
         {
-            IntPtr hdc = g.GetHdc();
-            bool result = _style.DrawShape(hdc, x, y, geometry.GetInternal(), drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+            var hdc = g.GetHdc();
+            var hdcInt = hdc.ToInt32();
+            var result = _style.DrawShape(hdcInt, x, y, geometry.GetInternal(), drawVertices, clipWidth, clipHeight, backColor.ToUInt());
             g.ReleaseHdc(hdc);
             return result;
         }

@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using MW5.Plugins.Enums;
+using MW5.Plugins.TemplatePlugin.Properties;
 
 namespace MW5.Plugins.TemplatePlugin.Menu
 {
@@ -58,10 +59,16 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// </summary>
         /// <param name="context">The application context.</param>
         /// <param name="identity">The plug-in identity.</param>
-        private void InitMenu(IAppContext context, PluginIdentity identity)
+        private static void InitMenu(IAppContext context, PluginIdentity identity)
         {
             var menu = context.Menu.Items.AddDropDown("Template", "_", identity);
+            menu.Icon = new MenuIcon(Resources.template_icon); // template by LAFS from the Noun Project
             menu.SubItems.AddButton("Info", MenuKeys.ShowDockableWindow, identity);
+            
+            var submenu = menu.SubItems.AddDropDown("SubMenu", MenuKeys.SubMenu, identity);
+            var btn = submenu.SubItems.AddButton("Foo", MenuKeys.Foo, identity);
+            btn.Icon = new MenuIcon(Resources.hello_icon); // hello by Deemak Daksina from the Noun Project
+            submenu.SubItems.AddButton("Bar", MenuKeys.Bar, identity);
         }
 
         /// <summary>

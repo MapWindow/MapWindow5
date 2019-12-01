@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ToolboxGroupCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -8,7 +8,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
@@ -28,9 +27,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         internal ToolboxGroupCollection(TreeNodeAdvCollection nodes)
         {
-            if (nodes == null) throw new NullReferenceException();
-
-            _nodes = nodes;
+            _nodes = nodes ?? throw new NullReferenceException();
         }
 
         /// <summary>
@@ -133,13 +130,10 @@ namespace MW5.Tools.Toolbox
         public bool Remove(string key)
         {
             var group = this.FirstOrDefault(g => g.Key == key);
-            if (group != null)
-            {
-                _nodes.Remove(group.InnerObject);
-                return true;
-            }
+            if (group == null) return false;
 
-            return false;
+            _nodes.Remove(group.InnerObject);
+            return true;
         }
 
         /// <summary>

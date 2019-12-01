@@ -105,7 +105,18 @@ namespace MW5.Controls
                         var group = Legend.Groups.ItemByHandle(_legendDockPanel.SelectedGroupHandle);
                         if (group != null)
                         {
-                            if (MessageService.Current.Ask("Do you want to remove group: " + group.Text + "?"))
+                            var cancel = false;
+                            foreach (var layer in group.Layers)
+                            {
+                                var args = new Plugins.Events.LayerCancelEventArgs(layer.Handle);
+                                _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, Legend, args);
+                                if (args.Cancel)
+                                {
+                                    cancel = true;
+                                    break;
+                                }
+                            }
+                            if (!cancel && MessageService.Current.Ask("Do you want to remove group: " + group.Text + "?"))
                             {
                                 Legend.Groups.Remove(group.Handle);
                             }
@@ -148,12 +159,16 @@ namespace MW5.Controls
                         if (layer != null)
                         {
                             if (!LayerSerializationHelper.CheckFilename(layer.Filename))
+                                LayerSerializationHelper.SaveSettings(layer);
+                            else
                             {
-                                MessageService.Current.Info("Can not save settings for a non-disk based layer.");
-                                return;
+                                if (!layer.SaveOptions("", true, ""))
+                                {
+                                    MessageService.Current.Info("Can not save settings for a non-disk based layer.");
+                                    return;
+                                }
                             }
-
-                            LayerSerializationHelper.SaveSettings(layer);
+                            
                         }
                         break;
                     }
@@ -163,13 +178,17 @@ namespace MW5.Controls
 
                         if (layer != null)
                         {
-                            if (!LayerSerializationHelper.CheckFilename(layer.Filename))
+                            if (LayerSerializationHelper.CheckFilename(layer.Filename))
+                                LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
+                            else
                             {
-                                MessageService.Current.Info("Can not load settings for a non-disk based layer.");
-                                return;
+                                string desc="";
+                                if (!layer.LoadOptions("", ref desc))
+                                {
+                                    MessageService.Current.Info("Can not load settings for a non-disk based layer.");
+                                    return;
+                                }
                             }
-
-                            LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
                         }
                         
                         _context.Legend.Redraw(LegendRedraw.LegendAndMap);

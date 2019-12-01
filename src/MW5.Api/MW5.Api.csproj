@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -24,6 +24,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>bin\x86\Debug\MW5.Api.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +56,11 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="AxInterop.MapWinGIS">
+      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\15.0\AxInterop.MapWinGIS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -89,6 +95,8 @@
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />
     <Compile Include="Concrete\WmsSource.cs" />
+    <Compile Include="Events\BeforeVertexDigitizedEventArgs.cs" />
+    <Compile Include="Interfaces\ICancellableEvent.cs" />
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
@@ -303,49 +311,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Static\GdalUtils.cs" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Release'">
-    <COMReference Include="AxMapWinGIS">
-      <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>True</Isolated>
-      <Private>True</Private>
-    </COMReference>
-    <COMReference Include="MapWinGIS">
-      <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>True</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <COMReference Include="AxMapWinGIS">
-      <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-      <Private>True</Private>
-    </COMReference>
-    <COMReference Include="MapWinGIS">
-      <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
-      <VersionMajor>4</VersionMajor>
-      <VersionMinor>9</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
-    </COMReference>
-  </ItemGroup>
   <ItemGroup>
+    <COMReference Include="MapWinGIS">
+      <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>True</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>2</VersionMajor>
@@ -374,7 +349,9 @@
       <Name>MW5.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

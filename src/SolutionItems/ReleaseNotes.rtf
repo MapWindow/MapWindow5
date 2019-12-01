@@ -1,97 +1,603 @@
-{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1043{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Cambria;}{\f2\fnil\fcharset2 Symbol;}}
-{\colortbl ;\red0\green0\blue255;}
-{\*\generator Riched20 10.0.17134}\viewkind4\uc1 
-\pard\sa200\sl276\slmult1\b\f0\fs44\lang19 Release notes for MapWindow 5\line\b0\fs20 Download at {{\field{\*\fldinst{HYPERLINK https://github.com/MapWindow/MapWindow5/releases }}{\fldrslt{https://github.com/MapWindow/MapWindow5/releases\ul0\cf0}}}}\f0\fs20  (since v5.1.1)\line\f1 We have a new forum: {{\field{\*\fldinst{HYPERLINK https://mapwindow.discourse.group/ }}{\fldrslt{https://mapwindow.discourse.group/\ul0\cf0}}}}\f0\fs20\par
-\ul\fs44 MW5 v5.4.1\ulnone\line\f1\fs20 Released March. 1, 2019\par
-\b News\b0 :\line This is a hotfix due to a bug in MapWinGIS: MWGIS-141: \i Crash when selecting a polygon\i0 .\par
-\line\ul\f0\fs44 MW5 v5.4.0\ulnone\line\f1\fs20 Released Jan. 19, 2019\par
-\b News\b0 :\line This is a maintenance release. Only a few issues have been resolved.\line The main reason for this release is the new version of MapWinGIS, which has some improvements. \line v5.0.0 of MapWinGIS is now using the VC++2015 dependencies.\line The release notes for MapWinGIS v5.0.0 can be found at {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10400 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10400\ul0\cf0}}}}\f1\fs20\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10500 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10500\ul0\cf0}}}}\f0\fs20\par
-\b\f1 Bug fixes\b0\par
-[MW5CORE-211] - WMS url cannot be secure (https)\f0\fs44\par
-\ul MW5 v5.3.0\ulnone\line\f1\fs20 Released Jul. 20, 2018\par
-\b News\b0 :\line This is a maintenance release. Only a few issues have been resolved.\line The main reason for this release is the new version of MapWinGIS, which has some improvements. v4.9.6 of MapWinGIS will also be the last version using the VC++2013 dependencies.\line The release notes for MapWinGIS v4.9.6 can be found at {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10600 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10600\ul0\cf0}}}}\f1\fs20\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10301 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10301\ul0\cf0}}}}\f1\fs20\par
-\b Bug fixes\b0\par
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\fswiss\fprq2\fcharset0 Liberation Sans{\*\falt Arial};}{\f5\froman\fprq2\fcharset0 Calibri;}{\f6\froman\fprq2\fcharset0 Cambria;}{\f7\fnil\fprq0\fcharset2 OpenSymbol{\*\falt Arial Unicode MS};}{\f8\fnil\fprq2\fcharset0 Microsoft YaHei;}{\f9\fnil\fprq2\fcharset0 Arial;}{\f10\fswiss\fprq0\fcharset128 Arial;}}
+{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;}
+{\stylesheet{\s0\snext0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1 Normal;}
+{\*\cs16\snext16\langfe255\alang255\cf9\lang255\ul\ulc0 Internetkoppeling;}
+{\*\cs20\snext20\dbch\af7\dbch\af7\loch\f7 Opsommingstekens;}
+{\s21\sbasedon0\snext22\dbch\af8\dbch\af9\afs28\sb240\sa120\keepn\loch\f4\fs28 Kop;}
+{\s22\sbasedon0\snext22\sl276\slmult1\sb0\sa140 Tekstblok;}
+{\s23\sbasedon22\snext23\dbch\af10\sl276\slmult1\sb0\sa140 Lijst;}
+{\s24\sbasedon0\snext24\dbch\af10\afs24\ai\sb120\sa120\noline\fs24\i Bijschrift;}
+{\s25\sbasedon0\snext25\dbch\af10\noline Index;}
+}{\*\listtable{\list\listtemplateid1
+{\listlevel\levelnfc23\leveljc0\levelstartat0\levelfollow0{\leveltext \'01\u183 ?;}{\levelnumbers;}\f1\fi0\li0}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'01.;}{\levelnumbers\'01;}\fi-360\li1080}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'02.;}{\levelnumbers\'01;}\fi-360\li1440}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'03.;}{\levelnumbers\'01;}\fi-360\li1800}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'04.;}{\levelnumbers\'01;}\fi-360\li2160}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'05.;}{\levelnumbers\'01;}\fi-360\li2520}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'06.;}{\levelnumbers\'01;}\fi-360\li2880}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'07.;}{\levelnumbers\'01;}\fi-360\li3240}
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'02\'08.;}{\levelnumbers\'01;}\fi-360\li3600}\listid1}
+{\list\listtemplateid2
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li720}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1080}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1440}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1800}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2160}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2520}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2880}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3240}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3600}\listid2}
+{\list\listtemplateid3
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li720}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1080}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1440}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1800}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2160}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2520}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2880}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3240}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3600}\listid3}
+{\list\listtemplateid4
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li720}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1080}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1440}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1800}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2160}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2520}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2880}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3240}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3600}\listid4}
+{\list\listtemplateid5
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li720}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1080}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1440}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li1800}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2160}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2520}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u8226 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li2880}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9702 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3240}
+{\listlevel\levelnfc23\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\u9642 ?;}{\levelnumbers;}\f7\rtlch\dbch\af7 \ltrch\loch\fi-360\li3600}\listid5}
+{\list\listtemplateid6
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}
+{\listlevel\levelnfc255\leveljc0\levelstartat1\levelfollow2{\leveltext \'00;}{\levelnumbers;}\fi0\li0}\listid6}
+}{\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}{\*\generator LibreOffice/6.3.3.2$Windows_X86_64 LibreOffice_project/a64200df03143b798afd1ec74a12ab50359878ed}{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\author Paul Meems}{\revtim\yr2019\mo12\dy1\hr16\min51}{\printim\yr0\mo0\dy0\hr0\min0}}{\*\userprops}\deftab720
+\viewscale100
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse451\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\pgdscnxt0 Standaard;}}
+\formshade{\*\pgdscno0}\paperh15840\paperw12240\margl1440\margr1440\margt1440\margb1440\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12240\pghsxn15840\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+{\*\ftnsep\chftnsep}\pgndec\pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\b\loch\f5\loch
+Release notes for MapWindow 5}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\b0\loch\f5\loch
+Download at }{{\field{\*\fldinst HYPERLINK "https://github.com/MapWindow/MapWindow5/releases" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\b0\loch\f5\loch
+https://github.com/MapWindow/MapWindow5/releases}{}}}\rtlch\hich\af5 \ltrch\fs20\lang19\b0\loch\f5\loch
+ (since v5.1.1)}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\b0\loch\f6\loch
+We have a new forum: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.discourse.group/" }{\fldrslt {\rtlch\hich\af6 \ltrch\langfe255\alang255\cf9\lang255\ul\ulc0\fs20\lang19\b0\loch\f6\loch
+https://mapwindow.discourse.group/}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.}{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+5}{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+.0}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Dec}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+. 1, 2019}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\rtlch\hich\af6 \ltrch\fs20\lang19\b0\loch\f6\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+22 issues have been resolved and the new MapWinGIS v5.1.0 (Released October 23, 2019) has been included.\line Release notes can also be found at }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/projects/MW5CORE/versions/10601/tab/release-report-done" }{\fldrslt {\rtlch\hich\af6 \ltrch\langfe255\alang255\cf9\lang255\ul\ulc0\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+https://mapwindow.atlassian.net/projects/MW5CORE/versions/10601/tab/release-report-done}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Improvement}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-226] - ProjectSaving and ProjectSaved events are missing}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-227] - Change C# version to 7.1}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-232] - DockPanelKeys class should be public}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-233] - MW5 WMS Support love}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-234] - Add installation location registry key}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-238] - OGR Layer style API improvement}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-243] - Add BeforeSaveChanges and AfterClearChanges events to the shape editor}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-244] - Add missing methods on GeometryEditor}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls2 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-246] - Creating custom tools for the toolbox is hard}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Bug}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls3 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab0\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-224] - Only the first registered event delegate of a plugin is fired}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls3 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab0\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-225] - Some events are not cancelled after setting the cancel flag.}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls3 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab0\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-230] - Add missing BeforeLayerEditingChanged broadcast to LayerEditingServices}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls3 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab0\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-231] - Splash window should show the plugins it is loading}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls3 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab0\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-237] - When deleting a group of layers, layer removed events are not fired}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Task}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls4 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-245] - Can't compile MapWindow5 using VS2019}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl240\slmult1\ql\sb0\sa200\ltrpar\rtlch\ab \ltrch\b\loch
 
-\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 [MW5CORE-216] - Charts and categories overlap in legend control\f0\par
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\pagebb\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\ab\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6
+ }{\rtlch\ab\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+New Feature}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-220] - Add selectable property to FeatureSet}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-221] - Add segment/vertex snapping options to the shape editor}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-222] - BeforeShapeEditEvent broadcast is missing when removing selected features in the ShapeEditor plugin}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-223] - There is no way to check if a feature is part of a featureset}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-228] - Add DiscardLayerChanges method to the LayerEditingServices interface}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-229] - Add BeforeDeleteShape events to RemoveSelectedShapesNoPrompt method of Geometry editor}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain \dbch\af7\dbch\af7\loch\f7 \u8226\'95\tab}\ilvl0\ls5 \li720\ri0\lin720\rin0\fi-360\sl240\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-235] - ReplaceShape method on GeoProcessingService}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+-------------------------------------------------------------------------------------------------------------------------------------------}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\ul\ulc0\b0\loch\f5\loch
+MW5 v5.4.1}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\ulnone\ulc0\b0\loch\f6\loch
+Released March. 1, 2019}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\ulnone\ulc0\b0\loch\f6\loch
+This is a hotfix due to a bug in MapWinGIS: MWGIS-141: }{\rtlch\hich\af6 \ltrch\fs20\lang19\i\ulnone\ulc0\b0\loch\f6\loch
+Crash when selecting a polygon}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+.}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+-------------------------------------------------------------------------------------------------------------------------------------------}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.4.0}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Jan. 19, 2019}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+This is a maintenance release. Only a few issues have been resolved.}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+The main reason for this release is the new version of MapWinGIS, which has some improvements. }{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+v5.0.0 of MapWinGIS is now using the VC++2015 dependencies.}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+The release notes for MapWinGIS v5.0.0 can be found at }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10400" }{\fldrslt {\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10400}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10500" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10500}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Bug fixes}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-211] - WMS url cannot be secure (https)}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+-------------------------------------------------------------------------------------------------------------------------------------------}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\pagebb\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.3.0}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Jul. 20, 2018}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+This is a maintenance release. Only a few issues have been resolved.}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+The main reason for this release is the new version of MapWinGIS, which has some improvements. v4.9.6 of MapWinGIS will also be the last version using the VC++2013 dependencies.}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+The release notes for MapWinGIS v4.9.6 can be found at }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10600" }{\fldrslt {\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10600}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10301" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10301}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Bug fixes}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl276\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+[MW5CORE-216] - Charts and categories overlap in legend control}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+-------------------------------------------------------------------------------------------------------------------------------------------}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.2.0}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Jan. 04, 2018}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+This is a maintenance release. Only a few issues have been resolved.}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+The main reason for this release is the new version of MapWinGIS, which has major improvements.}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+The release notes for MapWinGIS v4.9.5 can be found at }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10102" }{\fldrslt {\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10102}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10101" }{\fldrslt {\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10101}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs24\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+Improvement}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-179] - When closing keeps mentioning a new version is available}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-181] - Can't connect to PostServer on other port then 5432}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-191] - Need Z-value in Api.Concrete.Coordinate Constructor}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-195] - Read Only Coordinate X and Y Properties?}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-196] - Let user select selection color}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-205] - WMSLayers extra parameter in base URL}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar\loch
 
-\pard\sa200\sl276\slmult1\ul\fs44 MW5 v5.2.0\ulnone\line\f1\fs20 Released Jan. 04, 2018\par
-\b News\b0 :\line This is a maintenance release. Only a few issues have been resolved.\line The main reason for this release is the new version of MapWinGIS, which has major improvements.\line The release notes for MapWinGIS v4.9.5 can be found at {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10102 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10003&version=10102\ul0\cf0}}}}\f1\fs20\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {\f1{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10101 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10101\ul0\cf0}}}}\f0\fs20\par
-\b\fs24 Improvement\fs20\par
-
-\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0 [MW5CORE-179] - When closing keeps mentioning a new version is available\par
-{\pntext\f2\'B7\tab}[MW5CORE-181] - Can't connect to PostServer on other port then 5432\par
-{\pntext\f2\'B7\tab}[MW5CORE-191] - Need Z-value in Api.Concrete.Coordinate Constructor\par
-{\pntext\f2\'B7\tab}[MW5CORE-195] - Read Only Coordinate X and Y Properties?\par
-{\pntext\f2\'B7\tab}[MW5CORE-196] - Let user select selection color\par
-{\pntext\f2\'B7\tab}[MW5CORE-205] - WMSLayers extra parameter in base URL\par
-
-\pard\sa200\sl276\slmult1\b\fs24 Bug\fs20\par
-
-\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0 [MW5CORE-152] - MW5 freezes when project has reference to unavailable plug-in\par
-{\pntext\f2\'B7\tab}[MW5CORE-177] - GetValue doesn't return null\par
-{\pntext\f2\'B7\tab}[MW5CORE-189] - Reprojection is wrong\par
-{\pntext\f2\'B7\tab}[MW5CORE-190] - Number of features always 143\par
-{\pntext\f2\'B7\tab}[MW5CORE-192] - Portugal projections are not supported/recognized\par
-{\pntext\f2\'B7\tab}[MW5CORE-193] - Greyscale tiff is not shown properly\par
-{\pntext\f2\'B7\tab}[MW5CORE-194] - Raster identifier shows the rows and columns switched\par
-
-\pard\sa200\sl276\slmult1\b\fs24 Task\par
-
-\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0\fs20 [MW5CORE-91] - Network drives not visible\par
-{\pntext\f2\'B7\tab}[MW5CORE-202] - Update installer script for the VC++ redistributables\par
-{\pntext\f2\'B7\tab}[MW5CORE-207] - Upgrade to MapWinGIS v4.9.5\par
-
-\pard\sa200\sl276\slmult1\b\fs24 New Feature\par
-
-\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0\fs20 [MW5CORE-169] - Add option to plug-ins to load on start-up\par
-
-\pard\sa200\sl276\slmult1\line -------------------------------------------------------------------------------------------------------------------------------------------\fs44\par
-\ul MW5 v5.1.1\ulnone\line\f1\fs20 Released Jun. 14, 2016\par
-\b News\b0 :\line * We've moved the source code from CodePlex to GitHub: {{\field{\*\fldinst{HYPERLINK https://github.com/MapWindow/MapWindow5.git }}{\fldrslt{https://github.com/MapWindow/MapWindow5.git\ul0\cf0}}}}\f1\fs20\par
-\b Updated dependencies\b0 :\line * MapWinGIS: v4.9.4.2-Stable, released Jun. 9, 2016\line * GDAL: v2.2.0, released May 31, 2016\line * Synfusion Essential Studio 14.1.0.46\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10005 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10005\ul0\cf0}}}}\f0\fs20\par
-** Improvement\line     * [CORE-164] - Custom tiles provider is not used when loading project.\par
-** Bug\line     * [CORE-158] - Without an Internet connection checking for a new installers throws an Null Pointer Exception.\line     * [CORE-160] - Latest MW5 version will not start\par
--------------------------------------------------------------------------------------------------------------------------------------------\par
-Download at {{\field{\*\fldinst{HYPERLINK https://mapwindow5.codeplex.com/releases }}{\fldrslt{https://mapwindow5.codeplex.com/releases\ul0\cf0}}}}\f0\fs44\par
-\ul MW5 v5.1.0\ulnone\line\f1\fs20 Released Feb. 7, 2016\par
-\b News\b0 :\line   This is the first official stable release.\par
-\b Dependencies\b0 :\line   MapWinGIS: v4.9.4.0-Stable, released Feb. 7, 2016\line   GDAL: v2.1.0, released Feb. 7, 2016\line   Synfusion Essential Studio 13.4.0.53\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200\ul0\cf0}}}}\f0\fs20\par
-** Improvement\line     * [CORE-89] - Can't drop MW5 project on map\line     * [CORE-92] - Quickly edit shape with many vertices\line     * [CORE-93] - shape editor/do not display info\line     * [CORE-106] - Add to help if using 32-Bit or 64-Bit\par
-** Bug\line     * [CORE-17] - Can't edit SpatiaLite layer\line     * [CORE-62] - Spatial Editor Cut\line     * [CORE-81] - OGR import failure related to precision of fields\line     * [CORE-94] - feature not saved after edit\line     * [CORE-105] - Union of two layers from same database is not possible.\line     * [CORE-131] - Cannot connect to Azure MSSQL database\par
-** Task\line     * [CORE-90] - customize status bar\par
-** Sub-task\line     * [CORE-70] - Legend/add Table Editor to contextual menu\line     * [CORE-132] - Dragging MSSQL layer to map crashes MW5\line     * [CORE-133] - [MSSQL Azure] No tables are shown\par
-\b\fs28 MW5 Tools\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200\ul0\cf0}}}}\f0\fs20\par
-** Improvement\line     * [TOOLS-28] - Errors when running print layout plugin\line     * [TOOLS-29] - Indication loading tables is missing\line     * [TOOLS-30] - Can't view existing db connections\par
-** Bug\line     * [TOOLS-31] - Test connection keeps using previous values\line     * [TOOLS-32] - Double tables with MS Sql databases\line     * [TOOLS-35] - Validate tool crashes\fs44\par
-\ul MW5 v5.0.3.1\ulnone\line\f1\fs20 Released Dec. 15, 2015\par
-\b News\b0 :\line   This is a hotfix to solve this issue with the installer which keeps asking to install (\f0 CORE-83).\f1\par
-\b Dependencies\b0 :\line   MapWinGIS: v4.9.3.6-Stable, released Dec. 3, 2015\line   GDAL: v2.1.0, released Nov. 19, 2015\line   SyncFusion: v13.3.0.7\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10004 }}{\fldrslt{https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10004\ul0\cf0}}}}\f0\fs20\par
-** Improvement\line     * [CORE-19] - Startup is very slow when loading complex project\line     * [CORE-48] - Improve shapefile categories dialog\line     * [CORE-64] - Add support of field editing for OGR layers\line     * [CORE-71] - Display info about the number of modified shapes for the layer\line     * [CORE-73] - grid toggle\line     * [CORE-74] - label mover problem\line     * [CORE-84] - Allow to change maximum feature count for OGR layer\line     * [CORE-88] - Deal with Query builder issues\par
-** Bug\line     * [CORE-72] - Validation failed : Shape hasn't got part\line     * [CORE-82] - Fix the use of American units in measuring tool\line     * [CORE-83] - Updater keeps asking to update\line     * [CORE-87] - Higlighting No handler found \par
-** Sub-task\line     * [CORE-75] - Protect feature ID field for OGR layers in Table Editor.\line     * [CORE-76] - Improve support of fields types in the Table Editor\par
-\ul\fs44 MW5 v5.0.3.0\ulnone\line\f1\fs20 Released Nov. 29, 2015\par
-News:\line   Added WMS support, better handling of TMS, new print layout plug-in, new image registration plug-in, new and updated tools\par
-Dependencies:\line   MapWinGIS: v4.9.3.6-Beta, released Nov. 29, 2015\line   GDAL: v2.1.0, released Nov. 19, 2015\line   SyncFusion: v13.3.0.7\par
-\b\f0\fs28 MW5 Core\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10002&version=10004 }}{\fldrslt{https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10002&version=10004\ul0\cf0}}}}\f0\fs28\par
-\fs20 ** Improvement\line     * [CORE-4] - Categories - Unique values\line     * [CORE-10] - Add custom tile providers.\line     * [CORE-11] - Add layout plug-in\line     * [CORE-21] - GdalBuildVrt should support wildcards and input_file_list option\line     * [CORE-31] - Cursor is not reset when clicking 'New project'\line     * [CORE-39] - Browse tiles as map\line     * [CORE-42] - Add 'Set map scale' dialog\line     * [CORE-43] - Add support of groups (nested pages) in the Settings dialog\line     * [CORE-49] - Improve keyboard support for repository and toolbox\line     * [CORE-57] - Filter toolbox tools by name\par
-** Bug\line     * [CORE-1] - Column 'Region_Code' does not belong to the table\line     * [CORE-7] - When MW5 is started, no icon on the Windows task bar\line     * [CORE-8] - SQLite file in File System node has icon of raster file, but should have SQLite icon\line     * [CORE-9] - Don't show hidden files and folders in Repo browser\line     * [CORE-13] - Select 'Clear selection' results in crash when no layers loaded\line     * [CORE-14] - Create layer/Cancel/Create layer --> Crash\line     * [CORE-16] - Support of PolylineZ, PolygonZ shapefiles without M values.\line     * [CORE-22] - Assign projection doesn't create the prj-file\line     * [CORE-23] - GTIFFBuildOverviews() warning when set to auto\line     * [CORE-26] - Create Layer ArgumentException\line     * [CORE-35] - Tiff file disappears when zooming out\line     * [CORE-40] - Status bar doesn't support scale outside integer range\line     * [CORE-45] - Create layer/wrong file name\par
-** New Feature\line     * [CORE-36] - GeoLocation service\line     * [CORE-37] - Support keyboard shortcuts for main menu items\line     * [CORE-55] - SelectShapes not implemented\par
-** Sub-task\line     * [CORE-3] - Menu item 'Settings' is missing\line     * [CORE-51] - Start-up warnings\line     * [CORE-60] - Storing repository state outside of the main config file\line     * [CORE-61] - Preserve expanded state of folders in the repository\par
-\b\fs28 MW5 Tools\line\b0\fs20 URL: {{\field{\*\fldinst{HYPERLINK https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10004&version=10012 }}{\fldrslt{https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10004&version=10012\ul0\cf0}}}}\f0\fs28\par
-\fs20 ** Improvement\line     * [TOOLS-3] - Place progressbar below task\line     * [TOOLS-10] - Vector tools should only show vector layers\line     * [TOOLS-11] - Select selected layer in input datasource\line     * [TOOLS-12] - Random points tool doesn't work with non-vector layes\line     * [TOOLS-22] - Adding more groups for vector tools in the toolbox\par
-** Bug\line     * [TOOLS-1] - 'Polygon must be clockwise error' isn't recognized by validate shapefile\line     * [TOOLS-2] - Writing dbf progress isn't displayed correctly\line     * [TOOLS-5] - Interactive clipping NullReferenceException\line     * [TOOLS-8] - NPE with Interactive Clipping Tool\line     * [TOOLS-9] - NRE when layer is not vector\line     * [TOOLS-18] - Output layer is pre-filled with in-memory input layer\par
-** New Feature\line     * [TOOLS-7] - Clip raster by polygon\line     * [TOOLS-17] - Image registration plug-in\par
-\ul\fs44 MW5 v5.0.2.0\ulnone\f1\fs20\par
-Released Oct. 19, 2015\par
-\f0\fs28 First official beta release\fs44\par
-\ul MW5 v5.0.1.0\ulnone\f1\fs20\par
-Released Oct. 3, 2015\par
-\f0\fs28 Pre-release\fs22\par
-}
- 
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\pagebb\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs24\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+Bug}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-152] - MW5 freezes when project has reference to unavailable plug-in}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-177] - GetValue doesn't return null}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-189] - Reprojection is wrong}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-190] - Number of features always 143}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-192] - Portugal projections are not supported/recognized}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-193] - Greyscale tiff is not shown properly}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-194] - Raster identifier shows the rows and columns switched}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs24\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+Task}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-91] - Network drives not visible}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-202] - Update installer script for the VC++ redistributables}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl240\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-207] - Upgrade to MapWinGIS v4.9.5}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs24\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+New Feature}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1{\listtext\pard\plain  \u183\'b7\tab}\ilvl0\ls1 \li720\ri0\lin720\rin0\fi0\sl276\slmult1\ql\li720\ri0\lin720\rin0\fi-360\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+[MW5CORE-169] - Add option to plug-ins to load on start-up}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\loch
+\line }{{\*\bkmkstart __DdeLink__1021_2522639215}\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch{\*\bkmkend __DdeLink__1021_2522639215}
+-------------------------------------------------------------------------------------------------------------------------------------------}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.1.1}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Jun. 14, 2016}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+* We've moved the source code from CodePlex to GitHub: }{{\field{\*\fldinst HYPERLINK "https://github.com/MapWindow/MapWindow5.git" }{\fldrslt {\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+https://github.com/MapWindow/MapWindow5.git}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Updated dependencies}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+* MapWinGIS: v4.9.4.2-Stable, released Jun. 9, 2016}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+* GDAL: v2.2.0, released May 31, 2016}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+* Synfusion Essential Studio 14.1.0.46}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10005" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10005}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Improvement}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-164] - Custom tiles provider is not used when loading project.}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Bug}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-158] - Without an Internet connection checking for a new installers throws an Null Pointer Exception.}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-160] - Latest MW5 version will not start}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+-------------------------------------------------------------------------------------------------------------------------------------------}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+Download at }{{\field{\*\fldinst HYPERLINK "https://mapwindow5.codeplex.com/releases" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow5.codeplex.com/releases}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.1.0}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Feb. 7, 2016}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  This is the first official stable release.}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Dependencies}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  MapWinGIS: v4.9.4.0-Stable, released Feb. 7, 2016}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  GDAL: v2.1.0, released Feb. 7, 2016}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  Synfusion Essential Studio 13.4.0.53}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Improvement}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-89] - Can't drop MW5 project on map}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-92] - Quickly edit shape with many vertices}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-93] - shape editor/do not display info}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-106] - Add to help if using 32-Bit or 64-Bit}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Bug}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-17] - Can't edit SpatiaLite layer}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-62] - Spatial Editor Cut}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-81] - OGR import failure related to precision of fields}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-94] - feature not saved after edit}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-105] - Union of two layers from same database is not possible.}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-131] - Cannot connect to Azure MSSQL database}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Task}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-90] - customize status bar}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Sub-task}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-70] - Legend/add Table Editor to contextual menu}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-132] - Dragging MSSQL layer to map crashes MW5}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-133] - [MSSQL Azure] No tables are shown}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Tools}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10200}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Improvement}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-28] - Errors when running print layout plugin}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-29] - Indication loading tables is missing}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-30] - Can't view existing db connections}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Bug}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-31] - Test connection keeps using previous values}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-32] - Double tables with MS Sql databases}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-35] - Validate tool crashes}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.0.3.1}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Dec. 15, 2015}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+News}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  This is a hotfix to solve this issue with the installer which keeps asking to install (}{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+CORE-83).}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b\loch\f6\loch
+Dependencies}{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  MapWinGIS: v4.9.3.6-Stable, released Dec. 3, 2015}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  GDAL: v2.1.0, released Nov. 19, 2015}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  SyncFusion: v13.3.0.7}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10004" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/secure/ReleaseNote.jspa?projectId=10002&version=10004}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Improvement}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-19] - Startup is very slow when loading complex project}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-48] - Improve shapefile categories dialog}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-64] - Add support of field editing for OGR layers}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-71] - Display info about the number of modified shapes for the layer}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-73] - grid toggle}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-74] - label mover problem}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-84] - Allow to change maximum feature count for OGR layer}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-88] - Deal with Query builder issues}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Bug}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-72] - Validation failed : Shape hasn't got part}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-82] - Fix the use of American units in measuring tool}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-83] - Updater keeps asking to update}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-87] - Higlighting No handler found }
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Sub-task}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-75] - Protect feature ID field for OGR layers in Table Editor.}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-76] - Improve support of fields types in the Table Editor}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.0.3.0}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Nov. 29, 2015}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+News:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  Added WMS support, better handling of TMS, new print layout plug-in, new image registration plug-in, new and updated tools}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Dependencies:}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  MapWinGIS: v4.9.3.6-Beta, released Nov. 29, 2015}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  GDAL: v2.1.0, released Nov. 19, 2015}{\loch
+\line }{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+  SyncFusion: v13.3.0.7}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Core}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10002&version=10004" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10002&version=10004}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Improvement}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-4] - Categories - Unique values}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-10] - Add custom tile providers.}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-11] - Add layout plug-in}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-21] - GdalBuildVrt should support wildcards and input_file_list option}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-31] - Cursor is not reset when clicking 'New project'}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-39] - Browse tiles as map}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-42] - Add 'Set map scale' dialog}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-43] - Add support of groups (nested pages) in the Settings dialog}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-49] - Improve keyboard support for repository and toolbox}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-57] - Filter toolbox tools by name}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Bug}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-1] - Column 'Region_Code' does not belong to the table}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-7] - When MW5 is started, no icon on the Windows task bar}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-8] - SQLite file in File System node has icon of raster file, but should have SQLite icon}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-9] - Don't show hidden files and folders in Repo browser}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-13] - Select 'Clear selection' results in crash when no layers loaded}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-14] - Create layer/Cancel/Create layer --> Crash}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-16] - Support of PolylineZ, PolygonZ shapefiles without M values.}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-22] - Assign projection doesn't create the prj-file}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-23] - GTIFFBuildOverviews() warning when set to auto}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-26] - Create Layer ArgumentException}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-35] - Tiff file disappears when zooming out}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-40] - Status bar doesn't support scale outside integer range}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-45] - Create layer/wrong file name}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** New Feature}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-36] - GeoLocation service}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-37] - Support keyboard shortcuts for main menu items}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-55] - SelectShapes not implemented}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Sub-task}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-3] - Menu item 'Settings' is missing}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-51] - Start-up warnings}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-60] - Storing repository state outside of the main config file}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [CORE-61] - Preserve expanded state of folders in the repository}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b\loch\f5\loch
+MW5 Tools}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+URL: }{{\field{\*\fldinst HYPERLINK "https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10004&version=10012" }{\fldrslt {\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+https://mapwindow.atlassian.net/jira/secure/ReleaseNote.jspa?projectId=10004&version=10012}}}}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Improvement}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-3] - Place progressbar below task}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-10] - Vector tools should only show vector layers}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-11] - Select selected layer in input datasource}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-12] - Random points tool doesn't work with non-vector layes}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-22] - Adding more groups for vector tools in the toolbox}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** Bug}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-1] - 'Polygon must be clockwise error' isn't recognized by validate shapefile}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-2] - Writing dbf progress isn't displayed correctly}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-5] - Interactive clipping NullReferenceException}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-8] - NPE with Interactive Clipping Tool}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-9] - NRE when layer is not vector}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-18] - Output layer is pre-filled with in-memory input layer}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+** New Feature}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-7] - Clip raster by polygon}{\loch
+\line }{\rtlch\hich\af5 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+    * [TOOLS-17] - Image registration plug-in}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.0.2.0}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Oct. 19, 2015}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+First official beta release}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs44\lang19\i0\ul\ulc0\b0\loch\f5\loch
+MW5 v5.0.1.0}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af6 \ltrch\fs20\lang19\i0\ulnone\ulc0\b0\loch\f6\loch
+Released Oct. 3, 2015}
+\par \pard\plain \s0\hich\af3\dbch\af11\langfe2052\dbch\af9\afs24\alang1081\nowidctlpar\hyphpar0\ltrpar\cf0\loch\f3\fs24\lang1043\kerning1\sl276\slmult1\ql\sb0\sa200\ltrpar{\rtlch\hich\af5 \ltrch\fs28\lang19\i0\ulnone\ulc0\b0\loch\f5\loch
+Pre-release}
+\par }

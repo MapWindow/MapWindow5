@@ -19,7 +19,7 @@ namespace MW5.Plugins.ShapeEditor.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -246,6 +246,46 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         internal static System.Drawing.Bitmap img_shape_editor32 {
             get {
                 object obj = ResourceManager.GetObject("img_shape_editor32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_snap_active_layer {
+            get {
+                object obj = ResourceManager.GetObject("img_snap_active_layer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_snap_all_layers {
+            get {
+                object obj = ResourceManager.GetObject("img_snap_all_layers", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_snap_to_segments {
+            get {
+                object obj = ResourceManager.GetObject("img_snap_to_segments", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_snap_to_vertices {
+            get {
+                object obj = ResourceManager.GetObject("img_snap_to_vertices", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

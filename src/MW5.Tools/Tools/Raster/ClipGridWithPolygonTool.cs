@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ClipGridWithPolygonTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -38,19 +39,14 @@ namespace MW5.Tools.Tools.Raster
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Clip grid with polygon"; }
-        }
+        public override string Name => "Clip grid with polygon";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "Clips grid with a selected polygon: removes rows and columns that are outside polygon extents and " +
-                         "sets to no data value pixels that are not within polygon. "; }
-        }
+        public override string Description =>
+            "Clips grid with a selected polygon: removes rows and columns that are outside polygon extents and " +
+            "sets to no data value pixels that are not within polygon. ";
 
         protected override bool BeforeRun()
         {
@@ -60,28 +56,20 @@ namespace MW5.Tools.Tools.Raster
                 return false;
             }
 
-            if (Vector.Datasource.NumFeatures != 1 && Vector.Datasource.NumSelected != 1)
-            {
-                MessageService.Current.Info(
-                    "Polygon layer must have exactly one polygon or multiple polygons but only one of them selected.");
-                return false;
-            }
+            if (Vector.Datasource.NumFeatures == 1 || Vector.Datasource.NumSelected == 1) return true;
 
-            return true;
+            MessageService.Current.Info(
+                "Polygon layer must have exactly one polygon or multiple polygons but only one of them selected.");
+            return false;
+
         }
 
-        public override bool SupportsBatchExecution
-        {
-            get { return false; }
-        }
+        public override bool SupportsBatchExecution => false;
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         private IGeometry GetPolygon()
         {
@@ -90,13 +78,11 @@ namespace MW5.Tools.Tools.Raster
                 return Vector.Datasource.GetGeometry(0);
             }
 
-            if (Vector.Datasource.NumSelected == 1)
-            {
-                var ft = Vector.Datasource.Features.FirstOrDefault(f => f.Selected);
-                return ft != null ? ft.Geometry : null;
-            }
+            if (Vector.Datasource.NumSelected != 1) return null;
 
-            return null;
+            var ft = Vector.Datasource.Features.FirstOrDefault(f => f.Selected);
+            return ft?.Geometry;
+
         }
 
         /// <summary>
@@ -111,13 +97,11 @@ namespace MW5.Tools.Tools.Raster
                 return false;
             }
 
-            if (Output.Overwrite)
+            // ReSharper disable once InvertIf
+            if (Output.Overwrite && !GeoSource.Remove(Output.Filename))
             {
-                if (!GeoSource.Remove(Output.Filename))
-                {
-                    Log.Warn("Failed to remove file: " + Output.Filename, null);
-                    return false;
-                }
+                Log.Warn("Failed to remove file: " + Output.Filename, null);
+                return false;
             }   
 
             return GisUtils.Instance.ClipGridWithPolygon(Input.Datasource.Filename, poly, Output.Filename, KeepExtents);
@@ -130,14 +114,13 @@ namespace MW5.Tools.Tools.Raster
         /// </summary>
         public override bool AfterRun()
         {
-            if (Output.AddToMap && File.Exists(Output.Filename))
-            {
-                Log.Info("Adding the resulting datasource to the map");
+            if (!Output.AddToMap || !File.Exists(Output.Filename)) return true;
 
-                var raster = BitmapSource.Open(Output.Filename, true);
+            Log.Info("Adding the resulting datasource to the map");
 
-                OutputManager.AddToMap(raster);
-            }
+            var raster = BitmapSource.Open(Output.Filename, true);
+
+            OutputManager.AddToMap(raster);
 
             return true;
         }

@@ -1,6 +1,6 @@
 ﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ToolboxGroup.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015-2019
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ namespace MW5.Tools.Toolbox
 
         public ToolboxGroup(TreeNodeAdv node)
         {
-            if (node == null) throw new ArgumentNullException("node");
+            if (node == null) throw new ArgumentNullException(nameof(node));
             
             if (!(node.Tag is ToolboxGroupMetadata))
             {
@@ -34,9 +34,7 @@ namespace MW5.Tools.Toolbox
         {
             get
             {
-                var metadata = _node.Tag as ToolboxGroupMetadata;
-
-                if (metadata == null)
+                if (!(_node.Tag is ToolboxGroupMetadata metadata))
                 {
                     throw new NullReferenceException("Metadata for toolbox group was not set.");
                 }
@@ -48,18 +46,15 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Source tree node for the group
         /// </summary>
-        public object InnerObject
-        {
-            get { return _node; }
-        }
+        public object InnerObject => _node;
 
         /// <summary>
         /// Description of the tool
         /// </summary>
         public string Description
         {
-            get { return Metadata.Description; }
-            set { Metadata.Description = value; }
+            get => Metadata.Description;
+            set => Metadata.Description = value;
         }
 
         /// <summary>
@@ -67,34 +62,28 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public bool Expanded
         {
-            get { return _node.Expanded; }
-            set { _node.Expanded = value; }
+            get => _node.Expanded;
+            set => _node.Expanded = value;
         }
 
         /// <summary>
         /// Gets or sets the unique key for the group. 
         /// </summary>
-        public string Key
-        {
-            get { return Metadata.Key; }
-        }
+        public string Key => Metadata.Key;
 
         /// <summary>
         /// Gets or sets the name of tool
         /// </summary>
         public string Name
         {
-            get { return _node.Text; }
-            set { _node.Text = value; }
+            get => _node.Text;
+            set => _node.Text = value;
         }
 
         /// <summary>
         /// Gets identity of the plugin that created this group.
         /// </summary>
-        public PluginIdentity PluginIdentity
-        {
-            get { return Metadata.PluginIdentity; }
-        }
+        public PluginIdentity PluginIdentity => Metadata.PluginIdentity;
 
         /// <summary>
         /// List of sub groups inside the group
@@ -114,16 +103,13 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public object Tag
         {
-            get { return Metadata.Tag; }
-            set { Metadata.Tag = value; }
+            get => Metadata.Tag;
+            set => Metadata.Tag = value;
         }
 
         /// <summary>
         /// Gets list of tools for current group
         /// </summary>
-        public IToolCollection Tools
-        {
-            get { return new ToolboxToolCollection(_node.Nodes); }
-        }
+        public IToolCollection Tools => new ToolboxToolCollection(_node.Nodes);
     }
 }

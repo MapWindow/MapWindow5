@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MW5.Api.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MW5.Api.Legend.Events
 {
-    public class LayerCancelEventArgs: LayerEventArgs
+    public class LayerCancelEventArgs: LayerEventArgs, ICancellableEvent
     {
         public bool NewState { get; internal set; }
         public bool Cancel { get; set; }

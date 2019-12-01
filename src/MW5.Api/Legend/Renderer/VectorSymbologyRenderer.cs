@@ -117,10 +117,11 @@ namespace MW5.Api.Legend.Renderer
         private void RenderChartPreview(ref int top)
         {
             var hdc = _graphics.GetHdc();
+            var hdcInt = hdc.ToInt32();
             var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
 
             var left = _bounds.Left + Constants.TextLeftPad;
-            _sf.Charts.DrawChart(hdc, left, top, true, backColor);
+            _sf.Charts.DrawChart(hdcInt, left, top, true, backColor);
 
             _layer.Elements.Add(LayerElementType.Charts, new Rectangle(left, top, _sf.Charts.IconWidth, _sf.Charts.IconHeight));
 
@@ -202,12 +203,13 @@ namespace MW5.Api.Legend.Renderer
             var startIndex = i;
 
             var hdc = _graphics.GetHdc();
+            var hdcInt = hdc.ToInt32();
 
             for (; i < categories.Count; i++)
             {
                 var options = categories.Item[i].DrawingOptions;
 
-                DrawShapefileCategorySymbology(hdc, topTemp, options, i, true);
+                DrawShapefileCategorySymbology(hdcInt, topTemp, options, i, true);
 
                 topTemp += _layer.GetCategoryHeight(options);
                 if (topTemp >= ClientRectangle.Bottom && !isSnapshot)
@@ -249,9 +251,9 @@ namespace MW5.Api.Legend.Renderer
         }
 
         /// <summary>
-        /// Draws shapefile category. It's assumed here that GetHDC and ReleaseHDC calls are made by caller.
+        /// Draws shapefile category.
         /// </summary>
-        private void DrawShapefileCategorySymbology(IntPtr hdc, int top, ShapeDrawingOptions options, int categoryIndex, bool hasCheckbox)
+        private void DrawShapefileCategorySymbology(int hdcInt, int top, ShapeDrawingOptions options, int categoryIndex, bool hasCheckbox)
         {
             var categoryHeight = _layer.GetCategoryHeight(options);
             var categoryWidth = _layer.GetCategoryWidth(options);
@@ -273,11 +275,11 @@ namespace MW5.Api.Legend.Renderer
             switch (_layer.LegendLayerType)
             {
                 case LegendLayerType.PointShapefile:
-                    options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
+                    options.DrawPoint(hdcInt, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
                     break;
                 case LegendLayerType.LineShapefile:
                     options.DrawLine(
-                        hdc,
+                        hdcInt,
                         left,
                         top,
                         categoryWidth - 1,
@@ -289,7 +291,7 @@ namespace MW5.Api.Legend.Renderer
                     break;
                 case LegendLayerType.PolygonShapefile:
                     options.DrawRectangle(
-                        hdc,
+                        hdcInt,
                         left,
                         top,
                         categoryWidth - 1,
@@ -342,7 +344,8 @@ namespace MW5.Api.Legend.Renderer
             if (top + height > Legend.ClientRectangle.Top)
             {
                 var hdc = _graphics.GetHdc();
-                DrawShapefileCategorySymbology(hdc, top, _sf.DefaultDrawingOptions, -1, false);
+                var hdcInt = hdc.ToInt32();
+                DrawShapefileCategorySymbology(hdcInt, top, _sf.DefaultDrawingOptions, -1, false);
                 _graphics.ReleaseHdc(hdc);
             }
 

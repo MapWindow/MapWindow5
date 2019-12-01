@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="PolygonizeGridTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -46,39 +47,28 @@ namespace MW5.Tools.Tools.Raster
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
-        {
-            get { return "Polygonize grid"; }
-        }
+        public override string Name => "Polygonize grid";
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
-        {
-            get { return "A new shapefile will be created with polygons for all connected regions of pixels in the grid sharing a common pixel value."; }
-        }
+        public override string Description => "A new shapefile will be created with polygons for all connected regions of pixels in the grid sharing a common pixel value.";
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override PluginIdentity PluginIdentity
-        {
-            get { return PluginIdentity.Default; }
-        }
+        public override PluginIdentity PluginIdentity => PluginIdentity.Default;
 
         /// <summary>
         /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            if (Output.Overwrite)
+            // ReSharper disable once InvertIf
+            if (Output.Overwrite && !GeoSource.Remove(Output.Filename))
             {
-                if (!GeoSource.Remove(Output.Filename))
-                {
-                    Log.Warn("Failed to remove file: " + Output.Filename, null);
-                    return false;
-                }
+                Log.Warn("Failed to remove file: " + Output.Filename, null);
+                return false;
             }
 
             return GisUtils.Instance.Polygonize(GridFilename, Output.Filename, BandIndex, false, null, GdalFormats.Shapefile);
@@ -91,14 +81,13 @@ namespace MW5.Tools.Tools.Raster
         /// </summary>
         public override bool AfterRun()
         {
-            if (Output.AddToMap && File.Exists(Output.Filename))
-            {
-                Log.Info("Adding the resulting datasource to the map");
+            if (!Output.AddToMap || !File.Exists(Output.Filename)) return false;
 
-                var fs = new FeatureSet(Output.Filename);
+            Log.Info("Adding the resulting datasource to the map");
 
-                OutputManager.AddToMap(fs);
-            }
+            var fs = new FeatureSet(Output.Filename);
+
+            OutputManager.AddToMap(fs);
 
             return true;
         }

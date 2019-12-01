@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ToolBase.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015-2019
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
@@ -40,24 +42,17 @@ namespace MW5.Tools.Model
         /// </summary>
         public virtual void Initialize(IAppContext context)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         /// <summary>
         /// Returns true if a tool can be executed asynchronously using tasks.
         /// </summary>
-        public bool SupportsTasks
-        {
-            get { return false; }
-        }
+        public bool SupportsTasks => false;
 
         /// <summary>
         /// Gets a value indicating whether the tool supports batch execution.
         /// </summary>
-        public bool SupportsBatchExecution
-        {
-            get { return false; }
-        }
+        public bool SupportsBatchExecution => false;
     }
 }

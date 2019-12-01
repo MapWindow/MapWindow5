@@ -38,5 +38,9 @@
         UndoPoint = 33,
         FinishShape = 34,
         CancelShape = 35,
+
+        SnapToVertices = 63,
+        SnapToLinesAndVertices = 64,
+        SnapToLines = 65
     }
 }

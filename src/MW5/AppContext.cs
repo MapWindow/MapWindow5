@@ -223,7 +223,7 @@ namespace MW5
             Logger.Current.Trace("End AppContext.Init()");
         }
 
-        internal void InitPlugins(IConfigService configService)
+        internal void InitPlugins(IConfigService configService, Action<PluginIdentity> pluginLoadingCallback)
         {
             var pluginManager = PluginManager;
             pluginManager.PluginUnloaded += ManagerPluginUnloaded;
@@ -232,7 +232,7 @@ namespace MW5
             var guids = configService.Config.ApplicationPlugins;
             if (guids != null)
             {
-                PluginManager.RestoreApplicationPlugins(guids, this);
+                PluginManager.RestoreApplicationPlugins(guids, this, pluginLoadingCallback);
             }
         }
 
