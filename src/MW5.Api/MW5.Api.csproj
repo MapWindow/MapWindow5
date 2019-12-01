@@ -57,13 +57,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.MapWinGIS">
-      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\16.0\AxInterop.MapWinGIS.dll</HintPath>
+      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\15.0\AxInterop.MapWinGIS.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Interop.MapWinGIS">
-      <HintPath>..\..\..\..\MapWinGIS\git\src\bin\Win32\16.0\Interop.MapWinGIS.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -316,6 +312,15 @@
     <Compile Include="Static\GdalUtils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="MapWinGIS">
+      <Guid>{C368D713-CC5F-40ED-9F53-F84FE197B96A}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>True</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>2</VersionMajor>
