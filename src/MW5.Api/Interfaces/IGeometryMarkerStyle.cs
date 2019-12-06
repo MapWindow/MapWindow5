@@ -8,6 +8,7 @@ namespace MW5.Api.Interfaces
         VectorMarkerType VectorMarker { get; set; }
         char FontCharacter { get; set; }
         double Rotation { get; set; }
+        string RotationExpression { get; set; }
         int VectorSideCount { get; set; }
         float VectorMarkerSideRatio { get; set; }
         float Size { get; set; }

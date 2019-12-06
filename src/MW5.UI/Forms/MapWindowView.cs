@@ -18,16 +18,16 @@ namespace MW5.UI.Forms
 
         protected MapWindowView()
         {
-            Logger.Current.Trace("Start MapWindowView");
-            Logger.Current.Trace("Start MapWindowView.InitializeComponent()");
+            Logger.Current?.Trace("Start MapWindowView");
+            Logger.Current?.Trace("Start MapWindowView.InitializeComponent()");
             InitializeComponent();
-            Logger.Current.Trace("End MapWindowView.InitializeComponent()");
+            Logger.Current?.Trace("End MapWindowView.InitializeComponent()");
             Icon = Resources.MapWindow;
 #if STYLE2010
             ApplyAeroTheme = false;
             UseOffice2010SchemeBackColor = true;
 #endif
-            Logger.Current.Trace("End MapWindowView");
+            Logger.Current?.Trace("End MapWindowView");
         }
 
         protected void Invoke(Action action)

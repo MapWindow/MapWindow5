@@ -9,9 +9,11 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Attributes.Views
 {
-    public class QueryBuilderModel : BaseExpressionBuilderModel
+    public interface IExpressionBuilderModel
     {
-        public QueryBuilderModel(ILayer layer, string expression, bool query = true)
-            : base(layer, expression, query, TableValueType.Boolean) { }
+        string Expression { get; set; }
+        bool IsQuery { get; }
+        ILayer Layer { get; }
+        TableValueType OutputType { get; }
     }
 }

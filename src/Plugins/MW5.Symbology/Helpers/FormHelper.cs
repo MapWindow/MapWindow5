@@ -107,6 +107,17 @@ namespace MW5.Plugins.Symbology.Helpers
             }
         }
 
+        internal static bool ShowExpressionBuilder(IAppContext context, ILayer layer, IWin32Window parent, ref string expression, TableValueType outputType)
+        {
+            var model = new ExpressionBuilderModel(layer, expression, outputType);
+            bool result = context.Container.Run<ExpressionBuilderPresenter, ExpressionBuilderModel>(model, parent);
+
+            if (result)
+                expression = model.Expression;
+
+            return result;
+        }
+
         internal static bool ShowQueryBuilder(IAppContext context, ILayer layer, IWin32Window parent, ref string expression, bool selectionMode)
         {
             var model = new QueryBuilderModel(layer, expression, false);

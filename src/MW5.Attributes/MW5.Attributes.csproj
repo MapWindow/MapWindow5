@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -124,7 +124,7 @@
     </Compile>
     <Compile Include="Views\Abstract\IAttributeExplorer.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
-    <Compile Include="Views\Abstract\IQueryBuilderView.cs" />
+    <Compile Include="Views\Abstract\IExpressionBuilderView.cs" />
     <Compile Include="Views\AttributeExplorerPresenter.cs" />
     <Compile Include="Views\AttributeExplorerView.cs">
       <SubType>Form</SubType>
@@ -132,6 +132,9 @@
     <Compile Include="Views\AttributeExplorerView.Designer.cs">
       <DependentUpon>AttributeExplorerView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BaseExpressionBuilderModel.cs" />
+    <Compile Include="Views\ExpressionBuilderModel.cs" />
+    <Compile Include="Views\IExpressionBuilderModel.cs" />
     <Compile Include="Views\JoinTablePresenter.cs" />
     <Compile Include="Views\JoinTableView.cs">
       <SubType>Form</SubType>
@@ -141,6 +144,7 @@
     </Compile>
     <Compile Include="Views\JoinViewModel.cs" />
     <Compile Include="Views\QueryBuilderModel.cs" />
+    <Compile Include="Views\ExpressionBuilderPresenter.cs" />
     <Compile Include="Views\QueryBuilderPresenter.cs" />
     <Compile Include="Views\QueryBuilderView.cs">
       <SubType>Form</SubType>

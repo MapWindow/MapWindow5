@@ -548,5 +548,14 @@ namespace MW5.Plugins.Symbology.Forms
             // Fixing CORE-160
             CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string expression = _style.Marker.RotationExpression;
+            if (FormHelper.ShowExpressionBuilder(_context, _layer, this, ref expression, TableValueType.Double))
+            {
+                _style.Marker.RotationExpression = expression;
+            }
+        }
     }
 }
