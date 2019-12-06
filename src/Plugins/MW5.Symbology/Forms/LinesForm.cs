@@ -14,6 +14,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
@@ -36,7 +37,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Creates a new instance of PolygonsForm class
         /// </summary>
-        public LinesForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle style, bool applyDisabled)
+        public LinesForm(IAppContext _context, ILegendLayer layer, IGeometryStyle style, bool applyDisabled) : base(_context)
         {
             if (layer == null) throw new ArgumentNullException("layer");
             if (style == null) throw new ArgumentNullException("style");
@@ -44,7 +45,7 @@ namespace MW5.Plugins.Symbology.Forms
             InitializeComponent();
 
             _style = style;
-            _legend = legend;
+            _legend = _context.Legend;
             _layer = layer;
             _initState = style.Serialize();
 
@@ -84,6 +85,15 @@ namespace MW5.Plugins.Symbology.Forms
             clpVerticesColor.SelectedColorChanged += Ui2Options;
             chkVerticesFillVisible.CheckedChanged += Ui2Options;
             udVerticesSize.ValueChanged += Ui2Options;
+
+            // Visibility
+            var zoom = _context.Map.CurrentZoom;
+            var scale = _context.Map.CurrentScale;
+            dynamicVisibilityControl1.Initialize(_style, zoom, scale);
+            dynamicVisibilityControl1.ValueChanged += (s, e) => {
+                btnApply.Enabled = true;
+                dynamicVisibilityControl1.ApplyChanges();
+            };
 
             InitLinePattern();
 
@@ -374,6 +384,9 @@ namespace MW5.Plugins.Symbology.Forms
                     }
                 }
             }
+
+            // visibility
+            dynamicVisibilityControl1.ApplyChanges();
 
             btnApply.Enabled = true;
             DrawPreview();

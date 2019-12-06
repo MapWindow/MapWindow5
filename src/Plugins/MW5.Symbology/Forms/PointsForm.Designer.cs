@@ -94,6 +94,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.pnlFillPicture = new System.Windows.Forms.Panel();
             this.btnChooseTexture = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.groupBox4.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSize)).BeginInit();
@@ -114,6 +116,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.pnlFillGradient.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udGradientRotation)).BeginInit();
             this.pnlFillPicture.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox4
@@ -227,6 +230,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabControl1.Controls.Add(this.tabCharacter);
             this.tabControl1.Controls.Add(this.tabIcon);
             this.tabControl1.Controls.Add(this.tabOptions);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(191, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -809,6 +813,33 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.OnApplyClick);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dynamicVisibilityControl1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(415, 314);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Visibility";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dynamicVisibilityControl1
+            // 
+            this.dynamicVisibilityControl1.CurrentScale = 0D;
+            this.dynamicVisibilityControl1.CurrentZoom = 0;
+            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(5, 7);
+            this.dynamicVisibilityControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.dynamicVisibilityControl1.MaxScale = 1000000D;
+            this.dynamicVisibilityControl1.MaxZoom = 24;
+            this.dynamicVisibilityControl1.MinScale = 100D;
+            this.dynamicVisibilityControl1.MinZoom = 1;
+            this.dynamicVisibilityControl1.Mode = MW5.Api.Enums.DynamicVisibilityMode.Scale;
+            this.dynamicVisibilityControl1.Name = "dynamicVisibilityControl1";
+            this.dynamicVisibilityControl1.Size = new System.Drawing.Size(404, 203);
+            this.dynamicVisibilityControl1.TabIndex = 180;
+            this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
+            // 
             // PointsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -861,6 +892,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.pnlFillGradient.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udGradientRotation)).EndInit();
             this.pnlFillPicture.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -928,6 +960,7 @@ namespace MW5.Plugins.Symbology.Forms
         private TransparencyControl transparencyControl1;
         private System.Windows.Forms.Button btnApply;
         private PointIconControl pointIconControl1;
-
+        private System.Windows.Forms.TabPage tabPage1;
+        private DynamicVisibilityControl dynamicVisibilityControl1;
     }
 }

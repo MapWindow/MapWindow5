@@ -38,15 +38,15 @@ namespace MW5.Plugins.Symbology.Helpers
 
             if (type == GeometryType.Point || type == GeometryType.MultiPoint)
             {
-                form = new PointsForm(context.Legend, layer, options, applyDisabled);
+                form = new PointsForm(context, layer, options, applyDisabled);
             }
             else if (type == GeometryType.Polyline)
             {
-                form = new LinesForm(context.Legend, layer, options, applyDisabled);
+                form = new LinesForm(context, layer, options, applyDisabled);
             }
             else if (type == GeometryType.Polygon)
             {
-                form = new PolygonForm(context.Legend, layer, options, applyDisabled);
+                form = new PolygonForm(context, layer, options, applyDisabled);
             }
             return form;
         }

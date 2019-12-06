@@ -77,6 +77,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.clpVerticesColor = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.pnlFillHatch = new System.Windows.Forms.Panel();
             this.icbHatchStyle = new MW5.UI.Controls.ImageCombo();
             this.chkFillBgTransparent = new System.Windows.Forms.CheckBox();
@@ -108,6 +110,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabPage4.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udVerticesSize)).BeginInit();
+            this.tabPage1.SuspendLayout();
             this.pnlFillHatch.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupHatch.SuspendLayout();
@@ -139,6 +142,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(191, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -632,6 +636,33 @@ namespace MW5.Plugins.Symbology.Forms
             this.clpVerticesColor.Size = new System.Drawing.Size(74, 21);
             this.clpVerticesColor.TabIndex = 11;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dynamicVisibilityControl1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(418, 316);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Visibility";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dynamicVisibilityControl1
+            // 
+            this.dynamicVisibilityControl1.CurrentScale = 0D;
+            this.dynamicVisibilityControl1.CurrentZoom = 0;
+            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(7, 11);
+            this.dynamicVisibilityControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.dynamicVisibilityControl1.MaxScale = 1000000D;
+            this.dynamicVisibilityControl1.MaxZoom = 24;
+            this.dynamicVisibilityControl1.MinScale = 100D;
+            this.dynamicVisibilityControl1.MinZoom = 1;
+            this.dynamicVisibilityControl1.Mode = MW5.Api.Enums.DynamicVisibilityMode.Scale;
+            this.dynamicVisibilityControl1.Name = "dynamicVisibilityControl1";
+            this.dynamicVisibilityControl1.Size = new System.Drawing.Size(404, 202);
+            this.dynamicVisibilityControl1.TabIndex = 179;
+            this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
+            // 
             // pnlFillHatch
             // 
             this.pnlFillHatch.Controls.Add(this.icbHatchStyle);
@@ -857,6 +888,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udVerticesSize)).EndInit();
+            this.tabPage1.ResumeLayout(false);
             this.pnlFillHatch.ResumeLayout(false);
             this.pnlFillHatch.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -929,6 +961,7 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.Label label12;
         private TransparencyControl transpOutline;
         private System.Windows.Forms.Button btnApply;
-
+        private System.Windows.Forms.TabPage tabPage1;
+        private DynamicVisibilityControl dynamicVisibilityControl1;
     }
 }
