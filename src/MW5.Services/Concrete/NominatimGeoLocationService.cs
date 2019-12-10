@@ -16,6 +16,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using Newtonsoft.Json;
 
 namespace MW5.Services.Concrete
 {
@@ -38,13 +39,10 @@ namespace MW5.Services.Concrete
         {
             try
             {
-                var serializer = new JavaScriptSerializer();
-                serializer.RegisterConverters(new[] { new DynamicJsonConverter() });
-                dynamic obj = serializer.Deserialize(result, typeof(object));
+                dynamic stuff = JsonConvert.DeserializeObject(result);
+                var box = ParseBoundingBox(stuff);
 
-                var box = ParseBoundingBox(obj);
-
-                UpdateLicense(obj);
+                UpdateLicense(stuff);
 
                 return box;
             }
@@ -60,7 +58,7 @@ namespace MW5.Services.Concrete
 
             for (int i = 0; i < 4; i++)
             {
-                numbers.Add(double.Parse(obj[0].boundingbox[i], CultureInfo.InvariantCulture));
+                numbers.Add(double.Parse(obj[0]["boundingbox"][i].Value, CultureInfo.InvariantCulture));
             }
 
             IEnvelope box = null;
@@ -81,7 +79,7 @@ namespace MW5.Services.Concrete
         {
             try
             {
-                _license = obj[0].licence;
+                _license = obj[0]["licence"].Value;
             }
             catch
             {
