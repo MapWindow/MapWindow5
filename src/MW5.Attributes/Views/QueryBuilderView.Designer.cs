@@ -66,7 +66,7 @@ namespace MW5.Attributes.Views
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(409, 324);
+            this.btnRun.Location = new System.Drawing.Point(597, 324);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(67, 25);
             this.btnRun.TabIndex = 64;
@@ -76,7 +76,7 @@ namespace MW5.Attributes.Views
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(193, 11);
+            this.label2.Location = new System.Drawing.Point(344, 5);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 63;
@@ -84,16 +84,22 @@ namespace MW5.Attributes.Views
             // 
             // valueCountGrid1
             // 
+            this.valueCountGrid1.ActivateCurrentCellBehavior = Syncfusion.Windows.Forms.Grid.GridCellActivateAction.None;
+            this.valueCountGrid1.AlphaBlendSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.valueCountGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.valueCountGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.valueCountGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.valueCountGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.valueCountGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
             this.valueCountGrid1.BackColor = System.Drawing.SystemColors.Window;
-            this.valueCountGrid1.FreezeCaption = false;
-            this.valueCountGrid1.Location = new System.Drawing.Point(196, 27);
+            this.valueCountGrid1.BrowseOnly = true;
+            this.valueCountGrid1.GridLineColor = System.Drawing.Color.White;
+            this.valueCountGrid1.Location = new System.Drawing.Point(347, 21);
             this.valueCountGrid1.Name = "valueCountGrid1";
-            this.valueCountGrid1.Size = new System.Drawing.Size(280, 158);
+            this.valueCountGrid1.ShowColumnHeaders = false;
+            this.valueCountGrid1.ShowCurrentCellBorderBehavior = Syncfusion.Windows.Forms.Grid.GridShowCurrentCellBorder.HideAlways;
+            this.valueCountGrid1.ShowRowHeaders = false;
+            this.valueCountGrid1.Size = new System.Drawing.Size(320, 158);
             this.valueCountGrid1.TabIndex = 62;
             this.valueCountGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
             this.valueCountGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
@@ -104,12 +110,13 @@ namespace MW5.Attributes.Views
             this.valueCountGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
             this.valueCountGrid1.TopLevelGroupOptions.ShowCaption = false;
             this.valueCountGrid1.TopLevelGroupOptions.ShowColumnHeaders = false;
+            this.valueCountGrid1.UseRightToLeftCompatibleTextBox = true;
             this.valueCountGrid1.VersionInfo = "5.0.1.0";
             this.valueCountGrid1.WrapWithPanel = true;
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(222, 228);
+            this.button13.Location = new System.Drawing.Point(218, 222);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(20, 25);
             this.button13.TabIndex = 61;
@@ -120,7 +127,7 @@ namespace MW5.Attributes.Views
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(196, 228);
+            this.button12.Location = new System.Drawing.Point(192, 222);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(20, 25);
             this.button12.TabIndex = 60;
@@ -131,7 +138,7 @@ namespace MW5.Attributes.Views
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(145, 228);
+            this.button11.Location = new System.Drawing.Point(141, 222);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(45, 25);
             this.button11.TabIndex = 59;
@@ -143,7 +150,7 @@ namespace MW5.Attributes.Views
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 11);
+            this.label1.Location = new System.Drawing.Point(9, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 58;
@@ -151,16 +158,20 @@ namespace MW5.Attributes.Views
             // 
             // fieldTypeGrid1
             // 
+            this.fieldTypeGrid1.ActivateCurrentCellBehavior = Syncfusion.Windows.Forms.Grid.GridCellActivateAction.None;
+            this.fieldTypeGrid1.AlphaBlendSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.fieldTypeGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.fieldTypeGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.fieldTypeGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.fieldTypeGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.fieldTypeGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
             this.fieldTypeGrid1.BackColor = System.Drawing.SystemColors.Window;
-            this.fieldTypeGrid1.FreezeCaption = false;
-            this.fieldTypeGrid1.Location = new System.Drawing.Point(12, 27);
+            this.fieldTypeGrid1.GridLineColor = System.Drawing.Color.White;
+            this.fieldTypeGrid1.Location = new System.Drawing.Point(8, 21);
             this.fieldTypeGrid1.Name = "fieldTypeGrid1";
-            this.fieldTypeGrid1.Size = new System.Drawing.Size(178, 158);
+            this.fieldTypeGrid1.ShowCurrentCellBorderBehavior = Syncfusion.Windows.Forms.Grid.GridShowCurrentCellBorder.HideAlways;
+            this.fieldTypeGrid1.ShowRowHeaders = false;
+            this.fieldTypeGrid1.Size = new System.Drawing.Size(320, 158);
             this.fieldTypeGrid1.TabIndex = 36;
             this.fieldTypeGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
             this.fieldTypeGrid1.TableOptions.AllowDropDownCell = true;
@@ -173,13 +184,14 @@ namespace MW5.Attributes.Views
             this.fieldTypeGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
             this.fieldTypeGrid1.TopLevelGroupOptions.ShowCaption = false;
             this.fieldTypeGrid1.TopLevelGroupOptions.ShowColumnHeaders = true;
+            this.fieldTypeGrid1.UseRightToLeftCompatibleTextBox = true;
             this.fieldTypeGrid1.VersionInfo = "0.0.1.0";
             this.fieldTypeGrid1.WrapWithPanel = true;
             // 
             // chkShowValues
             // 
             this.chkShowValues.AutoSize = true;
-            this.chkShowValues.Location = new System.Drawing.Point(16, 426);
+            this.chkShowValues.Location = new System.Drawing.Point(12, 420);
             this.chkShowValues.Name = "chkShowValues";
             this.chkShowValues.Size = new System.Drawing.Size(87, 17);
             this.chkShowValues.TabIndex = 57;
@@ -188,7 +200,7 @@ namespace MW5.Attributes.Views
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(409, 355);
+            this.btnClear.Location = new System.Drawing.Point(597, 355);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(67, 25);
             this.btnClear.TabIndex = 56;
@@ -198,7 +210,7 @@ namespace MW5.Attributes.Views
             // 
             // btnShowValues
             // 
-            this.btnShowValues.Location = new System.Drawing.Point(381, 197);
+            this.btnShowValues.Location = new System.Drawing.Point(347, 191);
             this.btnShowValues.Name = "btnShowValues";
             this.btnShowValues.Size = new System.Drawing.Size(95, 25);
             this.btnShowValues.TabIndex = 55;
@@ -208,7 +220,7 @@ namespace MW5.Attributes.Views
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(260, 197);
+            this.button10.Location = new System.Drawing.Point(256, 191);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(19, 25);
             this.button10.TabIndex = 47;
@@ -219,7 +231,7 @@ namespace MW5.Attributes.Views
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(409, 293);
+            this.btnTest.Location = new System.Drawing.Point(597, 293);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(67, 25);
             this.btnTest.TabIndex = 48;
@@ -228,7 +240,7 @@ namespace MW5.Attributes.Views
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(97, 228);
+            this.button8.Location = new System.Drawing.Point(93, 222);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(45, 25);
             this.button8.TabIndex = 45;
@@ -240,7 +252,7 @@ namespace MW5.Attributes.Views
             // lblValidation
             // 
             this.lblValidation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblValidation.Location = new System.Drawing.Point(13, 398);
+            this.lblValidation.Location = new System.Drawing.Point(9, 392);
             this.lblValidation.Name = "lblValidation";
             this.lblValidation.Size = new System.Drawing.Size(461, 19);
             this.lblValidation.TabIndex = 51;
@@ -248,7 +260,7 @@ namespace MW5.Attributes.Views
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(57, 228);
+            this.button7.Location = new System.Drawing.Point(53, 222);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(35, 25);
             this.button7.TabIndex = 44;
@@ -260,9 +272,9 @@ namespace MW5.Attributes.Views
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.richTextBox1);
-            this.groupBox3.Location = new System.Drawing.Point(14, 283);
+            this.groupBox3.Location = new System.Drawing.Point(10, 272);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(389, 112);
+            this.groupBox3.Size = new System.Drawing.Size(581, 117);
             this.groupBox3.TabIndex = 54;
             this.groupBox3.TabStop = false;
             // 
@@ -272,13 +284,13 @@ namespace MW5.Attributes.Views
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(3, 16);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(383, 93);
+            this.richTextBox1.Size = new System.Drawing.Size(575, 98);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(236, 197);
+            this.button9.Location = new System.Drawing.Point(232, 191);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(18, 25);
             this.button9.TabIndex = 46;
@@ -289,7 +301,7 @@ namespace MW5.Attributes.Views
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(12, 228);
+            this.button6.Location = new System.Drawing.Point(8, 222);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(39, 25);
             this.button6.TabIndex = 43;
@@ -300,7 +312,7 @@ namespace MW5.Attributes.Views
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(192, 197);
+            this.button5.Location = new System.Drawing.Point(188, 191);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(34, 25);
             this.button5.TabIndex = 42;
@@ -312,7 +324,7 @@ namespace MW5.Attributes.Views
             // btnOk
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOk.Location = new System.Drawing.Point(279, 420);
+            this.btnOk.Location = new System.Drawing.Point(467, 420);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(95, 26);
             this.btnOk.TabIndex = 50;
@@ -321,7 +333,7 @@ namespace MW5.Attributes.Views
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 197);
+            this.button3.Location = new System.Drawing.Point(8, 191);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(34, 25);
             this.button3.TabIndex = 40;
@@ -332,7 +344,7 @@ namespace MW5.Attributes.Views
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(156, 197);
+            this.button4.Location = new System.Drawing.Point(152, 191);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(34, 25);
             this.button4.TabIndex = 41;
@@ -344,7 +356,7 @@ namespace MW5.Attributes.Views
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(381, 420);
+            this.btnCancel.Location = new System.Drawing.Point(569, 420);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(94, 26);
             this.btnCancel.TabIndex = 49;
@@ -353,7 +365,7 @@ namespace MW5.Attributes.Views
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(48, 197);
+            this.button2.Location = new System.Drawing.Point(44, 191);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(34, 25);
             this.button2.TabIndex = 39;
@@ -364,7 +376,7 @@ namespace MW5.Attributes.Views
             // 
             // button0
             // 
-            this.button0.Location = new System.Drawing.Point(120, 197);
+            this.button0.Location = new System.Drawing.Point(116, 191);
             this.button0.Name = "button0";
             this.button0.Size = new System.Drawing.Size(34, 25);
             this.button0.TabIndex = 37;
@@ -375,7 +387,7 @@ namespace MW5.Attributes.Views
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(84, 197);
+            this.button1.Location = new System.Drawing.Point(80, 191);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(34, 25);
             this.button1.TabIndex = 38;
@@ -387,7 +399,7 @@ namespace MW5.Attributes.Views
             // lblSelect
             // 
             this.lblSelect.AutoSize = true;
-            this.lblSelect.Location = new System.Drawing.Point(14, 267);
+            this.lblSelect.Location = new System.Drawing.Point(9, 256);
             this.lblSelect.Name = "lblSelect";
             this.lblSelect.Size = new System.Drawing.Size(199, 13);
             this.lblSelect.TabIndex = 65;
@@ -398,7 +410,8 @@ namespace MW5.Attributes.Views
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(483, 456);
+            this.CaptionFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClientSize = new System.Drawing.Size(676, 456);
             this.Controls.Add(this.lblSelect);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.label2);
