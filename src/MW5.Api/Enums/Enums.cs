@@ -53,6 +53,8 @@
         Overlaps = 5,
         Touches = 6,
         Within = 7,
+        Covers = 8,
+        CoveredBy = 9
     }
 
     public enum BufferCap
