@@ -42,10 +42,15 @@ namespace MW5.Plugins.Printing.Services
                 string tempFilename = _fileService.GetTempFilename(".xps");
                 var service = new PrintingService();
 
-                service.EndPrint += (s, args) => Task.Factory.StartNew(() => ConvertToPdf(tempFilename, pdfFilename));
+                if (service.HasNativePDFPrinter)
+                    service.PrintToPdfFile(layoutControl.Pages, layoutControl.PrinterSettings, layoutControl.LayoutElements, pdfFilename);
+                else
+                {
+                    service.EndPrint += (s, args) => Task.Factory.StartNew(() => ConvertToPdf(tempFilename, pdfFilename));
 
-                service.PrintToXpsFile(layoutControl.Pages, layoutControl.PrinterSettings, layoutControl.LayoutElements,
-                    tempFilename);
+                    service.PrintToXpsFile(layoutControl.Pages, layoutControl.PrinterSettings, layoutControl.LayoutElements,
+                        tempFilename);
+                }
             }
             catch (Exception ex)
             {
@@ -68,6 +73,8 @@ namespace MW5.Plugins.Printing.Services
             try
             {
                 var converter = new XPSToPdfConverter();
+
+                converter.Settings.EmbedCompleteFont = true;
 
                 var document = converter.Convert(xpsFilename);
 
