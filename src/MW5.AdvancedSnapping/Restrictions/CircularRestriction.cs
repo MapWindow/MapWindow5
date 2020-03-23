@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 
 namespace MW5.Plugins.AdvancedSnapping.Restrictions
 {
     public class CircularRestriction : DrawableRestriction
     {
+        private const int MinimumGeometrySegements = 181;
+        private const int MaximumGeometrySegments = 1810;
+
         public override RestrictionType Type => RestrictionType.Circular;
 
         public override ICoordinate Anchor { get; set; }
@@ -117,6 +121,30 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
 
         public IEnvelope GetExtents() 
             => new Envelope(Anchor.X - Factor, Anchor.X + Factor, Anchor.Y - Factor, Anchor.Y + Factor);
+
+
+        public override IGeometry ToMapGeometry(IMap map)
+            => ToMapGeometry(CalculateNumberOfGeometrySegments(map));
+
+        public IGeometry ToMapGeometry(int segments)
+        {
+            var geometry = new Geometry(Api.Enums.GeometryType.Point);
+            geometry.Points.Add(new Coordinate(Anchor.X, Anchor.Y));
+            return geometry.Buffer(Distance, segments).Boundary();
+        }
+
+        private int CalculateNumberOfGeometrySegments(IMap map)
+        {
+            double circumference = CalculateCircumference();
+            double tolerance = MapConfig.GetProjectedMouseTolerance(map);
+            var segments = Math.Ceiling(Math.Min(Math.Max(circumference / tolerance, MinimumGeometrySegements), MaximumGeometrySegments));
+            return (int)segments;
+        }
+
+        public double CalculateCircumference()
+        {
+            return Math.PI * 2.0 * Distance;
+        }
         #endregion
 
     }

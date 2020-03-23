@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -11,7 +12,18 @@ namespace MW5.Api.Concrete
         #region Private fields
         private GeometryPartCollection _parts;
         private CoordinateList _points;
-        private Shape _shape;
+
+        private Shape __shape;
+
+        private Shape _shape {
+            get => __shape;
+            set
+            {
+                __shape = value;
+            }
+        }
+
+
         private readonly int _partIndex;
         #endregion
 
@@ -370,17 +382,27 @@ namespace MW5.Api.Concrete
         public IEnumerable<IGeometry> Intersection(IGeometry g)
         {
             object o = null;
-            if (_shape.GetIntersection(g.GetInternal(), ref o))
+            if (!_shape.GetIntersection(g.GetInternal(), ref o))
+                yield break;
+            foreach (var shapeObject in o as object[])
             {
-                var shapes = o as Shape[];
-                if (shapes != null)
-                {
-                    foreach (var shp in shapes)
-                    {
-                        yield return new Geometry(shp);
-                    }
-                }
+                if (shapeObject is Shape shape)
+                    foreach (var geometry in new Geometry(shape).MultiToSingleGeometries())
+                        yield return geometry;
             }
+        }
+
+        private IEnumerable<IGeometry> MultiToSingleGeometries()
+        {
+            if (GeometryType == GeometryType.MultiPoint)
+                foreach (var point in Points)
+                {
+                    var pointGeometry = new Geometry(GeometryType.Point, ZValueType.None);
+                    pointGeometry.Points.Add(point);
+                    yield return pointGeometry;
+                }
+            else
+                yield return Clone();
         }
 
         public IGeometry Buffer(double distance, int numSegments)

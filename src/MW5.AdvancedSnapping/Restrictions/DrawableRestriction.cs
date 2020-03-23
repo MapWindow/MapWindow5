@@ -52,6 +52,7 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
         public abstract ICoordinate GetSnapPoint(ICoordinate original);
 
         public abstract IEnumerable<ICoordinate> GetIntersections(IRestriction other);
+        public abstract IGeometry ToMapGeometry(IMap map);
         #endregion
     }
 }

@@ -134,7 +134,17 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
 
         public override void DrawGuideline(IMap map)
         {
-            double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
+            (var coordinate1, var coordinate2) = GetMapCoordinates(map);
+            map.Drawing.DrawLine(DrawingHandle, coordinate1.X, coordinate1.Y, coordinate2.X, coordinate2.Y, GuidelineWidth, GuidelineColor);
+
+        }
+
+        private (ICoordinate, ICoordinate) GetMapCoordinates(IMap map)
+        {
+            double x1 = 0;
+            double y1 = 0;
+            double x2 = 0;
+            double y2 = 0;
             double extraD = Math.Max(map.Extents.Width / 100.0, map.Extents.Height / 100.0);
             // If a vertical line, set X to anchor & Y to extents (slightly enlarged)
             if (double.IsInfinity(Factor))
@@ -153,8 +163,7 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
                 x2 = map.Extents.MaxX + extraD;
                 y2 = GetYCoordinate(x2);
             }
-            map.Drawing.DrawLine(DrawingHandle, x1, y1, x2, y2, GuidelineWidth, GuidelineColor);
-
+            return (new Coordinate(x1, y1), new Coordinate(x2, y2));
         }
 
         /// <summary>
@@ -163,6 +172,15 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
         private void UpdateConstant()
         {
             _constant = _anchor.Y - _anchor.X * Factor;
+        }
+
+        public override IGeometry ToMapGeometry(IMap map)
+        {
+            var geometry = new Geometry(Api.Enums.GeometryType.Polyline);
+            (var coordinate1, var coordinate2) = GetMapCoordinates(map);
+            geometry.Points.Add(coordinate1);
+            geometry.Points.Add(coordinate2);
+            return geometry;
         }
 
         #endregion

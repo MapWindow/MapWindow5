@@ -35,5 +35,7 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
         ICoordinate GetSnapPoint(ICoordinate original);
 
         IEnumerable<ICoordinate> GetIntersections(IRestriction other);
+
+        IGeometry ToMapGeometry(IMap map);
     }
 }

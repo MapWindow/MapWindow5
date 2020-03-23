@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using MW5.Api.Enums;
+using System.Diagnostics;
 
 namespace MW5.Plugins.AdvancedSnapping.Services
 {
@@ -71,69 +73,87 @@ namespace MW5.Plugins.AdvancedSnapping.Services
             if (!activeRestrictions.Any())
                 return;
 
-            ICoordinate closest = null;
-            double distance = double.MaxValue;
-            Coordinate original = new Coordinate(e.PointX, e.PointY);
-            bool nearIntersection = false;
-
             double tolerance = MapConfig.GetProjectedMouseTolerance(_context.Map);
+            var snapPointChecker = new SnapPointCandidateChecker(new Coordinate(e.PointX, e.PointY), tolerance);
 
-            // First try to snap to an intersection (if possible)
-            if (activeRestrictions.Skip(1).Any())
-            {
-                foreach (var snap in GetIntersections())
-                {
-                    if (snap == null)
-                        continue;
+            // First try to snap to an intersection of two restrictions (if possible)
+            bool success = snapPointChecker.ContainsBetterCandidate(c => GetIntersectionBetweenRestrictions(c, tolerance));
 
-                    double newDistance = original.Distance(snap);
-                    if (newDistance > tolerance)
-                        continue; // try another one, too far anyway
+            // Then try to snap to an intersection of a restriction with layer geometries
+            if (!success)
+                success = snapPointChecker.ContainsBetterCandidate(c => GetIntersectionsWithLayerFeatures(c, tolerance));
 
-                    if (closest == null || newDistance < distance)
-                    {
-                        nearIntersection = true;
-                        closest = snap;
-                        distance = newDistance;
-                    }
-                }
-            }
+            // Try a regular snap to the restrictions
+            if (!success)
+                success = snapPointChecker.ContainsBetterCandidateWithoutTolerance(GetSnapPoints);
 
-            // If we're too far away, just do a regular snap
-            if (!nearIntersection)
-            {
-                foreach (var snap in GetSnapPoints(original))
-                {
-                    if (snap == null)
-                        continue; 
-                    double newDistance = original.Distance(snap);
-                    if (closest == null)
-                    {
-                        closest = snap;
-                        distance = newDistance;
-                    }
-                    else if (newDistance < distance)
-                    {
-                        closest = snap;
-                        distance = newDistance;
-                    }
-                }
-            }
-
-            e.SnappedX = closest.X;
-            e.SnappedY = closest.Y;
+            e.SnappedX = snapPointChecker.BestSnapPoint.X;
+            e.SnappedY = snapPointChecker.BestSnapPoint.Y;
             e.IsFinal = true;
             e.IsFound = true;
         }
 
-        private IEnumerable<ICoordinate> GetSnapPoints(Coordinate original) 
+        private IEnumerable<ICoordinate> GetSnapPoints(ICoordinate original) 
             => activeRestrictions.Select(r => r.GetSnapPoint(original));
 
-        private IEnumerable<ICoordinate> GetIntersections()
-            => activeRestrictions
+        private IEnumerable<ICoordinate> GetIntersectionBetweenRestrictions(ICoordinate original, double tolerance)
+        {
+            return activeRestrictions
                 .DifferentCombinations(2)
                 .Select(pair => pair.First().GetIntersections(pair.Last()))
                 .SelectMany(t => t);
+
+        }
+
+        private IEnumerable<ICoordinate> GetIntersectionsWithLayerFeatures(ICoordinate original, double tolerance)
+        {
+            foreach (var geometryToTest in GetSnapCandidateGeometriesFromLayers(original, tolerance))
+                foreach (var restrictionGeometry in GetRestrictionsAsGeometries())
+                    foreach (var coordinate in GetIntersections(geometryToTest, restrictionGeometry))
+                        yield return coordinate;
+        }
+
+        private IEnumerable<IGeometry> GetRestrictionsAsGeometries()
+        {
+            return activeRestrictions.Select(r => r.ToMapGeometry(_context.Map as IMap));
+        }
+
+        private static IEnumerable<ICoordinate> GetIntersections(IGeometry geometryToTest, IGeometry restrictionGeometry)
+        {
+            IEnumerable<IGeometry> allIntersections = geometryToTest.Intersection(restrictionGeometry).ToList();
+            return allIntersections
+                .Where(geometry => geometry.GeometryType == GeometryType.Point)
+                .SelectMany(geometry => geometry.Points);
+        }
+
+        private IList<IGeometry> GetSnapCandidateGeometriesFromLayers(ICoordinate original, double tolerance)
+        {
+            IGeometry pointGeom = new Geometry(GeometryType.Point);
+            pointGeom.Points.Add(original.Clone());
+            pointGeom = pointGeom.Buffer(tolerance * 2, 6);
+
+            IList<IGeometry> geometriesToTest = new List<IGeometry>();
+            foreach (var layer in _context.Layers.Where(l => l.IsVector && l.Visible))
+            {
+                var results = new int[] { };
+                if (layer.FeatureSet.GetRelatedShapes(pointGeom, SpatialRelation.Intersects, ref results))
+                {
+                    try {
+                        foreach (var index in results)
+                        {
+                            var feature = layer.FeatureSet.Features[index];
+                            geometriesToTest.Add(feature.Geometry.Clone());
+                        }
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        // ignore
+                    }
+                }
+            }
+
+            return geometriesToTest;
+        }
 
         #endregion
 

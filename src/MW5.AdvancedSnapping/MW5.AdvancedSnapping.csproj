@@ -115,6 +115,7 @@
     <Compile Include="Restrictions\LinearRestriction.cs" />
     <Compile Include="Restrictions\MapCapture.cs" />
     <Compile Include="Restrictions\RestrictionType.cs" />
+    <Compile Include="Services\SnapPointCandidateChecker.cs" />
     <Compile Include="Services\SnapRestrictionService.cs" />
     <Compile Include="ViewModels\DoubleInputBoxViewModel.cs" />
     <Compile Include="ViewModels\DoubleInputViewModel.cs" />
@@ -177,6 +178,9 @@
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
     </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\bearing.png" />
@@ -185,6 +189,9 @@
     <Content Include="Resources\perpendicular.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /C "$(ProjectDir)$(OutDir)*"  "C:\Program Files\MapWindow5\Plugins\" /sy</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
