@@ -288,7 +288,14 @@ namespace MW5.Api.Legend
         /// <returns>A Group object allowing you to read/change properties, null (nothing) on failure</returns>
         public ILegendGroup ItemByHandle(int handle)
         {
-            return this[_positions[handle]];
+            try
+            {
+                return this[_positions[handle]];
+            } 
+            catch (IndexOutOfRangeException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
