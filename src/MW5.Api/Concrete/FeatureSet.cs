@@ -379,6 +379,18 @@ namespace MW5.Api.Concrete
             return false;
         }
 
+        public bool HasOgrFidMapping
+        {
+            get => _shapefile.HasOgrFidMapping;
+        }
+
+        public int MapOgrFid2ShapeIndex(int ogrFID)
+        {
+            if (!HasOgrFidMapping)
+                throw new InvalidOperationException("Can not get a feature index from an OGR feature id when there is no feature id mapping!");
+            return _shapefile.OgrFid2ShapeIndex(ogrFID);
+        }
+
         public IFeatureSet Dissolve(int fieldIndex, bool selectedOnly)
         {
             var sf = _shapefile.Dissolve(fieldIndex, selectedOnly);

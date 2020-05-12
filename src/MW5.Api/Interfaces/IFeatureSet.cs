@@ -107,13 +107,15 @@ namespace MW5.Api.Interfaces
         bool StartAppendMode();
         void StopAppendMode();
         bool AppendMode { get; }
+        bool HasOgrFidMapping { get; }
 
         int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1);
+        int MapOgrFid2ShapeIndex(int ogrFID);
 
         #region Not implemented
 
         //int get_numPoints(int ShapeIndex);
-        
+
         //tkGeometryEngine GeometryEngine { get; set; }
         //tkSelectionAppearance SelectionAppearance { get; set; }
         //ShapeDrawingOptions SelectionDrawingOptions { get; set; }
