@@ -10,21 +10,23 @@ namespace MW5.Api.Events
     {
         private readonly _DMapEvents_BeforeDeleteShapeEvent _args;
 
-        public BeforeDeleteShapeEventArgs(DeleteTarget target, bool cancel)
+        public BeforeDeleteShapeEventArgs(DeleteTarget target, bool cancel, bool silent = false)
         {
             _args = new _DMapEvents_BeforeDeleteShapeEvent(
                 (tkDeleteTarget) target,
                 cancel ? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse
             );
+            Silent = silent;
         }
 
-        internal BeforeDeleteShapeEventArgs(_DMapEvents_BeforeDeleteShapeEvent args)
+        internal BeforeDeleteShapeEventArgs(_DMapEvents_BeforeDeleteShapeEvent args, bool silent = false)
         {
             _args = args;
             if (args == null)
             {
                 throw new NullReferenceException("Internal reference is null.");
             }
+            Silent = silent;
         }
 
         public bool Cancel
@@ -37,5 +39,7 @@ namespace MW5.Api.Events
         {
             get { return (DeleteTarget)_args.target; }
         }
+
+        public bool Silent { get; set; } = false;
     }
 }

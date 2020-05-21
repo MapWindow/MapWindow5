@@ -215,7 +215,7 @@ namespace MW5.Plugins.ShapeEditor.Services
                 {
                     if (!features[i].Selected) continue;
 
-                    var args = new BeforeDeleteShapeEventArgs(DeleteTarget.Shape, false);
+                    var args = new BeforeDeleteShapeEventArgs(DeleteTarget.Shape, false, true);
                     _broadcaster.BroadcastEvent(p => p.BeforeDeleteShape_, _context.Map, args);
                     if (!args.Cancel && features.EditDelete(i))
                     {
