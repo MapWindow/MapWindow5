@@ -52,7 +52,8 @@ namespace MW5.Plugins.Symbology.Menu
             // map toolbar
             items = _context.Toolbars.MapToolbar.Items;
             items.AddButton(_commands[MenuKeys.LabelMover]);
-            _context.Toolbars.FileToolbar.Update();
+            items.AddButton(_commands[MenuKeys.SymbolRotator]);
+            _context.Toolbars.MapToolbar.Update();
         }
     }
 }

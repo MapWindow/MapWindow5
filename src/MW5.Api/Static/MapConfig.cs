@@ -346,7 +346,7 @@ namespace MW5.Api.Static
             set { _settings.OgrShareConnection = value; }
         }
 
-        public static double GetProjectedMouseTolerance(IMuteMap map)
+        public static double GetProjectedMouseTolerance(this IMuteMap map)
         {
             map.PixelToProj(0, 0, out double x1, out double _);
             map.PixelToProj(MapConfig.MouseTolerance, 0, out double x2, out _);

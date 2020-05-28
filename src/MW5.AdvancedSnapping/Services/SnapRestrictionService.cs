@@ -107,7 +107,7 @@ namespace MW5.Plugins.AdvancedSnapping.Services
 
         private IEnumerable<ICoordinate> GetIntersectionsWithLayerFeatures(ICoordinate original, double tolerance)
         {
-            foreach (var geometryToTest in GetSnapCandidateGeometriesFromLayers(original, tolerance))
+            foreach (var geometryToTest in _context.Map.GetSnapCandidateGeometriesFromLayers(original, tolerance))
                 foreach (var restrictionGeometry in GetRestrictionsAsGeometries())
                     foreach (var coordinate in GetIntersections(geometryToTest, restrictionGeometry))
                         yield return coordinate;
@@ -124,35 +124,6 @@ namespace MW5.Plugins.AdvancedSnapping.Services
             return allIntersections
                 .Where(geometry => geometry.GeometryType == GeometryType.Point)
                 .SelectMany(geometry => geometry.Points);
-        }
-
-        private IList<IGeometry> GetSnapCandidateGeometriesFromLayers(ICoordinate original, double tolerance)
-        {
-            IGeometry pointGeom = new Geometry(GeometryType.Point);
-            pointGeom.Points.Add(original.Clone());
-            pointGeom = pointGeom.Buffer(tolerance * 2, 6);
-
-            IList<IGeometry> geometriesToTest = new List<IGeometry>();
-            foreach (var layer in _context.Layers.Where(l => l.IsVector && l.Visible))
-            {
-                var results = new int[] { };
-                if (layer.FeatureSet.GetRelatedShapes(pointGeom, SpatialRelation.Intersects, ref results))
-                {
-                    try {
-                        foreach (var index in results)
-                        {
-                            var feature = layer.FeatureSet.Features[index];
-                            geometriesToTest.Add(feature.Geometry.Clone());
-                        }
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        // ignore
-                    }
-                }
-            }
-
-            return geometriesToTest;
         }
 
         #endregion

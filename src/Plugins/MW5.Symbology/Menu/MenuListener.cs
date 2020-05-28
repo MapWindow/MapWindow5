@@ -37,6 +37,9 @@ namespace MW5.Plugins.Symbology.Menu
                 case MenuKeys.LabelMover:
                     _context.Map.CustomCursor = LabelMoverCursor.Instance;
                     break;
+                case MenuKeys.SymbolRotator:
+                    _context.Map.CustomCursor = SymbolRotaterCursor.Instance;
+                    break;
                 case MenuKeys.Labels:
                     FormHelper.ShowLabels(_context);
                     break;
@@ -75,6 +78,7 @@ namespace MW5.Plugins.Symbology.Menu
             if (toolbar)
             {
                 FindToolbarItem(MenuKeys.LabelMover).Checked = _context.Map.CustomCursor == LabelMoverCursor.Instance;
+                FindToolbarItem(MenuKeys.SymbolRotator).Checked = _context.Map.CustomCursor == SymbolRotaterCursor.Instance;
             }
             else
             {

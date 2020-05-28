@@ -20,6 +20,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Services
 {
+
     public class MapObjectMover
     {
         private const int MOUSE_TOLERANCE = 0;
@@ -27,7 +28,7 @@ namespace MW5.Plugins.Symbology.Services
         private readonly IAppContext _context;
         private readonly SymbologyPlugin _plugin;
         private readonly IMuteMap _map;
-        private ObjectMoveData _currentObject = new ObjectMoveData();        // The object being moved currently
+        private ObjectMoveData _currentObject;        // The object being moved currently
 
         public MapObjectMover(IAppContext context, SymbologyPlugin plugin)
         {
@@ -100,26 +101,10 @@ namespace MW5.Plugins.Symbology.Services
             if (e.X != _currentObject.X || e.Y != _currentObject.Y)
             {
                 int dx, dy;
-                GetEventDelta(e, out dx, out dy);
+                _currentObject.GetEventDelta(e, out dx, out dy);
                 var r = _currentObject.Rect.CloneWithOffset(dx, dy);
                 DrawLabelRectangle(r);
             }
-        }
-
-        private void GetEventDelta(MouseEventArgs e, out int dx, out int dy)
-        {
-            dx = -_currentObject.X + e.X;
-            dy = -_currentObject.Y + e.Y;
-        }
-
-        private void GetProjectedEventDelta(IMuteMap map, MouseEventArgs e, out double dx, out double dy)
-        {
-            double x1, x2, y1, y2;
-            map.PixelToProj(_currentObject.X, _currentObject.Y, out x1, out y1);
-            map.PixelToProj(e.X, e.Y, out x2, out y2);
-
-            dx = -x1 + x2;
-            dy = -y1 + y2;
         }
 
         /// <summary>
@@ -138,15 +123,14 @@ namespace MW5.Plugins.Symbology.Services
                 return;
             }
 
-            // check that new position is within map
-            if (!EventWithinMap(map, e))
+            if (!map.EventWithinMap(e))
             {
                 Clear();
                 return;
             }
 
             // Get the distance the object was moved (in projected coordinates)
-            GetProjectedEventDelta(map, e, out double dx, out double dy);
+            _currentObject.GetProjectedEventDelta(map, e, out double dx, out double dy);
 
             // Move the object
             if (_currentObject.IsChart)
@@ -159,14 +143,6 @@ namespace MW5.Plugins.Symbology.Services
         }
 
         /// <summary>
-        /// Check if final location is valid
-        /// </summary>
-        private static bool EventWithinMap(IMuteMap map, MouseEventArgs e)
-        {
-            return !(e.X < 0 || e.Y < 0 || e.X > map.Width || e.Y > map.Height);
-        }
-
-        /// <summary>
         /// Moves the current label
         /// </summary>
         private void MoveLabel(IMuteMap map, double dx, double dy)
@@ -174,34 +150,25 @@ namespace MW5.Plugins.Symbology.Services
             var layer = map.GetLayer(_currentObject.LayerHandle);
             var fs = layer.FeatureSet;
             var label = fs.Labels.Items[_currentObject.ObjectIndex, _currentObject.PartIndex];
-            if (label != null)
+            if (label == null)
+                return;
+            
+            // Check if the featureset has setup offset x or y fields & store the new offset if so
+            if (_currentObject is ObjectTranslateData translateData && translateData.HasBackingOffsetFields)
             {
-                // Check if the featureset has setup offset x or y fields & store the new offset if so
-                if (_currentObject.HasBackingOffsetFields)
-                {
-                    // We add the existing offset to the new offset & store it in the tabe of the shapefile
-                    dx += label.OffsetX;
-                    dy += label.OffsetY;
-                    var feature = fs.Features[_currentObject.ObjectIndex];
-                    bool needToCloseTable = !fs.EditingTable;
-                    if (needToCloseTable) fs.StartEditingTable();
-                    if (_currentObject.OffsetXField != -1)
-                        feature.SetDouble(_currentObject.OffsetXField, dx);
-                    if (_currentObject.OffsetYField != -1)
-                        feature.SetDouble(_currentObject.OffsetYField, dy);
-                    layer.VectorSource?.SaveChanges(out int count, SaveType.AttributesOnly, false);
-                    if (needToCloseTable) fs.StopEditingTable();
-                }
-                else // in case offsets are not backed by fields, just store the new position directly
-                {
-
-                    label.X = label.X + dx;
-                    label.Y = label.Y + dy;
-                    fs.Labels.SavingMode = PersistenceType.XmlOverwrite; // .lbl file should be overwritten
-                }
-                _context.Project.SetModified();
-                map.Redraw();
+                // We add the existing offset to the new offset & store it in the tabe of the shapefile
+                dx += label.OffsetX;
+                dy += label.OffsetY;
+                translateData.UpdateOffsetFields(layer, dx, dy);
             }
+            else // in case offsets are not backed by fields, just store the new position directly
+            {
+                label.X += dx;
+                label.Y += dy;
+                fs.Labels.SavingMode = PersistenceType.XmlOverwrite; // .lbl file should be overwritten
+            }
+            _context.Project.SetModified();
+            map.Redraw();
         }
 
         /// <summary>
@@ -272,20 +239,18 @@ namespace MW5.Plugins.Symbology.Services
 
         private ObjectMoveData CreateObjectMoveDataForChart(int x, int y, ILayer layer, int chartIndex)
         {
-            var data = new ObjectMoveData() { X = x, Y = y };
+            var data = new ChartMoveData() { X = x, Y = y };
             data.LayerHandle = layer.Handle;
             data.ObjectIndex = chartIndex;
-            data.IsChart = true;
             return data;
         }
 
         private ObjectMoveData CreateObjectMoveDataForLabel(int x, int y, ILayer layer, IFeatureSet fs, LabelInfo info)
         {
-            var data = new ObjectMoveData() { X = x, Y = y };
+            var data = new LabelMoveData() { X = x, Y = y };
             data.LayerHandle = layer.Handle;
             data.ObjectIndex = info.LabelIndex;
             data.PartIndex = info.PartIndex;
-            data.IsChart = false;
 
             var label = fs.Labels.Items[data.ObjectIndex, data.PartIndex];
             ILabelStyle labelStyle = fs.Labels.GetStyle(label);

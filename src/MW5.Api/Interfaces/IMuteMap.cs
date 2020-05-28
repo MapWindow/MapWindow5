@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using MapWinGIS;
@@ -149,6 +150,10 @@ namespace MW5.Api.Interfaces
         void SetTileProvider(int providerId);
 
         bool IsEmpty { get; }
+
+
+
+        IEnumerable<IGeometry> GetSnapCandidateGeometriesFromLayers(ICoordinate original, double tolerance);
 
         #region Not implemented
 

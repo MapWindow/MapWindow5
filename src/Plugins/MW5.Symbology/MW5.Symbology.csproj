@@ -121,6 +121,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MapExtensions.cs" />
+    <Compile Include="Services\SymbolRotater.cs" />
+    <Compile Include="Services\SymbolRotaterCursor.cs" />
     <Compile Include="Views\Abstract\IVectorStyleView.cs" />
     <Compile Include="Views\Abstract\IWmsStyleView.cs" />
     <Compile Include="Views\CategoriesPresenter.cs" />
@@ -773,6 +776,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_categories32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cursor_rotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\symbol-rotator.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
