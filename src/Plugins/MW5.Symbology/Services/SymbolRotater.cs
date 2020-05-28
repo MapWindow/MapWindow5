@@ -67,8 +67,11 @@ namespace MW5.Plugins.Symbology.Services
             if (e.X == _currentObject.X && e.Y == _currentObject.Y)
                 return;
 
+            var ctrlDown = Control.ModifierKeys.HasFlag(Keys.Control);
+            var shiftDown = Control.ModifierKeys.HasFlag(Keys.Shift);
+
             // Move the object
-            RotateSymbol(map, e.X, e.Y);
+            RotateSymbol(map, e.X, e.Y, shiftDown, ctrlDown);
 
         }
 
@@ -98,7 +101,6 @@ namespace MW5.Plugins.Symbology.Services
 
             var ctrlDown = Control.ModifierKeys.HasFlag(Keys.Control);
             var shiftDown = Control.ModifierKeys.HasFlag(Keys.Shift);
-
 
             RotateSymbol(map, e.X, e.Y, shiftDown, ctrlDown);
             Clear();
@@ -132,7 +134,7 @@ namespace MW5.Plugins.Symbology.Services
             
             // Check if the featureset has setup offset x or y fields & store the new offset if so
             if (_currentObject.HasBackingRotationField)
-                _currentObject.UpdateRotationField(layer, dx, dy);
+                _currentObject.UpdateRotationField(layer, dx, dy, snapToFeatures, snapToAxes);
             map.Redraw();
         }
 
@@ -191,13 +193,19 @@ namespace MW5.Plugins.Symbology.Services
                 data.RotationField = rotationFieldIndex;
                 data.OriginalRotation = feature.GetAsDouble(rotationFieldIndex);
             }
+            else
+            {
+                MessageBox.Show("This feature does not have a single field rotation expression - can not rotate symbol.");
+                Clear();
+                return _currentObject;
+            }
 
             return data;
         }
 
         private int GetRotationFieldIndex(string expression, ILayer layer)
         {
-            var result = Regex.Match(expression, @"^\[(\w+)\]$");
+            var result = Regex.Match(expression, @"^\s*\[(\w+)\]\s*$");
             if (result.Success)
             {
                 var fieldName = result.Groups[1].Value;

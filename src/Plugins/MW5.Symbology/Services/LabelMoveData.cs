@@ -117,11 +117,10 @@ namespace MW5.Plugins.Symbology.Services
             return GetAngle(newX, newY, geographicAngles) * (180 / Math.PI);
         }
 
-        protected double NormalizeAngle(double angle)
+        protected double NormalizeAngle(double angle, double minAngle = 0, double maxAngle = Math.PI*2)
         {
-            double twoPi = Math.PI + Math.PI;
-            while (angle <= -Math.PI) angle += twoPi;
-            while (angle > Math.PI) angle -= twoPi;
+            while (angle >= maxAngle) angle -= maxAngle;
+            while (angle < minAngle) angle += maxAngle;
             return angle;
         }
 
@@ -184,11 +183,12 @@ namespace MW5.Plugins.Symbology.Services
                     .Where(pair => IsBetween(pair.Item1, pair.Item2, center));
                 foreach (var segment in segments)
                 {
-                    double angle = GetAngle(segment.Item1.X, segment.Item1.Y, true);
+                    var angle = (Math.PI * 0.5) - Math.Atan2(segment.Item2.Y - segment.Item1.Y, segment.Item2.X - segment.Item1.X);
+                    angle = NormalizeAngle(angle) * (180 / Math.PI);
                     angles.Add(angle);
-                    angles.Add(NormalizeAngle(angle + 90));
-                    angles.Add(NormalizeAngle(angle - 90));
-                    angles.Add(NormalizeAngle(angle + 180));
+                    angles.Add(NormalizeAngle(angle + 90, 0, 360));
+                    angles.Add(NormalizeAngle(angle + 180, 0, 360));
+                    angles.Add(NormalizeAngle(angle + 270, 0, 360));
                 }
             }
 
@@ -237,11 +237,14 @@ namespace MW5.Plugins.Symbology.Services
             if (!snapAngles.Any())
                 return angle;
 
-            var minDelta = double.MaxValue;
+            var minDelta = 17.5;
             var snappedAngle = angle;
             foreach (var snapAngle in snapAngles)
             {
                 var delta = Math.Abs(snapAngle - angle);
+                if (180 < delta)
+                    delta = 360 - delta;
+
                 if (delta < minDelta)
                 {
                     minDelta = delta;
