@@ -263,11 +263,16 @@ namespace MW5.Plugins.Symbology.Forms
                             _noEvents = true;
                             pointSymbolControl1.SelectedIndex = (int)line.Marker;
                             udMarkerInterval.SetValue(line.MarkerInterval);
+                            chkIntervalIsRelative.Checked = line.MarkerIntervalIsRelative;
                             udMarkerSize.SetValue(line.MarkerSize);
                             clpMarkerFill.Color = line.Color;
                             clpMarkerOutline.Color = line.MarkerOutlineColor;
+                            udMarkerOffset.Minimum = -udMarkerOffset.Maximum;
                             udMarkerOffset.SetValue(line.MarkerOffset);
+                            chkOffsetIsRelative.Checked = line.MarkerOffsetIsRelative;
                             cboOrientation.SelectedIndex = (int)line.MarkerOrientation;
+                            chkMarkerFlipFirst.Checked = line.MarkerFlipFirst;
+                            chkMarkerAllowOverflow.Checked = line.MarkerAllowOverflow;
 
                             if (pointSymbolControl1.ForeColor != clpMarkerFill.Color)
                             {
@@ -354,11 +359,15 @@ namespace MW5.Plugins.Symbology.Forms
                         {
                             line.Marker = (VectorMarker)pointSymbolControl1.SelectedIndex;
                             line.MarkerInterval = (float)udMarkerInterval.Value;
+                            line.MarkerIntervalIsRelative = chkIntervalIsRelative.Checked;
                             line.MarkerSize = (float)udMarkerSize.Value;
                             line.Color = clpMarkerFill.Color;
                             line.MarkerOutlineColor = clpMarkerOutline.Color;
                             line.MarkerOrientation = (LabelOrientation)cboOrientation.SelectedIndex;
                             line.MarkerOffset = (float)udMarkerOffset.Value;
+                            line.MarkerOffsetIsRelative = chkOffsetIsRelative.Checked;
+                            line.MarkerFlipFirst = chkMarkerFlipFirst.Checked;
+                            line.MarkerAllowOverflow = chkMarkerAllowOverflow.Checked;
                             pointSymbolControl1.ForeColor = clpMarkerFill.Color;
                         }
                         dgv.Invalidate();
@@ -667,6 +676,19 @@ namespace MW5.Plugins.Symbology.Forms
         {
             // Fixing CORE-160
             CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
+
+        private void OnOffsetIsRelativeChanged(object sender, EventArgs e)
+        {
+            udMarkerOffset.DecimalPlaces = chkOffsetIsRelative.Checked ? 4 : 0;
+            Ui2Options(null, null);
+        }
+
+        private void OnIntervalIsRelativeChanged(object sender, EventArgs e)
+        {
+         
+            udMarkerInterval.DecimalPlaces = chkIntervalIsRelative.Checked ? 4 : 0;
+            Ui2Options(null, null);
         }
     }
 }

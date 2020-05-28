@@ -82,7 +82,11 @@ namespace MW5.Plugins.Symbology.Forms
             this.pointSymbolControl1 = new MW5.Plugins.Symbology.Controls.ListControls.SymbolControl();
             this.clpMarkerFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.udMarkerInterval = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.chkIntervalIsRelative = new System.Windows.Forms.CheckBox();
+            this.chkOffsetIsRelative = new System.Windows.Forms.CheckBox();
+            this.ttOffsetIsRelative = new System.Windows.Forms.ToolTip(this.components);
             this.chkMarkerFlipFirst = new System.Windows.Forms.CheckBox();
+            this.chkMarkerAllowOverflow = new System.Windows.Forms.CheckBox();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.btnMoveUp = new System.Windows.Forms.Button();
@@ -520,6 +524,8 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // groupMarker
             // 
+            this.groupMarker.Controls.Add(this.chkOffsetIsRelative);
+            this.groupMarker.Controls.Add(this.chkIntervalIsRelative);
             this.groupMarker.Controls.Add(this.label7);
             this.groupMarker.Controls.Add(this.label4);
             this.groupMarker.Controls.Add(this.udMarkerOffset);
@@ -533,6 +539,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupMarker.Controls.Add(this.clpMarkerFill);
             this.groupMarker.Controls.Add(this.udMarkerInterval);
             this.groupMarker.Controls.Add(this.label30);
+            this.groupMarker.Controls.Add(this.chkMarkerFlipFirst);
+            this.groupMarker.Controls.Add(this.chkMarkerAllowOverflow);
             this.groupMarker.Location = new System.Drawing.Point(635, 34);
             this.groupMarker.Name = "groupMarker";
             this.groupMarker.Size = new System.Drawing.Size(390, 224);
@@ -556,6 +564,30 @@ namespace MW5.Plugins.Symbology.Forms
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 127;
             this.label4.Text = "Outline color";
+            // 
+            // chkIntervalIsRelative
+            // 
+            this.chkIntervalIsRelative.AutoSize = true;
+            this.chkIntervalIsRelative.Location = new System.Drawing.Point(5, 62);
+            this.chkIntervalIsRelative.Name = "chkIntervalIsRelative";
+            this.chkIntervalIsRelative.Size = new System.Drawing.Size(18, 17);
+            this.chkIntervalIsRelative.TabIndex = 133;
+            this.ttOffsetIsRelative.SetToolTip(this.chkIntervalIsRelative, "If checked, the interval is expressed as a fraction of the total length of the li" +
+        "ne to be drawn.\r\nIf not checked, the interval is in pixels.");
+            this.chkIntervalIsRelative.UseVisualStyleBackColor = true;
+            this.chkIntervalIsRelative.CheckedChanged += new System.EventHandler(this.OnIntervalIsRelativeChanged);
+            // 
+            // chkOffsetIsRelative
+            // 
+            this.chkOffsetIsRelative.AutoSize = true;
+            this.chkOffsetIsRelative.Location = new System.Drawing.Point(5, 105);
+            this.chkOffsetIsRelative.Name = "chkOffsetIsRelative";
+            this.chkOffsetIsRelative.Size = new System.Drawing.Size(18, 17);
+            this.chkOffsetIsRelative.TabIndex = 134;
+            this.ttOffsetIsRelative.SetToolTip(this.chkOffsetIsRelative, "If checked, the offset is expressed as a fraction of the total length of the line" +
+        " to be drawn.\r\nIf not checked, the offset is in pixels.");
+            this.chkOffsetIsRelative.UseVisualStyleBackColor = true;
+            this.chkOffsetIsRelative.CheckedChanged += new System.EventHandler(this.OnOffsetIsRelativeChanged);
             // 
             // udMarkerOffset
             // 
@@ -649,15 +681,27 @@ namespace MW5.Plugins.Symbology.Forms
             this.udMarkerInterval.TabIndex = 12;
             this.udMarkerInterval.ValueChanged += new System.EventHandler(this.Ui2Options);
             // 
+            // chkMarkerAllowOverflow
+            // 
+            this.chkMarkerAllowOverflow.AutoSize = true;
+            this.chkMarkerAllowOverflow.Location = new System.Drawing.Point(120, 200);
+            this.chkMarkerAllowOverflow.Name = "chkMarkerAllowOverflow";
+            this.chkMarkerAllowOverflow.Size = new System.Drawing.Size(93, 17);
+            this.chkMarkerAllowOverflow.TabIndex = 0;
+            this.chkMarkerAllowOverflow.Text = "Allow marker overflow";
+            this.chkMarkerAllowOverflow.UseVisualStyleBackColor = true;
+            this.chkMarkerAllowOverflow.CheckedChanged += new System.EventHandler(this.Ui2Options);
+            // 
             // chkMarkerFlipFirst
             // 
             this.chkMarkerFlipFirst.AutoSize = true;
-            this.chkMarkerFlipFirst.Location = new System.Drawing.Point(648, 288);
+            this.chkMarkerFlipFirst.Location = new System.Drawing.Point(15, 200);
             this.chkMarkerFlipFirst.Name = "chkMarkerFlipFirst";
             this.chkMarkerFlipFirst.Size = new System.Drawing.Size(93, 17);
             this.chkMarkerFlipFirst.TabIndex = 0;
-            this.chkMarkerFlipFirst.Text = "Rotate marker";
+            this.chkMarkerFlipFirst.Text = "Flip first marker";
             this.chkMarkerFlipFirst.UseVisualStyleBackColor = true;
+            this.chkMarkerFlipFirst.CheckedChanged += new System.EventHandler(this.Ui2Options);
             // 
             // btnApply
             // 
@@ -724,7 +768,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.Controls.Add(this.btnMoveDown);
             this.Controls.Add(this.btnMoveUp);
             this.Controls.Add(this.btnRemove);
-            this.Controls.Add(this.chkMarkerFlipFirst);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox2);
@@ -811,11 +854,15 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboOrientation;
         private System.Windows.Forms.CheckBox chkMarkerFlipFirst;
+        private System.Windows.Forms.CheckBox chkMarkerAllowOverflow;
         private TransparencyControl transparencyControl1;
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnRemoveStyle;
         private System.Windows.Forms.Button btnAddStyle;
         private LinePatternControl linePatternControl1;
+        private System.Windows.Forms.CheckBox chkOffsetIsRelative;
+        private System.Windows.Forms.ToolTip ttOffsetIsRelative;
+        private System.Windows.Forms.CheckBox chkIntervalIsRelative;
     }
 }
