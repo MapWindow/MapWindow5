@@ -36,6 +36,8 @@ namespace MW5.Plugins.Symbology.Services
             _plugin = plugin ?? throw new ArgumentNullException("plugin");
             _map = context.Map;
 
+            _currentObject = new EmptyMoveData();
+
             plugin.MouseDown += MapMouseDown;
             plugin.MouseUp += MapMouseUp;
             plugin.MouseMove += MapMouseMove;

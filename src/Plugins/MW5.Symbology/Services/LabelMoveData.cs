@@ -15,7 +15,7 @@ using System.Windows.Forms;
 namespace MW5.Plugins.Symbology.Services
 {
     /// <summary>
-    /// Holds information about the currently selected label (probably beter move to another file)
+    /// Holds information about the currently selected label
     /// </summary>
     internal abstract class ObjectMoveData
     {
@@ -132,6 +132,10 @@ namespace MW5.Plugins.Symbology.Services
     internal class ChartMoveData : ObjectTranslateData
     {
         override internal bool IsChart => true;
+    }
+
+    internal class EmptyMoveData : ObjectTranslateData
+    {
     }
 
     internal class LabelMoveData : ObjectTranslateData
