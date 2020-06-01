@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -8,45 +9,44 @@ namespace MW5.Api.Concrete
 {
     public class Geometry : IGeometry
     {
+        #region Private fields
         private GeometryPartCollection _parts;
         private CoordinateList _points;
-        private Shape _shape;
+
+        private Shape __shape;
+
+        private Shape _shape {
+            get => __shape;
+            set
+            {
+                __shape = value;
+            }
+        }
+
+
         private readonly int _partIndex;
-
-        #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Geometry"/> class.
-        /// </summary>
-        /// <param name="type">The geometry type.</param>
-        /// <param name="zValue">The z value.</param>
-        public Geometry(GeometryType type, ZValueType zValue = ZValueType.None)
-        {
-            _shape = new Shape();
-            var shpType = GeometryHelper.GeometryType2ShpType(type, zValue);
-            _shape.Create(shpType);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Geometry"/> class from shape.
-        /// </summary>
-        /// <param name="shape">The shape.</param>
-        internal Geometry(Shape shape)
-        {
-            _shape = shape;
-            _partIndex = -1;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Geometry"/> class from specified part of shape.
-        /// </summary>
-        internal Geometry(Shape shape, int partIndex)
-        {
-            _shape = shape;
-            _partIndex = partIndex;
-        }
-
         #endregion
+
+        #region Properties
+        /// <summary>
+        /// Gets list of coodinates.
+        /// </summary>
+        public CoordinateList Points
+        {
+            get
+            {
+                _points = _points ?? new CoordinateList(_shape, _partIndex);
+                return _points;
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of the geometry.
+        /// </summary>
+        public GeometryType GeometryType
+        {
+            get { return GeometryHelper.ShapeType2GeometryType(_shape.ShapeType); }
+        }
 
         /// <summary>
         /// Gets parts of the geometry.
@@ -131,29 +131,75 @@ namespace MW5.Api.Concrete
             get { return _shape.Area; }
         }
 
-        public IGeometry Boundary()
+        /// <summary>
+        /// Gets the type of Z component for the current shape.
+        /// </summary>
+        public ZValueType ZValueType
         {
-            return new Geometry(_shape.Boundary());
+            get { return GeometryHelper.ShapeType2ZValueType(_shape.ShapeType); }
         }
 
-        public IGeometry Buffer(double distance, int numSegments)
+        public object InternalObject
         {
-            return new Geometry(_shape.Buffer(distance, numSegments));
+            get { return _shape; }
         }
 
-        public IGeometry BufferWithParams(double distance, int numSegments = 30, bool singleSided = false, 
-            BufferCap capStyle = BufferCap.Round,
-            BufferJoin joinStyle = BufferJoin.Round, double mitreLimit = 5)
+        public string LastError
         {
-            return new Geometry(_shape.BufferWithParams(distance, numSegments, singleSided,
-                (tkBufferCap)capStyle, (tkBufferJoin)joinStyle, mitreLimit));
+            get { return _shape.ErrorMsg[_shape.LastErrorCode]; }
         }
 
-        public IGeometry Clip(IGeometry g, ClipOperation operation)
+        public string Tag
         {
-            return new Geometry(_shape.Clip(g.GetInternal(), (tkClipOperation)operation));
+            get { return _shape.Key; }
+            set { _shape.Key = value; }
+        }
+        #endregion
+
+        #region Construction, initialization & disposal
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Geometry"/> class.
+        /// </summary>
+        /// <param name="type">The geometry type.</param>
+        /// <param name="zValue">The z value.</param>
+        public Geometry(GeometryType type, ZValueType zValue = ZValueType.None)
+        {
+            _shape = new Shape();
+            var shpType = GeometryHelper.GeometryType2ShpType(type, zValue);
+            _shape.Create(shpType);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Geometry"/> class from shape.
+        /// </summary>
+        /// <param name="shape">The shape.</param>
+        internal Geometry(Shape shape)
+        {
+            _shape = shape;
+            _partIndex = -1;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Geometry"/> class from specified part of shape.
+        /// </summary>
+        internal Geometry(Shape shape, int partIndex)
+        {
+            _shape = shape;
+            _partIndex = partIndex;
+        }
+
+        /// <summary>
+        /// Releases inner shape reference.
+        /// </summary>
+        public void Dispose()
+        {
+            _shape = null;
+        }
+
+        #endregion
+
+        #region Export & import methods
         public IGeometry Clone()
         {
             return new Geometry(_shape.Clone());
@@ -184,55 +230,9 @@ namespace MW5.Api.Concrete
             return g;
         }
 
-        public IGeometry ClosestPoints(IGeometry g)
-        {
-            return new Geometry(_shape.ClosestPoints(g.GetInternal()));
-        }
-
-        public bool Contains(IGeometry g)
-        {
-            return _shape.Contains(g.GetInternal());
-        }
-
-        public IGeometry ConvexHull()
-        {
-            return new Geometry(_shape.ConvexHull());
-        }
-
         public bool CopyFrom(IGeometry g)
         {
             return _shape.CopyFrom(g.GetInternal());
-        }
-
-        public bool Crosses(IGeometry g)
-        {
-            return _shape.Crosses(g.GetInternal());
-        }
-
-        public bool Disjoint(IGeometry g)
-        {
-            return _shape.Disjoint(g.GetInternal());
-        }
-
-        public double Distance(IGeometry g)
-        {
-            return _shape.Distance(g.GetInternal());
-        }
-
-        public IEnumerable<IGeometry> Explode()
-        {
-            object o = null;
-            if (_shape.Explode(ref o))
-            {
-                var shapes = o as object[];
-                if (shapes != null)
-                {
-                    foreach (var shp in shapes)
-                    {
-                        yield return new Geometry(shp as Shape);
-                    }
-                }
-            }
         }
 
         public byte[] ExportToBinary()
@@ -246,29 +246,6 @@ namespace MW5.Api.Concrete
             return _shape.ExportToWKT();
         }
 
-        public IGeometry FixUp()
-        {
-            Shape shape;
-            _shape.FixUp(out shape);
-            return shape != null ? new Geometry(shape) : null;
-        }
-
-        public IEnumerable<IGeometry> Intersection(IGeometry g)
-        {
-            object o = null;
-            if (_shape.GetIntersection(g.GetInternal(), ref o))
-            {
-                var shapes = o as Shape[];
-                if (shapes != null)
-                {
-                    foreach (var shp in shapes)
-                    {
-                        yield return new Geometry(shp);
-                    }
-                }
-            }
-        }
-
         public bool ImportFromBinary(byte[] bytes)
         {
             return _shape.ImportFromBinary(bytes);
@@ -278,17 +255,9 @@ namespace MW5.Api.Concrete
         {
             return _shape.ImportFromWKT(serialized);
         }
+        #endregion
 
-        public bool Intersects(IGeometry g)
-        {
-            return _shape.Intersects(g.GetInternal());
-        }
-
-        public void Move(double offsetX, double offsetY)
-        {
-            _shape.Move(offsetX, offsetY);
-        }
-
+        #region Point manipulation methods
         /// <summary>
         /// Moves the point.
         /// </summary>
@@ -323,30 +292,50 @@ namespace MW5.Api.Concrete
             return _shape.put_Z(pointIndex, z);
         }
 
-        public bool Overlaps(IGeometry g)
+        public bool GetPoint(int index, out double x, out double y)
         {
-            return _shape.Overlaps(g.GetInternal());
+            x = 0.0;
+            y = 0.0;
+
+            return _shape.XY[index, x, y];
+        }
+        #endregion
+
+        #region Spatial transformations
+        public IGeometry ClosestPoints(IGeometry g)
+        {
+            return new Geometry(_shape.ClosestPoints(g.GetInternal()));
         }
 
-        public bool PointInThisPoly(ICoordinate pt)
+        public double Distance(IGeometry g)
         {
-            return _shape.PointInThisPoly(pt.GetInternal());
+            return _shape.Distance(g.GetInternal());
         }
 
-        public bool Relates(IGeometry g, SpatialRelation relation)
+        public IGeometry Boundary()
         {
-            return _shape.Relates(g.GetInternal(), (tkSpatialRelation)relation);
+            return new Geometry(_shape.Boundary());
         }
 
-        /// <summary>
-        /// Rotates the geometry.
-        /// </summary>
-        /// <param name="originX">The origin x.</param>
-        /// <param name="originY">The origin y.</param>
-        /// <param name="angle">The angle, in degrees</param>
-        public void Rotate(double originX, double originY, double angle)
+        public IGeometry ConvexHull()
         {
-            _shape.Rotate(originX, originY, angle);
+            return new Geometry(_shape.ConvexHull());
+        }
+
+        public IEnumerable<IGeometry> Explode()
+        {
+            object o = null;
+            if (_shape.Explode(ref o))
+            {
+                var shapes = o as object[];
+                if (shapes != null)
+                {
+                    foreach (var shp in shapes)
+                    {
+                        yield return new Geometry(shp as Shape);
+                    }
+                }
+            }
         }
 
         public IEnumerable<IGeometry> SplitByPolyline(IGeometry polyline)
@@ -365,79 +354,115 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool Touches(IGeometry g)
+        public IGeometry FixUp()
         {
-            return _shape.Touches(g.GetInternal());
+            Shape shape;
+            _shape.FixUp(out shape);
+            return shape != null ? new Geometry(shape) : null;
         }
+        #endregion
 
-        public bool Within(IGeometry g)
+        #region Spatial operations
+        public void Move(double offsetX, double offsetY)
         {
-            return _shape.Within(g.GetInternal());
+            _shape.Move(offsetX, offsetY);
         }
 
         /// <summary>
-        /// Gets the type of Z component for the current shape.
+        /// Rotates the geometry.
         /// </summary>
-        public ZValueType ZValueType
+        /// <param name="originX">The origin x.</param>
+        /// <param name="originY">The origin y.</param>
+        /// <param name="angle">The angle, in degrees</param>
+        public void Rotate(double originX, double originY, double angle)
         {
-            get { return GeometryHelper.ShapeType2ZValueType(_shape.ShapeType); }
+            _shape.Rotate(originX, originY, angle);
         }
 
-        #region IGeometry Members        
-
-        /// <summary>
-        /// Gets list of coodinates.
-        /// </summary>
-        public CoordinateList Points
+        public IEnumerable<IGeometry> Intersection(IGeometry g)
         {
-            get
+            object o = null;
+            if (!_shape.GetIntersection(g.GetInternal(), ref o))
+                yield break;
+            foreach (var shapeObject in o as object[])
             {
-                _points = _points ?? new CoordinateList(_shape, _partIndex);
-                return _points;
+                if (shapeObject is Shape shape)
+                    foreach (var geometry in new Geometry(shape).MultiToSingleGeometries())
+                        yield return geometry;
             }
         }
 
-        /// <summary>
-        /// Gets the type of the geometry.
-        /// </summary>
-        public GeometryType GeometryType
+        private IEnumerable<IGeometry> MultiToSingleGeometries()
         {
-            get { return GeometryHelper.ShapeType2GeometryType(_shape.ShapeType); }
+            if (GeometryType == GeometryType.MultiPoint)
+                foreach (var point in Points)
+                {
+                    var pointGeometry = new Geometry(GeometryType.Point, ZValueType.None);
+                    pointGeometry.Points.Add(point);
+                    yield return pointGeometry;
+                }
+            else
+                yield return Clone();
         }
 
-        /// <summary>
-        /// Releases inner shape reference.
-        /// </summary>
-        public void Dispose()
+        public IGeometry Buffer(double distance, int numSegments)
         {
-            _shape = null;
+            return new Geometry(_shape.Buffer(distance, numSegments));
         }
 
+        public IGeometry BufferWithParams(double distance, int numSegments = 30, bool singleSided = false,
+            BufferCap capStyle = BufferCap.Round,
+            BufferJoin joinStyle = BufferJoin.Round, double mitreLimit = 5)
+        {
+            return new Geometry(_shape.BufferWithParams(distance, numSegments, singleSided,
+                (tkBufferCap)capStyle, (tkBufferJoin)joinStyle, mitreLimit));
+        }
+
+        public IGeometry Clip(IGeometry g, ClipOperation operation)
+        {
+            return new Geometry(_shape.Clip(g.GetInternal(), (tkClipOperation)operation));
+        }
         #endregion
 
-        public object InternalObject
+        #region Spatial operators
+        public bool PointInThisPoly(ICoordinate pt)
         {
-            get {  return _shape; }
+            return _shape.PointInThisPoly(pt.GetInternal());
         }
 
-        public string LastError
+        public bool Relates(IGeometry g, SpatialRelation relation)
         {
-            get { return _shape.ErrorMsg[_shape.LastErrorCode]; }
+            return _shape.Relates(g.GetInternal(), (tkSpatialRelation)relation);
         }
 
-        public string Tag
-        {
-            get { return _shape.Key; }
-            set { _shape.Key = value; }
-        }
+        public bool Covers(IGeometry g)
+            => _shape.Covers(g.GetInternal());
 
-        public bool GetPoint(int index, out double x, out double y)
-        {
-            x = 0.0;
-            y = 0.0;
+        public bool CoveredBy(IGeometry g)
+            => _shape.CoveredBy(g.GetInternal());
 
-            return _shape.XY[index, x, y];
-        }
+        public bool Overlaps(IGeometry g)
+            => _shape.Overlaps(g.GetInternal());
+
+        public bool Touches(IGeometry g) 
+            => _shape.Touches(g.GetInternal());
+
+        public bool Within(IGeometry g) 
+            => _shape.Within(g.GetInternal());
+
+        public bool Contains(IGeometry g)
+            => _shape.Contains(g.GetInternal());
+
+        public bool Crosses(IGeometry g) 
+            => _shape.Crosses(g.GetInternal());
+
+        public bool Disjoint(IGeometry g) 
+            => _shape.Disjoint(g.GetInternal());
+
+        public bool Intersects(IGeometry g) 
+            => _shape.Intersects(g.GetInternal());
+        #endregion
+
     }
 }
 

@@ -44,5 +44,7 @@ namespace MW5.Api.Interfaces
         bool Visible { get; set; }
         double OffsetX { get; set; }
         double OffsetY { get; set; }
+        int OffsetXField { get; set; }
+        int OffsetYField { get; set; }
     }
 }

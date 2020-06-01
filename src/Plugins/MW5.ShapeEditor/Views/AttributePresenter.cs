@@ -58,8 +58,7 @@ namespace MW5.Plugins.ShapeEditor.Views
                     }
                 case AttributeType.Integer:
                     {
-                        int val;
-                        if (!Int32.TryParse(text, out val))
+                        if (!Int32.TryParse(text, out int val))
                         {
                             MessageService.Current.Info("Failed to parse integer value: " + text);
                             return false;
@@ -70,10 +69,31 @@ namespace MW5.Plugins.ShapeEditor.Views
                     }
                 case AttributeType.Double:
                     {
-                        double val;
-                        if (!Double.TryParse(text, out val))
+                        if (!Double.TryParse(text, out double val))
                         {
                             MessageService.Current.Info("Failed to parse double value: " + text);
+                            return false;
+                        }
+
+                        table.EditCellValue(fieldIndex, Model.ShapeIndex, val);
+                        break;
+                    }
+                case AttributeType.Boolean:
+                    {
+                        if (!Boolean.TryParse(text, out bool val))
+                        {
+                            MessageService.Current.Info("Failed to parse boolean value: " + text);
+                            return false;
+                        }
+
+                        table.EditCellValue(fieldIndex, Model.ShapeIndex, val);
+                        break;
+                    }
+                case AttributeType.Date:
+                    {
+                        if (!DateTime.TryParse(text, out DateTime val))
+                        {
+                            MessageService.Current.Info("Failed to parse datetime value: " + text);
                             return false;
                         }
 

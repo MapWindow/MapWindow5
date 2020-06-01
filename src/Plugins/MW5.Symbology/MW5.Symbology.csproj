@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -41,7 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -121,6 +121,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MapExtensions.cs" />
+    <Compile Include="Services\SymbolRotater.cs" />
+    <Compile Include="Services\SymbolRotaterCursor.cs" />
     <Compile Include="Views\Abstract\IVectorStyleView.cs" />
     <Compile Include="Views\Abstract\IWmsStyleView.cs" />
     <Compile Include="Views\CategoriesPresenter.cs" />
@@ -305,12 +308,6 @@
     </Compile>
     <Compile Include="Views\VectorStyleView.Designer.cs">
       <DependentUpon>VectorStyleView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AddLabelsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AddLabelsForm.Designer.cs">
-      <DependentUpon>AddLabelsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FontGradientForm.cs">
       <SubType>Form</SubType>
@@ -539,9 +536,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\VectorStyleView.resx">
       <DependentUpon>VectorStyleView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddLabelsForm.resx">
-      <DependentUpon>AddLabelsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FontGradientForm.resx">
       <DependentUpon>FontGradientForm.cs</DependentUpon>
@@ -782,6 +776,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_categories32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cursor_rotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\symbol-rotator.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

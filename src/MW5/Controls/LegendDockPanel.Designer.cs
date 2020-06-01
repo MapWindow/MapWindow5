@@ -160,6 +160,7 @@
             this.contextMenuGroup.Name = "contextMenuGroup";
             this.contextMenuGroup.Size = new System.Drawing.Size(157, 126);
             this.contextMenuGroup.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
+            this.contextMenuGroup.Opening += new System.ComponentModel.CancelEventHandler(this.OnContextMenuGroupOpening);
             // 
             // mnuAddGroup
             // 

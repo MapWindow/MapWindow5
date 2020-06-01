@@ -1,0 +1,53 @@
+﻿<Window x:Class="MW5.Plugins.AdvancedSnapping.Views.DoubleInputView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MW5.Plugins.AdvancedSnapping.Views"
+             mc:Ignorable="d"
+             Name="Dialog" Title="Coordinate Input" 
+             Height="Auto" Width="Auto" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+             ResizeMode="NoResize" IsHitTestVisible="True" SizeToContent="WidthAndHeight"
+             FontFamily="Calibri" Topmost="True"
+             Left="{Binding WindowLeft, Mode=TwoWay}" Top="{Binding WindowTop, Mode=TwoWay}">
+    <Border Padding="5 5 5 5" BorderBrush="#FF6666" CornerRadius="4" BorderThickness="3" Background="#FFF5F5F5">
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Style.Resources>
+                    <Storyboard x:Key="CritAnimation" >
+                        <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                    To="#FF0000" 
+                                                    AutoReverse="True" Duration="0:0:0.5" RepeatBehavior="Forever"
+                                                    FillBehavior="HoldEnd" />
+                    </Storyboard>
+                </Style.Resources>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Visibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}}" Value="Visible">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard Name="flash" Storyboard="{StaticResource CritAnimation}" />
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <StopStoryboard BeginStoryboardName="flash" />
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <local:DoubleInputBox Grid.Column="0" x:Name="X" MinWidth="150" DataContext="{Binding Value}" TabIndex="1" Margin="0" />
+            <Button IsTabStop="False" Grid.Column="1" MinHeight="20" Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" Margin="5 0 1 0"
+                    Command="{Binding MapActionCommand}" Visibility="{Binding MapActionVisible}" ToolTip="Draw on map" Content="&#8593;">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="2"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+    </Border>
+</Window>

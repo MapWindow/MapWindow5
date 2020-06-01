@@ -75,6 +75,9 @@ namespace MW5.Attributes.Helpers
                     case AttributeType.Double:
                         obj = obj ?? 0.0;
                         break;
+                    case AttributeType.Boolean:
+                        obj = obj ?? false;
+                        break;
                 }
 
                 if (hashTable.ContainsKey(obj))

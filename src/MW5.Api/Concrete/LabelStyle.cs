@@ -276,5 +276,17 @@ namespace MW5.Api.Concrete
             get { return _category.OffsetY; }
             set { _category.OffsetY = value; }
         }
+
+        public int OffsetXField
+        {
+            get { return _category.OffsetXField; }
+            set { _category.OffsetXField = value; }
+        }
+
+        public int OffsetYField
+        {
+            get { return _category.OffsetYField; }
+            set { _category.OffsetYField = value; }
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MW5.Api.Interfaces
 {
-    public interface IFeatureCategory: IComWrapper
+    public interface IFeatureCategory: IComWrapper , IDynamicVisibilityTarget
     {
         IGeometryStyle Style { get; }
         CategoryValue ValueType { get; }

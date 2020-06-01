@@ -19,12 +19,12 @@ using MW5.UI.Helpers;
 
 namespace MW5.Attributes.Views
 {
-    public class QueryBuilderPresenter : BasePresenter<IQueryBuilderView, QueryBuilderModel>
+    public class QueryBuilderPresenter : BasePresenter<IExpressionBuilderView, IExpressionBuilderModel>
     {
         private readonly IAppContext _context;
         private string _lastQuery = string.Empty;
 
-        public QueryBuilderPresenter(IQueryBuilderView view, IAppContext context)
+        public QueryBuilderPresenter(IExpressionBuilderView view, IAppContext context)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");

@@ -4,7 +4,9 @@
     {
         String = 0,
         Integer = 1,
-        Double = 2
+        Double = 2,
+        Boolean = 3,
+        Date = 4
     }
 
     public enum GeometryType
@@ -51,6 +53,8 @@
         Overlaps = 5,
         Touches = 6,
         Within = 7,
+        Covers = 8,
+        CoveredBy = 9
     }
 
     public enum BufferCap

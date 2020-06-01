@@ -51,7 +51,7 @@ namespace MW5.Api.Legend.Abstract
         /// Tells you if a group exists with the specified handle
         /// </summary>
         /// <param name="handle"> layerHandle of the group to check </param>
-        /// <returns> True if the Group extists, False otherwise </returns>
+        /// <returns> True if the Group exists, False otherwise </returns>
         bool IsValidHandle(int handle);
 
         /// <summary>

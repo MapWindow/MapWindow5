@@ -3,16 +3,13 @@ using System.Drawing;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IGeometryStyle: IComWrapper
+    public interface IGeometryStyle: IComWrapper, IDynamicVisibilityTarget
     {
         IGeometryFillStyle Fill { get; }
         IGeometryLineStyle Line { get; }
         IGeometryMarkerStyle Marker { get; }
         IGeometryVertexStyle Vertices { get; }
 
-        bool DynamicVisibility { get; set; }
-        double MaxVisibleScale { get; set; }
-        double MinVisibleScale { get; set; }
         bool Visible { get; set; }
 
         IGeometryStyle Clone();

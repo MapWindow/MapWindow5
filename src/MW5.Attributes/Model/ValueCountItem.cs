@@ -10,6 +10,8 @@ namespace MW5.Attributes.Model
         private readonly string _strValue = string.Empty;
         private readonly double _dblValue = 0.0;
         private readonly int _intValue = 0;
+        private readonly bool _blnValue = false;
+        private readonly DateTime _dtmValue = DateTime.MinValue;
 
         public ValueCountItem(string value, int count)
         {
@@ -32,6 +34,20 @@ namespace MW5.Attributes.Model
             _type = AttributeType.Double;
         }
 
+        public ValueCountItem(bool value, int count)
+        {
+            _blnValue = value;
+            Count = count;
+            _type = AttributeType.Boolean;
+        }
+
+        public ValueCountItem(DateTime value, int count)
+        {
+            _dtmValue = value;
+            Count = count;
+            _type = AttributeType.Date;
+        }
+
 
         public int Count { get; private set; }
 
@@ -47,6 +63,10 @@ namespace MW5.Attributes.Model
                         return _intValue.ToString(CultureInfo.InvariantCulture);
                     case AttributeType.Double:
                         return _dblValue.ToString(CultureInfo.InvariantCulture);
+                    case AttributeType.Boolean:
+                        return _blnValue.ToString(CultureInfo.InvariantCulture);
+                    case AttributeType.Date:
+                        return _dtmValue.ToString(CultureInfo.InvariantCulture);
                 }
 
                 return string.Empty;
@@ -66,6 +86,10 @@ namespace MW5.Attributes.Model
                     return _intValue.CompareTo(other._intValue);
                 case AttributeType.Double:
                     return _dblValue.CompareTo(other._dblValue);
+                case AttributeType.Boolean:
+                    return _blnValue.CompareTo(other._blnValue);
+                case AttributeType.Date:
+                    return _dtmValue.CompareTo(other._dtmValue);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -84,6 +108,10 @@ namespace MW5.Attributes.Model
                     return _intValue.Equals(other._intValue);
                 case AttributeType.Double:
                     return _dblValue.Equals(other._dblValue);
+                case AttributeType.Boolean:
+                    return _blnValue.Equals(other._blnValue);
+                case AttributeType.Date:
+                    return _dtmValue.Equals(other._dtmValue);
             }
 
             return false;
@@ -110,6 +138,10 @@ namespace MW5.Attributes.Model
                     return _intValue.GetHashCode();
                 case AttributeType.Double:
                     return _dblValue.GetHashCode();
+                case AttributeType.Boolean:
+                    return _blnValue.GetHashCode();
+                case AttributeType.Date:
+                    return _dtmValue.GetHashCode();
             }
 
             return _strValue.GetHashCode();

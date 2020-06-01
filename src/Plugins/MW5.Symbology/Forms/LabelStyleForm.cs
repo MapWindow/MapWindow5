@@ -70,14 +70,15 @@ namespace MW5.Plugins.Symbology.Forms
             dynamicVisibilityControl1.ValueChanged += (s, e) => { btnApply.Enabled = true; };
 
             Initialize(_featureSet.Labels.Style);
+            InitPositioning(_featureSet.Labels);
 
             tabControlAdv1.SelectedIndex = tabNumber;
         }
 
         /// <summary>
-        /// Constructor for editing single category
+        /// Constructor for editing single category - not in use at the moment
         /// </summary>
-        public LabelStyleForm(IAppContext context, ILayer layer, ILabelStyle lb)
+        /*public LabelStyleForm(IAppContext context, ILayer layer, ILabelStyle lb)
         {
             InitializeComponent();
 
@@ -98,7 +99,7 @@ namespace MW5.Plugins.Symbology.Forms
 
             lblResult.Visible = false;
             btnApply.Visible = false;
-        }
+        }*/
 
         private IAttributeField SelectedField
         {
@@ -221,20 +222,11 @@ namespace MW5.Plugins.Symbology.Forms
 
         private bool GenerateLabels()
         {
-            using (var form = new AddLabelsForm(_featureSet, _category.Alignment))
-            {
-                if (_context.View.ShowChildView(form, this))
-                {
-                    if (_featureSet.PointOrMultiPoint)
-                    {
-                        _category.Alignment = form.Alignment;
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
+            return _featureSet.GenerateLabels(
+                -1, _featureSet.Labels.Positioning,
+                !chkLabelEveryPart.Checked,
+                _featureSet.Labels.OffsetXField, _featureSet.Labels.OffsetYField
+            ) > 0;
         }
 
         private string GetFloatFormat()
@@ -266,6 +258,134 @@ namespace MW5.Plugins.Symbology.Forms
             optAlignTopCenter.Checked = (alignment == LabelAlignment.TopCenter);
             optAlignTopLeft.Checked = (alignment == LabelAlignment.TopLeft);
             optAlignTopRight.Checked = (alignment == LabelAlignment.TopRight);
+        }
+
+        private void InitPositioning(ILabelsLayer labels)
+        {
+
+            _noEvents = true;
+
+            // Disable all by default
+            cboLineOrientation.Enabled = false;
+            optPosition1.Visible = false;
+            optPosition2.Visible = false;
+            optPosition3.Visible = false;
+            optPosition4.Visible = false;
+            groupBoxPositioning.Visible = false;
+
+            if (_featureSet.IsPolygon)
+                InitPositioningForPolygonFeatures(labels);
+            else if (_featureSet.IsPolyline)
+                InitPositioningForPolylineFeatures(labels);
+            else
+                InitPositioningForPointFeatures(labels);
+
+            _noEvents = false;
+        }
+
+        private void UpdatePositioningForPointFeatures(ILabelsLayer labels)
+        {
+            labels.Positioning = LabelPosition.Center;
+        }
+
+        private void InitPositioningForPointFeatures(ILabelsLayer labels)
+        {
+            labels.Positioning = LabelPosition.Center;
+        }
+
+        private void InitPositioningForPolygonFeatures(ILabelsLayer labels)
+        {
+            optPosition1.Text = "Center";
+            optPosition2.Text = "Centroid";
+            optPosition3.Text = "Interior point";
+
+            optPosition1.Tag = LabelPosition.Center;
+            optPosition2.Tag = LabelPosition.Centroid;
+            optPosition3.Tag = LabelPosition.InteriorPoint;
+
+            optPosition1.Visible = true;
+            optPosition2.Visible = true;
+            optPosition3.Visible = true;
+            optPosition4.Visible = false;
+
+            optPosition1.Checked = (labels.Positioning == LabelPosition.Center || labels.Positioning == LabelPosition.None);
+            optPosition2.Checked = labels.Positioning == LabelPosition.Centroid;
+            optPosition3.Checked = labels.Positioning == LabelPosition.InteriorPoint;
+
+            groupBoxPositioning.Visible = true;
+        }
+
+        private void InitPositioningForPolylineFeatures(ILabelsLayer labels)
+        {
+            optPosition1.Text = "First segment";
+            optPosition2.Text = "Last segment";
+            optPosition3.Text = "Middle segment";
+            optPosition4.Text = "The longest segment";
+
+            optPosition1.Tag = LabelPosition.FirstSegment;
+            optPosition2.Tag = LabelPosition.LastSegment;
+            optPosition3.Tag = LabelPosition.MiddleSegment;
+            optPosition4.Tag = LabelPosition.LongestSegement;
+
+            optPosition1.Checked = labels.Positioning == LabelPosition.FirstSegment;
+            optPosition2.Checked = labels.Positioning == LabelPosition.LastSegment;
+            optPosition3.Checked = (labels.Positioning == LabelPosition.MiddleSegment || labels.Positioning == LabelPosition.None);
+            optPosition4.Checked = labels.Positioning == LabelPosition.LongestSegement;
+
+            optPosition1.Visible = true;
+            optPosition2.Visible = true;
+            optPosition3.Visible = true;
+            optPosition4.Visible = true;
+
+            // Add items to line orientation
+            if (cboLineOrientation.Items.Count == 0)
+            {
+                // Line orientation
+                cboLineOrientation.Items.Clear();
+                cboLineOrientation.Items.Add("Horizontal");
+                cboLineOrientation.Items.Add("Parallel");
+                cboLineOrientation.Items.Add("Perpindicular");
+            }
+
+            if (labels.Style.Orientation == LabelOrientation.Horizontal)
+                cboLineOrientation.SelectedIndex = 0;
+            else if (labels.Style.Orientation == LabelOrientation.Parallel)
+                cboLineOrientation.SelectedIndex = 1;
+            else if (labels.Style.Orientation == LabelOrientation.Perpindicular)
+                cboLineOrientation.SelectedIndex = 2;
+
+            cboLineOrientation.Enabled = true;
+
+            groupBoxPositioning.Visible = true;
+        }
+
+        private void UpdatePositioningForPolylineFeatures(ILabelsLayer labels)
+        {
+            UpdatePositioningForPolyFeatures(labels);
+
+            if (cboLineOrientation.SelectedIndex == 0)
+                labels.Style.Orientation = LabelOrientation.Horizontal;
+            else if (cboLineOrientation.SelectedIndex == 1)
+                labels.Style.Orientation = LabelOrientation.Parallel;
+            else if (cboLineOrientation.SelectedIndex == 2)
+                labels.Style.Orientation = LabelOrientation.Perpindicular;
+        }
+
+        private void UpdatePositioningForPolyFeatures(ILabelsLayer labels)
+        {
+            if (optPosition1.Checked)
+                labels.Positioning = (LabelPosition)optPosition1.Tag;
+            else if (optPosition2.Checked)
+                labels.Positioning = (LabelPosition)optPosition2.Tag;
+            else if (optPosition3.Checked)
+                labels.Positioning = (LabelPosition)optPosition3.Tag;
+            else if (optPosition4.Checked)
+                labels.Positioning = (LabelPosition)optPosition4.Tag;
+        }
+
+        private void UpdatePositioningForPolygonFeatures(ILabelsLayer labels)
+        {
+            UpdatePositioningForPolyFeatures(labels);
         }
 
         private void InitDecimalPlaces()
@@ -357,6 +477,9 @@ namespace MW5.Plugins.Symbology.Forms
                 _featureSet.Labels.SavingMode = mode;
             }
 
+            SetupOffsetComboBox(comboOffsetX, lb.OffsetXField);
+            SetupOffsetComboBox(comboOffsetY, lb.OffsetYField);
+
             cboLabelsVerticalPosition.Items.Clear();
             cboLabelsVerticalPosition.Items.Add("Above layer");
             cboLabelsVerticalPosition.Items.Add("Above all layers");
@@ -386,6 +509,26 @@ namespace MW5.Plugins.Symbology.Forms
             _noEvents = false;
 
             DrawPreview();
+        }
+
+        private void SetupOffsetComboBox(ComboBox comboOffset, int selectedFieldIndex = -1)
+        {
+            comboOffset.Items.Clear();
+            comboOffset.DisplayMember = "DisplayName";
+            comboOffset.ValueMember = "Index";
+            object selectedOffsetField = new
+            {
+                DisplayName = " - None -",
+                Index = -1
+            };
+            comboOffset.Items.Add(selectedOffsetField);
+            foreach (var field in _featureSet.Fields)
+            {
+                comboOffset.Items.Add(field);
+                if (field.Index == selectedFieldIndex)
+                    selectedOffsetField = field;
+            }
+            comboOffset.SelectedItem = selectedOffsetField;
         }
 
         private void InitLayer(IAppContext context, ILayer layer)
@@ -765,7 +908,6 @@ namespace MW5.Plugins.Symbology.Forms
 
             cboBasicScale.Enabled = chkScaleLabels.Checked;
             btnSetCurrent.Enabled = chkScaleLabels.Checked;
-            lblScaleLabels.Enabled = chkScaleLabels.Checked;
 
             bool hasSortField = cboSortField.SelectedIndex > 0;
             udFontSize2.Enabled = chkUseVariableSize.Checked && hasSortField;
@@ -792,6 +934,8 @@ namespace MW5.Plugins.Symbology.Forms
 
             groupBox4.Enabled = !noLabels && chkUseFrame.Checked;
             groupBox2.Enabled = !noLabels && chkUseFrame.Checked;
+
+            //comboOffsetX.SelectedItem is IAttributeField fieldX
 
             _noEvents = false;
         }
@@ -958,8 +1102,28 @@ namespace MW5.Plugins.Symbology.Forms
                 _featureSet.SortAscending = chkSortAscending.Checked;
             }
 
+            lb.OffsetXField = (comboOffsetX.SelectedItem is IAttributeField fieldX) ? fieldX.Index : -1;
+            lb.OffsetYField = (comboOffsetY.SelectedItem is IAttributeField fieldY) ? fieldY.Index : -1;
+
+            if (lb.OffsetXField != -1)
+            {
+                udLabelOffsetX.Value = 0;
+                udLabelOffsetX.Enabled = false;
+            }
+            else
+                udLabelOffsetX.Enabled = true;
+
+            if (lb.OffsetYField != -1)
+            {
+                udLabelOffsetY.Value = 0;
+                udLabelOffsetY.Enabled = false;
+            }
+            else
+                udLabelOffsetY.Enabled = true;
+
             lb.OffsetX = (double)udLabelOffsetX.Value;
             lb.OffsetY = (double)udLabelOffsetY.Value;
+
             _featureSet.Labels.CollisionBuffer = (int)udLabelsBuffer.Value;
 
             // alignment
@@ -973,18 +1137,24 @@ namespace MW5.Plugins.Symbology.Forms
             if (optAlignTopLeft.Checked) lb.Alignment = LabelAlignment.TopLeft;
             if (optAlignTopRight.Checked) lb.Alignment = LabelAlignment.TopRight;
 
-            btnApply.Enabled = true;
+            // positioning
+            if (_featureSet.IsPolygon)
+                UpdatePositioningForPolygonFeatures(labels);
+            else if (_featureSet.IsPolyline)
+                UpdatePositioningForPolylineFeatures(labels);
+            else
+                UpdatePositioningForPointFeatures(labels);
 
-            _featureSet.Labels.TextRenderingHint = (TextRenderingHint)cboTextRenderingHint.SelectedIndex;
+            if (labels.Positioning == LabelPosition.None)
+                labels.Positioning = LabelPosition.Center;
+
+            _featureSet.Labels.TextRenderingHint = (TextRenderingHint) cboTextRenderingHint.SelectedIndex;
 
             var format = _featureSet.Labels.FloatNumberFormat;
             var newFormat = GetFloatFormat();
             _featureSet.Labels.FloatNumberFormat = newFormat;
 
-            if (newFormat != format)
-            {
-                //m_shapefile.Labels.ForceRecalculateExpression();
-            }
+            btnApply.Enabled = true;
 
             DrawPreview();
         }
@@ -1003,6 +1173,11 @@ namespace MW5.Plugins.Symbology.Forms
         {
             // Fixing CORE-160
             CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
+
+        private void btnSetCurrent_Click(object sender, EventArgs e)
+        {
+            // TODO
         }
     }
 }

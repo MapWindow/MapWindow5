@@ -14,6 +14,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
@@ -36,7 +37,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Creates a new instance of PolygonsForm class
         /// </summary>
-        public LinesForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle style, bool applyDisabled)
+        public LinesForm(IAppContext _context, ILegendLayer layer, IGeometryStyle style, bool applyDisabled) : base(_context)
         {
             if (layer == null) throw new ArgumentNullException("layer");
             if (style == null) throw new ArgumentNullException("style");
@@ -44,7 +45,7 @@ namespace MW5.Plugins.Symbology.Forms
             InitializeComponent();
 
             _style = style;
-            _legend = legend;
+            _legend = _context.Legend;
             _layer = layer;
             _initState = style.Serialize();
 
@@ -84,6 +85,15 @@ namespace MW5.Plugins.Symbology.Forms
             clpVerticesColor.SelectedColorChanged += Ui2Options;
             chkVerticesFillVisible.CheckedChanged += Ui2Options;
             udVerticesSize.ValueChanged += Ui2Options;
+
+            // Visibility
+            var zoom = _context.Map.CurrentZoom;
+            var scale = _context.Map.CurrentScale;
+            dynamicVisibilityControl1.Initialize(_style, zoom, scale);
+            dynamicVisibilityControl1.ValueChanged += (s, e) => {
+                btnApply.Enabled = true;
+                dynamicVisibilityControl1.ApplyChanges();
+            };
 
             InitLinePattern();
 
@@ -263,11 +273,16 @@ namespace MW5.Plugins.Symbology.Forms
                             _noEvents = true;
                             pointSymbolControl1.SelectedIndex = (int)line.Marker;
                             udMarkerInterval.SetValue(line.MarkerInterval);
+                            chkIntervalIsRelative.Checked = line.MarkerIntervalIsRelative;
                             udMarkerSize.SetValue(line.MarkerSize);
                             clpMarkerFill.Color = line.Color;
                             clpMarkerOutline.Color = line.MarkerOutlineColor;
+                            udMarkerOffset.Minimum = -udMarkerOffset.Maximum;
                             udMarkerOffset.SetValue(line.MarkerOffset);
+                            chkOffsetIsRelative.Checked = line.MarkerOffsetIsRelative;
                             cboOrientation.SelectedIndex = (int)line.MarkerOrientation;
+                            chkMarkerFlipFirst.Checked = line.MarkerFlipFirst;
+                            chkMarkerAllowOverflow.Checked = line.MarkerAllowOverflow;
 
                             if (pointSymbolControl1.ForeColor != clpMarkerFill.Color)
                             {
@@ -354,17 +369,24 @@ namespace MW5.Plugins.Symbology.Forms
                         {
                             line.Marker = (VectorMarker)pointSymbolControl1.SelectedIndex;
                             line.MarkerInterval = (float)udMarkerInterval.Value;
+                            line.MarkerIntervalIsRelative = chkIntervalIsRelative.Checked;
                             line.MarkerSize = (float)udMarkerSize.Value;
                             line.Color = clpMarkerFill.Color;
                             line.MarkerOutlineColor = clpMarkerOutline.Color;
                             line.MarkerOrientation = (LabelOrientation)cboOrientation.SelectedIndex;
                             line.MarkerOffset = (float)udMarkerOffset.Value;
+                            line.MarkerOffsetIsRelative = chkOffsetIsRelative.Checked;
+                            line.MarkerFlipFirst = chkMarkerFlipFirst.Checked;
+                            line.MarkerAllowOverflow = chkMarkerAllowOverflow.Checked;
                             pointSymbolControl1.ForeColor = clpMarkerFill.Color;
                         }
                         dgv.Invalidate();
                     }
                 }
             }
+
+            // visibility
+            dynamicVisibilityControl1.ApplyChanges();
 
             btnApply.Enabled = true;
             DrawPreview();
@@ -667,6 +689,19 @@ namespace MW5.Plugins.Symbology.Forms
         {
             // Fixing CORE-160
             CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
+
+        private void OnOffsetIsRelativeChanged(object sender, EventArgs e)
+        {
+            udMarkerOffset.DecimalPlaces = chkOffsetIsRelative.Checked ? 4 : 0;
+            Ui2Options(null, null);
+        }
+
+        private void OnIntervalIsRelativeChanged(object sender, EventArgs e)
+        {
+         
+            udMarkerInterval.DecimalPlaces = chkIntervalIsRelative.Checked ? 4 : 0;
+            Ui2Options(null, null);
         }
     }
 }

@@ -51,6 +51,12 @@ namespace MW5.Api.Concrete
             set { _style.PointRotation = value; }
         }
 
+        public string RotationExpression
+        {
+            get { return _style.PointRotationExpression; }
+            set { _style.PointRotationExpression = value; }
+        }
+
         public int VectorSideCount
         {
             get { return _style.PointSidesCount; }

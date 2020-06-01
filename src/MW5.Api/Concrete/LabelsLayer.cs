@@ -41,6 +41,11 @@ namespace MW5.Api.Concrete
             return _labels.Generate(expression, (tkLabelPositioning) position, largestPartOnly);
         }
 
+        public void ApplyCategories()
+        {
+            _labels.ApplyCategories();
+        }
+
         public LabelCollection Items
         {
             get { return new LabelCollection(_labels); }
@@ -128,6 +133,18 @@ namespace MW5.Api.Concrete
         {
             get { return _labels.OffsetY; }
             set { _labels.OffsetY = value; }
+        }
+
+        public int OffsetXField
+        {
+            get { return _labels.OffsetXField; }
+            set { _labels.OffsetXField = value; }
+        }
+
+        public int OffsetYField
+        {
+            get { return _labels.OffsetYField; }
+            set { _labels.OffsetYField = value; }
         }
 
         public LabelPosition Positioning
@@ -250,6 +267,14 @@ namespace MW5.Api.Concrete
         public void UpdateSizeField()
         {
             _labels.UpdateSizeField();
+        }
+
+        public ILabelStyle GetStyle(GeoLabel lb)
+        {
+            if (lb.CategoryIndex >= 0 && lb.CategoryIndex < Styles.Count)
+                return Styles[lb.CategoryIndex];
+            else
+                return Style;
         }
     }
 }

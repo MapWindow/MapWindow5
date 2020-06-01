@@ -12,6 +12,7 @@ using MW5.Tools.Helpers;
 
 namespace MW5.Plugins.TemplatePlugin
 {
+    using System.Collections.Generic;
     #region
 
     using System.Diagnostics;
@@ -95,6 +96,34 @@ namespace MW5.Plugins.TemplatePlugin
 
             // adding all the available tools in the toolbox
             _context.Toolbox.AddTools(GetType().Assembly.GetTools());
+        }
+
+        /// <summary>
+        /// Called before project is serialized - use it to set per-project plugin settings
+        /// </summary>
+        /// <returns></returns>
+        public override IDictionary<string, string> GetSettings()
+        {
+            // keep this call
+            var dictionary = base.GetSettings();
+
+            // add/modify settings here:
+            // dictionary["setting1"] = someValue.ToString();
+
+            return dictionary;
+        }
+
+        /// <summary>
+        /// Called after Initialize is called - use it to retrieve settings from the project
+        /// </summary>
+        /// <param name="settings"></param>
+        public override void SetSettings(IDictionary<string, string> settings)
+        {
+            // keep this call
+            base.SetSettings(settings);
+
+            // get settings here:
+            // someValue = Parse(dictionary["setting1"]);
         }
 
         #endregion

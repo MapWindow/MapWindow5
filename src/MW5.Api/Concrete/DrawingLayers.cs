@@ -48,33 +48,33 @@ namespace MW5.Api.Concrete
 
         public void DrawLine(double x1, double y1, double x2, double y2, int pixelWidth, Color color)
         {
-            _map.DrawLine(x1, y1, x2, y2, pixelWidth, ColorHelper.ColorToUInt(color));
+            _map.DrawLine(x1, y1, x2, y2, pixelWidth, ColorHelper.ColorToUInt(color), color.A);
         }
 
         public void DrawLine(int layerHandle, double x1, double y1, double x2, double y2, int pixelWidth, Color color)
         {
-            _map.DrawLineEx(layerHandle, x1, y1, x2, y2, pixelWidth, ColorHelper.ColorToUInt(color));
+            _map.DrawLineEx(layerHandle, x1, y1, x2, y2, pixelWidth, ColorHelper.ColorToUInt(color), color.A);
         }
 
         public void DrawPoint(double x, double y, int pixelSize, Color color)
         {
-            _map.DrawPoint(x, y, pixelSize, ColorHelper.ColorToUInt(color));
+            _map.DrawPoint(x, y, pixelSize, ColorHelper.ColorToUInt(color), color.A);
         }
 
         public void DrawPoint(int layerHandle, double x, double y, int pixelSize, Color color)
         {
-            _map.DrawPointEx(layerHandle, x, y, pixelSize, ColorHelper.ColorToUInt(color));
+            _map.DrawPointEx(layerHandle, x, y, pixelSize, ColorHelper.ColorToUInt(color), color.A);
         }
 
         public void DrawCircle(double x, double y, double pixelRadius, Color color, bool fill = true, short outlineWidth = 1)
         {
-            _map.DrawWideCircle(x, y, pixelRadius, ColorHelper.ColorToUInt(color), fill, outlineWidth);
+            _map.DrawWideCircle(x, y, pixelRadius, ColorHelper.ColorToUInt(color), fill, outlineWidth, color.A);
         }
 
         public void DrawCircle(int layerHandle, double x, double y, double pixelRadius, Color color, bool fill = true,
             short outlineWidth = 1)
         {
-            _map.DrawWideCircleEx(layerHandle, x, y, pixelRadius, ColorHelper.ColorToUInt(color), fill, outlineWidth);
+            _map.DrawWideCircleEx(layerHandle, x, y, pixelRadius, ColorHelper.ColorToUInt(color), fill, outlineWidth, color.A);
         }
 
         public void DrawPolygon(double[] xPoints, double[] yPoints, int numPoints, Color color, bool fill, short width)
@@ -82,7 +82,7 @@ namespace MW5.Api.Concrete
             // TODO: test it
             object x = xPoints;
             object y = yPoints;
-            _map.DrawWidePolygon(ref x, ref y, numPoints, ColorHelper.ColorToUInt(color), fill, width);
+            _map.DrawWidePolygon(ref x, ref y, numPoints, ColorHelper.ColorToUInt(color), fill, width, color.A);
         }
 
         public void DrawPolygon(int layerHandle, ref object xPoints, ref object yPoints, int numPoints, Color color,
@@ -90,7 +90,7 @@ namespace MW5.Api.Concrete
         {
             object x = xPoints;
             object y = yPoints;
-            _map.DrawWidePolygonEx(layerHandle, ref x, ref y, numPoints, ColorHelper.ColorToUInt(color), fill, width);
+            _map.DrawWidePolygonEx(layerHandle, ref x, ref y, numPoints, ColorHelper.ColorToUInt(color), fill, width, color.A);
         }
 
         public LabelsLayer GetLabels(int drawingLayerIndex)

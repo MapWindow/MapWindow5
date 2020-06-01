@@ -20,11 +20,11 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Attributes.Views
 {
-    public partial class QueryBuilderView : QueryBuilderViewBase, IQueryBuilderView
+    public partial class QueryBuilderView : QueryBuilderViewBase, IExpressionBuilderView
     {
         private IAttributeTable _table;
 
-        public QueryBuilderView()
+        public QueryBuilderView() : base()
         {
             InitializeComponent();
 
@@ -213,7 +213,7 @@ namespace MW5.Attributes.Views
         }
     }
 
-    public class QueryBuilderViewBase : MapWindowView<QueryBuilderModel>
+    public class QueryBuilderViewBase : MapWindowView<IExpressionBuilderModel>
     {
     }
 }

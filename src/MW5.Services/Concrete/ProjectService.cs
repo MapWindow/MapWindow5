@@ -271,36 +271,40 @@ namespace MW5.Services.Concrete
             }
 
             ShowLoadingForm(filename);
-
-            bool legacy = !filename.ToLower().EndsWith(".mwproj");
-            var loader = GetCurrentLoader(legacy);
-            loader.ProgressChanged += OnLoadingProgressChanged;
-
-            bool result;
-
-            _context.View.Lock();
-
-            if (legacy)
+            try
             {
-                result = OpenLegacyProject(filename);
+                bool legacy = !filename.ToLower().EndsWith(".mwproj");
+                var loader = GetCurrentLoader(legacy);
+                loader.ProgressChanged += OnLoadingProgressChanged;
+
+                bool result;
+
+                _context.View.Lock();
+
+                if (legacy)
+                {
+                    result = OpenLegacyProject(filename);
+                }
+                else
+                {
+                    result = OpenCore(filename, silent);
+                }
+
+                // let's redraw map before hiding the progress
+                _loadingForm.ShowProgress(100, "Rendering map...");
+                _context.Map.Redraw();
+                _context.View.Unlock();
+
+                Application.DoEvents();
+
+                loader.ProgressChanged -= OnLoadingProgressChanged;
+
+                return result;
             }
-            else
+            finally
             {
-                result = OpenCore(filename, silent);
+                HideLoadingForm();
             }
-
-            // let's redraw map before hiding the progress
-            _loadingForm.ShowProgress(100, "Rendering map...");
-            _context.Map.Redraw();
-            _context.View.Unlock();
-
-            Application.DoEvents();
-
-            loader.ProgressChanged -= OnLoadingProgressChanged;
-
-            HideLoadingForm();
-
-            return result;
         }
 
         private void OnLoadingProgressChanged(object sender, Plugins.Events.ProgressEventArgs e)

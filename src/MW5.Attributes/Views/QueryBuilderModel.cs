@@ -4,26 +4,14 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
-using System;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Attributes.Views
 {
-    public class QueryBuilderModel
+    public class QueryBuilderModel : BaseExpressionBuilderModel
     {
         public QueryBuilderModel(ILayer layer, string expression, bool query = true)
-        {
-            if (layer == null) throw new ArgumentNullException("layer");
-
-            Layer = layer;
-            Expression = expression;
-            IsQuery = query;
-        }
-
-        public bool IsQuery { get; private set; }
-
-        public string Expression { get; set; }
-
-        public ILayer Layer { get; private set; }
+            : base(layer, expression, query, TableValueType.Boolean) { }
     }
 }

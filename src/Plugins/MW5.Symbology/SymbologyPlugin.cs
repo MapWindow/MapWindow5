@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
@@ -17,7 +19,8 @@ namespace MW5.Plugins.Symbology
         private LegendListener _legendListener;
         private MenuGenerator _menuGenerator;
         private MenuListener _menuListener;
-        private LabelMover _labelMover;
+        private MapObjectMover _labelMover;
+        private SymbolRotater _symbolRotater;
         private SymbologyMetadataService _metadataService;
 
         internal static SymbologyMetadata GetMetadata(int layerHandle)
@@ -61,7 +64,8 @@ namespace MW5.Plugins.Symbology
             _context = context;
 
             _metadataService = context.Container.GetSingleton<SymbologyMetadataService>();
-            _labelMover = context.Container.GetSingleton<LabelMover>();
+            _labelMover = context.Container.GetSingleton<MapObjectMover>();
+            _symbolRotater = context.Container.GetSingleton<SymbolRotater>();
             _legendListener = context.Container.GetInstance<LegendListener>();
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();

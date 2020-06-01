@@ -63,6 +63,18 @@ namespace MW5.Api.Concrete
             set { _style.MinVisibleScale = value; }
         }
 
+        public int MaxVisibleZoom
+        {
+            get { return _style.MaxVisibleZoom; }
+            set { _style.MaxVisibleZoom = value; }
+        }
+
+        public int MinVisibleZoom
+        {
+            get { return _style.MinVisibleZoom; }
+            set { _style.MinVisibleZoom = value; }
+        }
+
         public bool Visible
         {
             get { return _style.Visible; }

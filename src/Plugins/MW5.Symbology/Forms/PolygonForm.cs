@@ -16,6 +16,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Helpers;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
@@ -38,9 +39,8 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Creates a new instance of PolygonForm class
         /// </summary>
-        public PolygonForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle style, bool applyDisabled)
+        public PolygonForm(IAppContext context, ILegendLayer layer, IGeometryStyle style, bool applyDisabled) : base(context)
         {
-            if (legend == null) throw new ArgumentNullException("legend");
             if (layer == null) throw new ArgumentNullException("layer");
             if (style == null) throw new ArgumentNullException("style");
 
@@ -48,7 +48,7 @@ namespace MW5.Plugins.Symbology.Forms
 
             _style = style;
             _metadata = SymbologyPlugin.GetMetadata(layer.Handle);
-            _legend = legend;
+            _legend = context.Legend;
             _layer = layer;
 
             _initState = style.Serialize();
@@ -213,6 +213,12 @@ namespace MW5.Plugins.Symbology.Forms
             icbHatchStyle.ComboStyle = ImageComboStyle.HatchStyle;
             icbLineType.ComboStyle = ImageComboStyle.LineStyle;
             icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
+
+            dynamicVisibilityControl1.Initialize(_style, _context.Map.CurrentZoom, _context.Map.CurrentScale);
+            dynamicVisibilityControl1.ValueChanged += (s, e) => {
+                btnApply.Enabled = true;
+                dynamicVisibilityControl1.ApplyChanges();
+            };
         }
 
         private void InitTextures()
@@ -364,6 +370,9 @@ namespace MW5.Plugins.Symbology.Forms
             // transparency
             _style.Line.Transparency = transpOutline.Value;
             _style.Fill.Transparency = transpFill.Value;
+
+            // visibility
+            dynamicVisibilityControl1.ApplyChanges();
 
             btnApply.Enabled = true;
 

@@ -52,10 +52,11 @@ namespace MW5.Plugins.Services
         /// Loads a single plugin.
         /// </summary>
         /// <param name="identity">Plugin identity.</param>
+        /// <param name="settings">Plugin settings.</param>
         /// <param name="context">Application context.</param>
-        void LoadPlugin(PluginIdentity identity, IAppContext context);
+        void LoadPlugin(PluginIdentity identity, IDictionary<string, string> settings, IAppContext context);
 
-        void LoadPlugin(Guid pluginGuid, IAppContext context);
+        void LoadPlugin(string PluginName, Guid pluginGuid, IDictionary<string, string> settings, IAppContext context);
 
         /// <summary>
         /// Unloads single plugin and removes associated menus & toolbars

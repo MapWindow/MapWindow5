@@ -94,6 +94,31 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool DynamicVisibility {
+            get => _category.DrawingOptions.DynamicVisibility;
+            set => _category.DrawingOptions.DynamicVisibility = value;
+        }
+        public int MinVisibleZoom
+        {
+            get => _category.DrawingOptions.MinVisibleZoom;
+            set => _category.DrawingOptions.MinVisibleZoom = value;
+        }
+        public int MaxVisibleZoom
+        {
+            get => _category.DrawingOptions.MaxVisibleZoom;
+            set => _category.DrawingOptions.MaxVisibleZoom = value;
+        }
+        public double MinVisibleScale
+        {
+            get => _category.DrawingOptions.MinVisibleScale;
+            set => _category.DrawingOptions.MinVisibleScale = value;
+        }
+        public double MaxVisibleScale
+        {
+            get => _category.DrawingOptions.MaxVisibleScale;
+            set => _category.DrawingOptions.MaxVisibleScale = value;
+        }
+
         public double GetMinValue()
         {
             double val;

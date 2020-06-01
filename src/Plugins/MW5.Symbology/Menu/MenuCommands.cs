@@ -27,6 +27,7 @@ namespace MW5.Plugins.Symbology.Menu
                 new MenuCommand("Query Builder", MenuKeys.QueryBuilder, Resources.img_database_search32),
                 new MenuCommand("Categories", MenuKeys.Categories, Resources.img_categories32),
                 new MenuCommand("Label Mover", MenuKeys.LabelMover, Resources.label_mover),
+                new MenuCommand("Symbol Rotator", MenuKeys.SymbolRotator, Resources.symbol_rotator),
                 new MenuCommand("Labels", MenuKeys.Labels, Resources.img_label24),
                 new MenuCommand("Charts", MenuKeys.Charts, Resources.img_chart24),
                 new MenuCommand("Layer Properties", MenuKeys.LayerProperties, Resources.img_properties24),

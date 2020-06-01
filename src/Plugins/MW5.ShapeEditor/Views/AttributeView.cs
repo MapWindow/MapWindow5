@@ -172,6 +172,10 @@ namespace MW5.Plugins.ShapeEditor.Views
                     return 0;
                 case AttributeType.Double:
                     return 0.0;
+                case AttributeType.Boolean:
+                    return false;
+                case AttributeType.Date:
+                    return DateTime.MinValue;
                 case AttributeType.String:
                 default:
                     return "";
@@ -186,6 +190,8 @@ namespace MW5.Plugins.ShapeEditor.Views
                     return "i";
                 case AttributeType.Double:
                     return "d";
+                case AttributeType.Boolean:
+                    return "b";
                 case AttributeType.String:
                 default:
                     return "s";

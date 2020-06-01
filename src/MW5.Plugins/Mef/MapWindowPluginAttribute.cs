@@ -7,23 +7,18 @@ namespace MW5.Plugins.Mef
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property), MetadataAttribute]
     public class MapWindowPluginAttribute : ExportAttribute, IPluginMetadata
     {
-        private string _name;
-        private string _author;
-        private string _guid;
-        private bool _empty;
-        private bool _loadOnStartUp = false;
 
         public MapWindowPluginAttribute()
             : base(typeof(IPlugin))
         {
-            _empty = true;
+            Empty = true;
         }
 
         public MapWindowPluginAttribute(bool loadOnStartUp)
             : base(typeof(IPlugin))
         {
-            _empty = true;
-            _loadOnStartUp = loadOnStartUp;
+            Empty = true;
+            LoadOnStartUp = loadOnStartUp;
         }
 
         public MapWindowPluginAttribute(string name, string author, string guid)
@@ -47,35 +42,23 @@ namespace MW5.Plugins.Mef
                 throw new ApplicationException("Invalid Guid value.");
             }
 
-            _empty = false;
-            _author = author;
-            _name = name;
-            _guid = guid;
+            Empty = false;
+            Author = author;
+            Name = name;
+            Guid = guid;
         }
 
-        public bool Empty
-        {
-            get { return _empty; }
-        }
+        public bool Empty { get; }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; }
 
-        public string Author
-        {
-            get { return _author; }
-        }
+        public string Author { get; }
 
-        public string Guid
-        {
-            get { return _guid; }
-        }
+        public string Guid { get; }
 
-        public bool LoadOnStartUp
-        {
-            get { return _loadOnStartUp; }
-        }
+        public bool LoadOnStartUp { get; } = false;
+
+        public string[] Before { get; set; } = new string[] { };
+        public string[] After { get; set; } = new string[] { };
     }
 }

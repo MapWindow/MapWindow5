@@ -191,6 +191,9 @@ namespace MW5.Plugins.Symbology.Views
 
             using (var form = _context.GetSymbologyForm(Model.Layer.Handle, ct.Style, true))
             {
+                if (form == null)
+                    return;
+
                 form.Text = "Category drawing options";
 
                 if (_context.View.ShowChildView(form))

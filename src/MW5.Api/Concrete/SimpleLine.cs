@@ -80,6 +80,12 @@ namespace MW5.Api.Concrete
             set { _segment.MarkerInterval = value; }
         }
 
+        public bool MarkerIntervalIsRelative
+        {
+            get { return _segment.MarkerIntervalIsRelative; }
+            set { _segment.MarkerIntervalIsRelative = value; }
+        }
+
         public LabelOrientation MarkerOrientation
         {
             get { return (LabelOrientation)_segment.MarkerOrientation; }
@@ -98,6 +104,17 @@ namespace MW5.Api.Concrete
             set { _segment.MarkerOffset = value; }
         }
 
+        public bool MarkerOffsetIsRelative
+        {
+            get { return _segment.MarkerOffsetIsRelative; }
+            set { _segment.MarkerOffsetIsRelative = value; }
+        }
+
+        public bool MarkerAllowOverflow
+        {
+            get { return _segment.MarkerAllowOverflow; }
+            set { _segment.MarkerAllowOverflow = value; }
+        }
         public Color MarkerOutlineColor
         {
             get { return ColorHelper.UintToColor(_segment.MarkerOutlineColor); }

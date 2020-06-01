@@ -10,5 +10,7 @@
         bool Visible { get; set; }
         double X { get; set; }
         double Y { get; set; }
+        double OffsetX { get; }
+        double OffsetY { get; }
     }
 }

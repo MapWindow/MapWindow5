@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="MW5.Plugins.AdvancedSnapping.Views.DoubleInputBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:extensions="clr-namespace:MW5.Plugins.AdvancedSnapping.WPFExtensions"
+             xmlns:behaviours="clr-namespace:MW5.Plugins.AdvancedSnapping.WPFBehaviours"
+             mc:Ignorable="d">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Margin="0 0 5 0" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" Focusable="False" Content="{Binding Label, FallbackValue='Label'}" />
+        <TextBox TabIndex="1" Grid.Column="1" MinWidth="150" x:Name="InputBox" extensions:FocusExtension.IsFocused="{Binding HasFocus}" VerticalContentAlignment="Center" 
+             Text="{Binding Path=StringValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             behaviours:Masking.Mask="{Binding Path=InputRegex}" AcceptsReturn="False">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding ValueEnteredCommand}" CommandParameter="{Binding ElementName=InputBox}" />
+                <KeyBinding Key="Return" Command="{Binding ValueEnteredCommand}" CommandParameter="{Binding ElementName=InputBox}" />
+            </TextBox.InputBindings>
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="2"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+    </Grid>
+</UserControl>

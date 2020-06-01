@@ -601,7 +601,7 @@ namespace MW5.Api.Legend
                 }
                 else if (_vScrollBar.Value + stepSize > maxSize)
                 {
-                    _vScrollBar.Value = maxSize + 1;
+                    _vScrollBar.Value = Math.Max(maxSize + 1, _vScrollBar.Minimum);
                 }
                 else
                 {

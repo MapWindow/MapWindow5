@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using log4net;
@@ -23,6 +24,9 @@ namespace MW5.Services.Concrete
 
         public LoggingService()
         {
+            FileInfo configFileInfo = new FileInfo("App.config");
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(configFileInfo);
+
             ThreadId = Thread.CurrentThread.ManagedThreadId;
 
             _log4NetLogger = LogManager.GetLogger(typeof(Logger));

@@ -45,6 +45,8 @@ namespace MW5.Plugins.Symbology.Menu
                 {
                     using (var form = _context.GetSymbologyForm(e.LayerHandle, ct.Style, false))
                     {
+                        if (form == null)
+                            return;
                         _context.View.ShowChildView(form);
                     }
                     e.Handled = true;

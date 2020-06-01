@@ -1,7 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Static
 {
@@ -342,6 +344,13 @@ namespace MW5.Api.Static
         {
             get { return _settings.OgrShareConnection; }
             set { _settings.OgrShareConnection = value; }
+        }
+
+        public static double GetProjectedMouseTolerance(this IMuteMap map)
+        {
+            map.PixelToProj(0, 0, out double x1, out double _);
+            map.PixelToProj(MapConfig.MouseTolerance, 0, out double x2, out _);
+            return Math.Abs(x1-x2);
         }
 
         #region Not implemented

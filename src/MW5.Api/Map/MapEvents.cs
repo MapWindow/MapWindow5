@@ -39,6 +39,9 @@ namespace MW5.Api.Map
             _map.UndoListChanged += MapUndoListChanged;
             _map.ValidateShape += MapValidateShape;
             _map.BeforeVertexDigitized += MapBeforeVertexDigitized;
+            _map.SnapPointRequested += MapSnapPointRequested;
+            _map.SnapPointFound += MapSnapPointFound;
+            _map.SnapPointFound += MapSnapPointFound;
         }
 
         public void DetachHandlers()
@@ -69,10 +72,22 @@ namespace MW5.Api.Map
             _map.TilesLoaded -= MapTilesLoaded;
             _map.UndoListChanged -= MapUndoListChanged;
             _map.ValidateShape -= MapValidateShape;
+            _map.SnapPointRequested -= MapSnapPointRequested;
+            _map.SnapPointFound -= MapSnapPointFound;
             _map.BeforeVertexDigitized -= MapBeforeVertexDigitized;
         }
 
         #region Handlers
+        private void MapSnapPointRequested(object sender, _DMapEvents_SnapPointRequestedEvent e)
+        {
+            Invoke(sender, SnapPointRequested, new SnapPointRequestedEventArgs(e));
+        }
+
+        private void MapSnapPointFound(object sender, _DMapEvents_SnapPointFoundEvent e)
+        {
+            Invoke(sender, SnapPointFound, new SnapPointFoundEventArgs(e));
+        }
+
         private void MapBeforeVertexDigitized(object sender, _DMapEvents_BeforeVertexDigitizedEvent e)
         {
             Invoke(sender, BeforeVertexDigitized, new BeforeVertexDigitizedEventArgs(e));

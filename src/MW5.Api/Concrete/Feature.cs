@@ -97,7 +97,9 @@ namespace MW5.Api.Concrete
             get
             {
                 int index = CategoryIndex;
-                return new FeatureCategory(_shapefile.Categories.Item[index], index);
+                if (index < 0)
+                    return null;
+                return new FeatureCategory(_shapefile.Categories.Item[index], index); // TODO this causes null ref?
             }
             set { _shapefile.ShapeCategory3[_shapeIndex] = value.GetInternal(); }
         }

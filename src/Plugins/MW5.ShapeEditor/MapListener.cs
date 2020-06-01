@@ -39,7 +39,7 @@ namespace MW5.Plugins.ShapeEditor
 
         private void OnBeforeDeleteShape(IMuteMap map, BeforeDeleteShapeEventArgs e)
         {
-            if (e.Cancel || (e.Target == DeleteTarget.Vertex && Control.ModifierKeys.HasFlag(Keys.Control)))
+            if (e.Silent || e.Cancel || (e.Target == DeleteTarget.Vertex && Control.ModifierKeys.HasFlag(Keys.Control)))
             {
                 // don't bother user with prompt
                 return;

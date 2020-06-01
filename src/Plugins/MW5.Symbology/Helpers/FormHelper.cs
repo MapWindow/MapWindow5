@@ -33,17 +33,20 @@ namespace MW5.Plugins.Symbology.Helpers
 
             var type = fs.GeometryType;
 
+            if (type == GeometryType.None)
+                type = layer.VectorSource.ActiveGeometryType;
+
             if (type == GeometryType.Point || type == GeometryType.MultiPoint)
             {
-                form = new PointsForm(context.Legend, layer, options, applyDisabled);
+                form = new PointsForm(context, layer, options, applyDisabled);
             }
             else if (type == GeometryType.Polyline)
             {
-                form = new LinesForm(context.Legend, layer, options, applyDisabled);
+                form = new LinesForm(context, layer, options, applyDisabled);
             }
             else if (type == GeometryType.Polygon)
             {
-                form = new PolygonForm(context.Legend, layer, options, applyDisabled);
+                form = new PolygonForm(context, layer, options, applyDisabled);
             }
             return form;
         }
@@ -67,6 +70,8 @@ namespace MW5.Plugins.Symbology.Helpers
 
             using (var form = context.GetSymbologyForm(layer.Handle, style, applyDisabled))
             {
+                if (form == null)
+                    return false;
                 form.Text = "Default Layer Style";
 
                 if (context.View.ShowChildView(form, parent))
@@ -100,6 +105,17 @@ namespace MW5.Plugins.Symbology.Helpers
                 var model = new QueryBuilderModel(layer, "");
                 context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model);
             }
+        }
+
+        internal static bool ShowExpressionBuilder(IAppContext context, ILayer layer, IWin32Window parent, ref string expression, TableValueType outputType)
+        {
+            var model = new ExpressionBuilderModel(layer, expression, outputType);
+            bool result = context.Container.Run<ExpressionBuilderPresenter, ExpressionBuilderModel>(model, parent);
+
+            if (result)
+                expression = model.Expression;
+
+            return result;
         }
 
         internal static bool ShowQueryBuilder(IAppContext context, ILayer layer, IWin32Window parent, ref string expression, bool selectionMode)

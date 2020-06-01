@@ -40,5 +40,7 @@ namespace MW5.Api.Interfaces
         event EventHandler<EventArgs> HistoryChanged;
         event EventHandler<ValidateShapeEventArgs> ValidateShape;
         event EventHandler<EventArgs> TmsProviderChanged;
+        event EventHandler<SnapPointRequestedEventArgs> SnapPointRequested;
+        event EventHandler<SnapPointFoundEventArgs> SnapPointFound;
     }
 }

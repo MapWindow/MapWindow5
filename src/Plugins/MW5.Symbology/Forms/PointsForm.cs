@@ -15,6 +15,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
@@ -37,15 +38,14 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Creates a new instance of PointsForm class
         /// </summary>
-        public PointsForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle options, bool applyDisabled)
+        public PointsForm(IAppContext context, ILegendLayer layer, IGeometryStyle options, bool applyDisabled) : base(context)
         {
             if (layer == null) throw new ArgumentNullException("layer");
             if (options == null) throw new ArgumentNullException("options");
-            if (legend == null) throw new ArgumentNullException("legend");
-
+            
             InitializeComponent();
 
-            _legend = legend;
+            _legend = context.Legend;
             _layer = layer;
             _style = options;
 
@@ -56,6 +56,12 @@ namespace MW5.Plugins.Symbology.Forms
             btnApply.Visible = !applyDisabled;
 
             pointIconControl1.Initialize(_style.Marker);
+
+            dynamicVisibilityControl1.Initialize(_style, _context.Map.CurrentZoom, _context.Map.CurrentScale);
+            dynamicVisibilityControl1.ValueChanged += (s, e) => {
+                btnApply.Enabled = true;
+                dynamicVisibilityControl1.ApplyChanges();
+            };
 
             InitControls();
 
@@ -185,6 +191,9 @@ namespace MW5.Plugins.Symbology.Forms
             fill.Rotation = (double)udGradientRotation.Value;
 
             fill.Transparency = transparencyControl1.Value;
+
+            // visibility
+            dynamicVisibilityControl1.ApplyChanges();
 
             if (!_noEvents)
             {
@@ -538,6 +547,15 @@ namespace MW5.Plugins.Symbology.Forms
         {
             // Fixing CORE-160
             CaptionFont = new Font("Microsoft Sans Serif", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string expression = _style.Marker.RotationExpression;
+            if (FormHelper.ShowExpressionBuilder(_context, _layer, this, ref expression, TableValueType.Double))
+            {
+                _style.Marker.RotationExpression = expression;
+            }
         }
     }
 }

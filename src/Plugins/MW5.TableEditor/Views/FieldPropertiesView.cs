@@ -87,6 +87,8 @@ namespace MW5.Plugins.TableEditor.Views
                 var value = cboDataType.GetValue<AttributeType>();
                 switch (value)
                 {
+                    case AttributeType.Boolean:
+                    case AttributeType.Date:
                     case AttributeType.String:
                         udWidth.Maximum = 255;
                         udWidth.Value = 50;

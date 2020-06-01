@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -251,6 +252,11 @@ namespace MW5.UI.Docking
         private IDockPanel GetDockPanel(Control control)
         {
             return new DockPanel(_dockingManager, control, _mainForm);
+        }
+
+        public void SetMinimumSize(IDockPanel panel, Size size)
+        {
+            _dockingManager.SetControlMinimumSize(panel.Control, size);
         }
     }
 }

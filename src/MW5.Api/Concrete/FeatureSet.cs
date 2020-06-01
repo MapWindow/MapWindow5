@@ -379,6 +379,18 @@ namespace MW5.Api.Concrete
             return false;
         }
 
+        public bool HasOgrFidMapping
+        {
+            get => _shapefile.HasOgrFidMapping;
+        }
+
+        public int MapOgrFid2ShapeIndex(int ogrFID)
+        {
+            if (!HasOgrFidMapping)
+                throw new InvalidOperationException("Can not get a feature index from an OGR feature id when there is no feature id mapping!");
+            return _shapefile.OgrFid2ShapeIndex(ogrFID);
+        }
+
         public IFeatureSet Dissolve(int fieldIndex, bool selectedOnly)
         {
             var sf = _shapefile.Dissolve(fieldIndex, selectedOnly);
@@ -637,9 +649,9 @@ namespace MW5.Api.Concrete
             set => _shapefile.StopExecution = new StopExecution(value);
         }
 
-        public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false)
+        public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1)
         {
-            return _shapefile.GenerateLabels(-1, (tkLabelPositioning) method, largestPartOnly);
+            return _shapefile.GenerateLabels(-1, (tkLabelPositioning) method, largestPartOnly, offsetXField, offsetYField);
         }
 
         public IList<int> SelectedIndices
@@ -711,9 +723,9 @@ namespace MW5.Api.Concrete
 
         public bool AppendMode => _shapefile.AppendMode;
 
-        public int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false)
+        public int GenerateLabels(int fieldIndex, LabelPosition position, bool largestPartOnly = false, int offsetXField = -1, int offsetYField = -1)
         {
-            return _shapefile.GenerateLabels(fieldIndex, (tkLabelPositioning)position, largestPartOnly);
+            return _shapefile.GenerateLabels(fieldIndex, (tkLabelPositioning)position, largestPartOnly, offsetXField, offsetYField);
         }
 
         public IGlobalListener Callback

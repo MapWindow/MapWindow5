@@ -31,57 +31,86 @@ namespace MW5.Plugins.Printing.Services
         }
 
         /// <summary>
-        /// Runs printing including printer selection
+        /// Runs printing including user printer selection
         /// </summary>
         public void Print(LayoutPages pages, PrinterSettings printerSettings, IEnumerable<LayoutElement> elements)
         {
-            var pd = CreateAndShowPrintDialog(pages, printerSettings);
-
-            if (pd == null)
+            using (var pd = CreateAndShowPrintDialog(pages, printerSettings))
             {
-                return;
+                if (pd == null)
+                    return;
+
+                SchedulePages(
+                    pages, elements,
+                    pd.PrinterSettings.PrintRange, pd.PrinterSettings.FromPage, pd.PrinterSettings.ToPage);
             }
 
-            _pages = pages;
-            _elements = elements;
-
-            SchedulePages(pages, pd);
-
-            var _printDocument = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
-            _printDocument.PrintPage += PrintNextPage;
-            _printDocument.EndPrint += (s, e) => DelegateHelper.FireEvent(this, EndPrint, e);
-            _printDocument.PrintController = new StandardPrintController();
-
-            _printDocument.Print();
+            Print(printerSettings);
         }
+
+        /// <summary>
+        /// Prints to PDF file.
+        /// </summary>
+        public bool PrintToPdfFile(LayoutPages pages, PrinterSettings printerSettings, IEnumerable<LayoutElement> elements, string filename)
+            => PrintToFile(pages, elements, printerSettings, filename, "Microsoft Print to PDF");
 
         /// <summary>
         /// Prints to XPS file.
         /// </summary>
         public bool PrintToXpsFile(LayoutPages pages, PrinterSettings printerSettings, IEnumerable<LayoutElement> elements, string filename)
+            => PrintToFile(pages, elements, printerSettings, filename, "Microsoft XPS Document Writer");
+
+        /// <summary>
+        /// Prints to a file using the specified printer
+        /// </summary>
+        public bool PrintToFile(LayoutPages pages, IEnumerable<LayoutElement> elements, PrinterSettings printerSettings, string filename, string printerName)
         {
-            _pages = pages;
-            _elements = elements;
+            SchedulePages(pages, elements, PrintRange.AllPages, null, null);
 
-            const string printer = "Microsoft XPS Document Writer";
-            if (!PrinterSettings.InstalledPrinters.OfType<string>().Contains(printer))
-            {
-                MessageService.Current.Info("Failed to find \"Microsoft XPS Document Writer\" which is used for PDF conversion.");
+            if (!UsePrinter(printerSettings, printerName))
                 return false;
-            }
 
-            printerSettings.PrinterName = printer;
             printerSettings.PrintFileName = filename;
             printerSettings.PrintToFile = true;
 
-            var _printDocument = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
-            _printDocument.PrintPage += PrintNextPage;
-            _printDocument.EndPrint += (s, e) => DelegateHelper.FireEvent(this, EndPrint, e);
-            _printDocument.PrintController = new StandardPrintController();
-
-            _printDocument.Print();
+            Print(printerSettings);
 
             return true;
+        }
+
+        public bool HasNativePDFPrinter => PrinterSettings.InstalledPrinters.OfType<string>().Contains("Microsoft Print to PDF");
+
+        /// <summary>
+        /// Checks if the specified printer is available and sets it on the printer settings or returns false if not available
+        /// </summary>
+        private static bool UsePrinter(PrinterSettings printerSettings, string printerName)
+        {
+            // Check if printer is installed
+            if (!PrinterSettings.InstalledPrinters.OfType<string>().Contains(printerName))
+            {
+                MessageService.Current.Info($"Failed to find \"{printerName}\" which is used for PDF conversion.");
+                return false;
+            }
+
+            // Set printer name
+            printerSettings.PrinterName = printerName;
+            return true;
+        }
+
+        /// <summary>
+        /// Print the document using the given printer settings
+        /// </summary>
+        /// <param name="printerSettings"></param>
+        private void Print(PrinterSettings printerSettings)
+        {
+            using (var _printDocument = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings })
+            {
+                _printDocument.PrintPage += PrintNextPage;
+                _printDocument.EndPrint += (s, e) => DelegateHelper.FireEvent(this, EndPrint, e);
+                _printDocument.PrintController = new StandardPrintController();
+
+                _printDocument.Print();
+            }
         }
 
         /// <summary>
@@ -187,13 +216,16 @@ namespace MW5.Plugins.Printing.Services
         }
 
         /// <summary>
-        /// Schedules which pages should be rendered depending on print dialog.
+        /// Schedules which pages should be rendered
         /// </summary>
-        private void SchedulePages(LayoutPages pages, PrintDialog pd)
+        private void SchedulePages(LayoutPages pages, IEnumerable<LayoutElement> elements, PrintRange printRange, int? fromPage, int? toPage)
         {
+            _pages = pages;
+            _elements = elements;
+
             pages.MarkUnprinted();
 
-            switch (pd.PrinterSettings.PrintRange)
+            switch (printRange)
             {
                 case PrintRange.AllPages:
                     foreach (var page in pages)
@@ -211,7 +243,7 @@ namespace MW5.Plugins.Printing.Services
                     foreach (var page in pages)
                     {
                         var index = pages.PageIndex(page);
-                        page.Scheduled = (index >= pd.PrinterSettings.FromPage && index <= pd.PrinterSettings.ToPage);
+                        page.Scheduled = (index >= fromPage && index <= toPage);
                     }
                     break;
             }

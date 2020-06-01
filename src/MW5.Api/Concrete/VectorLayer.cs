@@ -55,6 +55,11 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool ExtendFromQuery(string query)
+        {
+            return _layer.ExtendFromQuery(query);
+        }
+
         public void ReloadFromSource(bool preserveStyleAndLabels = true)
         {
             var lbls = Data.Labels.Style.Serialize();

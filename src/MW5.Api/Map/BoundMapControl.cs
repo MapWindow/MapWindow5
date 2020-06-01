@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -123,6 +125,36 @@ namespace MW5.Api.Map
         public bool StartNewBoundShape(int layerHandle)
         {
             return _map.StartNewBoundShapeEx(layerHandle);
+        }
+
+        public IEnumerable<IGeometry> GetSnapCandidateGeometriesFromLayers(ICoordinate original, double tolerance)
+        {
+            IGeometry pointGeom = new Geometry(GeometryType.Point);
+            pointGeom.Points.Add(original.Clone());
+            pointGeom = pointGeom.Buffer(tolerance * 2, 6);
+
+            IList<IGeometry> geometriesToTest = new List<IGeometry>();
+            foreach (var layer in Layers.Where(l => l.IsVector && l.Visible && l.LayerVisibleAtCurrentScale))
+            {
+                var results = new int[] { };
+                if (layer.FeatureSet.GetRelatedShapes(pointGeom, SpatialRelation.Intersects, ref results))
+                {
+                    try
+                    {
+                        foreach (var index in results)
+                        {
+                            var feature = layer.FeatureSet.Features[index];
+                            geometriesToTest.Add(feature.Geometry.Clone());
+                        }
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        // ignore
+                    }
+                }
+            }
+
+            return geometriesToTest;
         }
 
         [Browsable(false)]

@@ -32,7 +32,17 @@ namespace MW5.Api.Concrete
 
         public int CategoryIndex
         {
-            get { return _label.Category; }
+            get
+            {
+                try
+                {
+                    return _label.Category;
+                }
+                catch (NullReferenceException)
+                {
+                    return -1;
+                }
+            }
             set { _label.Category = value; }
         }
 
@@ -74,6 +84,16 @@ namespace MW5.Api.Concrete
         {
             get { return _label.y; }
             set { _label.y = value; }
+        }
+
+        public double OffsetX
+        {
+            get { return _label.OffsetX; }
+        }
+
+        public double OffsetY
+        {
+            get { return _label.OffsetY; }
         }
     }
 }

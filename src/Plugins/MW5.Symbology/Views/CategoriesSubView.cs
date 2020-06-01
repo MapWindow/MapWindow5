@@ -247,6 +247,10 @@ namespace MW5.Plugins.Symbology.Views
                     return true;
                 case AttributeType.Double:
                     return !uniqueValues;
+                case AttributeType.Boolean:
+                    return true;
+                case AttributeType.Date:
+                    return uniqueValues;
                 default:
                     throw new ArgumentOutOfRangeException("type");
             }

@@ -118,7 +118,7 @@ namespace MW5.Services.Concrete
         {
             foreach (var p in project.Plugins)
             {
-                _context.PluginManager.LoadPlugin(p.Guid, _context);
+                _context.PluginManager.LoadPlugin(p.Name, p.Guid, p.Settings, _context);
             }
         }
 

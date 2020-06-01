@@ -60,10 +60,7 @@ namespace MW5.Controls
                 Legend.SelectedLayerHandle = e.LayerHandle;
 
                 var group = Legend.Groups.GroupByLayerHandle(e.LayerHandle);
-                if (group != null)
-                {
-                    SelectedGroupHandle = group.Handle;
-                }
+                SelectedGroupHandle = group?.Handle ?? -1;
 
                 var pnt = PointToClient(Cursor.Position);
                 contextMenuLayer.Show(this, pnt);
@@ -74,6 +71,7 @@ namespace MW5.Controls
         {
             if (e.Button == MouseButtons.Right)
             {
+                SelectedGroupHandle = 0;
                 var pnt = PointToClient(Cursor.Position);
                 contextMenuGroup.Show(this, pnt);
             }
@@ -101,6 +99,14 @@ namespace MW5.Controls
                 toolLabels.Enabled = layer.IsVector;
                 toolTableEditor.Enabled = layer.IsVector;
             }
+        }
+
+        private void OnContextMenuGroupOpening(object sender, CancelEventArgs e)
+        {
+            var validGroupHandle = Legend.Groups.IsValidHandle(SelectedGroupHandle);
+            mnuRemoveGroup.Enabled = validGroupHandle;
+            mnuZoomToGroup.Enabled = validGroupHandle;
+            mnuGroupProperties.Enabled = validGroupHandle;
         }
     }
 }

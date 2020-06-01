@@ -45,11 +45,8 @@ namespace MW5.Plugins
         public PluginManager(IApplicationContainer container, MainPlugin mainPlugin)
         {
             Logger.Current.Trace("In PluginManager");
-            if (container == null) throw new ArgumentNullException("container");
-            if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");
-
-            _container = container;
-            _mainPlugin = mainPlugin;
+            _container = container ?? throw new ArgumentNullException("container");
+            _mainPlugin = mainPlugin ?? throw new ArgumentNullException("mainPlugin");
         }
 
         public event EventHandler<PluginEventArgs> PluginUnloaded;
@@ -89,6 +86,132 @@ namespace MW5.Plugins
             get { return (new[] { _mainPlugin }).Concat(_plugins.Where(p => _active.Contains(p.Identity))); }
         }
 
+        private List<Lazy<IPlugin, IPluginMetadata>> SortPlugins(IEnumerable<Lazy<IPlugin, IPluginMetadata>> list)
+        {
+            // Order by more restricted items first
+            var pickList = list
+                .OrderByDescending((lazy) => lazy.Metadata.Before?.Count() + lazy.Metadata.After?.Count())
+                .ToList();
+
+            // Create a new empty list for the result set
+            var resultList = new List<Lazy<IPlugin, IPluginMetadata>>();
+
+            // Process each item
+            foreach (var currentItem in pickList)
+            {
+                int index;
+                var sortResult = SortPluginsFor(currentItem, pickList, resultList);
+                index = sortResult.Item1;
+                resultList = sortResult.Item2;
+            }
+
+            // return result
+            return resultList;
+        }
+
+        private Tuple<int, List<Lazy<IPlugin, IPluginMetadata>>> SortPluginsFor(
+            Lazy<IPlugin, IPluginMetadata> currentItem,
+            List<Lazy<IPlugin, IPluginMetadata>> pickList,
+            List<Lazy<IPlugin, IPluginMetadata>> resultList)
+        {
+            // No more items to process?
+            if (currentItem == null)
+                return Tuple.Create(-1, resultList);
+
+            // Check if item is already processed:
+            if (resultList.Contains(currentItem))
+                return Tuple.Create(resultList.IndexOf(currentItem), resultList);
+
+            // Satisfy before dependents
+            var minIndex = int.MaxValue;
+            foreach (var beforeName in currentItem.Metadata.Before)
+            {  
+                // Find the dependency
+                var dependency = pickList.FirstOrDefault(i => {
+                    if (!i.Metadata.Empty)
+                        return i.Metadata.Name == beforeName;
+                    else
+                        return PluginIdentityHelper.GetIdentity(i.Value.GetType(), i.Metadata).Name == beforeName;
+                });
+                if (dependency == null)
+                {
+                    Logger.Current.Info($"Could not find before dependency '{beforeName}' for plugin '{currentItem.Value}'");
+                    return Tuple.Create(-1, resultList); // bail out - this plugins dependencies aren't satisfied
+                }
+
+                // Get  the index of the dependecy
+                var beforeIndex = resultList.IndexOf(dependency);
+                if (beforeIndex < 0) // not in the result list yet
+                {
+                    // Resolve the dependency's order
+                    var sortResult = SortPluginsFor(dependency, pickList, resultList);
+                    beforeIndex = sortResult.Item1;
+                    resultList = sortResult.Item2;
+                    if (beforeIndex < 0)
+                    {
+                        Logger.Current.Info($"Could not satisfy before dependency '{beforeName}' for plugin '{currentItem.Value}'");
+                        return Tuple.Create(-1, resultList); // bail out - this plugins dependencies aren't satisfied
+                    }
+                }
+
+                // Keep track of the lowest index
+                if (minIndex > beforeIndex)
+                    minIndex = beforeIndex;
+            }
+
+            // Satisfy after dependencies
+            var maxIndex = 0;
+            foreach (var afterName in currentItem.Metadata.After)
+            {
+                // Find the dependency
+                var dependency = pickList.FirstOrDefault(i => {
+                    if (!i.Metadata.Empty)
+                        return i.Metadata.Name == afterName;
+                    else
+                        return PluginIdentityHelper.GetIdentity(i.Value.GetType(), i.Metadata).Name == afterName;
+                });
+                if (dependency == null)
+                {
+                    Logger.Current.Info($"Could not find after dependency '{afterName}' for plugin '{currentItem.Value}'");
+                    return Tuple.Create(-1, resultList); // bail out - this plugins dependencies aren't satisfied
+                }
+
+                // Get  the index of the dependecy
+                var afterIndex = resultList.IndexOf(dependency);
+                if (afterIndex < 0) // not in the result list yet
+                {
+                    // Resolve the dependency's order
+                    var sortResult = SortPluginsFor(dependency, pickList, resultList);
+                    afterIndex = sortResult.Item1;
+                    resultList = sortResult.Item2;
+                    if (afterIndex < 0)
+                    {
+                        Logger.Current.Info($"Could not satisfy after dependency '{afterName}' for plugin '{currentItem.Value}'");
+                        return Tuple.Create(-1, resultList); // bail out - this plugins dependencies aren't satisfied
+                    }
+
+                    // We want it to be inserted AFTER this:
+                    afterIndex++;
+                }
+
+                // Keep track of the lowest index
+                if (maxIndex < afterIndex)
+                    maxIndex = afterIndex;
+            }
+
+            // If we have restrictions in both directions, ensure we can meet them both:
+            if (currentItem.Metadata.Before.Any() && currentItem.Metadata.After.Any() && minIndex >= maxIndex)
+            {
+                Logger.Current.Info($"Could not satisfy dependency restrictions for plugin '{currentItem.Value}'");
+                return Tuple.Create(-1, resultList); // bail out - this plugins dependencies aren't satisfied
+            }
+
+            // Insert item at highest possible index
+            resultList.Insert(maxIndex, currentItem);
+
+            return Tuple.Create(maxIndex, resultList);
+        }
+
         /// <summary>
         /// Validates the list of plugins loaded by MEF.
         /// </summary>
@@ -103,10 +226,9 @@ namespace MW5.Plugins
                 return;
             }
 
-            foreach (var item in _mefPlugins)
+            foreach (var item in SortPlugins(_mefPlugins))
             {
-                var p = item.Value as BasePlugin;
-                if (p == null)
+                if (!(item.Value is BasePlugin p))
                 {
                     Logger.Current.Warn("Invalid plugin type: plugin must inherit from BasePlugin type.");
                     continue;
@@ -172,12 +294,12 @@ namespace MW5.Plugins
         /// </summary>
         /// <param name="identity">Plugin identity.</param>
         /// <param name="context">Application context.</param>
-        public void LoadPlugin(PluginIdentity identity, IAppContext context)
+        public void LoadPlugin(PluginIdentity identity, IDictionary<string, string> settings, IAppContext context)
         {
-            LoadPlugin(identity.Guid, context);
+            LoadPlugin(identity.Name, identity.Guid, settings, context);
         }
 
-        public void LoadPlugin(Guid pluginGuid, IAppContext context)
+        public void LoadPlugin(string pluginName, Guid pluginGuid, IDictionary<string, string> settings, IAppContext context)
         {
             if (_active.Select(p => p.Guid).Contains(pluginGuid))
             {
@@ -188,7 +310,7 @@ namespace MW5.Plugins
             if (plugin == null)
             {
                 // throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
-                MessageService.Current.Warn("Plugin which requested for loading isn't present in the list.");
+                MessageService.Current.Warn($"Could not find requested plugin '{pluginName}'.");
                 return;
             }
 
@@ -198,19 +320,17 @@ namespace MW5.Plugins
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to register services for plugin: " + plugin.Identity +
-                                            Environment.NewLine + ex.Message);
+                MessageService.Current.Warn($"Failed to register services for plugin '{plugin.Identity}':{Environment.NewLine}{ex.Message}");
                 return;
             }
 
             try
             {
-                plugin.Initialize(context);
+                plugin.Initialize(context, settings);
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine +
-                                            ex.Message);
+                MessageService.Current.Warn($"Failed to load plugin '{plugin.Identity}':{Environment.NewLine}{ex.Message}");
                 return;
             }
 
@@ -250,7 +370,7 @@ namespace MW5.Plugins
                 if (active && !PluginActive(p.Identity))
                 {
                     pluginLoadingCallback?.Invoke(p.Identity);
-                    LoadPlugin(p.Identity, context);
+                    LoadPlugin(p.Identity, Enumerable.Empty<string>().ToDictionary(s => s), context);
                 }
             }
         }

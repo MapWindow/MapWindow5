@@ -24,6 +24,10 @@ namespace MW5.Plugins.TableEditor.Helpers
                     return "Integer";
                 case AttributeType.Double:
                     return "Double";
+                case AttributeType.Boolean:
+                    return "Boolean";
+                case AttributeType.Date:
+                    return "Date/Time";
             }
             return "Not defined";
         }
