@@ -258,6 +258,11 @@ namespace MW5.Plugins.AdvancedSnapping.Services
             // Show input box to end-user to enter the distance
             // live updating the map with the snap line
             void inputAction (double value) {
+                if (Math.Abs(value) <= double.Epsilon)
+                {
+                    RemoveRestriction(restriction);
+                    return;
+                }
                 restriction.Distance = value;
                 restriction.RefreshGuideline(_context.Map as IMap);
             };
