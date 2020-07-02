@@ -326,6 +326,12 @@ namespace MW5.Plugins.TableEditor.Editor
         public void SortByColumn(int columnIndex, bool ascending)
         {
             var fld = _table.Fields[columnIndex];
+            if (fld == null)
+            {
+                ClearSorting();
+                return;
+            }
+
             switch (fld.Type)
             {
                 case AttributeType.String:

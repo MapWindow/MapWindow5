@@ -102,9 +102,8 @@ namespace MW5.Plugins.Symbology.Services
 
             if (e.X != _currentObject.X || e.Y != _currentObject.Y)
             {
-                int dx, dy;
-                _currentObject.GetEventDelta(e, out dx, out dy);
-                var r = _currentObject.Rect.CloneWithOffset(dx, dy);
+                _currentObject.GetEventDelta(e, out double dx, out double dy);
+                var r = _currentObject.Rect.CloneWithOffset((int) dx, (int) dy);
                 DrawLabelRectangle(r);
             }
         }
