@@ -13,9 +13,9 @@
 #define MyAppPublisher "MapWindow Open Source GIS Community"
 #define MyAppURL "https://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
-#define GdalLicensePath ExeBinPath + "\..\..\..\..\..\MapWinGIS\git\support\GDAL_SDK\licenses\
+#define GdalLicensePath ExeBinPath + "\..\..\..\..\..\MapWinGIS\git\support\GDAL_SDK\licenses\"
 
-;;#define x64BitVersion true
+#define x64BitVersion true
 
 #ifdef x64BitVersion
   #define CPU "x64"
@@ -43,7 +43,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\MapWindow5
+DefaultDirName={commonpf}\MapWindow5
 DisableProgramGroupPage=no
 DefaultGroupName={#MyAppName}
 LicenseFile={#ExeBinPath}\..\..\..\licenses\MapWindow5License.rtf
@@ -78,7 +78,6 @@ AlwaysShowComponentsList=false
   ArchitecturesInstallIn64BitMode=x64
 #endif
 ChangesAssociations=Yes
-UsePreviousAppDir=False
 
 [Components]
 Name: "MapWindow"; Description: "MapWindow5 files"; Types: full custom compact; Flags: fixed
@@ -97,7 +96,7 @@ Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: igno
 ;; Manuals sub folder
 Source: "{#ExeBinPath}\Manuals\*"; DestDir: "{app}\Manuals"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; Plugins subfolder
-Source: "{#ExeBinPath}\Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "AxInterop.MapWinGIS.dll,Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*"
+Source: "{#ExeBinPath}\Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "AxInterop.MapWinGIS.dll,Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*, *.pdb"
 ;; Styles subfolder
 Source: "{#ExeBinPath}\Styles\*"; DestDir: "{app}\Styles"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; SQLite interop:
@@ -272,8 +271,6 @@ end;
 
 // custom wizard page setup, for data dir.
 procedure InitializeWizard;
-var
-  myLocalAppData: String;
 begin
   DataDirPage := CreateInputDirPage(
     wpSelectComponents,
@@ -302,7 +299,7 @@ begin
   // if the page that is asked to be skipped is your custom page, then...
   if PageID = DataDirPage.ID then
     // if the component is not selected, skip the page
-    Result := not IsComponentSelected('USASampleData');
+    Result := not WizardIsComponentSelected('USASampleData');
 end;
 
 function IsDotNetDetected(version: string; service: cardinal): boolean;
