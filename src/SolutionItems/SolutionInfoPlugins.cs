@@ -11,8 +11,8 @@ using System.Runtime.InteropServices;
 
 #endregion
 
-[assembly: AssemblyCopyright("Copyright (C) 1998-2019 MapWindow OSS Team")]
-[assembly: AssemblyTrademark("MapWindow GIS is a trademark of Daniel P. Ames, 2005-2019")]
+[assembly: AssemblyCopyright("Copyright (C) 1998-2020 MapWindow OSS Team")]
+[assembly: AssemblyTrademark("MapWindow GIS is a trademark of Daniel P. Ames, 2005-2020")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

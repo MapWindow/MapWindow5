@@ -119,6 +119,8 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
         {
             var delta = distance - _offset;
             var offsets = GetNewAnchorsAtDistance(delta);
+            if (!offsets.Any())
+                return;
             if (delta > 0)
                 Anchor = offsets.First();
             else

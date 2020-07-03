@@ -17,21 +17,21 @@ namespace MW5.Plugins.Symbology.Services
     /// <summary>
     /// Holds information about the currently selected label
     /// </summary>
-    internal abstract class ObjectMoveData
+    public abstract class ObjectMoveData
     {
-        internal int LayerHandle;
-        internal int ObjectIndex;
-        internal int PartIndex;
-        internal Rectangle Rect;
+        public int LayerHandle;
+        public int ObjectIndex;
+        public int PartIndex;
+        public Rectangle Rect;
 
-        internal virtual bool IsChart { get; }
-        internal virtual bool IsLabel { get; }
-        internal virtual bool IsSymbol { get; }
+        public virtual bool IsChart { get; }
+        public virtual bool IsLabel { get; }
+        public virtual bool IsSymbol { get; }
 
-        internal int X;   // original location in screen coordinates
-        internal int Y;   // original location in screen coordinates
+        public virtual double X { get; set; }   // original location
+        public virtual double Y { get; set; }  // original location
 
-        internal virtual void Clear()
+        public virtual void Clear()
         {
             LayerHandle = -1;
             ObjectIndex = -1;
@@ -40,17 +40,17 @@ namespace MW5.Plugins.Symbology.Services
             Y = 0;
         }
 
-        internal ObjectMoveData()
+        public ObjectMoveData()
         {
             Clear();
         }
-        internal void GetEventDelta(MouseEventArgs e, out int dx, out int dy)
+        public void GetEventDelta(MouseEventArgs e, out double dx, out double dy)
         {
             dx = -X + e.X;
             dy = -Y + e.Y;
         }
 
-        internal void GetProjectedEventDelta(IMuteMap map, MouseEventArgs e, out double dx, out double dy)
+        public void GetProjectedEventDelta(IMuteMap map, MouseEventArgs e, out double dx, out double dy)
         {
             map.PixelToProj(X, Y, out double x1, out double y1);
             map.PixelToProj(e.X, e.Y, out double x2, out double y2);
@@ -59,13 +59,13 @@ namespace MW5.Plugins.Symbology.Services
             dy = -y1 + y2;
         }
     }
-    internal abstract class ObjectTranslateData : ObjectMoveData
+    public abstract class ObjectTranslateData : ObjectMoveData
     {
-        internal bool HasBackingOffsetFields;
-        internal int OffsetXField;
-        internal int OffsetYField;
+        public bool HasBackingOffsetFields;
+        public int OffsetXField;
+        public int OffsetYField;
 
-        internal override void Clear()
+        public override void Clear()
         {
             base.Clear();
             OffsetXField = -1;
@@ -88,15 +88,22 @@ namespace MW5.Plugins.Symbology.Services
         }
     }
 
-    internal abstract class ObjectRotateData : ObjectMoveData
+    public abstract class ObjectRotateData : ObjectMoveData
     {
 
-        internal bool HasBackingRotationField;
-        internal int RotationField;
+        public Action RotationCancelledCallback;
 
-        internal double OriginalRotation;
+        public bool HasBackingRotationField;
+        public int RotationField;
 
-        internal override void Clear()
+        public double OriginalRotation;
+
+        public IEnumerable<double> SegmentAngles { get; protected set; }
+        public IEnumerable<double> CartesianAngles { get; } =
+            new double[] { 0, 45, 90, 135, 180, 225, 270, 315 };
+
+
+        public override void Clear()
         {
             base.Clear();
             RotationField = -1;
@@ -104,15 +111,15 @@ namespace MW5.Plugins.Symbology.Services
             HasBackingRotationField = false;
         }
 
-        internal double GetAngle(double newX, double newY, bool azimuth = false)
+        public double GetAngle(double newX, double newY, bool azimuth = false)
         {
-            var angle = Math.Atan2(Y - newY, newX - X);
+            var angle = Math.Atan2(newY - Y, newX - X);
             if (azimuth)
                 angle = (Math.PI * 0.5) - angle;
             return NormalizeAngle(angle);
         }
 
-        internal double GetAngleInDegrees(double newX, double newY, bool geographicAngles = false)
+        public double GetAngleInDegrees(double newX, double newY, bool geographicAngles = false)
         {
             return GetAngle(newX, newY, geographicAngles) * (180 / Math.PI);
         }
@@ -127,36 +134,39 @@ namespace MW5.Plugins.Symbology.Services
         public abstract void UpdateRotationField(
             ILayer layer, double dx, double dy,
             bool snapToFeatures = false, bool snapToAxes = false);
+
+        public abstract void SaveRotationField(ILayer layer);
     }
 
-    internal class ChartMoveData : ObjectTranslateData
+    public class ChartMoveData : ObjectTranslateData
     {
-        override internal bool IsChart => true;
+        override public bool IsChart => true;
     }
 
-    internal class EmptyMoveData : ObjectTranslateData
+    public class EmptyMoveData : ObjectTranslateData
     {
     }
 
-    internal class LabelMoveData : ObjectTranslateData
+    public class LabelMoveData : ObjectTranslateData
     {
-        override internal bool IsLabel => true;
+        override public bool IsLabel => true;
     }
 
-    internal class SymbolRotateData : ObjectRotateData
+    public class SymbolRotateData : ObjectRotateData
     {
-        override internal bool IsSymbol => true;
+        override public bool IsSymbol => true;
+
+        private readonly ICoordinate originalPoint;
 
         protected IMuteMap Map { get; }
 
-        private IEnumerable<double> SegmentAngles;
-        private IEnumerable<double> CartesianAngles = new double[] { 0, 45, 90, 135, 180, 225, 270, 315 };
-
-        public SymbolRotateData(IMuteMap map, int layerHandle, int objectIndex)
+        public SymbolRotateData(IMuteMap map, int layerHandle, int objectIndex, double x, double y)
         {
             Map = map;
             LayerHandle = layerHandle;
             ObjectIndex = objectIndex;
+            X = x;
+            Y = y;
 
             CalculateSnapAngles();
         }
@@ -184,7 +194,7 @@ namespace MW5.Plugins.Symbology.Services
                     continue;
                 var segments = snapCandidate.Points
                     .Pairwise((p1, p2) => new Tuple<ICoordinate, ICoordinate>(p1, p2))
-                    .Where(pair => IsBetween(pair.Item1, pair.Item2, center));
+                    .Where(pair => IsBetween(pair.Item1, pair.Item2, center, tolerance));
                 foreach (var segment in segments)
                 {
                     var angle = (Math.PI * 0.5) - Math.Atan2(segment.Item2.Y - segment.Item1.Y, segment.Item2.X - segment.Item1.X);
@@ -199,25 +209,25 @@ namespace MW5.Plugins.Symbology.Services
             SegmentAngles = angles.Distinct().ToList();
         }
 
-        public bool IsBetween(ICoordinate segment1, ICoordinate segment2, ICoordinate point)
+        public bool IsBetween(ICoordinate segment1, ICoordinate segment2, ICoordinate point, double tolerance)
         {
             var crossproduct = 
                 (point.Y - segment1.Y) * (segment2.X - segment1.X) - 
                 (point.X - segment1.X) * (segment2.Y - segment1.Y);
 
-            if (Math.Abs(crossproduct) > float.Epsilon)
+            if (Math.Abs(crossproduct) > tolerance)
                 return false;
 
             var dotproduct = 
                 (point.X - segment1.X) * (segment2.X - segment1.X) + 
                 (point.Y - segment1.Y) * (segment2.Y - segment1.Y);
-            if (dotproduct < 0)
+            if (dotproduct < -tolerance)
                 return false;
 
             var squaredlengthba = 
                 (segment2.X - segment1.X) * (segment2.X - segment1.X) +
                 (segment2.Y - segment1.Y) * (segment2.Y - segment1.Y);
-            if (dotproduct > squaredlengthba)
+            if (dotproduct > squaredlengthba + tolerance)
                 return false;
 
             return true;
@@ -259,6 +269,8 @@ namespace MW5.Plugins.Symbology.Services
             return snappedAngle;
         }
 
+        private bool needToCloseTable = false;
+
         public override void UpdateRotationField(
             ILayer layer, double dx, double dy, 
             bool snapToFeatures = false, bool snapToAxes = false)
@@ -269,8 +281,15 @@ namespace MW5.Plugins.Symbology.Services
             var feature = fs.Features[ObjectIndex];
             bool needToCloseTable = !fs.EditingTable;
             if (needToCloseTable) fs.StartEditingTable();
+            feature.Rotation = angle;
             if (RotationField != -1)
                 feature.SetDouble(RotationField, angle);
+        }
+
+        public override void SaveRotationField(ILayer layer)
+        {
+            var fs = layer.FeatureSet;
+            var feature = fs.Features[ObjectIndex];
             layer.VectorSource?.SaveChanges(out int count, SaveType.AttributesOnly, false);
             if (needToCloseTable) fs.StopEditingTable();
         }

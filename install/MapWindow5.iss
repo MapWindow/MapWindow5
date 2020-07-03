@@ -13,7 +13,7 @@
 #define MyAppPublisher "MapWindow Open Source GIS Community"
 #define MyAppURL "https://www.mapwindow.org/documentation/mapwindow5/"
 #define ReleaseNotes ExeBinPath + "\..\..\..\src\SolutionItems\ReleaseNotes.rtf"
-#define GdalLicensePath ExeBinPath + "\..\..\..\..\..\MapWinGIS\git\support\GDAL_SDK\licenses\
+#define GdalLicensePath ExeBinPath + "\..\..\..\..\..\MapWinGIS\git\support\GDAL_SDK\licenses\"
 
 #define x64BitVersion true
 
@@ -29,10 +29,13 @@
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-;; x86:
-;;AppId={{EB12FA54-F2EE-4536-9A3E-3477A6049798}
-;; x64:
-AppId={{AF7BDDC6-2263-47B0-9AA2-DA03CA6E8DC6}
+#ifdef x64BitVersion
+  ;; x64:
+  AppId={{AF7BDDC6-2263-47B0-9AA2-DA03CA6E8DC6}
+#else
+  ;; x86:
+  AppId={{EB12FA54-F2EE-4536-9A3E-3477A6049798}
+#endif
 
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -40,7 +43,7 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}\MapWindow5
+DefaultDirName={commonpf}\MapWindow5
 DisableProgramGroupPage=no
 DefaultGroupName={#MyAppName}
 LicenseFile={#ExeBinPath}\..\..\..\licenses\MapWindow5License.rtf
@@ -75,7 +78,6 @@ AlwaysShowComponentsList=false
   ArchitecturesInstallIn64BitMode=x64
 #endif
 ChangesAssociations=Yes
-UsePreviousAppDir=False
 
 [Components]
 Name: "MapWindow"; Description: "MapWindow5 files"; Types: full custom compact; Flags: fixed
@@ -94,7 +96,7 @@ Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: igno
 ;; Manuals sub folder
 Source: "{#ExeBinPath}\Manuals\*"; DestDir: "{app}\Manuals"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; Plugins subfolder
-Source: "{#ExeBinPath}\Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*"
+Source: "{#ExeBinPath}\Plugins\*"; DestDir: "{app}\Plugins"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow; Excludes: "AxInterop.MapWinGIS.dll,Interop.MapWinGIS.dll,MW5.TemplatePlugin.dll,Syncfusion.*, *.pdb"
 ;; Styles subfolder
 Source: "{#ExeBinPath}\Styles\*"; DestDir: "{app}\Styles"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; SQLite interop:
@@ -126,9 +128,9 @@ BeveledLabel={#MyAppName}
 [Run]
 ; Install VC++ 2017 if needed:
 #ifdef x64BitVersion
-Filename: "{tmp}\{#vcredist}"; Parameters: "/quiet"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x64()
+  Filename: "{tmp}\{#vcredist}"; Parameters: "/quiet"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x64()
 #else
-Filename: "{tmp}\{#vcredist}"; Parameters: "/quiet"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x86()
+  Filename: "{tmp}\{#vcredist}"; Parameters: "/quiet"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x86()
 #endif
 Filename: "{app}\MapWindow.exe"; Flags: shellexec runasoriginaluser postinstall nowait skipifsilent; Description: "Start MapWindow5 GIS?"
 Filename: "{code:GetDataDir}"; Flags: shellexec runasoriginaluser nowait skipifsilent; Description: "Open sample data folder"; Components: USASampleData
@@ -160,6 +162,7 @@ Root: "HKCR"; Subkey: "MW5Project\"; ValueName: "InstallDir"; ValueType: string;
 [InstallDelete]
 Type: files; Name: "{app}\Plugins\MW5.TemplatePlugin.dll"; Components: MapWindow
 Type: files; Name: "{app}\Plugins\Interop.MapWinGIS.dll"; Components: MapWindow
+Type: files; Name: "{app}\Plugins\AxInterop.MapWinGIS.dll"; Components: MapWindow
 ;; Old ECW driver, conflicts with new driver:
 Type: files; Name: "{app}\MapWinGIS\libecwj2.dll"; Components: MapWindow
 
@@ -268,8 +271,6 @@ end;
 
 // custom wizard page setup, for data dir.
 procedure InitializeWizard;
-var
-  myLocalAppData: String;
 begin
   DataDirPage := CreateInputDirPage(
     wpSelectComponents,
@@ -298,7 +299,7 @@ begin
   // if the page that is asked to be skipped is your custom page, then...
   if PageID = DataDirPage.ID then
     // if the component is not selected, skip the page
-    Result := not IsComponentSelected('USASampleData');
+    Result := not WizardIsComponentSelected('USASampleData');
 end;
 
 function IsDotNetDetected(version: string; service: cardinal): boolean;

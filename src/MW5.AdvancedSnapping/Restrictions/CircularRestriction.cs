@@ -63,6 +63,9 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
             if (restrictionA == null)
                 yield break;
 
+            if (Distance == 0)
+                yield break;
+
             // Translate line so circle center is at origin
             var A = restrictionA.Factor;
             var B = -1.0;
@@ -75,6 +78,9 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
         public IEnumerable<ICoordinate> GetIntersections(CircularRestriction restrictionA)
         {
             if (restrictionA == null)
+                yield break;
+
+            if (Distance == 0)
                 yield break;
 
             // Some things we'll need a lot:
@@ -130,7 +136,10 @@ namespace MW5.Plugins.AdvancedSnapping.Restrictions
         {
             var geometry = new Geometry(Api.Enums.GeometryType.Point);
             geometry.Points.Add(new Coordinate(Anchor.X, Anchor.Y));
-            return geometry.Buffer(Distance, segments).Boundary();
+            if (Math.Abs(Distance) <= double.Epsilon)
+                return geometry;
+            IGeometry buffer = geometry.Buffer(Distance, segments);
+            return buffer?.Boundary() ?? geometry;
         }
 
         private int CalculateNumberOfGeometrySegments(IMap map)
