@@ -232,7 +232,7 @@ namespace MW5.Api.Legend.Renderer
                 AdjustCategoryTextTop(options, ref tempTop);
 
                 int checkBoxLeft = _bounds.Left + Constants.TextLeftPad;
-                int checkboxTop = tempTop + Constants.CheckboxTopOffset();
+                int checkboxTop = tempTop + Constants.CheckboxTopOffset;
 
                 DrawCheckBox(_graphics, checkboxTop, checkBoxLeft, ct.DrawingOptions.Visible, false);
 
@@ -264,7 +264,7 @@ namespace MW5.Api.Legend.Renderer
 
             if (hasCheckbox)
             {
-                left += Constants.CategoryCheckboxWidthWithPadding();
+                left += Constants.CategoryCheckboxWidthWithPadding;
             }
 
             if (categoryWidth != Constants.IconWidth)
@@ -318,7 +318,7 @@ namespace MW5.Api.Legend.Renderer
 
             if (hasCheckbox)
             {
-                left += Constants.CategoryCheckboxWidthWithPadding();
+                left += Constants.CategoryCheckboxWidthWithPadding;
             }
 
             var rect = new Rectangle(

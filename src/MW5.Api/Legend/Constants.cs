@@ -1,12 +1,51 @@
-﻿namespace MW5.Api.Legend
+﻿using System.Drawing;
+using System.Windows.Forms;
+namespace MW5.Api.Legend
 {
+    // TODO turn this in to service?
     internal class Constants
     {
-        public const int ItemHeight = 19; 
+
+        public Constants(Control control)
+        {
+            Control = control;
+        }
+
+        public const int ItemHeight = 19;
         public const int ItemPad = 4;
         public const int ItemRightPad = 5;
         // TEXT
-        public const int TextHeight = 14;
+
+        public static Font DefaultLegendFont = new Font("Arial", 8, GraphicsUnit.Pixel);
+
+        public int _textHeight = -1;
+        public int TextHeight
+        {
+            get
+            {
+                if (_textHeight < 0)
+                {
+                    var scale = GetScalingFactor(Control);
+                    _textHeight = TextRenderer
+                        .MeasureText("HçjÊ{}g", DefaultLegendFont)
+                        .Height + (int) (4 * scale);
+                }
+
+                return _textHeight;
+            }
+        }
+
+        public Control Control { get; }
+
+        private static double GetScalingFactor(Control control)
+        {
+            double dpiX, dpiY;
+            Graphics graphics = control.CreateGraphics();
+            dpiX = graphics.DpiX;
+            dpiY = graphics.DpiY;
+            return dpiX / (double)96;
+        }
+
         public const int TextTopPad = 3;
         public const int TextLeftPad = 30;
         public const int TextRightPad = 25;
@@ -63,14 +102,9 @@
             return CsItemHeight + VerticalPad;
         }
 
-        public static int CategoryCheckboxWidthWithPadding()
-        {
-            return CheckBoxSize + 5;
-        }
+        public static int CategoryCheckboxWidthWithPadding
+            => CheckBoxSize + 5;
 
-        public static int CheckboxTopOffset()
-        {
-            return (TextHeight - CheckBoxSize) / 2;
-        }
+        public int CheckboxTopOffset => (TextHeight - CheckBoxSize) / 2;
     }
 }

@@ -24,9 +24,17 @@ namespace MW5.Api.Legend.Renderer
         {
         }
 
+        private Font _boldFont;
         public Font BoldFont
         {
-            get { return new Font(Legend.Font, FontStyle.Bold); }
+            get {
+                if (_boldFont == null)
+                {
+                    _boldFont = new Font(Legend.Font, FontStyle.Bold);
+                }
+
+                return _boldFont;
+            }
         }
 
         /// <summary>

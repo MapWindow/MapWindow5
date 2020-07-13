@@ -60,7 +60,7 @@ namespace MW5.Api.Legend
             _selectedGroupHandle = -1;
 
             HitTest = new LegendHitTest(this);
-            Font = new Font("Arial", 8);
+            Font = new Font("Arial", 8, GraphicsUnit.Pixel);
             SelectionColor = Color.FromArgb(255, 240, 240, 240);
             ShowGroupIcons = true;
             ShowLabels = false;

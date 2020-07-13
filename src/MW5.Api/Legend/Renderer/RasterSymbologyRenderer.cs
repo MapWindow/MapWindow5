@@ -14,7 +14,6 @@ namespace MW5.Api.Legend.Renderer
         public RasterSymbologyRenderer(LegendControlBase legend)
             : base(legend)
         {
-
         }
 
         /// <summary>
