@@ -21,7 +21,7 @@ namespace MW5.Api.Interfaces
         void ApplyColorScheme(SchemeType type, ColorRamp colorScheme, StyleElement shapeElement,
                                 int categoryStartIndex, int categoryEndIndex);
 
-        void ApplyExpression(int categoryIndex);
+        void ApplyExpression(int categoryIndex, int startRowIndex = -1, int endRowIndex = -1);
 
         void ApplyExpressions();
 
