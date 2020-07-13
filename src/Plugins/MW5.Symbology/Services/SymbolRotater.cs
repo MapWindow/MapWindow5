@@ -114,8 +114,6 @@ namespace MW5.Plugins.Symbology.Services
                 return;
 
             feature.Rotation = CurrentObject.OriginalRotation;
-
-            CurrentObject.RotationCancelledCallback?.Invoke();
         }
 
         private void RotateSymbol(IMuteMap map, double dx, double dy,
@@ -127,11 +125,8 @@ namespace MW5.Plugins.Symbology.Services
             if (feature == null)
                 return;     
             
-            if (CurrentObject.HasBackingRotationField)
-            {
-                var projCoordinate = _context.Map.PixelToProj(new Coordinate(dx, dy));
-                CurrentObject.UpdateRotationField(layer, projCoordinate.X, projCoordinate.Y, snapToFeatures, snapToAxes);
-            }
+            var projCoordinate = _context.Map.PixelToProj(new Coordinate(dx, dy));
+            CurrentObject.UpdateRotationField(layer, projCoordinate.X, projCoordinate.Y, snapToFeatures, snapToAxes);
 
             map.Redraw();
         }
@@ -144,8 +139,7 @@ namespace MW5.Plugins.Symbology.Services
             if (feature == null)
                 return;
 
-            if (CurrentObject.HasBackingRotationField)
-                CurrentObject.SaveRotationField(layer);
+            CurrentObject.SaveRotationField(layer);
         }
 
         private void Clear()
