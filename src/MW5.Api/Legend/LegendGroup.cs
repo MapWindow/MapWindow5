@@ -21,17 +21,19 @@ namespace MW5.Api.Legend
         private int _height;
         private object _icon;
         private bool _recalcHeight;
+        private Constants Constants { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendGroup"/> class.
         /// </summary>
-        internal LegendGroup(LegendControl leg, int handle)
+        internal LegendGroup(LegendControl legend, int handle)
         {
-            _legend = leg;
+            _legend = legend;
             _layers = new List<LegendLayer>();
             _icon = null;
             _recalcHeight = true;
 
+            Constants = new Constants(legend);
             Handle = handle;
             Visible = Visibility.AllVisible;
             Expanded = true;

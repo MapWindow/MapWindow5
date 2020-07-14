@@ -57,7 +57,7 @@ namespace MW5.Api.Legend.Renderer
 
         private void AdjustCategoryTextTop(ShapeDrawingOptions options, ref int top)
         {
-            const int targetHeight = Constants.CsItemHeight + 2;
+            int targetHeight = Constants.CsItemHeightAndPad;
             var categoryHeight = _layer.GetCategoryHeight(options);
             if (categoryHeight > targetHeight)
             {
@@ -110,7 +110,7 @@ namespace MW5.Api.Legend.Renderer
                 Constants.TextHeight);
 
             DrawText(_graphics, caption, rect, Font, Legend.ForeColor);
-            top += Constants.CsItemHeight + Constants.VerticalPad;
+            top += Constants.CsItemHeightAndPad;
             _layer.Elements.Add(LayerElementType.Charts, rect);
         }
 
@@ -272,6 +272,8 @@ namespace MW5.Api.Legend.Renderer
                 left -= (categoryWidth - Constants.IconWidth) / 2;
             }
 
+            var topCentering = (Constants.ItemHeight - Constants.IconHeight) / 2 - 1;
+
             switch (_layer.LegendLayerType)
             {
                 case LegendLayerType.PointShapefile:
@@ -281,7 +283,7 @@ namespace MW5.Api.Legend.Renderer
                     options.DrawLine(
                         hdcInt,
                         left,
-                        top,
+                        top + topCentering,
                         categoryWidth - 1,
                         Constants.IconHeight - 1,
                         false,
@@ -293,7 +295,7 @@ namespace MW5.Api.Legend.Renderer
                     options.DrawRectangle(
                         hdcInt,
                         left,
-                        top,
+                        top + topCentering,
                         categoryWidth - 1,
                         Constants.IconHeight - 1,
                         false,

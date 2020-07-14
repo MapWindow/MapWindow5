@@ -13,10 +13,13 @@ namespace MW5.Api.Legend
     {
         private readonly LegendControlBase _legend;
 
+        private Constants Constants { get; }
+
         public LegendHitTest(LegendControlBase legend)
         {
             if (legend == null) throw new ArgumentNullException("legend");
             _legend = legend;
+            Constants = new Constants(legend);
         }
 
         private LegendGroup GetGroup(int index)

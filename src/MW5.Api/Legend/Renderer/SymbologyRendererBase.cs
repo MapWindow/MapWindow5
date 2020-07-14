@@ -68,7 +68,7 @@ namespace MW5.Api.Legend.Renderer
                 DrawText(g, text, rect, font, Legend.ForeColor);
             }
 
-            top += Constants.CsItemHeight + Constants.VerticalPad;
+            top += Constants.CsItemHeightAndPad;
         }
 
 

@@ -42,6 +42,8 @@ namespace MW5.Api.Legend
         protected Graphics GraphicsBackBuffer;
         protected Image BackBuffer;
 
+        protected Constants Constants;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendControlBase"/> class. 
         /// </summary>
@@ -65,7 +67,7 @@ namespace MW5.Api.Legend
             ShowGroupIcons = true;
             ShowLabels = false;
             DrawLines = true;
-
+            Constants = new Constants(this);
             MouseWheel += (s, e) => OnMouseWheel(e);
         }
 
