@@ -42,6 +42,8 @@ namespace MW5.Api.Legend
         protected Graphics GraphicsBackBuffer;
         protected Image BackBuffer;
 
+        protected Constants Constants;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendControlBase"/> class. 
         /// </summary>
@@ -60,12 +62,12 @@ namespace MW5.Api.Legend
             _selectedGroupHandle = -1;
 
             HitTest = new LegendHitTest(this);
-            Font = new Font("Arial", 8);
+            Font = new Font("Arial", 8, GraphicsUnit.Pixel);
             SelectionColor = Color.FromArgb(255, 240, 240, 240);
             ShowGroupIcons = true;
             ShowLabels = false;
             DrawLines = true;
-
+            Constants = new Constants(this);
             MouseWheel += (s, e) => OnMouseWheel(e);
         }
 

@@ -57,7 +57,7 @@ namespace MW5.Api.Legend.Renderer
 
         private void AdjustCategoryTextTop(ShapeDrawingOptions options, ref int top)
         {
-            const int targetHeight = Constants.CsItemHeight + 2;
+            int targetHeight = Constants.CsItemHeightAndPad;
             var categoryHeight = _layer.GetCategoryHeight(options);
             if (categoryHeight > targetHeight)
             {
@@ -110,7 +110,7 @@ namespace MW5.Api.Legend.Renderer
                 Constants.TextHeight);
 
             DrawText(_graphics, caption, rect, Font, Legend.ForeColor);
-            top += Constants.CsItemHeight + Constants.VerticalPad;
+            top += Constants.CsItemHeightAndPad;
             _layer.Elements.Add(LayerElementType.Charts, rect);
         }
 
@@ -232,7 +232,7 @@ namespace MW5.Api.Legend.Renderer
                 AdjustCategoryTextTop(options, ref tempTop);
 
                 int checkBoxLeft = _bounds.Left + Constants.TextLeftPad;
-                int checkboxTop = tempTop + Constants.CheckboxTopOffset();
+                int checkboxTop = tempTop + Constants.CheckboxTopOffset;
 
                 DrawCheckBox(_graphics, checkboxTop, checkBoxLeft, ct.DrawingOptions.Visible, false);
 
@@ -264,13 +264,15 @@ namespace MW5.Api.Legend.Renderer
 
             if (hasCheckbox)
             {
-                left += Constants.CategoryCheckboxWidthWithPadding();
+                left += Constants.CategoryCheckboxWidthWithPadding;
             }
 
             if (categoryWidth != Constants.IconWidth)
             {
                 left -= (categoryWidth - Constants.IconWidth) / 2;
             }
+
+            var topCentering = (Constants.ItemHeight - Constants.IconHeight) / 2 - 1;
 
             switch (_layer.LegendLayerType)
             {
@@ -281,7 +283,7 @@ namespace MW5.Api.Legend.Renderer
                     options.DrawLine(
                         hdcInt,
                         left,
-                        top,
+                        top + topCentering,
                         categoryWidth - 1,
                         Constants.IconHeight - 1,
                         false,
@@ -293,7 +295,7 @@ namespace MW5.Api.Legend.Renderer
                     options.DrawRectangle(
                         hdcInt,
                         left,
-                        top,
+                        top + topCentering,
                         categoryWidth - 1,
                         Constants.IconHeight - 1,
                         false,
@@ -318,7 +320,7 @@ namespace MW5.Api.Legend.Renderer
 
             if (hasCheckbox)
             {
-                left += Constants.CategoryCheckboxWidthWithPadding();
+                left += Constants.CategoryCheckboxWidthWithPadding;
             }
 
             var rect = new Rectangle(

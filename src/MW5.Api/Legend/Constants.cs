@@ -1,20 +1,60 @@
-﻿namespace MW5.Api.Legend
+﻿using System.Drawing;
+using System.Windows.Forms;
+namespace MW5.Api.Legend
 {
-    internal class Constants
+    // TODO turn this in to service?
+    public class Constants
     {
-        public const int ItemHeight = 19; 
+
+        public Constants(Control control)
+        {
+            Control = control;
+        }
+
+        public int _itemHeight => (int)(19.0 * GetScalingFactor());
+
+        public int ItemHeight => TextHeight + 4;
         public const int ItemPad = 4;
         public const int ItemRightPad = 5;
         // TEXT
-        public const int TextHeight = 14;
+
+        public static Font DefaultLegendFont = new Font("Arial", 8, GraphicsUnit.Pixel);
+
+        public int _textHeight = -1;
+        public int TextHeight
+        {
+            get
+            {
+                var scale = GetScalingFactor();
+                return (int) (14.0 * scale);/*
+                if (_textHeight < 0)
+                {
+                    
+                    _textHeight = TextRenderer
+                        .MeasureText("HçjÊ{}g", DefaultLegendFont)
+                        .Height + (int) (4 * scale);
+                }
+
+                return _textHeight;*/
+            }
+        }
+
+        public Control Control { get; }
+
+        private double GetScalingFactor()
+        {
+            var graphics = Control.CreateGraphics();
+            return graphics.DpiX / 96.0;
+        }
+
         public const int TextTopPad = 3;
         public const int TextLeftPad = 30;
         public const int TextRightPad = 25;
         public const int TextRightPadNoIcon = 8;
         public const int TextEditingRightPad = 10;
         // CHECK BOX
-        public const int CheckTopPad = 4;
-        public const int CheckBoxSize = 12;
+        public int CheckTopPad => (ItemHeight - CheckBoxSize) / 2;
+        public int CheckBoxSize => 12;
         // EXPANSION BOX
         public const int ExpandBoxTopPad = 5;
         public const int ExpandBoxLeftPad = 3;
@@ -22,14 +62,12 @@
         // LIST ITEMS
         public const int ListItemIndent = 18;
         public const int IconRightPad = 25;
-        public const int IconTopPad = 3;
+        public int IconTopPad => (ItemHeight - IconSize) / 2;
         public const int IconSize = 13;
         public const int VertLineGrpTopOffset = 14;
         // COLOR SCHEME CONSTANTS
-        public const int CsItemHeight = 14;
-        public const int CsTopPad = 1;
+        public int CsItemHeight => (int) (14 * GetScalingFactor());
         public const int CsPatchHeight = 12;
-        public const int CsTextTopPad = 3;
         // SCROLLBAR
         public const int ScrollWidth = 15;
         // MISC
@@ -53,24 +91,13 @@
 
         public const int VerticalPad = 2;
 
-        public static int ItemHeightAndPad()
-        {
-            return ItemHeight + VerticalPad;
-        }
+        public int ItemHeightAndPad => ItemHeight + VerticalPad;
 
-        public static int CsItemHeightAndPad()
-        {
-            return CsItemHeight + VerticalPad;
-        }
+        public int CsItemHeightAndPad => CsItemHeight + VerticalPad;
 
-        public static int CategoryCheckboxWidthWithPadding()
-        {
-            return CheckBoxSize + 5;
-        }
+        public int CategoryCheckboxWidthWithPadding
+            => CheckBoxSize + 5;
 
-        public static int CheckboxTopOffset()
-        {
-            return (TextHeight - CheckBoxSize) / 2;
-        }
+        public int CheckboxTopOffset => (TextHeight - CheckBoxSize) / 2;
     }
 }

@@ -14,7 +14,6 @@ namespace MW5.Api.Legend.Renderer
         public RasterSymbologyRenderer(LegendControlBase legend)
             : base(legend)
         {
-
         }
 
         /// <summary>
@@ -110,8 +109,8 @@ namespace MW5.Api.Legend.Renderer
 
                 DrawText(g, item.ToString(), textRect, Font, Color.Black);
 
-                r.Y += Constants.CsItemHeightAndPad();
-                textRect.Y += Constants.CsItemHeightAndPad();
+                r.Y += Constants.CsItemHeightAndPad;
+                textRect.Y += Constants.CsItemHeightAndPad;
                 // count++;
             }
         }

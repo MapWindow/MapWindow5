@@ -7,13 +7,16 @@ namespace MW5.Api.Legend.Renderer
     public class SymbologyRendererBase
     {
         protected readonly LegendControlBase Legend;
+
+        internal Constants Constants { get; }
+
         private readonly Color _boxLineColor;
 
         public SymbologyRendererBase(LegendControlBase legend)
         {
             if (legend == null) throw new ArgumentNullException("legend");
             Legend = legend;
-
+            Constants = new Constants(legend);
             _boxLineColor = Color.Gray;
         }
 
@@ -65,7 +68,7 @@ namespace MW5.Api.Legend.Renderer
                 DrawText(g, text, rect, font, Legend.ForeColor);
             }
 
-            top += Constants.CsItemHeight + Constants.VerticalPad;
+            top += Constants.CsItemHeightAndPad;
         }
 
 

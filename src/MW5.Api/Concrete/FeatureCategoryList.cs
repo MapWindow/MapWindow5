@@ -159,9 +159,9 @@ namespace MW5.Api.Concrete
                 categoryStartIndex, categoryEndIndex);
         }
 
-        public void ApplyExpression(int categoryIndex)
+        public void ApplyExpression(int categoryIndex, int startRowIndex = -1, int endRowIndex = -1)
         {
-            _categories.ApplyExpression(categoryIndex);
+            _categories.ApplyExpression(categoryIndex, startRowIndex, endRowIndex);
         }
 
         public void ApplyExpressions()

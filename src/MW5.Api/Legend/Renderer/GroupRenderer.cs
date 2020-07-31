@@ -10,7 +10,6 @@ namespace MW5.Api.Legend.Renderer
     {
         public GroupRenderer(LegendControlBase legend) : base(legend) 
         {
-
         }
 
         /// <summary>

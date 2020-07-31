@@ -24,9 +24,17 @@ namespace MW5.Api.Legend.Renderer
         {
         }
 
+        private Font _boldFont;
         public Font BoldFont
         {
-            get { return new Font(Legend.Font, FontStyle.Bold); }
+            get {
+                if (_boldFont == null)
+                {
+                    _boldFont = new Font(Legend.Font, FontStyle.Bold);
+                }
+
+                return _boldFont;
+            }
         }
 
         /// <summary>
@@ -95,7 +103,7 @@ namespace MW5.Api.Legend.Renderer
             if (!isSnapshot)
             {
                 var curWidth = bounds.Width - Constants.ItemRightPad;
-                const int curHeight = Constants.ItemHeight;
+                int curHeight = Constants.ItemHeight;
                 var rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
                 if (lyr.Handle == Legend.SelectedLayerHandle && bounds.Width > 25

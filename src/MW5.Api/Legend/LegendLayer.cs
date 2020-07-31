@@ -22,6 +22,7 @@ namespace MW5.Api.Legend
         private readonly LayerElementsCollection _elements; // size and positions of elements
         private readonly Dictionary<Guid, ILayerMetadataBase> _customObjects;
         private readonly Dictionary<Guid, XmlElement> _rawObjects;
+        private Constants Constants { get; }
 
         private bool _expanded;
         private object _icon;
@@ -49,6 +50,7 @@ namespace MW5.Api.Legend
             Expanded = true;
             SmallIconWasDrawn = false;
             SymbologyCaption = "";
+            Constants = new Constants(legend);
         }
 
         /// <summary>
@@ -408,7 +410,7 @@ namespace MW5.Api.Legend
             }
 
             // layer name
-            int ret = Constants.ItemHeightAndPad();
+            int ret = Constants.ItemHeightAndPad;
 
             bool expanded = _expanded || useExpandedHeight;
 
@@ -416,16 +418,16 @@ namespace MW5.Api.Legend
             {
                 if (expanded)
                 {
-                    ret += Constants.CsItemHeightAndPad(); //!string.IsNullOrWhiteSpace(SymbologyCaption) ? Constants.CsItemHeightAndPad() : 0;
+                    ret += Constants.CsItemHeightAndPad;
 
-                    ret += RasterSymbologyCount * Constants.CsItemHeightAndPad();
+                    ret += RasterSymbologyCount * Constants.CsItemHeightAndPad;
                 }
             }
             else if (LegendLayerType == LegendLayerType.WmsLayer)
             {
                 if (expanded)
                 {
-                    ret += Constants.CsItemHeightAndPad();
+                    ret += Constants.CsItemHeightAndPad;
                 }
             }
             else
@@ -438,12 +440,12 @@ namespace MW5.Api.Legend
 
                     if (sf.Categories.Count > 0)
                     {
-                        ret += Constants.CsItemHeight + Constants.VerticalPad; // caption
+                        ret += Constants.CsItemHeightAndPad; // caption
 
                         var categories = sf.Categories;
                         if (LegendLayerType == LegendLayerType.LineShapefile || LegendLayerType == LegendLayerType.PolygonShapefile)
                         {
-                            ret += sf.Categories.Count * (Constants.CsItemHeight + Constants.VerticalPad);
+                            ret += sf.Categories.Count * (Constants.CsItemHeightAndPad);
                         }
                         else
                         {
@@ -458,11 +460,11 @@ namespace MW5.Api.Legend
 
                     if (sf.Charts.Count > 0 && sf.Charts.NumFields > 0 && sf.Charts.Visible)
                     {
-                        ret += Constants.CsItemHeightAndPad(); // caption
+                        ret += Constants.CsItemHeightAndPad; // caption
                         ret += sf.Charts.IconHeight;
                         ret += Constants.VerticalPad;
 
-                        ret += sf.Charts.NumFields * Constants.CsItemHeightAndPad();
+                        ret += sf.Charts.NumFields * Constants.CsItemHeightAndPad;
                     }
                 }
             }
@@ -476,7 +478,7 @@ namespace MW5.Api.Legend
         {
             if (LegendLayerType == LegendLayerType.PolygonShapefile || LegendLayerType == LegendLayerType.LineShapefile)
             {
-                return Constants.CsItemHeight + 2;
+                return Constants.CsItemHeightAndPad;
             }
 
             if (LegendLayerType == LegendLayerType.PointShapefile)
@@ -489,7 +491,7 @@ namespace MW5.Api.Legend
                                             ((options.Picture.Height * options.PictureScaleY) + 2 <= Constants.CsItemHeight);
 
                         return defaultHeight
-                            ? Constants.CsItemHeight + 2
+                            ? Constants.CsItemHeightAndPad
                             : (int) ((options.Picture.Height*options.PictureScaleY) + 2);
                     }
 

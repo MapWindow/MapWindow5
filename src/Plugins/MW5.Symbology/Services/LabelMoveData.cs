@@ -91,8 +91,6 @@ namespace MW5.Plugins.Symbology.Services
     public abstract class ObjectRotateData : ObjectMoveData
     {
 
-        public Action RotationCancelledCallback;
-
         public bool HasBackingRotationField;
         public int RotationField;
 
@@ -269,8 +267,6 @@ namespace MW5.Plugins.Symbology.Services
             return snappedAngle;
         }
 
-        private bool needToCloseTable = false;
-
         public override void UpdateRotationField(
             ILayer layer, double dx, double dy, 
             bool snapToFeatures = false, bool snapToAxes = false)
@@ -279,19 +275,20 @@ namespace MW5.Plugins.Symbology.Services
 
             var fs = layer.FeatureSet;
             var feature = fs.Features[ObjectIndex];
-            bool needToCloseTable = !fs.EditingTable;
-            if (needToCloseTable) fs.StartEditingTable();
             feature.Rotation = angle;
+
             if (RotationField != -1)
+            {
+                if (!fs.EditingTable) fs.StartEditingTable();
                 feature.SetDouble(RotationField, angle);
+            }
+                
         }
 
         public override void SaveRotationField(ILayer layer)
         {
-            var fs = layer.FeatureSet;
-            var feature = fs.Features[ObjectIndex];
-            layer.VectorSource?.SaveChanges(out int count, SaveType.AttributesOnly, false);
-            if (needToCloseTable) fs.StopEditingTable();
+            if (HasBackingRotationField)
+                layer.VectorSource?.SaveChanges(out int _, SaveType.AttributesOnly, false);            
         }
     }
 }
