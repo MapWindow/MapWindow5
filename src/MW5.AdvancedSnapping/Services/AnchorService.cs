@@ -16,9 +16,9 @@ namespace MW5.Plugins.AdvancedSnapping.Services
     public class AnchorService : IAnchorService
     {
         private const string drawingContextName = "anchorService";
-        private IAppContext _context;
+        private readonly IAppContext _context;
         private readonly IDrawingService _drawingService;
-        private int highlightLayerHandle;
+        //private int highlightLayerHandle;
         private readonly Dispatcher dispatcher;
         private IList<CancellationTokenSource> taskTokens;
 
@@ -94,8 +94,8 @@ namespace MW5.Plugins.AdvancedSnapping.Services
 
         public AnchorService(IAppContext context, IDrawingService drawingService)
         {
-            _context = context ?? throw new ArgumentNullException("context");
-            _drawingService = drawingService ?? throw new ArgumentNullException("drawingService");
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _drawingService = drawingService ?? throw new ArgumentNullException(nameof(drawingService));
             dispatcher = Dispatcher.CurrentDispatcher;
             taskTokens = new List<CancellationTokenSource>();
         }
