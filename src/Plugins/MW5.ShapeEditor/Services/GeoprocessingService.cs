@@ -204,39 +204,31 @@ namespace MW5.Plugins.ShapeEditor.Services
 
         private void RemoveSelectedShapesNoPrompt(IMuteMap map, IFeatureSet fs, int layerHandle)
         {
-
-            // First try to delete each feature - some may get cancelled
             var features = fs.Features;
+            var list = map.History;
             var actualDeletes = new List<int>();
 
             try
             {
+                list.BeginBatch();
                 for (int i = features.Count - 1; i >= 0; i--)
                 {
                     if (!features[i].Selected) continue;
 
                     var args = new BeforeDeleteShapeEventArgs(DeleteTarget.Shape, false, true);
                     _broadcaster.BroadcastEvent(p => p.BeforeDeleteShape_, _context.Map, args);
-                    if (!args.Cancel && features.EditDelete(i))
+                    if (!args.Cancel && list.Add(UndoOperation.RemoveShape, layerHandle, i))
                     {
-                        actualDeletes.Add(i);
+                        features.EditDelete(i);
                     }
                 }
             }
             finally
             {
-                // Then add this to the undo history
-                var list = map.History;
-                list.BeginBatch();
-                foreach (var i in actualDeletes)
-                {
-                    list.Add(UndoOperation.RemoveShape, layerHandle, i);
-                }
                 list.EndBatch();
             }
 
             _broadcaster.BroadcastEvent(p => p.LayerFeatureCountChanged_, fs, new LayerEventArgs(layerHandle));
         }
-
     }
 }
